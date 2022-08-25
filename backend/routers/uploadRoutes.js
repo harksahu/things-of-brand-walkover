@@ -1,8 +1,10 @@
-import express, { application, Router } from "express";
+import express from "express";
+
 import { uploadSingleFileAndSendUrl } from "../controlllers/uploadController.js";
 import upload from "../middleware/multerMiddleware.js";
+
 const routes = express.Router();
 
-routes.route('/single').post(upload.single,uploadSingleFileAndSendUrl);
+routes.route('/').post(upload,uploadSingleFileAndSendUrl);
 
 export default routes;

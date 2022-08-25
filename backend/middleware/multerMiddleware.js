@@ -4,16 +4,14 @@ import path from 'path';
 
 const fileStorageEngine = multer.diskStorage({
     destination: (req,file,cb) =>{
-        console.log("IN HERE");
-        cb(null,'./images')
+        cb(null,'./uploads')
     },
     filename: (req,file,cb)=>{
-        // cb(null, Date.now() + '--' + file.originalname)
-        req.imageName = new Date().toISOString().replace(/:/g, '-') + file.originalname
+        req.imageName = new Date().toISOString().replace(/:/g, '-') + path.basename(file.originalname)
         cb(null, req.imageName)
     },
 });
 
-const upload = multer({storage: fileStorageEngine});
+const upload = multer({storage: fileStorageEngine}).single("image");
 
 export  default upload;
