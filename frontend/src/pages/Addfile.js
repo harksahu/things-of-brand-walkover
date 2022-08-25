@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { UserAuth } from '../context/AuthContext';
 
 const Addfile = () => {
+  const { logOut, user } = UserAuth();
+
   const [file, setFile] = useState([]);
   const [title, setTitle] = useState([]);
 
@@ -52,6 +55,8 @@ const Addfile = () => {
           </div>
         </form>
       </div>
+      <h1>email:- {user?.email}</h1>
+
     </div>
   );
 };

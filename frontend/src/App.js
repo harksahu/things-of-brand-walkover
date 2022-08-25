@@ -6,7 +6,7 @@ import { AuthContextProvider } from './context/AuthContext';
 import Account from './pages/Account';
 import Home from './pages/Home';
 import Addfile from './pages/Addfile';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
