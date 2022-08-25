@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import NavigationBar from './components/NavigationBar';
 import Protected from './components/Protected';
 import { AuthContextProvider } from './context/AuthContext';
 import Account from './pages/Account';
@@ -12,7 +12,7 @@ function App() {
   return (
     <div>
       <AuthContextProvider>
-        <Navbar />
+        <NavigationBar />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path="/addfile" element={
