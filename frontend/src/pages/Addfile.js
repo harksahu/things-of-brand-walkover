@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { UserAuth } from '../context/AuthContext';
+import { uploadSingleFileAndGetURL } from "../utils/fileUpload";
 
 const Addfile = () => {
   const { user } = UserAuth();
 
   const [file, setFile] = useState([]);
   const [title, setTitle] = useState([]);
-
+const onSubmitClick = ()=>{
+  console.log("IN onSubmitClick");
+  const fileUrl = uploadSingleFileAndGetURL(file);
+  console.log(fileUrl);
+}
   return (
     <div>
       <div className="w-full place-items-center text-center max-w-xs">
@@ -38,17 +43,20 @@ const Addfile = () => {
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              onChange={(e) => setFile({ ...file, image: e.target.value })}
+              onChange={(e) => {
+                debugger
+                setFile(e.target.files[0]);
+              }}
               id="image"
               type="file"
-              accept=".svg"
+              // accept=".svg"
             />
           </div>
           <div className="flex items-center justify-between">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
-              onClick={() => console.log(file, " ===", title)}
+              onClick={onSubmitClick}
             >
               Submit
             </button>

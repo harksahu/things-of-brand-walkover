@@ -2,7 +2,6 @@
   "name": "googlelogin-2",
   "version": "1.0.0",
   "type": "module",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node backend/server",
@@ -22,6 +21,7 @@
   },
   "homepage": "https://github.com/harksahu/things-of-brand-walkover#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "bootscrap": "^0.1.0",
     "bootstrap": "^5.2.0",
     "dotenv": "^16.0.1",
@@ -33,5 +33,6 @@
   "devDependencies": {
     "concurrently": "^6.0.0",
     "nodemon": "^2.0.7"
-  }
+  },
+  "description": ""
 }
