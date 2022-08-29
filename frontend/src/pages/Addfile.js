@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { UserAuth } from '../context/AuthContext';
 
 const Addfile = () => {
-  const { logOut, user } = UserAuth();
+  const { user } = UserAuth();
 
   const [file, setFile] = useState([]);
   const [title, setTitle] = useState([]);
@@ -24,7 +24,7 @@ const Addfile = () => {
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               onChange={(e) => setTitle({ ...title, username: e.target.value })}
-              id="username"
+              id="title"
               type="text"
               placeholder="Title name"
             />

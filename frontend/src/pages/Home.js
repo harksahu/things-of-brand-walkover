@@ -1,33 +1,111 @@
-import React from 'react'
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Accordion from "react-bootstrap/Accordion";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 function Home() {
+  const [width, setWidth] = useState();
+  const [height, setHeight] = useState();
+  console.log(width)
   return (
+    <div className=" m-3 flex">
 
-    <div>
-     <div class="max-w-sm rounded overflow-hidden shadow-lg">
-  <img class="w-full" src="https://v1.tailwindcss.com/img/card-top.jpg" alt="Sunset in the mountains"/>
-  <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
+      <Card style={{ width: "18rem" }} className="m-3">
+        <Card.Img
+          variant="top"
+          src="https://v1.tailwindcss.com/img/card-top.jpg"
+        />
+        <Card.Body>
+          <Card.Title className="text-center">Title Name</Card.Title>
+          <Card.Text>
+            <Accordion flush>
+              <Accordion.Item eventKey="0" size="sm">
+                <Accordion.Header>Adjust Size</Accordion.Header>
+                <Accordion.Body>
+                  <InputGroup size="sm" className="mb-3">
+                    <InputGroup.Text id="inputGroup-sizing-sm">
+                      Width
+                    </InputGroup.Text>
+                    <Form.Control
+                      aria-label="Small"
+                      aria-describedby="inputGroup-sizing-sm"
+                      onChange={(e) => setWidth({ ...width, image: e.target.value })}
+                    />
+                  </InputGroup>
+                  <InputGroup size="sm" className="mb-3">
+                    <InputGroup.Text id="inputGroup-sizing-sm" >
+                      Height
+                    </InputGroup.Text>
+                    <Form.Control
+                      aria-label="Small"
+                      aria-describedby="inputGroup-sizing-sm"
+                      onChange={(e) => setHeight({ ...height, image: e.target.value })}
+                    />
+                  </InputGroup>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+          </Card.Text>
+        </Card.Body>
+        <Card.Body>
+          <Button variant="outline-primary" size="sm">
+            Download PNG
+          </Button>{" "}
+          <Button variant="outline-secondary" size="sm">
+            Download SVG
+          </Button>{" "}
+        </Card.Body>
+      </Card>
 
-  </div>
-</div>
-
-    {/* <Card style={{ width: '18rem' }}>
-    <Card.Img variant="top" src="holder.js/100px180" />
-      <Card.Body>
-         <Card.Title>Card Title</Card.Title>
-     <Card.Text>
-           Some quick example text to build on the card title and make up the
-           bulk of the card's content.
-         </Card.Text>
-         <Button variant="primary">Go somewhere</Button>
-       </Card.Body>
-     </Card> */}
-
-
-  </div>
-  )
+      <Card style={{ width: "18rem" }} className="m-3">
+        <Card.Img
+          variant="top"
+          src="https://v1.tailwindcss.com/img/card-top.jpg"
+        />
+        <Card.Body>
+          <Card.Title className="text-center">Title Name</Card.Title>
+          <Card.Text>
+            <Accordion flush>
+              <Accordion.Item eventKey="0" size="sm">
+                <Accordion.Header>Adjust Size</Accordion.Header>
+                <Accordion.Body>
+                  <InputGroup size="sm" className="mb-3">
+                    <InputGroup.Text id="inputGroup-sizing-sm">
+                      Width
+                    </InputGroup.Text>
+                    <Form.Control
+                      aria-label="Small"
+                      aria-describedby="inputGroup-sizing-sm"
+                      onChange={(e) => setWidth({ ...width, image: e.target.value })}
+                    />
+                  </InputGroup>
+                  <InputGroup size="sm" className="mb-3">
+                    <InputGroup.Text id="inputGroup-sizing-sm" >
+                      Height
+                    </InputGroup.Text>
+                    <Form.Control
+                      aria-label="Small"
+                      aria-describedby="inputGroup-sizing-sm"
+                      onChange={(e) => setHeight({ ...height, image: e.target.value })}
+                    />
+                  </InputGroup>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+          </Card.Text>
+        </Card.Body>
+        <Card.Body>
+          <Button variant="outline-primary" size="sm">
+            Download PNG
+          </Button>{" "}
+          <Button variant="outline-secondary" size="sm">
+            Download SVG
+          </Button>{" "}
+        </Card.Body>
+      </Card>
+    </div>
+  );
 }
 
-export default Home
+export default Home;

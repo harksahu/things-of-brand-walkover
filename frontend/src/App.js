@@ -7,10 +7,11 @@ import Account from './pages/Account';
 import Home from './pages/Home';
 import Addfile from './pages/Addfile';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import Navbar2 from './components/navbar2'
 function App() {
   return (
     <div>
+      <Navbar2 />
       <AuthContextProvider>
         <NavigationBar />
         <Routes>

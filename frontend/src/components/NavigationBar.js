@@ -68,17 +68,6 @@ const NavigationBar = () => {
 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
   );
 };
 
