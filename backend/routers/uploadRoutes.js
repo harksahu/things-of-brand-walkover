@@ -1,6 +1,6 @@
 import express from "express";
 
-import { uploadSingleFileAndSendUrl } from "../controlllers/uploadController.js";
+import { uploadSingleFileAndSendUrl } from "../controllers/uploadController.js";
 import upload from "../middleware/multerMiddleware.js";
 
 const routes = express.Router();

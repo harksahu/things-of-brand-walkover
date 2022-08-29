@@ -34,8 +34,8 @@ function BasicExample() {
   return (
     <>
       <Navbar bg="light" expand="lg">
-        <Container>
-          <Navbar.Brand href="#home">Things of Brand</Navbar.Brand>
+        <Container className="mb-3" fill>
+          <Navbar.Brand href="#home" className="bo">Things of Brand</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
         <Nav

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { createBrandAPI } from "../api";
 import { UserAuth } from '../context/AuthContext';
 import { uploadSingleFileAndGetURL } from "../utils/fileUpload";
 
@@ -6,11 +7,18 @@ const Addfile = () => {
   const { user } = UserAuth();
 
   const [file, setFile] = useState([]);
-  const [title, setTitle] = useState([]);
-const onSubmitClick = ()=>{
+  const [title, setTitle] = useState();
+
+const onSubmitClick =async ()=>{
   console.log("IN onSubmitClick");
-  const fileUrl = uploadSingleFileAndGetURL(file);
+  const fileUrl = await uploadSingleFileAndGetURL(file);
   console.log(fileUrl);
+  createBrandAPI({
+url:fileUrl,
+title,
+description:"Description",
+email: user?.email,
+  })
 }
   return (
     <div>
@@ -28,7 +36,7 @@ const onSubmitClick = ()=>{
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              onChange={(e) => setTitle({ ...title, username: e.target.value })}
+              onChange={(e) => setTitle( e.target.value )}
               id="title"
               type="text"
               placeholder="Title name"
