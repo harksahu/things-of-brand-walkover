@@ -6,12 +6,14 @@ import connectDB from './services/mongodb_service.js';
 import uploadRoutes from "./routers/uploadRoutes.js";
 import brandRouters from "./routers/brandRouters.js";
 
-// SERVICES
 
+
+// SERVICES
 const app = express();
 const __dirname = path.resolve();
 connectDB();
 // MIDDLEWARE
+
 app.use(cors())
 app.use(express.json());
 
@@ -27,7 +29,7 @@ app.use('/api/brands',brandRouters);
 app.get("/uploads/:id",(req,res)=>{
     res.sendFile(path.join(__dirname,"uploads",req.params.id));
 })
-
+// console.log("abc")
 // ERROR HANDLE
 
 app.listen(8080)

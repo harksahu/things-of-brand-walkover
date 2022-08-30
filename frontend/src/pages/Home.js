@@ -5,6 +5,8 @@ import Accordion from "react-bootstrap/Accordion";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { sendBrandAPI } from "../api";
+import saveas from "file-saver";
+import saveSvgAsPng from "save-svg-as-png";
 
 function Home() {
   const [width, setWidth] = useState();
@@ -59,10 +61,12 @@ function Home() {
           </Card.Text>
         </Card.Body>
         <Card.Body>
-          <Button variant="outline-primary" size="sm">
+          <Button variant="outline-primary" size="sm" onClick={()=>
+          saveas(brand.url,"image.png")}>
             Download PNG
           </Button>{" "}
-          <Button variant="outline-secondary" size="sm">
+          <Button variant="outline-secondary" size="sm" onClick={()=>
+          saveas(brand.url)}>
             Download SVG
           </Button>{" "}
         </Card.Body>

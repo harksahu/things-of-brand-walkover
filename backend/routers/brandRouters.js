@@ -4,6 +4,7 @@ import { createBrand, deleteBrand, searchBrandName, UpdateBrand } from "../contr
 
 const routes = express.Router();
 
+
 routes.route('/').post(createBrand).get(searchBrandName).put(UpdateBrand).delete(deleteBrand);
 
 export default routes;

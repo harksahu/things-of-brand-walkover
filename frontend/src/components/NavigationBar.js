@@ -2,18 +2,12 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { GoogleButton } from "react-google-button";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Offcanvas from "react-bootstrap/Offcanvas";
+
 
 const NavigationBar = () => {
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleGoogleSignIn = async () => {
     try {
