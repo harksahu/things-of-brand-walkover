@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../interceptor/interceptor'
 const URL = "http://localhost:8080"
 const uploadSingleFileAPI =async (fileObject)=>{
     const config = {

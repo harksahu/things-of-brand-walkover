@@ -21,7 +21,8 @@ function Home() {
     <div className=" m-3 flex">
 {listOfbrands.map(brand=>{
   console.log(brand);
-  return (<Card style={{ width: "18rem" }} className="m-3">
+  return (
+  <Card style={{ width: "18rem" }} className="m-3">
         <Card.Img
           variant="top"
           src={brand.url}
