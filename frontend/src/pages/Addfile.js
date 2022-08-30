@@ -1,25 +1,40 @@
 import React, { useState } from "react";
 import { createBrandAPI } from "../api";
-import { UserAuth } from '../context/AuthContext';
+import { UserAuth } from "../context/AuthContext";
 import { uploadSingleFileAndGetURL } from "../utils/fileUpload";
-
+const URL = "http://localhost:8080";
 const Addfile = () => {
   const { user } = UserAuth();
 
   const [file, setFile] = useState([]);
   const [title, setTitle] = useState();
 
-const onSubmitClick =async ()=>{
-  console.log("IN onSubmitClick");
-  const fileUrl = await uploadSingleFileAndGetURL(file);
-  console.log(fileUrl);
-  createBrandAPI({
-url:fileUrl,
-title,
-description:"Description",
-email: user?.email,
-  })
-}
+  const onSubmitClick = async () => {
+    console.log("IN onSubmitClick");
+    const fileUrl = await uploadSingleFileAndGetURL(file);
+    console.log(fileUrl);
+    const a = createBrandAPI({
+      url: URL + "/" + fileUrl,
+      title,
+      description: "Description",
+      email: user?.email,
+    });
+    console.log(a)
+
+    //check
+    console.log(
+      "aaaa"+
+      URL +
+        "/" +
+        fileUrl +
+        " " +
+        title +
+        " " +
+        "Description" +
+        " " +
+        user?.email
+    );
+  };
   return (
     <div>
       <div className="w-full place-items-center text-center max-w-xs">
@@ -36,7 +51,7 @@ email: user?.email,
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              onChange={(e) => setTitle( e.target.value )}
+              onChange={(e) => setTitle(e.target.value)}
               id="title"
               type="text"
               placeholder="Title name"
@@ -52,7 +67,7 @@ email: user?.email,
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               onChange={(e) => {
-                debugger
+                debugger;
                 setFile(e.target.files[0]);
               }}
               id="image"
@@ -72,7 +87,6 @@ email: user?.email,
         </form>
       </div>
       <h1>email:- {user?.email}</h1>
-
     </div>
   );
 };

@@ -10,9 +10,9 @@ const uploadSingleFileAPI =async (fileObject)=>{
 
 const createBrandAPI = async(dataToSend)=>{
 const data = {
-...dataToSend,
-Url:URL+"/"+dataToSend.Url,
+...dataToSend
 }
+// console.log(dataToSend)
 return await axios.post(URL+"/api/brands",data); 
 }
 

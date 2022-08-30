@@ -10,7 +10,7 @@ function Home() {
   const [width, setWidth] = useState();
   const [height, setHeight] = useState();
   const[ listOfbrands , setListOfBrands] = useState([])
-  console.log(width)
+  // console.log(width)
   const printIt=async()=>{
     setListOfBrands((await sendBrandAPI())?.data?.data)
   }
@@ -24,10 +24,10 @@ function Home() {
   return (<Card style={{ width: "18rem" }} className="m-3">
         <Card.Img
           variant="top"
-          src={brand.Url}
+          src={brand.url}
         />
         <Card.Body>
-          <Card.Title className="text-center">{brand.Title}</Card.Title>
+          <Card.Title className="text-center">{brand.title}</Card.Title>
           <Card.Text>
             <Accordion flush>
               <Accordion.Item eventKey="0" size="sm">

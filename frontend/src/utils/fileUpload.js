@@ -1,4 +1,4 @@
-import { async } from "@firebase/util";
+// import { async } from "@firebase/util";
 import { uploadSingleFileAPI } from "../api";
 
 const uploadSingleFileAndGetURL =async (fileObject)=>{
