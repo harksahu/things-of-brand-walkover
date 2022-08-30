@@ -72,7 +72,7 @@ const Addfile = () => {
               }}
               id="image"
               type="file"
-              // accept=".svg"
+              accept=".svg"
             />
           </div>
           <div className="flex items-center justify-between">
