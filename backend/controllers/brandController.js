@@ -83,6 +83,26 @@ const searchBrandName = async (req,res)=>{
     }
 }
 
+
+
+
+// const searchBrandByName = async (req,res)=>{
+//     try {
+//         const data = await BrandModel.find(
+//             {$or: [ { title: req.body.text }, { description: req.body.text } ]}
+//         );
+//         res.json({
+//             "message":"Related Data is Successfully Find",
+//             "data":data
+//         }).status(200);
+//     } catch (error) {
+//         res.send({
+//             message:"Some Error on Server",
+//             error
+//         }).status(400);
+//     }
+// }
+
 export {
     createBrand,
     deleteBrand,

@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { sendBrandAPI } from "../api";
 import saveas from "file-saver";
-import saveSvgAsPng from "save-svg-as-png";
+
 
 function Home() {
   const [width, setWidth] = useState();

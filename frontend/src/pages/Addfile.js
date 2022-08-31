@@ -13,6 +13,7 @@ const Addfile = () => {
     console.log("IN onSubmitClick");
     const fileUrl = await uploadSingleFileAndGetURL(file);
     console.log(fileUrl);
+    alert("Uploaded");
     const a = createBrandAPI({
       url: URL + "/" + fileUrl,
       title,

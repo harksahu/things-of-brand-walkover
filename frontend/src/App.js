@@ -11,7 +11,7 @@ import Navbar2 from './components/navbar2'
 function App() {
   return (
     <div>
-      {/* <Navbar2 /> */}
+      <Navbar2 />
       <AuthContextProvider>
         <NavigationBar />
         <Routes>
@@ -19,14 +19,14 @@ function App() {
           <Route path="/addfile" element={
             <Protected>
           <Addfile />
-          </Protected>
+           </Protected>
           } />
           <Route
             path='/account'
             element={
               <Protected>
                 <Account />
-              </Protected>
+               </Protected>
             }
           />
         </Routes>

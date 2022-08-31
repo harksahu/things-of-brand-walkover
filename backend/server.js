@@ -24,6 +24,7 @@ app.get("/",(req,res)=>{
 
 app.use('/api/uploads',uploadRoutes);
 app.use('/api/brands',brandRouters);
+// app.use('/api/search',SearchRouters);
 
 
 app.get("/uploads/:id",(req,res)=>{

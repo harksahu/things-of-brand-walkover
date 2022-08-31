@@ -5,9 +5,9 @@ import admin from "../config/firebase-config.js"
 
 class Middleware{
     async decodeToken(req,res,next){
-        const token = req.headers.authorization 
+        const token = req.headers.authorization
         try{
-            const decodeValue = await admin.auth().verifyToken(token);
+            const decodeValue = await admin.auth().verifyIdToken(token);
             if(decodeValue){
                 return next();
             }
