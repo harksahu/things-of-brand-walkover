@@ -70,7 +70,7 @@ function BasicExample() {
               <NavDropdown.Item href="#action/3.3">My Stuff</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4" >
-              <button  className='btn btn-danger'>Sign Out </button>
+              <Button variant="outline-primary" size="sm">Logout</Button>
               </NavDropdown.Item>
             </NavDropdown>
             </Navbar.Collapse>
