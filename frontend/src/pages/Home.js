@@ -21,7 +21,7 @@ function Home() {
   },[]);
   return (
     <div className=" m-3 flex">
-{listOfbrands.map(brand=>{
+{/* {listOfbrands.map(brand=>{
   console.log(brand);
   return (<Card style={{ width: "18rem" }} className="m-3">
         <Card.Img
@@ -71,7 +71,7 @@ function Home() {
           </Button>{" "}
         </Card.Body>
       </Card>)
-})}
+})} */}
 
      
     </div>
