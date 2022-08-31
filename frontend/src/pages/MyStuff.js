@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
+import { UserAuth } from "../context/AuthContext";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import { sendBrandAPI } from "../api";
+import { sendMyStuffAPI } from "../api";
 import saveas from "file-saver";
 
 
 
 function Home() {
+  const { user } = UserAuth();
   const [width, setWidth] = useState();
   const [height, setHeight] = useState();
   const[ listOfbrands , setListOfBrands] = useState([])
   // console.log(width)
   const printIt=async()=>{
-    setListOfBrands((await sendBrandAPI())?.data?.data)
+    setListOfBrands((await sendMyStuffAPI(user.email))?.data?.data)
   }
   useEffect(() => {
     printIt()

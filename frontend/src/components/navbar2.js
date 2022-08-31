@@ -11,7 +11,7 @@ import Form from 'react-bootstrap/Form';
 
 function BasicExample() {
   // const { logOut } = UserAuth();
-  // const { googleSignIn, user } = UserAuth();
+  // const { user } = UserAuth();
   // const navigate = useNavigate();
 
   // const handleGoogleSignIn = async () => {
@@ -24,20 +24,24 @@ function BasicExample() {
   // };
 
   // const handleSignOut = async () => {
+  //   console.log("out")
   //   try {
+  //     console.log("sdfghjkl;")
   //     await logOut();
   //   } catch (error) {
+  //     console.log("acfvd")
   //     console.log(error);
   //   }
   // };
 
   return (
     <>
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="light" expand="lg" >
         <Container className="mb-3" fill>
-          <Navbar.Brand href="#home" className="bo">Things of Brand</Navbar.Brand>
+          <Navbar.Brand href="/" className="bo">Things of Brand</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
+
         <Nav
             className="m-auto my-2"
             style={{ maxHeight: '100px' }}
@@ -51,18 +55,24 @@ function BasicExample() {
               aria-label="Search"
             />
             </Form>
-            <NavDropdown title="My stuff" id="collasible-nav-dropdown" className="">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+            
+            </Nav>
+            {/* <img
+            className="w-8 h-8 rounded-full"
+            src={user?.photoURL}
+            alt={user?.displayName}
+          /> */}
+            <NavDropdown title="{user?.displayName}" id="collasible-nav-dropdown" className=""  style={{alignItems:'end'}}>
+              <NavDropdown.Item href="/account">Profile</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
-                Another action
+                Uploads
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">My Stuff</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
+              <NavDropdown.Item href="#action/3.4" >
+              <Button variant="outline-primary" size="sm">Logout</Button>
               </NavDropdown.Item>
             </NavDropdown>
-            </Nav>
             </Navbar.Collapse>
         </Container>
       </Navbar>

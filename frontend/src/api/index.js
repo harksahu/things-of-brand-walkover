@@ -20,6 +20,9 @@ return await axios.post(URL+"/api/brands",data);
 const sendBrandAPI = async()=>{
     return await axios.get(URL+"/api/brands"); 
     }
+const sendMyStuffAPI = async(email)=>{
+    return await axios.get(URL+"/api/Mystuff/"+email); 
+    }
 
 
 
@@ -27,5 +30,6 @@ const sendBrandAPI = async()=>{
 export {
  uploadSingleFileAPI ,
  createBrandAPI,
- sendBrandAPI
+ sendBrandAPI,
+ sendMyStuffAPI
 }

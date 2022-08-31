@@ -5,6 +5,7 @@ import multer from "multer";
 import connectDB from './services/mongodb_service.js';
 import uploadRoutes from "./routers/uploadRoutes.js";
 import brandRouters from "./routers/brandRouters.js";
+import MyStuffRouters from "./routers/MyStuffRouters.js";
 
 
 
@@ -25,6 +26,7 @@ app.get("/",(req,res)=>{
 app.use('/api/uploads',uploadRoutes);
 app.use('/api/brands',brandRouters);
 // app.use('/api/search',SearchRouters);
+app.use('/api/MyStuff',MyStuffRouters);
 
 
 app.get("/uploads/:id",(req,res)=>{

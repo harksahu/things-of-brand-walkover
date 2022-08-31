@@ -1,21 +1,4 @@
 import BrandModel from '../models/brandModel.js'
-const createBrand = async (req,res)=>{
-    try {
-        const data = await BrandModel.create({
-            ...req.body,
-            Url:req.body.url
-        });
-        res.json({
-            "message":"Successfully Created",
-            "data":data
-        }).status(200);
-    } catch (error) {
-        res.send({
-            message:"Some Error on Server",
-            error
-        }).status(400);
-    }
-}
 
 
 const deleteBrand = async (req,res)=>{
@@ -52,7 +35,7 @@ const UpdateBrand = async (req,res)=>{
         });
         res.json({
             "message":"Successfully Updated",
-            "data":data
+            "data":"data"
         }).status(200);
     } catch (error) {
         res.send({
@@ -68,9 +51,10 @@ const UpdateBrand = async (req,res)=>{
 
 const searchBrandName = async (req,res)=>{
     try {
-        const data = await BrandModel.find(
-            // {$or: [ { title: req.body.text }, { description: req.body.text } ]}
-        );
+        console.log(req.params.email)
+        const data = await BrandModel.find({
+            email : req.params.email
+        });
         res.json({
             "message":"Related Data is Successfully Find",
             "data":data
@@ -86,7 +70,6 @@ const searchBrandName = async (req,res)=>{
 
 
 export {
-    createBrand,
     deleteBrand,
     searchBrandName,
     UpdateBrand 

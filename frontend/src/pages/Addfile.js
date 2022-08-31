@@ -87,7 +87,7 @@ const Addfile = () => {
           </div>
         </form>
       </div>
-      <h1>email:- {user?.email}</h1>
+      {/* <h1>email:- {user?.email}</h1> */}
     </div>
   );
 };
