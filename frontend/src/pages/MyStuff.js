@@ -21,7 +21,7 @@ function Home() {
   }
   useEffect(() => {
     printIt()
-  },[]);
+  },[user]);
   return (
     <div className=" m-3 flex">
 {listOfbrands.map(brand=>{

@@ -9,10 +9,10 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from 'react-bootstrap/Form';
 import Container from "react-bootstrap/Container";
-
 const NavigationBar = (props) => {
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();
+  const navigate = useNavigate()
   // const navigate = useNavigate();
 console.log(props.user);
   const handleGoogleSignIn = async () => {
@@ -36,7 +36,7 @@ console.log(props.user);
     <>
       <Navbar bg="light" expand="lg" >
         <Container className="mb-3" fill>
-          <Navbar.Brand href="/" className="bo">Things of Brand</Navbar.Brand>
+          <Navbar.Brand onClick={()=>{navigate("/") }} className="bo">Things of Brand</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
 
@@ -62,11 +62,11 @@ console.log(props.user);
           /> */}
           {user?.displayName ? (
             <NavDropdown title={user?.displayName} id="collasible-nav-dropdown" className=""  style={{alignItems:'end'}}>
-              <NavDropdown.Item href="/account">Profile</NavDropdown.Item>
-              <NavDropdown.Item href="/addfile">
+              <NavDropdown.Item onClick={()=>{navigate("/account") }}>Profile</NavDropdown.Item>
+              <NavDropdown.Item onClick={()=>{navigate("/addfile") }}>
                 Upload File
               </NavDropdown.Item>
-              <NavDropdown.Item href="/MyStuff">My Stuff</NavDropdown.Item>
+              <NavDropdown.Item onClick={()=>{navigate("/MyStuff") }}>My Stuff</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={handleSignOut} >
               logout
