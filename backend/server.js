@@ -19,9 +19,7 @@ app.use(cors())
 app.use(express.json());
 
 //  ROUTES
-app.get("/",(req,res)=>{
-    res.send("WORKING BACKEND");
-})
+
 
 app.use('/api/uploads',uploadRoutes);
 app.use('/api/brands',brandRouters);
@@ -32,6 +30,21 @@ app.use('/api/MyStuff',MyStuffRouters);
 app.get("/uploads/:id",(req,res)=>{
     res.sendFile(path.join(__dirname,"uploads",req.params.id));
 })
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static(path.join(__dirname, '/frontend/build')))
+    app.get('*', (req, res) =>
+        res.sendFile(path.resolve(__dirname , 'frontend' , 'build' , 'index.html'))
+    )
+}else{
+     app.get("/",(req,res)=>{
+        res.send("Api working");
+     })
+}
+
+
+
+
 // console.log("abc")
 // ERROR HANDLE
 
