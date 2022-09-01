@@ -1,21 +1,25 @@
 import React from 'react';
 import { UserAuth } from '../context/AuthContext';
-
+import Image from 'react-bootstrap/Image'
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 const Account = () => {
   const {  user } = UserAuth();
   
   return (
-    
-    <div className='w-[300px] m-auto'>
-      <h1 className='text-center text-2xl font-bold pt-12'>Account</h1>
-      <div>
-        <img src={user?.photoURL} alt="sdg" width="200" height="70"/>
-        <h1>Welcome, {user?.displayName}</h1>
-        <h1>Mail id:- {user?.email}</h1>
-        <h1>Uid:- {user?.uid}</h1>
-       
-      </div>
-    </div>
+    <Card style={{ width: '23rem' }} className="m-auto">
+    <Card.Img variant="top" src={user?.photoURL} />
+    <Card.Body>
+      <Card.Title>Welcome, {user?.displayName}</Card.Title>
+      <Card.Text>
+      Mail id:- {user?.email}<br/>
+      Uid:- {user?.uid}
+      </Card.Text>
+     
+    </Card.Body>
+  </Card>
+
+
   );
 };
 

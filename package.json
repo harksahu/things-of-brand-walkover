@@ -24,6 +24,7 @@
     "axios": "^0.27.2",
     "bootscrap": "^0.1.0",
     "bootstrap": "^5.2.0",
+    "canvg": "^4.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
@@ -33,6 +34,8 @@
     "multer": "^1.4.5-lts.1",
     "react-bootstrap": "^2.5.0",
     "react-router-dom": "^6.3.0",
+    "request-image-size": "^2.2.0",
+    "resize-image": "^0.1.0",
     "save-svg-as-png": "^1.4.17",
     "svg-to-png": "^4.0.0"
   },

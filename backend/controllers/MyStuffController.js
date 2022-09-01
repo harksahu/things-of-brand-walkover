@@ -53,7 +53,10 @@ const searchBrandName = async (req,res)=>{
     try {
         console.log(req.params.email)
         const data = await BrandModel.find({
-            email : req.params.email
+            $and: [
+                { email : req.params.email },
+                { active: 1 }
+             ]
         });
         res.json({
             "message":"Related Data is Successfully Find",

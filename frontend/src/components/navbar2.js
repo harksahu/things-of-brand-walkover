@@ -1,84 +1,79 @@
-import React from "react";
-import Container from "react-bootstrap/Container";
-import { Link, useNavigate } from "react-router-dom";
-import { UserAuth } from "../context/AuthContext";
-import { GoogleButton } from "react-google-button";
-import Button from "react-bootstrap/Button";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Form from 'react-bootstrap/Form';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
-function BasicExample() {
-  // const { logOut } = UserAuth();
-  // const { user } = UserAuth();
-  // const navigate = useNavigate();
-
-  // const handleGoogleSignIn = async () => {
-  //   try {
-  //     await googleSignIn();
-  //     // console.log(object);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const handleSignOut = async () => {
-  //   console.log("out")
-  //   try {
-  //     console.log("sdfghjkl;")
-  //     await logOut();
-  //   } catch (error) {
-  //     console.log("acfvd")
-  //     console.log(error);
-  //   }
-  // };
-
+function GridExample() {
   return (
-    <>
-      <Navbar bg="light" expand="lg" >
-        <Container className="mb-3" fill>
-          <Navbar.Brand href="/" className="bo">Things of Brand</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+    <Row md={4} className="g-4">
+      
+        <Col>
+          <Card>
+            <Card.Img variant="top" src="holder.js/100px160" />
+            <Card.Body>
+              <Card.Title>Card title</Card.Title>
+              <Card.Text>
+                This is a longer card with supporting text below as a natural
+                lead-in to additional content. This content is a little bit
+                longer.
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col>
+          <Card>
+            <Card.Img variant="top" src="holder.js/100px160" />
+            <Card.Body>
+              <Card.Title>Card title</Card.Title>
+              <Card.Text>
+                This is a longer card with supporting text below as a natural
+                lead-in to additional content. This content is a little bit
+                longer.
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col>
+          <Card>
+            <Card.Img variant="top" src="holder.js/100px160" />
+            <Card.Body>
+              <Card.Title>Card title</Card.Title>
+              <Card.Text>
+                This is a longer card with supporting text below as a natural
+                lead-in to additional content. This content is a little bit
+                longer.
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col>
+          <Card>
+            <Card.Img variant="top" src="holder.js/100px160" />
+            <Card.Body>
+              <Card.Title>Card title</Card.Title>
+              <Card.Text>
+                This is a longer card with supporting text below as a natural
+                lead-in to additional content. This content is a little bit
+                longer.
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col>
+          <Card>
+            <Card.Img variant="top" src="holder.js/100px160" />
+            <Card.Body>
+              <Card.Title>Card title</Card.Title>
+              <Card.Text>
+                This is a longer card with supporting text below as a natural
+                lead-in to additional content. This content is a little bit
+                longer.
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
 
-        <Nav
-            className="m-auto my-2"
-            style={{ maxHeight: '100px' }}
-            navbarScroll
-          >
-          <Form className="justify-content-center">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            </Form>
-            
-            </Nav>
-            {/* <img
-            className="w-8 h-8 rounded-full"
-            src={user?.photoURL}
-            alt={user?.displayName}
-          /> */}
-            <NavDropdown title="{user?.displayName}" id="collasible-nav-dropdown" className=""  style={{alignItems:'end'}}>
-              <NavDropdown.Item href="/account">Profile</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Uploads
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">My Stuff</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4" >
-              <Button variant="outline-primary" size="sm">Logout</Button>
-              </NavDropdown.Item>
-            </NavDropdown>
-            </Navbar.Collapse>
-        </Container>
-      </Navbar>
-
-    </>
+    </Row>
   );
 }
 
-export default BasicExample;
+export default GridExample;

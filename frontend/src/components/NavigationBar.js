@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
@@ -13,6 +13,9 @@ const NavigationBar = (props) => {
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate()
+
+  const [searchItem, setItems] = useState();
+
   // const navigate = useNavigate();
 console.log(props.user);
   const handleGoogleSignIn = async () => {
@@ -51,6 +54,7 @@ console.log(props.user);
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              onChange={(e) => setItems( e.target.value )}
             />
             </Form>
             
@@ -62,11 +66,11 @@ console.log(props.user);
           /> */}
           {user?.displayName ? (
             <NavDropdown title={user?.displayName} id="collasible-nav-dropdown" className=""  style={{alignItems:'end'}}>
-              <NavDropdown.Item onClick={()=>{navigate("/account") }}>Profile</NavDropdown.Item>
               <NavDropdown.Item onClick={()=>{navigate("/addfile") }}>
                 Upload File
               </NavDropdown.Item>
               <NavDropdown.Item onClick={()=>{navigate("/MyStuff") }}>My Stuff</NavDropdown.Item>
+              <NavDropdown.Item onClick={()=>{navigate("/account") }}>Profile</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={handleSignOut} >
               logout
@@ -96,39 +100,3 @@ export default NavigationBar;
 
 
 
-
-
-
-
-{/* <div className='flex justify-between bg-gray-200 w-full p-4 ' >
-
-  <h1 className='text-center text-2xl font-bold'>
-    Things of Brand
-  </h1>
-
-  <div className="d-flex form-inputs">
-    <input className="form-control" type="text" placeholder="Search any product..."/>
-    <i className="bx bx-search"></i>
-    </div>
-
-  {user?.displayName ? (
-    <div>
-
-    <Link to="/addfile" className='btn btn-success'>add</Link>
-      <button onClick={handleSignOut} className='btn btn-danger'>Sign Out </button>
-      {/* <img
-            className="w-8 h-8 rounded-full"
-            src={user?.photoURL}
-            alt={user?.displayName}
-          /> */}
-
-        //   </div>
-
-        //   ) : (
-        //     <div>
-        //   <div>
-        //     <GoogleButton onClick={handleGoogleSignIn} />
-        //   </div>
-        // </div>
-        //   )}
-        // </div> */}
