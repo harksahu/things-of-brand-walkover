@@ -7,7 +7,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { sendMyStuffAPI } from "../api";
 import saveas from "file-saver";
-import { Canvg } from 'canvg';
+import { Canvg,presets } from 'canvg';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
@@ -16,10 +16,18 @@ import Row from 'react-bootstrap/Row';
 function Home() {
 
   const { user } = UserAuth();
-  const [width, setWidth] = useState();
-  const [height, setHeight] = useState();
+  const [mwidth, setWidth] = useState();
+  const [mheight, setHeight] = useState();
   const[ listOfbrands , setListOfBrands] = useState([])
   const [dimensions,setdimensions] = useState([]);
+
+  function size(img){
+    const x = document.getElementById(img).clientWidth
+    setWidth(x)
+    const y = document.getElementById(img).clientHeight
+      setHeight(y)
+  }
+
 
   // console.log(width)
   const printIt=async()=>{
@@ -32,20 +40,45 @@ function size(img){
   setHeight(  document.getElementById(img).clientHeight)
 }
 
-  const DownloadToPng = async (img) => {
-   const canvas = document.querySelector('canvas');
-   const ctx = canvas.getContext('2d');
-// const a ='<svg height="500" width="400">'+img+'</svg>';
-   v = await Canvg.from(ctx,img);
-   console.log(v)
-   v.start();
-   console.log("first")
-   var img1 = canvas.toDataURL("img/png");
-
-
-    saveas(img1); 
-
+const DownloadToPng = async (img,w,h) => {
+  if(w==undefined){
+    const x = document.getElementById(img).clientWidth
+    setWidth(x)
+    w=x
   }
+  if(h==undefined){
+    const y = document.getElementById(img).clientHeight
+    setHeight(y)
+    h=y
+  }
+
+  
+  const preset = presets.offscreen()
+
+  async function toPng(data) {
+    const {
+      width,
+      height
+    } = data
+    console.log(width)
+    const canvas = new OffscreenCanvas(width, height)
+    const ctx = canvas.getContext('2d')
+    const v = await Canvg.from(ctx, img, preset)
+    v.resize(width, height, 'xMidYMid meet')
+    await v.render()
+    const blob = await canvas.convertToBlob()
+    const pngUrl = URL.createObjectURL(blob)
+    return pngUrl
+  }
+  
+  toPng({
+    width: w,
+    height: h
+  }).then((pngUrl) => {  
+    saveas(pngUrl)
+  })
+
+}
 
   useEffect(() => {
     printIt()
@@ -59,15 +92,19 @@ function size(img){
   return (
     <Col>
     
-  <Card style={{ width: "18rem" }} className="m-3">
+    
+    <Card style={{ width: "18rem" }} className="m-3">
         <Card.Img
           variant="top"
           src={brand.url}
+          id={brand.url}
         />
         <Card.Body>
           <Card.Title className="text-center">{brand.title}</Card.Title>
           <Card.Text>
-            <Accordion flush>
+            <Accordion flush onClick={()=>{
+              size(brand.url)
+            }}>
               <Accordion.Item eventKey="0" size="sm">
                 <Accordion.Header>Adjust Size</Accordion.Header>
                 <Accordion.Body>
@@ -79,7 +116,8 @@ function size(img){
                       aria-label="Small"
                       aria-describedby="inputGroup-sizing-sm"
                       onChange={(e) => setWidth( e.target.value )}
-                      placeholder={width}
+                      // placeholder={mwidth}
+                      value={mwidth}
 
                     />
                   </InputGroup>
@@ -91,7 +129,10 @@ function size(img){
                       aria-label="Small"
                       aria-describedby="inputGroup-sizing-sm"
                       onChange={(e) => setHeight( e.target.value )}
-                      placeholder={height}
+                      // placeholder={mheight}
+                      value={mheight}
+                      // name={document.getElementById(brand.url).clientHeight}
+
 
                     />
                   </InputGroup>
@@ -102,7 +143,7 @@ function size(img){
         </Card.Body>
         <Card.Body>
           <Button variant="outline-primary" size="sm" 
-          onClick={() =>{DownloadToPng(brand.url)}}>
+          onClick={() =>{DownloadToPng(brand.url,mwidth,mheight)}}>
             Download PNG
           </Button>{" "}
           <Button variant="outline-secondary" size="sm" onClick={()=>
