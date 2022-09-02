@@ -31,8 +31,7 @@ function App() {
           <Route path="/addfile" element={
             <Protected>
           <Addfile />
-           </Protected>
-          } />
+           </Protected>}/>
           <Route path="/MyStuff" element={
             <Protected>
           <MyStuff />

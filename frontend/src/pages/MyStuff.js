@@ -52,26 +52,24 @@ function size(img){
   },[user]);
   return (
     <div className=" m-3 flex">
+      <Row md={4} className="g-4">
+      {/* {Array.from({ length: listOfbrands.length }).map((_, idx) => ( */}
 {listOfbrands.map(brand=>{
-  console.log(brand);
-
-
+  // console.log(brand);
   return (
-
-    <Row md={4} className="g-4">
-      <Col>
+    <Col>
+    
   <Card style={{ width: "18rem" }} className="m-3">
         <Card.Img
           variant="top"
           src={brand.url}
-          id={brand.url}
         />
         <Card.Body>
           <Card.Title className="text-center">{brand.title}</Card.Title>
           <Card.Text>
             <Accordion flush>
               <Accordion.Item eventKey="0" size="sm">
-                <Accordion.Header onClick={()=>size(brand.url)}>Adjust Size</Accordion.Header>
+                <Accordion.Header>Adjust Size</Accordion.Header>
                 <Accordion.Body>
                   <InputGroup size="sm" className="mb-3">
                     <InputGroup.Text id="inputGroup-sizing-sm">
@@ -82,6 +80,7 @@ function size(img){
                       aria-describedby="inputGroup-sizing-sm"
                       onChange={(e) => setWidth( e.target.value )}
                       placeholder={width}
+
                     />
                   </InputGroup>
                   <InputGroup size="sm" className="mb-3">
@@ -93,6 +92,7 @@ function size(img){
                       aria-describedby="inputGroup-sizing-sm"
                       onChange={(e) => setHeight( e.target.value )}
                       placeholder={height}
+
                     />
                   </InputGroup>
                 </Accordion.Body>
@@ -101,7 +101,8 @@ function size(img){
           </Card.Text>
         </Card.Body>
         <Card.Body>
-          <Button variant="outline-primary" size="sm"  onClick={() =>DownloadToPng(brand.url)}>
+          <Button variant="outline-primary" size="sm" 
+          onClick={() =>{DownloadToPng(brand.url)}}>
             Download PNG
           </Button>{" "}
           <Button variant="outline-secondary" size="sm" onClick={()=>
@@ -110,11 +111,12 @@ function size(img){
           </Button>{" "}
         </Card.Body>
       </Card>
-      </Col>
-      </Row>
+      
+</Col>
       )
 })}
-
+            {/* ))} */}
+      </Row>
      
     </div>
   );

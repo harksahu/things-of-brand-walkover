@@ -2,9 +2,45 @@ import React, { useState } from "react";
 import { createBrandAPI } from "../api";
 import { UserAuth } from "../context/AuthContext";
 import { uploadSingleFileAndGetURL } from "../utils/fileUpload";
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Stack from 'react-bootstrap/Stack';
+import Modal from 'react-bootstrap/Modal';
+
+function MyVerticallyCenteredModal(props) {
+    return (
+      <Modal
+        {...props}
+        size="sm"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+          successfully Uploaded
+          </Modal.Title>
+        </Modal.Header>
+
+      </Modal>
+    );
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 const Addfile = () => {
   const { user } = UserAuth();
-
+  const [modalShow, setModalShow] = React.useState(false);
   const [file, setFile] = useState([]);
   const [title, setTitle] = useState();
 
@@ -12,7 +48,7 @@ const Addfile = () => {
     console.log("IN onSubmitClick");
     const fileUrl = await uploadSingleFileAndGetURL(file);
     console.log(fileUrl);
-    alert("Uploaded");
+    setModalShow(true);
     const a = createBrandAPI({
       url: fileUrl,
       title,
@@ -36,58 +72,42 @@ const Addfile = () => {
     );
   };
   return (
-    <div>
-      <div className="w-full place-items-center text-center max-w-xs">
-        <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-          id="image_upload"
-        >
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="File name"
-            >
-              Title name
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              onChange={(e) => setTitle(e.target.value)}
-              id="title"
-              type="text"
-              placeholder="Title name"
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password"
-            >
-              Upload file
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              onChange={(e) => {
-                debugger;
-                setFile(e.target.files[0]);
-              }}
-              id="image"
-              type="file"
-              accept=".svg"
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
-              onClick={onSubmitClick}
-            >
-              Submit
-            </button>
-          </div>
-        </form>
-      </div>
-     
-    </div>
+    <>
+<Card style={{ width: '30rem' }} className="text-center m-auto">
+
+      <Card.Body>
+        <Card.Header>File to Upload</Card.Header>
+        <br/>
+        <Card.Text>
+        <Stack gap={3}>
+        <InputGroup>
+          <InputGroup.Text id="btnGroupAddon">Title</InputGroup.Text>
+          <Form.Control
+            type="text"
+            placeholder="Input group example"
+            aria-label="Input group example"
+            aria-describedby="btnGroupAddon"
+            onChange={(e) => setTitle(e.target.value)}
+          />
+           </InputGroup>
+           <Form.Group controlId="formFileSm" className="mb-3">
+        <Form.Control type="file" size="m"
+        onChange={(e) => {
+            debugger;
+            setFile(e.target.files[0]);}}
+         />
+      </Form.Group>
+      </Stack>
+        </Card.Text>
+        <Button variant="primary" onClick={onSubmitClick}>Submit</Button>
+      </Card.Body>
+
+    </Card>
+    <MyVerticallyCenteredModal
+    show={modalShow}
+    onHide={() => setModalShow(false)}
+  />
+    </>
   );
 };
 

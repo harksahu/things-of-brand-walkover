@@ -7,7 +7,8 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { sendBrandAPI } from "../api";
 import saveas from "file-saver";
 import { Canvg } from 'canvg';
-
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 function Home() {
   const [width, setWidth] = useState();
@@ -26,26 +27,34 @@ function Home() {
     setListOfBrands((await sendBrandAPI())?.data?.data)
   }
   let v = null;
-  const DownloadPng = async (img) => {
-   const canvas = document.querySelector('canvas');
+  const DownloadToPng = async (img) => {
+   try {
+     console.log("first")
+    const canvas = document.querySelector('canvas');
    const ctx = canvas.getContext('2d');
 
    v = await Canvg.from(ctx, img);
    v.start();
 
    var img1 = canvas.toDataURL("img/png");
-
     saveas(img1); 
+   } catch (e) {
+    console.log("qwsedfrghj"+e)
+   }
   }
   useEffect(() => {
     printIt()
   },[]);
   return (
     <div className=" m-3 flex">
+      <Row>
+      {/* {Array.from({ length: listOfbrands.length }).map((_, idx) => ( */}
 {listOfbrands.map(brand=>{
-  console.log(brand);
+  // console.log(brand);
   return (
-  <Card style={{ width: "18rem" }} className="m-3">
+    <Col>
+    
+  <Card style={{ width: "15rem" }}>
         <Card.Img
           variant="top"
           src={brand.url}
@@ -88,7 +97,7 @@ function Home() {
         </Card.Body>
         <Card.Body>
           <Button variant="outline-primary" size="sm" 
-          onClick={() =>DownloadPng(brand.url)}>
+          onClick={() =>{DownloadToPng(brand.url)}}>
             Download PNG
           </Button>{" "}
           <Button variant="outline-secondary" size="sm" onClick={()=>
@@ -96,9 +105,13 @@ function Home() {
             Download SVG
           </Button>{" "}
         </Card.Body>
-      </Card>)
+      </Card>
+      
+</Col>
+      )
 })}
-
+            {/* ))} */}
+      </Row>
      
     </div>
   );
