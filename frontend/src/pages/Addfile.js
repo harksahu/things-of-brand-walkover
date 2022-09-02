@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { createBrandAPI } from "../api";
 import { UserAuth } from "../context/AuthContext";
 import { uploadSingleFileAndGetURL } from "../utils/fileUpload";
-const URL = "http://localhost:8080";
 const Addfile = () => {
   const { user } = UserAuth();
 
@@ -15,7 +14,7 @@ const Addfile = () => {
     console.log(fileUrl);
     alert("Uploaded");
     const a = createBrandAPI({
-      url: URL + "/" + fileUrl,
+      url: fileUrl,
       title,
       description: "Description",
       email: user?.email,
