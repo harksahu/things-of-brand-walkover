@@ -6,36 +6,15 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { sendBrandAPI } from "../api";
 import saveas from "file-saver";
-import { Canvg } from 'canvg';
-
+import saveSvgAsPng from "save-svg-as-png";
 
 function Home() {
   const [width, setWidth] = useState();
   const [height, setHeight] = useState();
   const[ listOfbrands , setListOfBrands] = useState([])
   // console.log(width)
-
-
-  function size(img){
-
-    setWidth(  document.getElementById(img).clientWidth)
-    setHeight(  document.getElementById(img).clientHeight)
-  }
-
   const printIt=async()=>{
     setListOfBrands((await sendBrandAPI())?.data?.data)
-  }
-  let v = null;
-  const DownloadPng = async (img) => {
-   const canvas = document.querySelector('canvas');
-   const ctx = canvas.getContext('2d');
-
-   v = await Canvg.from(ctx, img);
-   v.start();
-
-   var img1 = canvas.toDataURL("img/png");
-
-    saveas(img1); 
   }
   useEffect(() => {
     printIt()
@@ -44,8 +23,7 @@ function Home() {
     <div className=" m-3 flex">
 {listOfbrands.map(brand=>{
   console.log(brand);
-  return (
-  <Card style={{ width: "18rem" }} className="m-3">
+  return (<Card style={{ width: "18rem" }} className="m-3">
         <Card.Img
           variant="top"
           src={brand.url}
@@ -64,9 +42,7 @@ function Home() {
                     <Form.Control
                       aria-label="Small"
                       aria-describedby="inputGroup-sizing-sm"
-                      onChange={(e) => setWidth( e.target.value )}
-                      placeholder={width}
-
+                      onChange={(e) => setWidth({ ...width, image: e.target.value })}
                     />
                   </InputGroup>
                   <InputGroup size="sm" className="mb-3">
@@ -76,9 +52,7 @@ function Home() {
                     <Form.Control
                       aria-label="Small"
                       aria-describedby="inputGroup-sizing-sm"
-                      onChange={(e) => setHeight( e.target.value )}
-                      placeholder={height}
-
+                      onChange={(e) => setHeight({ ...height, image: e.target.value })}
                     />
                   </InputGroup>
                 </Accordion.Body>
@@ -87,8 +61,8 @@ function Home() {
           </Card.Text>
         </Card.Body>
         <Card.Body>
-          <Button variant="outline-primary" size="sm" 
-          onClick={() =>DownloadPng(brand.url)}>
+          <Button variant="outline-primary" size="sm" onClick={()=>
+          saveas(brand.url,"image.png")}>
             Download PNG
           </Button>{" "}
           <Button variant="outline-secondary" size="sm" onClick={()=>
