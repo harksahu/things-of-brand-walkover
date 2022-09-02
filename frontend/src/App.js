@@ -8,7 +8,7 @@ import Home from './pages/Home';
 import Addfile from './pages/Addfile';
 import MyStuff from './pages/MyStuff';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import GridExample from './components/navbar2'
+
 import { auth } from './firebase.js';
 function App() {
   const [isUserLoaded , setIsUserLoaded] = useState(false);
@@ -21,7 +21,7 @@ function App() {
   }
   return (
     <div>
-      {/* <GridExample /> */}
+
       {
         isUserLoaded && 
         <AuthContextProvider>

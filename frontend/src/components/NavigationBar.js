@@ -37,7 +37,7 @@ console.log(props.user);
 
   return (
     <>
-      <Navbar bg="light" expand="lg" >
+      <Navbar bg="light" expand="lg" sticky="top">
         <Container className="mb-3" fill>
           <Navbar.Brand onClick={()=>{navigate("/") }} className="bo">Things of Brand</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
