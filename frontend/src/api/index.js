@@ -1,5 +1,7 @@
 import axios from '../interceptor/interceptor'
-const URL = "https://things-of-brand.herokuapp.com"
+// const URL = "https://things-of-brand.herokuapp.com"
+const URL = "http://localhost:8080"
+
 const uploadSingleFileAPI =async (fileObject)=>{
     const config = {
         header:{"Content-Type":"multipart/form-data"}
@@ -24,13 +26,31 @@ const sendBrandAPI = async()=>{
 const sendMyStuffAPI = async(email)=>{
     return await axios.get(URL+"/api/Mystuff/"+email); 
     }
-
-
+const deleteMyStuffAPI = async(id)=>{
+    return await axios.delete(URL+"/api/Mystuff/"+id); 
+    }
+const sendSearchAPI = async(text)=>{
+    return await axios.get(URL+"/api/search/"+text); 
+    }
+const sendMydeleteStuffAPI = async(email)=>{
+    return await axios.get(URL+"/api/deteteItems/"+email); 
+    }
+    const restoreMyStuffAPI = async(id)=>{
+        return await axios.delete(URL+"/api/deteteItems/"+id); 
+        }
+ const saveMyStuffAPI = async(id)=>{
+            return await axios.put(URL+"/api/Mystuff/"+id); 
+  }
 
 
 export {
  uploadSingleFileAPI ,
  createBrandAPI,
  sendBrandAPI,
- sendMyStuffAPI
+ sendMyStuffAPI,
+ sendSearchAPI,
+ deleteMyStuffAPI,
+ sendMydeleteStuffAPI,
+ restoreMyStuffAPI,
+ saveMyStuffAPI
 }

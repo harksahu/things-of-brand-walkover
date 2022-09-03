@@ -69,7 +69,6 @@ const UpdateBrand = async (req,res)=>{
 const searchBrandName = async (req,res)=>{
     try {
         const data = await BrandModel.find(
-            // {$or: [ { title: req.body.text }, { description: req.body.text } ]}
         );
         res.json({
             "message":"Related Data is Successfully Find",
