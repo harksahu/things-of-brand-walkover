@@ -157,11 +157,11 @@ const DownloadToPng = async (img,w,h) => {
       , name)
     alert("saved")
     
-  }}>save</Button>
+  }}  variant="success" disabled>save</Button>
         <Button onClick={async()=>{
     await deleteMyStuffAPI(props.user._id)
     alert("Deleted")
-  }}>delete</Button>
+  }} variant="danger">delete</Button>
 
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
@@ -311,14 +311,14 @@ const DownloadToPng = async (img,w,h) => {
       <Modal.Footer>
       <Button onClick={async()=>{
     await saveMyStuffAPI(props.user
-      ,props.user.title = name)
+      , name)
     alert("saved")
     
-  }}>save</Button>
+  }}  variant="success" disabled>save</Button>
         <Button onClick={async()=>{
     await restoreMyStuffAPI(props.user._id)
     alert("Restore")
-  }}>Restore</Button>
+  }} variant="info">Restore</Button>
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>

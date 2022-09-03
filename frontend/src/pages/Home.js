@@ -16,6 +16,7 @@ import Modal from 'react-bootstrap/Modal';
 function MyVerticallyCenteredModal(props) {
   const [mwidth, setWidth] = useState();
   const [mheight, setHeight] = useState();
+  const [name, setName] = useState();
 
   function size(img){
 
@@ -25,12 +26,12 @@ function MyVerticallyCenteredModal(props) {
 
 
 const DownloadToPng = async (img,w,h) => {
-  if(w==undefined){
+  if(w===undefined){
     const x = document.getElementById(img).clientWidth
     setWidth(x)
     w=x
   }
-  if(h==undefined){
+  if(h===undefined){
     const y = document.getElementById(img).clientHeight
     setHeight(y)
     h=y
@@ -54,6 +55,9 @@ const DownloadToPng = async (img,w,h) => {
     const pngUrl = URL.createObjectURL(blob)
     return pngUrl
   }
+
+
+
   
   toPng({
     width: w,
@@ -71,10 +75,19 @@ const DownloadToPng = async (img,w,h) => {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-     { console.log(props)}
+      
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-         {props.user.title}
+        <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Control
+
+                placeholder={props.user.title}
+
+                onChange={(e) => setName( e.target.value )}
+              />
+            </Form.Group>
+        </Form>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -150,9 +163,9 @@ const DownloadToPng = async (img,w,h) => {
 
 
 
-
 function Home() {
   const [modalShow, setModalShow] = React.useState(false);
+  const[ open , opendata] = useState([])
 
   const[ listOfbrands , setListOfBrands] = useState([])
 
@@ -174,7 +187,7 @@ function Home() {
     <Col>
     
     
-    <Card style={{ width: "18rem" }} className="m-3" onClick={() => setModalShow(true)}>
+    <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow(true);opendata(brand)}}>
         <Card.Img
           variant="top"
           src={brand.url}
@@ -192,7 +205,7 @@ function Home() {
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}
-        user = {brand}
+        user = {open}
       />
 </Col>
       )
