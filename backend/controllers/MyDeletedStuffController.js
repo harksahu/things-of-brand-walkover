@@ -1,7 +1,7 @@
 import BrandModel from '../models/brandModel.js'
 
 
-const deleteBrand = async (req,res)=>{
+const restoreBrand = async (req,res)=>{
     try {
         const data = await BrandModel.updateOne({
             _id: req.params.id
@@ -73,7 +73,7 @@ const searchBrandName = async (req,res)=>{
 
 
 export {
-    deleteBrand,
+    restoreBrand,
     searchBrandName,
     UpdateBrand 
 

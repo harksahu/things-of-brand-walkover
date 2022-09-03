@@ -24,12 +24,13 @@ const deleteBrand = async (req,res)=>{
 
 
 const UpdateBrand = async (req,res)=>{
+    console.log(req.params?.data?.props)
     try {
         const data = await BrandModel.find({
-            _id: req.params.id
+            _id: req.params.data.id
         },{
             $set: {
-                title: req.params.title,
+                title: req.params.data.name,
                 // description: req.params.description,
             }
         });

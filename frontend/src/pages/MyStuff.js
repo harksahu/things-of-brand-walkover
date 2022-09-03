@@ -153,8 +153,9 @@ const DownloadToPng = async (img,w,h) => {
       </Modal.Body>
       <Modal.Footer>
       <Button onClick={async()=>{
-    // await saveMyStuffAPI(props.user._id)
-    // alert("saved")
+    await saveMyStuffAPI(props.user
+      , name)
+    alert("saved")
     
   }}>save</Button>
         <Button onClick={async()=>{
@@ -308,7 +309,12 @@ const DownloadToPng = async (img,w,h) => {
           </Row>
       </Modal.Body>
       <Modal.Footer>
-
+      <Button onClick={async()=>{
+    await saveMyStuffAPI(props.user
+      ,props.user.title = name)
+    alert("saved")
+    
+  }}>save</Button>
         <Button onClick={async()=>{
     await restoreMyStuffAPI(props.user._id)
     alert("Restore")

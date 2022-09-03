@@ -5,7 +5,7 @@ import {  deleteBrand, searchBrandName, UpdateBrand } from "../controllers/MyStu
 const routes = express.Router();
 
 
-routes.route('/:id').put(UpdateBrand)
+routes.route('/:data').put(UpdateBrand)
 routes.route('/:email').get(searchBrandName)
 routes.route('/:id').delete(deleteBrand);
 export default routes;
