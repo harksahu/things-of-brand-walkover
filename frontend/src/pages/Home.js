@@ -191,6 +191,12 @@ function Home() {
         <Card.Img
           variant="top"
           src={brand.url}
+          style={{
+            width:("250px"),
+              height:("250px"),
+            margin: "auto"
+          }} 
+
         />
         <Card.Body>
           <Card.Title className="text-center">{brand.title}</Card.Title>
