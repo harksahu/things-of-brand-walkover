@@ -165,7 +165,7 @@ const DownloadToPng = async (img,w,h) => {
 
 function Home() {
   const [modalShow, setModalShow] = React.useState(false);
-  const[ open , opendata] = useState([])
+  const[ open , opendata] = useState()
 
   const[ listOfbrands , setListOfBrands] = useState([])
 
