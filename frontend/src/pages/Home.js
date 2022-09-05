@@ -11,16 +11,43 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Modal from 'react-bootstrap/Modal';
 
+// const preset = presets.offscreen();
+// async function toPng(data) {
+//   const {
+//     width,
+//     height,
+//     svg
+//   } = data
+//   const canvas = new OffscreenCanvas(width, height)
+//   const ctx = canvas.getContext('2d')
+//   const v = await Canvg.from(ctx, svg, preset)
+//   v.resize(width, height, 'xMidYMid meet')
+//   await v.render()
+//   const blob = await canvas.convertToBlob()
+//   const pngUrl = URL.createObjectURL(blob)
+//   return pngUrl
+// }
 
+// toPng({
+//   width: 600,
+//   height: 600,
+//   svg: './example.svg'
+// }).then((pngUrl) => {
+//   const img = document.querySelector('img')
+
+//   img.src = pngUrl
+// })
 
 function MyVerticallyCenteredModal(props) {
   const [mwidth, setWidth] = useState();
   const [mheight, setHeight] = useState();
+// setimag(props.user.url)
 
   function size(img){
 
     setWidth(  document.getElementById(img).clientWidth)
     setHeight(  document.getElementById(img).clientHeight)
+    // setimag()
   }
 
 
@@ -44,7 +71,6 @@ const DownloadToPng = async (img,w,h) => {
       width,
       height
     } = data
-    console.log(width)
     const canvas = new OffscreenCanvas(width, height)
     const ctx = canvas.getContext('2d')
     const v = await Canvg.from(ctx, img, preset)
@@ -83,19 +109,21 @@ const DownloadToPng = async (img,w,h) => {
 
       <Card.Img
           variant="top"
-          src={props.user.url}
+          src={props.user.url}  //image 
           id={props.user.url}
+          width={mwidth}
+          height = {mheight}
         />
           </Col>
           <div className="vr" />
           <Col>
 
 
-      <Accordion flush onClick={()=>{
-              size(props.user.url)
-            }}>
+      <Accordion flush>
               <Accordion.Item eventKey="0" size="sm">
-                <Accordion.Header>Adjust Size</Accordion.Header>
+                <Accordion.Header onClick={()=>{
+              size(props.user.url)
+            }}>Adjust Size</Accordion.Header>
                 <Accordion.Body>
                   <InputGroup size="sm" className="mb-3">
                     <InputGroup.Text id="inputGroup-sizing-sm">
@@ -155,6 +183,7 @@ function Home() {
   const [modalShow, setModalShow] = React.useState(false);
 
   const[ listOfbrands , setListOfBrands] = useState([])
+  const[ open , setopen] = useState()
 
 
 
@@ -174,7 +203,7 @@ function Home() {
     <Col>
     
     
-    <Card style={{ width: "18rem" }} className="m-3" onClick={() => setModalShow(true)}>
+    <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow(true) ;setopen(brand)}}>
         <Card.Img
           variant="top"
           src={brand.url}
@@ -192,7 +221,7 @@ function Home() {
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}
-        user = {brand}
+        user = {open}
       />
 </Col>
       )
