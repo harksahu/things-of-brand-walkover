@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import { UserAuth } from "../context/AuthContext";
 import Accordion from "react-bootstrap/Accordion";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -14,6 +15,7 @@ import Modal from 'react-bootstrap/Modal';
 
 
 function MyVerticallyCenteredModal(props) {
+  console.log(props)
   const [mwidth, setWidth] = useState();
   const [mheight, setHeight] = useState();
   const [name, setName] = useState();
@@ -165,22 +167,29 @@ const DownloadToPng = async (img,w,h) => {
 
 function Home() {
   const [modalShow, setModalShow] = React.useState(false);
-  const[ open , opendata] = useState()
-
+  const [modalShow2, setModalShow2] = React.useState(false);
+  const { user } = UserAuth();
   const[ listOfbrands , setListOfBrands] = useState([])
 
+  const[ open , opendata] = useState([])
 
 
+
+  // console.log(width)
   const printIt=async()=>{
     setListOfBrands((await sendBrandAPI())?.data?.data)
+
   }
- 
   useEffect(() => {
     printIt()
-  },[]);
+  },[user]);
   return (
+    <>
     <div className=" m-3 flex">
+    <h1 className="text-center">Public Items</h1>
+
       <Row md={4} className="g-4">
+      {/* {Array.from({ length: listOfbrands.length }).map((_, idx) => ( */}
 {listOfbrands.map(brand=>{
   // console.log(brand);
   return (
@@ -191,6 +200,7 @@ function Home() {
         <Card.Img
           variant="top"
           src={brand.url}
+
         />
         <Card.Body>
           <Card.Title className="text-center">{brand.title}</Card.Title>
@@ -211,10 +221,15 @@ function Home() {
       )
 })}
             {/* ))} */}
+
       </Row>
      
     </div>
+
+
+
+
+    </>
   );
 }
-
 export default Home;
