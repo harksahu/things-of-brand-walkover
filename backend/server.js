@@ -6,7 +6,7 @@ import connectDB from './services/mongodb_service.js';
 import uploadRoutes from "./routers/uploadRoutes.js";
 import brandRouters from "./routers/brandRouters.js";
 import MyStuffRouters from "./routers/MyStuffRouters.js";
-import SearchRouters from "./routers/SearchRouters.js";
+// import SearchRouters from "./routers/SearchRouters.js";
 import MyStuffdeleteitemRouters from "./routers/MyStuffdeleteitemRouters.js";
 
 
@@ -25,7 +25,7 @@ app.use(express.json());
 
 app.use('/api/uploads',uploadRoutes);
 app.use('/api/brands',brandRouters);
-app.use('/api/search',SearchRouters);
+// app.use('/api/search',SearchRouters);
 app.use('/api/MyStuff',MyStuffRouters);
 app.use('/api/deteteItems',MyStuffdeleteitemRouters);
 
