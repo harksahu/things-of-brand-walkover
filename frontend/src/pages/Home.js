@@ -15,18 +15,17 @@ import Modal from 'react-bootstrap/Modal';
 
 
 function MyVerticallyCenteredModal(props) {
-  console.log(props)
   const [mwidth, setWidth] = useState();
   const [mheight, setHeight] = useState();
+  useEffect(()=>{
+  },[mwidth])
   const [name, setName] = useState();
-
   function size(img){
 
     setWidth(  document.getElementById(img).clientWidth)
     setHeight(  document.getElementById(img).clientHeight)
   }
-
-
+  
 const DownloadToPng = async (img,w,h) => {
   if(w===undefined){
     const x = document.getElementById(img).clientWidth
@@ -39,7 +38,6 @@ const DownloadToPng = async (img,w,h) => {
     h=y
   }
 
-  
   const preset = presets.offscreen()
 
   async function toPng(data) {
@@ -47,7 +45,7 @@ const DownloadToPng = async (img,w,h) => {
       width,
       height
     } = data
-    console.log(width)
+
     const canvas = new OffscreenCanvas(width, height)
     const ctx = canvas.getContext('2d')
     const v = await Canvg.from(ctx, img, preset)
@@ -57,18 +55,16 @@ const DownloadToPng = async (img,w,h) => {
     const pngUrl = URL.createObjectURL(blob)
     return pngUrl
   }
-
-
-
-  
   toPng({
     width: w,
     height: h
   }).then((pngUrl) => {  
+
     saveas(pngUrl)
   })
 
 }
+
 
   return (
     <Modal
@@ -86,13 +82,20 @@ const DownloadToPng = async (img,w,h) => {
       </Modal.Header>
       <Modal.Body>
         <Row>
-        <Col>
+        <Col 
+        style={{overflow:"auto"}}
+         >
 
       <Card.Img
           variant="top"
+    
           src={props.user.url}
           id={props.user.url}
-        />
+          style={{
+            width:(mwidth+"px"),
+              height:(mheight+"px")
+          }} 
+        />  
           </Col>
           <div className="vr" />
           <Col>
@@ -124,7 +127,8 @@ const DownloadToPng = async (img,w,h) => {
                     <Form.Control
                       aria-label="Small"
                       aria-describedby="inputGroup-sizing-sm"
-                      onChange={(e) => setHeight( e.target.value )}
+                     // onChange={(e) => setHeight( e.target.value )}
+                      onChange={(e) => {setHeight( e.target.value );}}
                       // placeholder={mheight}
                       value={mheight}
                       // name={document.getElementById(brand.url).clientHeight}
@@ -165,9 +169,6 @@ function Home() {
 
   const[ open , opendata] = useState([])
 
-
-
-  // console.log(width)
   const printIt=async()=>{
     setListOfBrands((await sendBrandAPI())?.data?.data)
 
@@ -183,7 +184,6 @@ function Home() {
       <Row md={4} className="g-4">
       {/* {Array.from({ length: listOfbrands.length }).map((_, idx) => ( */}
 {listOfbrands.map(brand=>{
-  // console.log(brand);
   return (
     <Col>
     
