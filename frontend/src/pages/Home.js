@@ -85,13 +85,20 @@ const DownloadToPng = async (img,w,h) => {
       </Modal.Header>
       <Modal.Body>
         <Row>
-        <Col>
+        <Col 
+        style={{overflow:"auto"}}
+         >
 
       <Card.Img
           variant="top"
+    
           src={props.user.url}
           id={props.user.url}
-        />
+          style={{
+            width:(mwidth+"px"),
+              height:(mheight+"px")
+          }} 
+        />  
           </Col>
           <div className="vr" />
           <Col>
