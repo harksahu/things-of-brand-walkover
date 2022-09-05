@@ -78,16 +78,9 @@ const DownloadToPng = async (img,w,h) => {
       
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-        <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Control
 
-                placeholder={props.user.title}
+{props.user.title}
 
-                onChange={(e) => setName( e.target.value )}
-              />
-            </Form.Group>
-        </Form>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -104,11 +97,11 @@ const DownloadToPng = async (img,w,h) => {
           <Col>
 
 
-      <Accordion flush onClick={()=>{
+      <Accordion flush >
+              <Accordion.Item eventKey="0" size="sm" >
+                <Accordion.Header onClick={()=>{
               size(props.user.url)
-            }}>
-              <Accordion.Item eventKey="0" size="sm">
-                <Accordion.Header>Adjust Size</Accordion.Header>
+            }}>Adjust Size</Accordion.Header>
                 <Accordion.Body>
                   <InputGroup size="sm" className="mb-3">
                     <InputGroup.Text id="inputGroup-sizing-sm">

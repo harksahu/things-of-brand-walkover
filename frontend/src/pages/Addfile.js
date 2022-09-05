@@ -95,6 +95,7 @@ const Addfile = () => {
         onChange={(e) => {
             debugger;
             setFile(e.target.files[0]);}}
+            accept=".svg"
          />
       </Form.Group>
       </Stack>
