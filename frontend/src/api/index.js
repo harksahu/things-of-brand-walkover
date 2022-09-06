@@ -1,6 +1,6 @@
 import axios from "../interceptor/interceptor";
-const URL = "https://thingsofbrand.herokuapp.com"
-// const URL = "http://localhost:8080";
+// const URL = "https://thingsofbrand.herokuapp.com"
+const URL = "http://localhost:8080";
 
 const uploadSingleFileAPI = async (fileObject) => {
   const config = {
@@ -28,8 +28,8 @@ const sendMyStuffAPI = async (email) => {
 const deleteMyStuffAPI = async (id) => {
   return await axios.delete(URL + "/api/Mystuff/" + id);
 };
-const sendSearchAPI = async (text) => {
-  return await axios.get(URL + "/api/search/" + text);
+const sendSearchAPI = async ({title = "" , email = "" , active = "1",description=""}) => {
+  return await axios.get(URL + "/api/search?title=" + title+"&email="+email+"&active="+active+"&description="+description);
 };
 const sendMydeleteStuffAPI = async (email) => {
   return await axios.get(URL + "/api/deteteItems/" + email);
