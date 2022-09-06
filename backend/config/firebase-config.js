@@ -1,7 +1,7 @@
 
 import admin from "firebase-admin";
 
-import serviceAccount from "./web-auth-ff19c-firebase-adminsdk-vfm9f-100b9bc626.json" assert {type: 'json'};
+import serviceAccount from "./things-of-brand-firebase-adminsdk-tuqm8-9e3628ec92.json" assert {type: 'json'};
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)

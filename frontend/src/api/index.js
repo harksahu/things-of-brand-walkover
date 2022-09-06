@@ -1,6 +1,6 @@
 import axios from "../interceptor/interceptor";
-const URL = "https://thingsofbrand.herokuapp.com"
-// const URL = "http://localhost:8080";
+// const URL = "https://thingsofbrand.herokuapp.com"
+const URL = "http://localhost:8080";
 
 const uploadSingleFileAPI = async (fileObject) => {
   const config = {
