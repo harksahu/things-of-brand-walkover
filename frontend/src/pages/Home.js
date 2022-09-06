@@ -12,6 +12,7 @@ import Row from "react-bootstrap/Row";
 import Modal from "react-bootstrap/Modal";
 import { connect } from "react-redux";
 import { searchBrand } from "../store/actions/search-brands";
+import Figure from 'react-bootstrap/Figure';
 
 function MyVerticallyCenteredModal(props) {
   const [mwidth, setWidth] = useState();
@@ -149,6 +150,28 @@ function MyVerticallyCenteredModal(props) {
   );
 }
 
+
+function Not_found(){
+  return(
+
+
+<Figure
+className="text-center flex justify-cont"
+>
+<Figure.Image
+  width={500}
+  height={500}
+  alt="171x180"
+  src="https://i.pinimg.com/564x/f4/e0/d9/f4e0d998d00d96269eeb30c8c625031b.jpg"
+
+/>
+<Figure.Caption>
+Data not found
+</Figure.Caption>
+</Figure>
+  )
+}
+
 function Home({ searchBrandData=[], getSearchBrand }) {
   console.log(searchBrandData)
   const [modalShow, setModalShow] = React.useState(false);
@@ -160,7 +183,7 @@ function Home({ searchBrandData=[], getSearchBrand }) {
   return (
     <div className=" m-3 flex">
       <Row md={4} className="g-4">
-        { searchBrandData?.data?.length ===0?<div>No Icon</div>: searchBrandData?.data?.map((brand) => {
+        { searchBrandData?.data?.length ===0?<Not_found/>: searchBrandData?.data?.map((brand) => {
           // console.log(brand);
           return (
             <Col>
