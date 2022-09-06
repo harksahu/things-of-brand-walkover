@@ -17,7 +17,7 @@ const __dirname = path.resolve();
 connectDB();
 // MIDDLEWARE
 
-app.use(cors())
+app.use(cors("https://thingsofbrand.herokuapp.com"))
 app.use(express.json());
 
 //  ROUTES
