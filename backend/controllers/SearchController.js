@@ -6,7 +6,7 @@ const searchBrandName = async (req,res)=>{
         console.log(req.params.text)
         const data = await BrandModel.find({
             $and: [
-                { title: { $regex: req.params.text } },
+                { title: { $regex: req.params.text }},
             // {$or: [ { title: { $regex: req.params.text } }, { description: { $regex: req.params.text } } ]},
             // {$or: [ { title: { $in: req.params.text } }, { description: { $in: req.params.text }} ]},
                 { active: 1 }

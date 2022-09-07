@@ -9,8 +9,8 @@ import Search from './pages/searchResult';
 import Addfile from './pages/Addfile';
 import MyStuff from './pages/MyStuff';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import { auth } from './firebase.js';
+
 function App() {
   const [isUserLoaded , setIsUserLoaded] = useState(false);
   useEffect(()=>{
