@@ -8,13 +8,18 @@ import brandRouters from "./routers/brandRouters.js";
 import MyStuffRouters from "./routers/MyStuffRouters.js";
 import SearchRouters from "./routers/SearchRouters.js";
 import MyStuffdeleteitemRouters from "./routers/MyStuffdeleteitemRouters.js";
-const PORT = process.env.PORT || 8080
+import {generateUploadUrl} from './services/s3.js'
+
+import dotenv from 'dotenv'
+
+dotenv.config({path:'../.env'})
 
 
 // SERVICES
 const app = express();
 const __dirname = path.resolve();
 connectDB();
+
 // MIDDLEWARE
 
 app.use(cors())
@@ -28,6 +33,11 @@ app.use('/api/brands',brandRouters);
 app.use('/api/search',SearchRouters);
 app.use('/api/MyStuff',MyStuffRouters);
 app.use('/api/deteteItems',MyStuffdeleteitemRouters);
+
+app.get('/s3url',async(req,res)=>{
+    const url = await generateUploadUrl()
+    res.send({url});
+})
 
 
 app.get("/uploads/:id",(req,res)=>{

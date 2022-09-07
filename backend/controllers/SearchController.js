@@ -8,6 +8,12 @@ const searchBrandName = async (req,res)=>{
         var email = req.query.email === ""?{}:{email: req.query.email };
         var active = req.query.active === ""?{}:{active: req.query.active };
         const data = await BrandModel.find({
+            $and: [
+                { title: { $regex: req.params.text }},
+            // {$or: [ { title: { $regex: req.params.text } }, { description: { $regex: req.params.text } } ]},
+            // {$or: [ { title: { $in: req.params.text } }, { description: { $in: req.params.text }} ]},
+                { active: 1 }
+             ],
                 ...title ,
                 ...email ,
                 ...active ,

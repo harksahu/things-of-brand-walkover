@@ -47,13 +47,9 @@ const Addfile = () => {
 
   const onSubmitClick = async () => {
     console.log("IN onSubmitClick");
-    // const fileUrl = await uploadSingleFileAndGetURL(file);
-    const data = await getS3SignUrl(file.name,    
-      file.type);
-      if(data.url){
-      await pushProfilePhotoToS3(data.url, file);
-      }
-    console.log(data);
+    const fileUrl = await uploadSingleFileAndGetURL(file);
+
+    console.log(fileUrl);
     setModalShow(true);
     const a = createBrandAPI({
       url: data.url,
