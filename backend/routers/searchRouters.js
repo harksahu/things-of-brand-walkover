@@ -5,6 +5,6 @@ import { searchBrandName } from "../controllers/SearchController.js";
 const routes = express.Router();
 
 
-routes.route('/:text').get(searchBrandName);
+routes.route('/').get(searchBrandName);
 
 export default routes;

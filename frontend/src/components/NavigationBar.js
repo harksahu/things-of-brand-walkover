@@ -9,44 +9,34 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from 'react-bootstrap/Form';
 import Container from "react-bootstrap/Container";
 import { sendSearchAPI } from "../api";
+import { searchBrand , clearSearchBrand } from '../store/actions/search-brands'
+import { connect } from "react-redux";
 
-const NavigationBar = (props) => {
+function NavigationBar({
+  getSearchBrand,
+  clearSearchBrand}) {
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();
-  const navigate = useNavigate()
-  const[ listOfbrands , setListOfBrands] = useState([])
+  const navigate = useNavigate();
+  const [listOfbrands, setListOfBrands] = useState([]);
 
   const [searchItem, setItems] = useState();
 
-const sendData =async(text)=>{
-  text = text.trimStart();
-  setItems(text)
-  if (text === "") {
-    setItems(null)
-  } else {
+  const sendData = async (text) => {
+    text = text.trimStart();
+    setItems(text);
+    if (text === "") {
+      setItems(null);
+      getSearchBrand({title: ""})
+    } else {
+            getSearchBrand({title:text});
+    }
 
-    console.log(text)
-  setListOfBrands((await sendSearchAPI(text))?.data?.data)
-  console.log(listOfbrands)
-  }
-
-  // <Link to={{ 
-  //   pathname: "/search", 
-  //   state: listOfbrands
-  //  }}/>
-  
-}
-
-
-
-
-  // const navigate = useNavigate();
-console.log(props.user);
-
-
-
-
-
+    // <Link to={{ 
+    //   pathname: "/search", 
+    //   state: listOfbrands
+    //  }}/>
+  };
 
   const handleGoogleSignIn = async () => {
     try {
@@ -69,54 +59,52 @@ console.log(props.user);
     <>
       <Navbar bg="light" expand="lg" sticky="top">
         <Container className="mb-3" fill>
-          <Navbar.Brand onClick={()=>{navigate("/") }} className="bo">Things of Brand</Navbar.Brand>
+          <Navbar.Brand onClick={() => { navigate("/"); } } className="bo">Things of Brand</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+          <Navbar.Collapse id="basic-navbar-nav">
 
-        <Nav
-            className="m-auto my-2"
-            style={{ maxHeight: '100px' }}
-            navbarScroll
-          >
-          <Form className="justify-content-center">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-              onChange={(e) => {sendData(e.target.value)}}
-              value={searchItem}
+            <Nav
+              className="m-auto my-2"
+              style={{ maxHeight: '100px' }}
+              navbarScroll
+            >
+              <Form className="justify-content-center">
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  className="me-2"
+                  aria-label="Search"
+                  onChange={(e) => { sendData(e.target.value); } }
+                  value={searchItem} />
+              </Form>
 
-            />
-            </Form>
-            
             </Nav>
             {/* <img
             className="w-8 h-8 rounded-full"
             src={user?.photoURL}
             alt={user?.displayName}
           /> */}
-          {user?.displayName ? (
-            <NavDropdown title={user?.displayName} id="collasible-nav-dropdown" className=""  style={{alignItems:'end'}}>
-              <NavDropdown.Item onClick={()=>{navigate("/addfile") }}>
-                Upload File
-              </NavDropdown.Item>
-              <NavDropdown.Item onClick={()=>{navigate("/MyStuff") }}>My Stuff</NavDropdown.Item>
-              <NavDropdown.Item onClick={()=>{navigate("/account") }}>Profile</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item onClick={handleSignOut} >
-              logout
-              </NavDropdown.Item>
-            </NavDropdown>
+            {user?.displayName ? (
+              <NavDropdown title={user?.displayName} id="collasible-nav-dropdown" className="" style={{ alignItems: 'end' }}>
+                <NavDropdown.Item onClick={() => { navigate("/addfile"); } }>
+                  Upload File
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => { navigate("/MyStuff"); } }>My Stuff</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => { navigate("/account"); } }>Profile</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={handleSignOut}>
+                  logout
+                </NavDropdown.Item>
+              </NavDropdown>
 
-          ):(
-                <div>
+            ) : (
               <div>
-                <GoogleButton onClick={handleGoogleSignIn} />
+                <div>
+                  <GoogleButton onClick={handleGoogleSignIn} />
+                </div>
               </div>
-            </div>
-              )}
-            </Navbar.Collapse>
+            )}
+          </Navbar.Collapse>
         </Container>
       </Navbar>
 
@@ -125,9 +113,21 @@ console.log(props.user);
 
 
   );
-};
+}
 
-export default NavigationBar;
+const mapStateToProp = (state , ownProps)=>{
+  return {...ownProps}
+}
+const mapDispatchToProp = (dispatch)=>{
+  return {
+getSearchBrand:(payload)=>dispatch(searchBrand(payload)),
+clearSearchBrand:()=>dispatch(clearSearchBrand())
+  }
+}
+export default  connect(
+  mapStateToProp,
+  mapDispatchToProp
+)(NavigationBar);
 
 
 

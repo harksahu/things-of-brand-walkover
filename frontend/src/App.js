@@ -11,6 +11,7 @@ import MyStuff from './pages/MyStuff';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { auth } from './firebase.js';
 
+
 function App() {
   const [isUserLoaded , setIsUserLoaded] = useState(false);
   useEffect(()=>{
@@ -28,7 +29,10 @@ function App() {
         <AuthContextProvider>
         <NavigationBar />
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={
+
+          <Home />
+} />
           <Route path='/search' element={<Search />} />
           <Route path="/addfile" element={
             <Protected>
