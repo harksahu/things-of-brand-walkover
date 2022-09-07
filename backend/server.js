@@ -8,7 +8,7 @@ import brandRouters from "./routers/brandRouters.js";
 import MyStuffRouters from "./routers/MyStuffRouters.js";
 import SearchRouters from "./routers/SearchRouters.js";
 import MyStuffdeleteitemRouters from "./routers/MyStuffdeleteitemRouters.js";
-
+const PORT = process.env.PORT || 8080
 
 
 // SERVICES
@@ -51,6 +51,5 @@ if(process.env.NODE_ENV === 'production'){
 // console.log("abc")
 // ERROR HANDLE
 
-const PORT = process.env.PORT || 8080
 
 app.listen(PORT , () =>{ console.log("listening on port "+PORT)});
