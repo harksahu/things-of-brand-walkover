@@ -34,7 +34,7 @@ app.use('/api/search',SearchRouters);
 app.use('/api/MyStuff',MyStuffRouters);
 app.use('/api/deteteItems',MyStuffdeleteitemRouters);
 
-app.get('/',async(req,res)=>{
+app.get('/s3url',async(req,res)=>{
     const url = await generateUploadUrl()
     res.send({url});
 })

@@ -47,6 +47,7 @@ const Addfile = () => {
   const onSubmitClick = async () => {
     console.log("IN onSubmitClick");
     const fileUrl = await uploadSingleFileAndGetURL(file);
+
     console.log(fileUrl);
     setModalShow(true);
     const a = createBrandAPI({
