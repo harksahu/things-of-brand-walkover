@@ -1,7 +1,8 @@
+
 import React, { useState } from "react";
 import { createBrandAPI } from "../api";
 import { UserAuth } from "../context/AuthContext";
-import { uploadSingleFileAndGetURL } from "../utils/fileUpload";
+import { uploadSingleFileAndGetURL ,getS3SignUrl ,pushProfilePhotoToS3} from "../utils/fileUpload";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -46,15 +47,22 @@ const Addfile = () => {
 
   const onSubmitClick = async () => {
     console.log("IN onSubmitClick");
-    const fileUrl = await uploadSingleFileAndGetURL(file);
-    console.log(fileUrl);
+    // const fileUrl = await uploadSingleFileAndGetURL(file);
+    const data = await getS3SignUrl(file.name,    
+      file.type);
+      if(data.url){
+      await pushProfilePhotoToS3(data.url, file);
+      }
+    console.log(data);
     setModalShow(true);
     const a = createBrandAPI({
-      url: fileUrl,
+      url: data.url,
       title,
       description: "Description",
       email: user?.email,
     });
+
+
     console.log(a)
 
     //check
@@ -62,7 +70,7 @@ const Addfile = () => {
       "aaaa"+
       URL +
         "/" +
-        fileUrl +
+        data.url +
         " " +
         title +
         " " +
@@ -113,3 +121,4 @@ const Addfile = () => {
 };
 
 export default Addfile;
+

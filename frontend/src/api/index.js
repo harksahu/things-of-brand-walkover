@@ -41,7 +41,34 @@ const saveMyStuffAPI = async (data) => {
   return await axios.put(URL + "/api/Mystuff/" + data);
 };
 
+
+async function getS3SignUrl(filename, filetype){
+  const headers = new Headers({ 'Content-Type': 'application/json'   
+    });
+  const options = {
+  method: 'POST',
+  headers: headers, 
+  body: JSON.stringify({ filename, "fileType": filetype })
+   };
+  const response = await fetch(URL+"/presignedurl", options);       
+  const presignedUrl = await response.json();
+  return presignedUrl
+}
+
+async function pushProfilePhotoToS3(presignedUrl, uploadPhoto) {
+  const myHeaders = new Headers({ 'Content-Type': 'image/*' });
+  const response = await fetch(presignedUrl, {
+      method: 'PUT',
+      headers: myHeaders,
+      body: uploadPhoto
+   });
+
+  }
+
+
 export {
+  getS3SignUrl,
+  pushProfilePhotoToS3,
   uploadSingleFileAPI,
   createBrandAPI,
   sendBrandAPI,
@@ -50,5 +77,5 @@ export {
   deleteMyStuffAPI,
   sendMydeleteStuffAPI,
   restoreMyStuffAPI,
-  saveMyStuffAPI,
+  saveMyStuffAPI
 };
