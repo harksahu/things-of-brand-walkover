@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Stack from 'react-bootstrap/Stack';
 import Modal from 'react-bootstrap/Modal';
-
+import {getS3SignUrl} from "../api/index.js"
 function MyVerticallyCenteredModal(props) {
     return (
       <Modal
@@ -46,30 +46,40 @@ const Addfile = () => {
 
   const onSubmitClick = async () => {
     console.log("IN onSubmitClick");
-    const fileUrl = await uploadSingleFileAndGetURL(file);
-    console.log(fileUrl);
-    setModalShow(true);
-    const a = createBrandAPI({
-      url: fileUrl,
-      title,
-      description: "Description",
-      email: user?.email,
-    });
-    console.log(a)
+    console.log(file)
+    // const fileUrl = await uploadSingleFileAndGetURL(file);
+    try {
+      const data = await getS3SignUrl(file);
 
-    //check
-    console.log(
-      "aaaa"+
-      URL +
-        "/" +
-        fileUrl +
-        " " +
-        title +
-        " " +
-        "Description" +
-        " " +
-        user?.email
-    );
+      console.log(data);
+    } catch (error) {
+      console.log("cha")
+      console.log(error)
+    }
+    
+    // console.log(fileUrl);
+    // setModalShow(true);
+    // const a = createBrandAPI({
+    //   url: fileUrl,
+    //   title,
+    //   description: "Description",
+    //   email: user?.email,
+    // });
+    // console.log(a)
+
+    // //check
+    // console.log(
+    //   "aaaa"+
+    //   URL +
+    //     "/" +
+    //     fileUrl +
+    //     " " +
+    //     title +
+    //     " " +
+    //     "Description" +
+    //     " " +
+    //     user?.email
+    // );
   };
   return (
     <>

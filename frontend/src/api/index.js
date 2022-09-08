@@ -1,6 +1,6 @@
 import axios from "../interceptor/interceptor";
-const URL = "https://thingsofbrand.herokuapp.com"
-// const URL = "http://localhost:8080";
+// const URL = "https://thingsofbrand.herokuapp.com"
+const URL = "http://localhost:8080";
 
 const uploadSingleFileAPI = async (fileObject) => {
   const config = {
@@ -41,6 +41,41 @@ const saveMyStuffAPI = async (data) => {
   return await axios.put(URL + "/api/Mystuff/" + data);
 };
 
+
+
+const getS3SignUrl = async (file ) => {
+  const { url } = await fetch(URL + "/s3url").then(res => res.json())
+  console.log(file)
+
+  console.log(url)
+  const imageUrl = url.split('?')[0]
+  console.log("urlimg"+imageUrl)
+  await fetch(imageUrl, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "multipart/form-data"
+    },
+    body: file
+  })
+
+  
+};
+
+// export async function getS3SignUrl(filename, filetype){
+  // const headers = new Headers({ 'Content-Type': 'application/json'   
+  //   });
+  // const options = {
+  // method: 'POST',
+  // headers: headers, 
+  // body: JSON.stringify({ fileName, fileType: fileType })
+  //  };
+//   const response = await fetch(`${baseUrl}/presignedurl`,    
+//   options);       
+//   const presignedUrl = await response.json();
+//   return presignedUrl
+// }
+
+
 export {
   uploadSingleFileAPI,
   createBrandAPI,
@@ -51,4 +86,5 @@ export {
   sendMydeleteStuffAPI,
   restoreMyStuffAPI,
   saveMyStuffAPI,
+  getS3SignUrl
 };
