@@ -182,6 +182,9 @@ function Home({ searchBrandData=[], getSearchBrand }) {
   }, []);
   return (
     <div className=" m-3 flex">
+
+
+      
       <Row md={4} className="g-4">
         { searchBrandData?.data?.length ===0?<Not_found/>: searchBrandData?.data?.map((brand) => {
           // console.log(brand);

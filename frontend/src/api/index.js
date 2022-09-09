@@ -40,6 +40,12 @@ const restoreMyStuffAPI = async (id) => {
 const saveMyStuffAPI = async (data) => {
   return await axios.put(URL + "/api/Mystuff/" + data);
 };
+const getAuthKey =  async (token)=>{
+  return await axios.post(URL + "/api/storeKey/"+token);
+}
+const setAuthKey =  async (email)=>{
+  return await axios.get(URL + "/api/fetchKey/"+email);
+}
 
 export {
   uploadSingleFileAPI,
@@ -51,4 +57,6 @@ export {
   sendMydeleteStuffAPI,
   restoreMyStuffAPI,
   saveMyStuffAPI,
+  getAuthKey,
+  setAuthKey
 };
