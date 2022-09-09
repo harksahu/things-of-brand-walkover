@@ -9,6 +9,7 @@ import MyStuffRouters from "./routers/MyStuffRouters.js";
 import SearchRouters from "./routers/SearchRouters.js";
 import MyStuffdeleteitemRouters from "./routers/MyStuffdeleteitemRouters.js";
 import {generateUploadURL} from './services/s3.js'
+import GetAuthKeyRouters from "./routers/authKeyRouters";
 
 import dotenv from 'dotenv'
 
@@ -33,6 +34,7 @@ app.use('/api/brands',brandRouters);
 app.use('/api/search',SearchRouters);
 app.use('/api/MyStuff',MyStuffRouters);
 app.use('/api/deteteItems',MyStuffdeleteitemRouters);
+app.use('/api/storeKey',GetAuthKeyRouters);
 
 app.get('/s3url',async(req,res)=>{
     console.log("file:-");
