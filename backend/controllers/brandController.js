@@ -67,9 +67,13 @@ const UpdateBrand = async (req,res)=>{
 
 
 const searchBrandName = async (req,res)=>{
+    const titles = req.params.title.split(","); 
+    console.log(titles);
     try {
-        const data = await BrandModel.find(
-        );
+        const data = await BrandModel.find({
+            title: { $in: titles} 
+
+        });
         res.json({
             "message":"Related Data is Successfully Find",
             "data":data

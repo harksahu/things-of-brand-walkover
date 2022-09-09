@@ -1,20 +1,26 @@
 import express from "express";
 import cors from 'cors';
 import path from "path";
-import multer from "multer";
+// import multer from "multer";
 import connectDB from './services/mongodb_service.js';
 import uploadRoutes from "./routers/uploadRoutes.js";
 import brandRouters from "./routers/brandRouters.js";
 import MyStuffRouters from "./routers/MyStuffRouters.js";
 import SearchRouters from "./routers/SearchRouters.js";
 import MyStuffdeleteitemRouters from "./routers/MyStuffdeleteitemRouters.js";
+import {generateUploadURL} from './services/s3.js'
+import GetAuthKeyRouters from "./routers/authKeyRouters";
 
+import dotenv from 'dotenv'
+
+dotenv.config({path:'../.env'})
 
 
 // SERVICES
 const app = express();
 const __dirname = path.resolve();
 connectDB();
+
 // MIDDLEWARE
 
 app.use(cors())
@@ -28,6 +34,15 @@ app.use('/api/brands',brandRouters);
 app.use('/api/search',SearchRouters);
 app.use('/api/MyStuff',MyStuffRouters);
 app.use('/api/deteteItems',MyStuffdeleteitemRouters);
+app.use('/api/storeKey',GetAuthKeyRouters);
+
+app.get('/s3url',async(req,res)=>{
+    console.log("file:-");
+    console.log(req)
+    const url = await generateUploadURL()
+
+    res.send({url});
+})
 
 
 app.get("/uploads/:id",(req,res)=>{

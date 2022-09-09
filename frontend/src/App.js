@@ -5,7 +5,7 @@ import Protected from './components/Protected';
 import { AuthContextProvider, UserAuth } from './context/AuthContext';
 import Account from './pages/Account';
 import Home from './pages/Home';
-import Search from './pages/searchResult';
+
 import Addfile from './pages/Addfile';
 import MyStuff from './pages/MyStuff';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -33,7 +33,7 @@ function App() {
 
           <Home />
 } />
-          <Route path='/search' element={<Search />} />
+          {/* <Route path='/search' element={<Search />} /> */}
           <Route path="/addfile" element={
             <Protected>
           <Addfile />
