@@ -1,12 +1,15 @@
-import { request } from 'express';
-import authKeyModel from '../models/authKeyModel.js'
+import AuthKeyModel from '../models/AuthKeyModel.js'
 
 const storeAuthKey = async (req,res)=>{
     try {
-        const data = await authKeyModel.create({
-            // ...req.body,
-            authKey:req.body.authKey
-        });
+        console.log(req.body.email);
+        const data = await AuthKeyModel.create(
+           { 
+            ...req.body,
+        authKey : req.body.authKey,
+        email : req.body.email
+    }   
+        );
         res.json({
             "message":"Successfully Created",
             "data":data
@@ -14,7 +17,8 @@ const storeAuthKey = async (req,res)=>{
     } catch (error) {
         res.send({
             message:"Some Error on Server",
-            error
+            error : error,
+           
         }).status(400);
     }
 }
@@ -22,7 +26,7 @@ const storeAuthKey = async (req,res)=>{
 const deleteAuthKey = async (req,res)=>{
     try {
         const data = await authKeyModel.findOneAndDelete({
-            email: req.body.email
+            email: req.params.email
         });
         res.json({
             "message":"Successfully Deleted",
@@ -40,8 +44,8 @@ const deleteAuthKey = async (req,res)=>{
 const getAuthorizedKey = async (req,res)=>{
 
     try {
-        const data = await authKeyModel.find({
-            email: req.body.email
+        const data = await AuthKeyModel.find({
+            email: req.params.email
         });
         res.json({
             "message":"Related Data is Successfully Find",

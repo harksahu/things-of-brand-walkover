@@ -5,9 +5,13 @@ const authKeySchema = new mongoose.Schema({
     authKey: {
         type: String,
         unique: true
+    },
+    email:{
+        type: String,
+        unique: true
     }
 })
 
-const authKey = mongoose.model("authKeys",authKeySchema)
+const authorizedKeys = mongoose.model("authKeys",authKeySchema)
 
-export default authKeySchema;
+export default authorizedKeys;

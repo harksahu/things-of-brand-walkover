@@ -18,7 +18,10 @@ const token = async () => {
   setKey(keyValue);
   document.getElementById("authKeybtn").style.display = "none";
   console.log("in token");
-    const data  = await getAuthKey(keyValue);
+    const data  = await getAuthKey({
+      authKey : keyValue,
+      email: user?.email,
+    });
     console.log("data - "+ data);
   }
   catch(error)
@@ -27,8 +30,11 @@ const token = async () => {
 };
 const setAuth = async () => {
   const x = await setAuthKey(user.email)
-  console.log("hello = "+ x);
-  setKey(x);
+  console.log("hello = ");
+  const authinfo = x?.data?.data[0];
+  console.log( authinfo);
+
+  setKey(authinfo.authKey);
 };
 useEffect(  () => {
   setAuth();

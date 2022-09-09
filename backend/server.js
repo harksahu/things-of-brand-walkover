@@ -2,14 +2,15 @@ import express from "express";
 import cors from 'cors';
 import path from "path";
 // import multer from "multer";
+import GetAuthKeyRouters from "./routers/authKeyRouters.js";
 import connectDB from './services/mongodb_service.js';
 import uploadRoutes from "./routers/uploadRoutes.js";
 import brandRouters from "./routers/brandRouters.js";
 import MyStuffRouters from "./routers/MyStuffRouters.js";
 import SearchRouters from "./routers/SearchRouters.js";
 import MyStuffdeleteitemRouters from "./routers/MyStuffdeleteitemRouters.js";
-import {generateUploadURL} from './services/s3.js'
-import GetAuthKeyRouters from "./routers/authKeyRouters";
+import {generateUploadURL} from './services/s3.js';
+
 
 import dotenv from 'dotenv'
 
