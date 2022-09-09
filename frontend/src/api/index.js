@@ -20,7 +20,7 @@ const createBrandAPI = async (dataToSend) => {
 };
 
 const sendBrandAPI = async () => {
-  return await axios.get(URL + "/api/brands");
+  return await axios.get(URL + "/api/brands/");
 };
 const sendMyStuffAPI = async (email) => {
   return await axios.get(URL + "/api/Mystuff/" + email);
@@ -50,7 +50,7 @@ const getS3SignUrl = async (file ) => {
   console.log(url)
   const imageUrl = url.split('?')[0]
   console.log("urlimg"+imageUrl)
-  await fetch(imageUrl, {
+  await fetch(url, {
     method: "PUT",
     headers: {
       "Content-Type": "multipart/form-data"

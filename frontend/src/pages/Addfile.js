@@ -50,7 +50,6 @@ const Addfile = () => {
     // const fileUrl = await uploadSingleFileAndGetURL(file);
     try {
       const data = await getS3SignUrl(file);
-
       console.log(data);
     } catch (error) {
       console.log("cha")

@@ -36,7 +36,7 @@ app.use('/api/deteteItems',MyStuffdeleteitemRouters);
 
 app.get('/s3url',async(req,res)=>{
     console.log("file:-");
-    console.log(req.query.file)
+    console.log(req)
     const url = await generateUploadURL()
 
     res.send({url});
