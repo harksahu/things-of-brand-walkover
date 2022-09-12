@@ -2,14 +2,14 @@
 import React, { useState } from "react";
 import { createBrandAPI } from "../api";
 import { UserAuth } from "../context/AuthContext";
-import { uploadSingleFileAndGetURL ,getS3SignUrl ,pushProfilePhotoToS3} from "../utils/fileUpload";
+// import { uploadSingleFileAndGetURL ,getS3SignUrl ,pushProfilePhotoToS3} from "../utils/fileUpload";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Stack from 'react-bootstrap/Stack';
 import Modal from 'react-bootstrap/Modal';
-
+import {getS3SignUrl} from "../api/index.js"
 function MyVerticallyCenteredModal(props) {
     return (
       <Modal
@@ -47,33 +47,41 @@ const Addfile = () => {
 
   const onSubmitClick = async () => {
     console.log("IN onSubmitClick");
-    const fileUrl = await uploadSingleFileAndGetURL(file);
+    console.log(file)
+    // const fileUrl = await uploadSingleFileAndGetURL(file);
+    try {
+      const data = await getS3SignUrl(file);
+      console.log(data);
+      setModalShow(true);
+      const imageUrl = data.split('?')[0];
 
-    console.log(fileUrl);
-    setModalShow(true);
-    const a = createBrandAPI({
-      url: data.url,
-      title,
-      description: "Description",
-      email: user?.email,
-    });
+      const a = createBrandAPI({
+        url: imageUrl,
+        title,
+        description: "Description",
+        email: user?.email,
+      });
+      console.log(a)
+    } catch (error) {
+      console.log("cha")
+      console.log(error)
+    }
+    
+    // console.log(fileUrl);
 
-
-    console.log(a)
-
-    //check
-    console.log(
-      "aaaa"+
-      URL +
-        "/" +
-        data.url +
-        " " +
-        title +
-        " " +
-        "Description" +
-        " " +
-        user?.email
-    );
+    // //check
+    // console.log(
+    //   "aaaa"+
+    //   URL +
+    //     "/" +
+    //     fileUrl +
+    //     " " +
+    //     title +
+    //     " " +
+    //     "Description" +
+    //     " " +
+    //     user?.email
+    // );
   };
   return (
     <>

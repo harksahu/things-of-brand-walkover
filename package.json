@@ -37,6 +37,7 @@
     "mongoose": "^6.5.2",
     "multer": "^1.4.5-lts.1",
     "react-bootstrap": "^2.5.0",
+    "react-redux": "^8.0.2",
     "request-image-size": "^2.2.0",
     "resize-image": "^0.1.0",
     "save-svg-as-png": "^1.4.17",

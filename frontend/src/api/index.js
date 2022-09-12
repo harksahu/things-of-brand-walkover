@@ -1,6 +1,6 @@
 import axios from "../interceptor/interceptor";
-const URL = "https://thingsofbrand.herokuapp.com"
-// const URL = "http://localhost:8080";
+// const URL = "https://thingsofbrand.herokuapp.com"
+const URL = "http://localhost:8080";
 
 const uploadSingleFileAPI = async (fileObject) => {
   const config = {
@@ -13,14 +13,14 @@ const uploadSingleFileAPI = async (fileObject) => {
 const createBrandAPI = async (dataToSend) => {
   const data = {
     ...dataToSend,
-    url: URL + "/" + dataToSend.url,
+    // url: URL + "/" + dataToSend.url,
   };
   // console.log(dataToSend)
   return await axios.post(URL + "/api/brands", data);
 };
 
 const sendBrandAPI = async () => {
-  return await axios.get(URL + "/api/brands");
+  return await axios.get(URL + "/api/brands/");
 };
 const sendMyStuffAPI = async (email) => {
   return await axios.get(URL + "/api/Mystuff/" + email);
@@ -40,35 +40,43 @@ const restoreMyStuffAPI = async (id) => {
 const saveMyStuffAPI = async (data) => {
   return await axios.put(URL + "/api/Mystuff/" + data);
 };
-
-
-async function getS3SignUrl(filename, filetype){
-  const headers = new Headers({ 'Content-Type': 'application/json'   
-    });
-  const options = {
-  method: 'POST',
-  headers: headers, 
-  body: JSON.stringify({ filename, "fileType": filetype })
-   };
-  const response = await fetch(URL+"/presignedurl", options);       
-  const presignedUrl = await response.json();
-  return presignedUrl
+const getAuthKey =  async (authdata)=>{
+const data = {
+  ...authdata
 }
 
-async function pushProfilePhotoToS3(presignedUrl, uploadPhoto) {
-  const myHeaders = new Headers({ 'Content-Type': 'image/*' });
-  const response = await fetch(presignedUrl, {
-      method: 'PUT',
-      headers: myHeaders,
-      body: uploadPhoto
-   });
+  return await axios.post(URL + "/api/storeKey",data);
+}
+const setAuthKey =  async (email)=>{
+  // console.log("email");
+  // console.log(email);
+  return await axios.get(URL + "/api/storeKey/"+email);
+}
 
-  }
+
+
+const getS3SignUrl = async (file ) => {
+  const { url } = await fetch(URL + "/s3url").then(res => res.json())
+  console.log(file)
+
+  console.log(url)
+  // const imageUrl = url.split('?')[0]
+  // // console.log("urlimg"+imageUrl)
+  await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "multipart/form-data"
+    },
+    body: file
+  })
+return url;
+  
+};
+
 
 
 export {
   getS3SignUrl,
-  pushProfilePhotoToS3,
   uploadSingleFileAPI,
   createBrandAPI,
   sendBrandAPI,
@@ -77,5 +85,7 @@ export {
   deleteMyStuffAPI,
   sendMydeleteStuffAPI,
   restoreMyStuffAPI,
-  saveMyStuffAPI
+  saveMyStuffAPI,
+  getAuthKey,
+  setAuthKey,
 };
