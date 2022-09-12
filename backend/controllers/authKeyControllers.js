@@ -25,8 +25,10 @@ const storeAuthKey = async (req,res)=>{
 
 const deleteAuthKey = async (req,res)=>{
     try {
-        const data = await authKeyModel.findOneAndDelete({
-            email: req.params.email
+        
+        const data = await AuthKeyModel.findOneAndDelete({
+            email: req.query.email,
+            authKey: req.query.authKey 
         });
         res.json({
             "message":"Successfully Deleted",

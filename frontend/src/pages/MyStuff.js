@@ -155,7 +155,6 @@ const DownloadToPng = async (img,w,h) => {
           _id :props.user._id,
           title: name
         }
-        // console.log(new_data)
     await saveMyStuffAPI(new_data)
     alert("saved")
     
