@@ -13,7 +13,7 @@ import Modal from "react-bootstrap/Modal";
 import { connect } from "react-redux";
 import { searchBrand } from "../store/actions/search-brands";
 import Figure from 'react-bootstrap/Figure';
-import SvgInline from '../utils/SvgInline.js';
+
 function MyVerticallyCenteredModal(props) {
   const [mwidth, setWidth] = useState();
   const [mheight, setHeight] = useState();
@@ -73,8 +73,16 @@ function MyVerticallyCenteredModal(props) {
       </Modal.Header>
       <Modal.Body>
         <Row>
-        <Col style={{ overflow: "auto" }}>
-              <SvgInline {...props.user}/>
+          <Col style={{ overflow: "auto" }}>
+            <Card.Img
+              variant="top"
+              src={props.user.url}
+              id={props.user.url}
+              style={{
+                width: mwidth + "px",
+                height: mheight + "px",
+              }}
+            />
           </Col>
           <div className="vr" />
           <Col>
@@ -95,9 +103,13 @@ function MyVerticallyCenteredModal(props) {
                     <Form.Control
                       aria-label="Small"
                       aria-describedby="inputGroup-sizing-sm"
+<<<<<<< HEAD
                       onChange={(e) => setWidth(e.target.value)}
                       // placeholder={mwidth}
                       value={mwidth}
+=======
+                      onChange={(e) => setWidth({ ...width, image: e.target.value })}
+>>>>>>> a615629d924213e755cf7b8556aa48bfb0f402ef
                     />
                   </InputGroup>
                   <InputGroup size="sm" className="mb-3">
@@ -107,15 +119,20 @@ function MyVerticallyCenteredModal(props) {
                     <Form.Control
                       aria-label="Small"
                       aria-describedby="inputGroup-sizing-sm"
+<<<<<<< HEAD
                       onChange={(e) => setHeight(e.target.value)}
                       // placeholder={mheight}
                       value={mheight}
                       // name={document.getElementById(brand.url).clientHeight}
+=======
+                      onChange={(e) => setHeight({ ...height, image: e.target.value })}
+>>>>>>> a615629d924213e755cf7b8556aa48bfb0f402ef
                     />
                   </InputGroup>
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
+<<<<<<< HEAD
             <Button
               variant="outline-primary"
               size="sm"
@@ -187,9 +204,15 @@ function Home({ searchBrandData=[], getSearchBrand }) {
                   opendata(brand);
                 }}
               >
-                <div  style={{ overflow: "auto" }}>
-                <SvgInline {...brand}/>
-                </div>
+                <Card.Img
+                  variant="top"
+                  src={brand.url}
+                  style={{
+                    width: "250px",
+                    height: "250px",
+                    margin: "auto",
+                  }}
+                />
                 <Card.Body>
                   <Card.Title className="text-center">{brand.title}</Card.Title>
                   <Card.Text></Card.Text>
@@ -206,6 +229,24 @@ function Home({ searchBrandData=[], getSearchBrand }) {
         })}
         {/* ))} */}
       </Row>
+=======
+          </Card.Text>
+        </Card.Body>
+        <Card.Body>
+          <Button variant="outline-primary" size="sm" onClick={()=>
+          saveas(brand.url,"image.png")}>
+            Download PNG
+          </Button>{" "}
+          <Button variant="outline-secondary" size="sm" onClick={()=>
+          saveas(brand.url)}>
+            Download SVG
+          </Button>{" "}
+        </Card.Body>
+      </Card>)
+})}
+
+     
+>>>>>>> a615629d924213e755cf7b8556aa48bfb0f402ef
     </div>
   );
 }

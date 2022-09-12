@@ -61,19 +61,6 @@ return url;
   
 };
 
-// export async function getS3SignUrl(filename, filetype){
-  // const headers = new Headers({ 'Content-Type': 'application/json'   
-  //   });
-  // const options = {
-  // method: 'POST',
-  // headers: headers, 
-  // body: JSON.stringify({ fileName, fileType: fileType })
-  //  };
-//   const response = await fetch(`${baseUrl}/presignedurl`,    
-//   options);       
-//   const presignedUrl = await response.json();
-//   return presignedUrl
-// }
 
 
 export {
