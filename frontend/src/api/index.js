@@ -13,14 +13,14 @@ const uploadSingleFileAPI = async (fileObject) => {
 const createBrandAPI = async (dataToSend) => {
   const data = {
     ...dataToSend,
-    url: URL + "/" + dataToSend.url,
+    // url: URL + "/" + dataToSend.url,
   };
   // console.log(dataToSend)
   return await axios.post(URL + "/api/brands", data);
 };
 
 const sendBrandAPI = async () => {
-  return await axios.get(URL + "/api/brands");
+  return await axios.get(URL + "/api/brands/");
 };
 const sendMyStuffAPI = async (email) => {
   return await axios.get(URL + "/api/Mystuff/" + email);
@@ -40,8 +40,43 @@ const restoreMyStuffAPI = async (id) => {
 const saveMyStuffAPI = async (data) => {
   return await axios.put(URL + "/api/Mystuff/" + data);
 };
+const getAuthKey =  async (authdata)=>{
+const data = {
+  ...authdata
+}
+
+  return await axios.post(URL + "/api/storeKey",data);
+}
+const setAuthKey =  async (email)=>{
+  // console.log("email");
+  // console.log(email);
+  return await axios.get(URL + "/api/storeKey/"+email);
+}
+
+
+
+const getS3SignUrl = async (file ) => {
+  const { url } = await fetch(URL + "/s3url").then(res => res.json())
+  console.log(file)
+
+  console.log(url)
+  // const imageUrl = url.split('?')[0]
+  // // console.log("urlimg"+imageUrl)
+  await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "multipart/form-data"
+    },
+    body: file
+  })
+return url;
+  
+};
+
+
 
 export {
+  getS3SignUrl,
   uploadSingleFileAPI,
   createBrandAPI,
   sendBrandAPI,
@@ -51,4 +86,6 @@ export {
   sendMydeleteStuffAPI,
   restoreMyStuffAPI,
   saveMyStuffAPI,
+  getAuthKey,
+  setAuthKey,
 };

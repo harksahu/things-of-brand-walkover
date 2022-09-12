@@ -11,6 +11,7 @@ import { Canvg,presets } from 'canvg';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Modal from 'react-bootstrap/Modal';
+import SvgInline from '../utils/SvgInline.js';
 
 function MyVerticallyCenteredModal(props) {
   const [mwidth, setWidth] = useState();
@@ -95,16 +96,7 @@ const DownloadToPng = async (img,w,h) => {
         style={{overflow:"auto"}}
          >
 
-      <Card.Img
-          variant="top"
-    
-          src={props.user.url}
-          id={props.user.url}
-          style={{
-            width:(mwidth+"px"),
-              height:(mheight+"px")
-          }} 
-        />  
+<SvgInline {...props.user}/>
           </Col>
           <div className="vr" />
           <Col>
@@ -259,16 +251,7 @@ const DownloadToPng = async (img,w,h) => {
         style={{overflow:"auto"}}
          >
 
-      <Card.Img
-          variant="top"
-    
-          src={props.user.url}
-          id={props.user.url}
-          style={{
-            width:(mwidth+"px"),
-              height:(mheight+"px")
-          }} 
-        />  
+<SvgInline {...props.user}/>
           </Col>
           <div className="vr" />
           <Col>
@@ -372,15 +355,11 @@ function Home() {
     
     
     <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow(true);opendata(brand)}}>
-        <Card.Img
-          variant="top"
-          src={brand.url}
-          style={{
-            width:("250px"),
-              height:("250px"),
-            margin: "auto"
-          }} 
-        />
+    <div  style={{ overflow: "auto" }}>
+
+<SvgInline {...brand}/>
+
+</div>
         <Card.Body>
           <Card.Title className="text-center">{brand.title}</Card.Title>
           <Card.Text>
@@ -421,15 +400,11 @@ function Home() {
     
     
     <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow2(true);opendata(brand)}}>
-        <Card.Img
-          variant="top"
-          src={brand.url}
-          style={{
-            width:("250px"),
-              height:("250px"),
-            margin: "auto"
-          }} 
-        />
+    <div  style={{ overflow: "auto" }}>
+
+<SvgInline {...brand}/>
+
+</div>
         <Card.Body>
           <Card.Title className="text-center">{brand.title}</Card.Title>
           <Card.Text>

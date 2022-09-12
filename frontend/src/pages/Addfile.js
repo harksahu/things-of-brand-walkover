@@ -1,14 +1,15 @@
+
 import React, { useState } from "react";
 import { createBrandAPI } from "../api";
 import { UserAuth } from "../context/AuthContext";
-import { uploadSingleFileAndGetURL } from "../utils/fileUpload";
+// import { uploadSingleFileAndGetURL ,getS3SignUrl ,pushProfilePhotoToS3} from "../utils/fileUpload";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Stack from 'react-bootstrap/Stack';
 import Modal from 'react-bootstrap/Modal';
-
+import {getS3SignUrl} from "../api/index.js"
 function MyVerticallyCenteredModal(props) {
     return (
       <Modal
@@ -46,30 +47,41 @@ const Addfile = () => {
 
   const onSubmitClick = async () => {
     console.log("IN onSubmitClick");
-    const fileUrl = await uploadSingleFileAndGetURL(file);
-    console.log(fileUrl);
-    setModalShow(true);
-    const a = createBrandAPI({
-      url: fileUrl,
-      title,
-      description: "Description",
-      email: user?.email,
-    });
-    console.log(a)
+    console.log(file)
+    // const fileUrl = await uploadSingleFileAndGetURL(file);
+    try {
+      const data = await getS3SignUrl(file);
+      console.log(data);
+      setModalShow(true);
+      const imageUrl = data.split('?')[0];
 
-    //check
-    console.log(
-      "aaaa"+
-      URL +
-        "/" +
-        fileUrl +
-        " " +
-        title +
-        " " +
-        "Description" +
-        " " +
-        user?.email
-    );
+      const a = createBrandAPI({
+        url: imageUrl,
+        title,
+        description: "Description",
+        email: user?.email,
+      });
+      console.log(a)
+    } catch (error) {
+      console.log("cha")
+      console.log(error)
+    }
+    
+    // console.log(fileUrl);
+
+    // //check
+    // console.log(
+    //   "aaaa"+
+    //   URL +
+    //     "/" +
+    //     fileUrl +
+    //     " " +
+    //     title +
+    //     " " +
+    //     "Description" +
+    //     " " +
+    //     user?.email
+    // );
   };
   return (
     <>
@@ -113,3 +125,4 @@ const Addfile = () => {
 };
 
 export default Addfile;
+
