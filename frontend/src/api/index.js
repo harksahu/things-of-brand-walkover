@@ -37,8 +37,9 @@ const sendMydeleteStuffAPI = async (email) => {
 const restoreMyStuffAPI = async (id) => {
   return await axios.delete(URL + "/api/deteteItems/" + id);
 };
-const saveMyStuffAPI = async (data) => {
-  return await axios.put(URL + "/api/Mystuff/" + data);
+const saveMyStuffAPI = async ({_id ="" , title = "" }) => {
+
+  return await axios.put(URL + "/api/Mystuff?_id=" + _id+"&title="+title);
 };
 const getAuthKey =  async (authdata)=>{
 const data = {

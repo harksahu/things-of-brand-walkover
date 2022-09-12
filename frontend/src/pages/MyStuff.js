@@ -151,11 +151,15 @@ const DownloadToPng = async (img,w,h) => {
       </Modal.Body>
       <Modal.Footer>
       <Button onClick={async()=>{
-    await saveMyStuffAPI(props.user
-      , name)
+        const new_data ={
+          _id :props.user._id,
+          title: name
+        }
+        // console.log(new_data)
+    await saveMyStuffAPI(new_data)
     alert("saved")
     
-  }}  variant="success" disabled>save</Button>
+  }} variant="success">save</Button>
         <Button onClick={async()=>{
     await deleteMyStuffAPI(props.user._id)
     alert("Deleted")
@@ -179,12 +183,12 @@ function MydeletedStuff(props) {
 
 
 const DownloadToPng = async (img,w,h) => {
-  if(w==undefined){
+  if(w===undefined){
     const x = document.getElementById(img).clientWidth
     setWidth(x)
     w=x
   }
-  if(h==undefined){
+  if(h===undefined){
     const y = document.getElementById(img).clientHeight
     setHeight(y)
     h=y
@@ -306,11 +310,15 @@ const DownloadToPng = async (img,w,h) => {
       </Modal.Body>
       <Modal.Footer>
       <Button onClick={async()=>{
-    await saveMyStuffAPI(props.user
-      , name)
+        const new_data ={
+          _id :props.user._id,
+          title: name
+        }
+        // console.log(new_data)
+    await saveMyStuffAPI(new_data)
     alert("saved")
     
-  }}  variant="success" disabled>save</Button>
+  }}  variant="success" >save</Button>
         <Button onClick={async()=>{
     await restoreMyStuffAPI(props.user._id)
     alert("Restore")
