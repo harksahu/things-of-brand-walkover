@@ -4,5 +4,5 @@ const routes = express.Router();
 
 routes.route('/:email').get(getAuthorizedKey);
 routes.route('/').post(storeAuthKey);
-routes.route('/:email').delete(deleteAuthKey);
+routes.route('/').delete(deleteAuthKey);
 export default routes;

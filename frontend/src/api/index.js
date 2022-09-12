@@ -40,13 +40,19 @@ const restoreMyStuffAPI = async (id) => {
 const saveMyStuffAPI = async (data) => {
   return await axios.put(URL + "/api/Mystuff/" + data);
 };
-const getAuthKey =  async (authdata)=>{
+const storeAuthKey =  async (authdata)=>{
 const data = {
   ...authdata
 }
 
   return await axios.post(URL + "/api/storeKey",data);
 }
+
+const deleteAuthKey = async ({authKey="",email=""}) => {
+  // console.log(authdata);  
+    return await axios.delete(URL + "/api/deleteKey?authKey=" + authKey + "&email=" + email);
+}
+
 const setAuthKey =  async (email)=>{
   // console.log("email");
   // console.log(email);
@@ -86,6 +92,7 @@ export {
   sendMydeleteStuffAPI,
   restoreMyStuffAPI,
   saveMyStuffAPI,
-  getAuthKey,
+  storeAuthKey,
   setAuthKey,
+  deleteAuthKey
 };

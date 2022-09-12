@@ -12,6 +12,7 @@ console.log(props.url)
 
     useEffect(() => {
         fetch(props.url)
+            
             .then(res => res.text())
             .then(Canvg.from( new OffscreenCanvas(100, 100).getContext("2d"), props.url, presets))
             .then(setSvg)

@@ -2,7 +2,7 @@ import express from "express";
 import cors from 'cors';
 import path from "path";
 // import multer from "multer";
-import GetAuthKeyRouters from "./routers/authKeyRouters.js";
+import authKeyRouters from "./routers/authKeyRouters.js";
 import connectDB from './services/mongodb_service.js';
 import uploadRoutes from "./routers/uploadRoutes.js";
 import brandRouters from "./routers/brandRouters.js";
@@ -35,7 +35,8 @@ app.use('/api/brands',brandRouters);
 app.use('/api/search',SearchRouters);
 app.use('/api/MyStuff',MyStuffRouters);
 app.use('/api/deteteItems',MyStuffdeleteitemRouters);
-app.use('/api/storeKey',GetAuthKeyRouters);
+app.use('/api/storeKey',authKeyRouters);
+app.use('/api/deleteKey',authKeyRouters);
 
 app.get('/s3url',async(req,res)=>{
     console.log("file:-");
