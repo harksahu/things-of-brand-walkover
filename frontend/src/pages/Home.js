@@ -13,7 +13,7 @@ import Modal from "react-bootstrap/Modal";
 import { connect } from "react-redux";
 import { searchBrand } from "../store/actions/search-brands";
 import Figure from 'react-bootstrap/Figure';
-
+import SvgInline from '../utils/SvgInline.js';
 function MyVerticallyCenteredModal(props) {
   const [mwidth, setWidth] = useState();
   const [mheight, setHeight] = useState();
@@ -73,16 +73,8 @@ function MyVerticallyCenteredModal(props) {
       </Modal.Header>
       <Modal.Body>
         <Row>
-          <Col style={{ overflow: "auto" }}>
-            <Card.Img
-              variant="top"
-              src={props.user.url}
-              id={props.user.url}
-              style={{
-                width: mwidth + "px",
-                height: mheight + "px",
-              }}
-            />
+        <Col style={{ overflow: "auto" }}>
+              <SvgInline {...props.user}/>
           </Col>
           <div className="vr" />
           <Col>
@@ -195,15 +187,9 @@ function Home({ searchBrandData=[], getSearchBrand }) {
                   opendata(brand);
                 }}
               >
-                <Card.Img
-                  variant="top"
-                  src={brand.url}
-                  style={{
-                    width: "250px",
-                    height: "250px",
-                    margin: "auto",
-                  }}
-                />
+                <div  style={{ overflow: "auto" }}>
+                <SvgInline {...brand}/>
+                </div>
                 <Card.Body>
                   <Card.Title className="text-center">{brand.title}</Card.Title>
                   <Card.Text></Card.Text>

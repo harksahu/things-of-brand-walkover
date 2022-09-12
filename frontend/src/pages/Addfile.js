@@ -41,7 +41,7 @@ function MyVerticallyCenteredModal(props) {
 const Addfile = () => {
   const { user } = UserAuth();
   const [modalShow, setModalShow] = React.useState(false);
-  const [file, setFile] = useState([]);
+  const [file, setFile] = useState(null);
   const [title, setTitle] = useState();
 
   const onSubmitClick = async () => {
@@ -51,20 +51,22 @@ const Addfile = () => {
     try {
       const data = await getS3SignUrl(file);
       console.log(data);
+      setModalShow(true);
+      const imageUrl = data.split('?')[0]
+
+      const a = createBrandAPI({
+        url: imageUrl,
+        title,
+        description: "Description",
+        email: user?.email,
+      });
+      console.log(a)
     } catch (error) {
       console.log("cha")
       console.log(error)
     }
     
-    // console.log(fileUrl);
-    // setModalShow(true);
-    // const a = createBrandAPI({
-    //   url: fileUrl,
-    //   title,
-    //   description: "Description",
-    //   email: user?.email,
-    // });
-    // console.log(a)
+    
 
     // //check
     // console.log(

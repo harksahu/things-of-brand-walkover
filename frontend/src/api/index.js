@@ -1,5 +1,7 @@
-import axios from "../interceptor/interceptor";
+// import axios from "../interceptor/interceptor";
 // const URL = "https://thingsofbrand.herokuapp.com"
+// import {default as publicAxios}  from 'axios';
+import axios from 'axios';
 const URL = "http://localhost:8080";
 
 const uploadSingleFileAPI = async (fileObject) => {
@@ -13,7 +15,7 @@ const uploadSingleFileAPI = async (fileObject) => {
 const createBrandAPI = async (dataToSend) => {
   const data = {
     ...dataToSend,
-    url: URL + "/" + dataToSend.url,
+    // url: URL + "/" + dataToSend.url,
   };
   // console.log(dataToSend)
   return await axios.post(URL + "/api/brands", data);
@@ -45,19 +47,17 @@ const saveMyStuffAPI = async (data) => {
 
 const getS3SignUrl = async (file ) => {
   const { url } = await fetch(URL + "/s3url").then(res => res.json())
-  console.log(file)
-
-  console.log(url)
-  const imageUrl = url.split('?')[0]
-  console.log("urlimg"+imageUrl)
-  await fetch(url, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "multipart/form-data"
+  // console.log(file)
+debugger
+  // console.log(url)
+  console.log("urlimg"+url)
+  await axios.put(url, 
+    file,
+    {
+      "Content-Type": file.type
     },
-    body: file
-  })
-
+  )
+return url;
   
 };
 
