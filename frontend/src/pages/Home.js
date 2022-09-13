@@ -10,6 +10,7 @@ import { Canvg, presets } from "canvg";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Modal from "react-bootstrap/Modal";
+import "../utils/svginline.css"
 
 import { connect } from "react-redux";
 
@@ -21,10 +22,10 @@ import SvgInline from '../utils/SvgInline.js';
 
 function MyVerticallyCenteredModal(props) {
 
-  const [mwidth, setWidth] = useState();
+  const [mwidth, setWidth] = useState(250);
 
-  const [mheight, setHeight] = useState();
-  const [name, setName] = useState();
+  const [mheight, setHeight] = useState(250);
+
 
   function size(img) {
     setWidth(document.getElementById(img).clientWidth);
