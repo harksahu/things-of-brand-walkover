@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { createBrandAPI } from "../api";
 import { UserAuth } from "../context/AuthContext";
-// import { uploadSingleFileAndGetURL ,getS3SignUrl ,pushProfilePhotoToS3} from "../utils/fileUpload";
+
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -49,6 +49,8 @@ const Addfile = () => {
     // console.log("IN onSubmitClick");
     // console.log(file)
     // const fileUrl = await uploadSingleFileAndGetURL(file);
+if(title){
+  if(file.length > 0){
     try {
       const data = await getS3SignUrl(file);
       // console.log(data);
@@ -66,6 +68,15 @@ const Addfile = () => {
       // console.log("cha")
       // console.log(error)
     }
+  }
+  else{
+    alert("Image imput required")
+  }
+
+}
+else{
+  alert("title is required")
+}
   };
   return (
     <React.Fragment>
@@ -89,10 +100,12 @@ const Addfile = () => {
      </InputGroup>
      <Form.Group controlId="formFileSm" className="mb-3">
   <Form.Control type="file" size="m"
+  required
   onChange={(e) => {
-      debugger;
+      // debugger;
       setFile(e.target.files[0]);}}
       accept=".svg"
+
    />
 </Form.Group>
 </Stack>

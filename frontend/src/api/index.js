@@ -2,13 +2,13 @@ import axios from "../interceptor/interceptor";
 // const URL = "https://thingsofbrand.herokuapp.com"
 const URL = "http://localhost:8080";
 
-const uploadSingleFileAPI = async (fileObject) => {
-  const config = {
-    header: { "Content-Type": "multipart/form-data" },
-  };
-  const { data } = await axios.post(URL + "/api/uploads", fileObject, config);
-  return data;
-};
+// const uploadSingleFileAPI = async (fileObject) => {
+//   const config = {
+//     header: { "Content-Type": "multipart/form-data" },
+//   };
+//   const { data } = await axios.post(URL + "/api/uploads", fileObject, config);
+//   return data;
+// };
 
 const createBrandAPI = async (dataToSend) => {
   const data = {
@@ -64,11 +64,6 @@ const setAuthKey =  async (email)=>{
 
 const getS3SignUrl = async (file ) => {
   const { url } = await fetch(URL + "/s3url").then(res => res.json())
-  // console.log(file)
-
-  // console.log(url)
-  // const imageUrl = url.split('?')[0]
-  // // console.log("urlimg"+imageUrl)
   await fetch(url, {
     method: "PUT",
     headers: {
@@ -84,7 +79,7 @@ return url;
 
 export {
   getS3SignUrl,
-  uploadSingleFileAPI,
+  // uploadSingleFileAPI,
   createBrandAPI,
   sendBrandAPI,
   sendMyStuffAPI,
