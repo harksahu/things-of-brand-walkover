@@ -360,7 +360,7 @@ function Home() {
     <Col key= { brand._id}>
     
     
-    <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow(true);opendata(brand)}}>
+    <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow(+true);opendata(brand)}}>
     <div  style={{ overflow: "auto" }}>
 
 <SvgInline {...brand}/>
@@ -405,7 +405,7 @@ function Home() {
     <Col key= { brand._id}>
     
     
-    <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow2(true);opendata(brand)}}>
+    <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow2(+true);opendata(brand)}}>
     <div  style={{ overflow: "auto" }}>
 
 <SvgInline {...brand}/>

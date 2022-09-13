@@ -85,7 +85,8 @@ Things of Brand
                   className="me-2"
                   aria-label="Search"
                   onChange={(e) => { sendData(e.target.value); } }
-                  value={searchItem} />
+                  value={searchItem || ""} 
+                  />
               </Form>
 
             </Nav>

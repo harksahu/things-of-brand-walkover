@@ -52,7 +52,7 @@ const Addfile = () => {
     try {
       const data = await getS3SignUrl(file);
       // console.log(data);
-      setModalShow(true);
+      setModalShow(+true);
       const imageUrl = data.split('?')[0];
 
       const a = createBrandAPI({

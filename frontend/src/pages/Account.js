@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { UserAuth } from "../context/AuthContext";
-import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { storeAuthKey } from "../api";
 import { setAuthKey } from "../api";
 import { deleteAuthKey } from "../api";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Link, useNavigate } from "react-router-dom";
 
 const Account = () => {
   const { user } =  UserAuth();
   const [key, setKey] = useState();
-  const navigate = useNavigate();
   
   const rand = () => {
     return Math.random().toString(36).substr(2);
@@ -64,7 +61,7 @@ const Account = () => {
     if(user && user.email){
       setAuth()
     }
-  }, [user]);
+  }, [setAuth, user]);
 
   return (
     <Card style={{ width: "23rem" }} className="m-auto">

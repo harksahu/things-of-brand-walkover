@@ -13,7 +13,7 @@ const SvgInline = (props) => {
       .then((res) => res.text())
       .then(setSvg)
       .catch(setIsErrored)
-      .then(() => setIsLoaded(true));
+      .then(() => setIsLoaded(+true));
   }, [props.url]);
 
 
