@@ -19,29 +19,33 @@ const Account = () => {
     return Math.random().toString(36).substr(2);
   };
 
+
+
   const token = async () => {
+    console.log("no entry")
     try {
       const keyValue = rand() + rand();
-      setKey(keyValue);
       document.getElementById("authKeybtn").style.display = "none";
       console.log("in token");
       const data = await storeAuthKey({
         authKey: keyValue,
         email: user?.email,
       });
-      console.log("data - " + data);
+      console.log( data);
+      setKey(keyValue);
     } catch (error) {
       console.log(error);
     }
   };
 
   const setAuth = async () => {
+
     const x = await setAuthKey(user.email);
-    console.log("hello = ");
     const authinfo = x?.data?.data[0];
     console.log(authinfo);
 
     setKey(authinfo.authKey);
+
   };
 
   const deleteKey = async () => {
@@ -52,10 +56,12 @@ const Account = () => {
       email: user?.email
     });
   };
-
   useEffect(() => {
-    setAuth();
-  }, []);
+    console.log(user);
+    if(user && user.email){
+      setAuth()
+    }
+  }, [user]);
 
   return (
     <Card style={{ width: "23rem" }} className="m-auto">
