@@ -13,7 +13,7 @@ export const searchBrand = (payload) => {
     sendSearchAPI(payload)
 
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         dispatch(searchBrandSuccess(response?.data?.data));
       })
 

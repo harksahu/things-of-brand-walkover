@@ -44,7 +44,7 @@ const DownloadToPng = async (img,w,h) => {
       width,
       height
     } = data
-    console.log(width)
+    // console.log(width)
     const canvas = new OffscreenCanvas(width, height)
     const ctx = canvas.getContext('2d')
     const v = await Canvg.from(ctx, img, preset)
@@ -201,7 +201,7 @@ const DownloadToPng = async (img,w,h) => {
       width,
       height
     } = data
-    console.log(width)
+    // console.log(width)
     const canvas = new OffscreenCanvas(width, height)
     const ctx = canvas.getContext('2d')
     const v = await Canvg.from(ctx, img, preset)
@@ -357,7 +357,7 @@ function Home() {
 {listOfbrands.map(brand=>{
   // console.log(brand);
   return (
-    <Col>
+    <Col key= { brand._id}>
     
     
     <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow(true);opendata(brand)}}>
@@ -402,7 +402,7 @@ function Home() {
 {listOfdeletedbrands.map(brand=>{
   // console.log(brand);
   return (
-    <Col>
+    <Col key= { brand._id}>
     
     
     <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow2(true);opendata(brand)}}>

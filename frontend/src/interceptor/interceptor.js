@@ -5,7 +5,6 @@ import { auth } from "../firebase";
 //request interceptor
 axios.interceptors.request.use(
     async(config) =>{
-        console.log("hello")
         const token =await auth.currentUser?.getIdToken()
         if(token)
         {
@@ -22,7 +21,7 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
     response=>{
-        console.log("RESPONSE");
+        // console.log("RESPONSE");
         return response
     },
     function(error){

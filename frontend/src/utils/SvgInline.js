@@ -2,7 +2,7 @@ import { vectorsAngle } from "canvg";
 import React, { useEffect, useState } from "react";
 import { Canvg, presets } from "canvg";
 const SvgInline = (props) => {
-  console.log(props.url);
+  // console.log(props.url);
 
   const [svg, setSvg] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -17,7 +17,7 @@ const SvgInline = (props) => {
   }, [props.url]);
 
 
-  console.log(svg)
+  // console.log(svg)
   return (
     <div
       className={`svgInline svgInline--${isLoaded ? "loaded" : "loading"} ${

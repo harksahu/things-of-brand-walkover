@@ -64,9 +64,9 @@ const setAuthKey =  async (email)=>{
 
 const getS3SignUrl = async (file ) => {
   const { url } = await fetch(URL + "/s3url").then(res => res.json())
-  console.log(file)
+  // console.log(file)
 
-  console.log(url)
+  // console.log(url)
   // const imageUrl = url.split('?')[0]
   // // console.log("urlimg"+imageUrl)
   await fetch(url, {

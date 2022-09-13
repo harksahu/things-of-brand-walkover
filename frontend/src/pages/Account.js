@@ -12,7 +12,6 @@ import { Link, useNavigate } from "react-router-dom";
 const Account = () => {
   const { user } =  UserAuth();
   const [key, setKey] = useState();
-  // const [user, setuser] = useState();
   const navigate = useNavigate();
   
   const rand = () => {
@@ -22,42 +21,46 @@ const Account = () => {
 
 
   const token = async () => {
-    console.log("no entry")
     try {
       const keyValue = rand() + rand();
       document.getElementById("authKeybtn").style.display = "none";
-      console.log("in token");
+      // console.log("in token");
       const data = await storeAuthKey({
         authKey: keyValue,
         email: user?.email,
       });
-      console.log( data);
+      // console.log( data);
       setKey(keyValue);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
   const setAuth = async () => {
 
+   try {
     const x = await setAuthKey(user.email);
     const authinfo = x?.data?.data[0];
-    console.log(authinfo);
+    // console.log(authinfo);
 
     setKey(authinfo.authKey);
+    
+   } catch (e) {
+    
+   }
 
   };
 
   const deleteKey = async () => {
     // console.log(key);
-    console.log("delete authKey");
+    // console.log("delete authKey");
     const data = await deleteAuthKey({
       authKey: key ,
       email: user?.email
     });
   };
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
     if(user && user.email){
       setAuth()
     }
@@ -78,6 +81,7 @@ const Account = () => {
             {key}
             <DeleteIcon onClick={() => {
             deleteKey();
+            setKey(null);
           }} style={{ color: "red" }} />
           
           
@@ -89,19 +93,10 @@ const Account = () => {
                 token();
               }}
             >
-              generate{" "}
+              generate
             </Button>
           )}
-{/* {key ? (
-         
-          ) : (
-            "a"
-          ) */}
 
-{/* } */}
-
-          {/* <Button  id = "authKeybtn" onClick={() => {token()}} style={{display: 'none'}}> delete </Button> */}
-          {/* <p></p> */}
         </Card.Text>
       </Card.Body>
     </Card>
