@@ -42,7 +42,7 @@ function MyVerticallyCenteredModal(props) {
 const Addfile = () => {
   const { user } = UserAuth();
   const [modalShow, setModalShow] = React.useState(false);
-  const [file, setFile] = useState([]);
+  const [file, setFile] = useState();
   const [title, setTitle] = useState();
 
   const onSubmitClick = async () => {
@@ -50,7 +50,7 @@ const Addfile = () => {
     // console.log(file)
     // const fileUrl = await uploadSingleFileAndGetURL(file);
 if(title){
-  if(file.length > 0){
+  if(file){
     try {
       const data = await getS3SignUrl(file);
       // console.log(data);

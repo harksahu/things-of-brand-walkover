@@ -28,12 +28,6 @@ const SvgInline = (props) => {
       dangerouslySetInnerHTML={{ __html: svg }}
       offset="30%"
       style={{
-        // objectFit:"cover",
-        // width: "230px",
-        // height: "250px",
-        // margin: "auto",
-        // size: "1%",
-        // backgroundSize: "100% " "100%";
       }}
     >
 

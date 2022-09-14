@@ -10,7 +10,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const Account = () => {
   const { user } =  UserAuth();
   const [key, setKey] = useState();
-  
   const rand = () => {
     return Math.random().toString(36).substr(2);
   };
@@ -73,26 +72,36 @@ const Account = () => {
           <br />
           Uid:- {user?.uid}
           <br />
-          auth key :-{" "}
-          {key ? (<>
+          <div style={{display: "flex"}}>
+
+          auth key :-
+          {key ? (< >
+           <p  id= "key" onClick={() => {
+            navigator.clipboard.writeText(key);
+            document.getElementById("key").style.color = "grey";
+          }}>
+            
             {key}
+            
+            </p> 
             <DeleteIcon onClick={() => {
-            deleteKey();
-            setKey(null);
-          }} style={{ color: "red" }} />
+              deleteKey();
+              setKey(null);
+            }} style={{ color: "red" }} />
           
           
           </>
           ) : (
             <Button
-              id="authKeybtn"
-              onClick={() => {
-                token();
-              }}
+            id="authKeybtn"
+            onClick={() => {
+              token();
+            }}
             >
               generate
             </Button>
           )}
+          </div>
 
         </Card.Text>
       </Card.Body>
