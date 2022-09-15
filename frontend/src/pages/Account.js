@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { UserAuth } from "../context/AuthContext";
-import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { storeAuthKey } from "../api";
 import { setAuthKey } from "../api";
 import { deleteAuthKey } from "../api";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Link, useNavigate } from "react-router-dom";
 
 const Account = () => {
   const { user } =  UserAuth();
   const [key, setKey] = useState();
-  const navigate = useNavigate();
-  
   const rand = () => {
     return Math.random().toString(36).substr(2);
   };
@@ -64,7 +60,7 @@ const Account = () => {
     if(user && user.email){
       setAuth()
     }
-  }, [user]);
+  }, [setAuth, user]);
 
   return (
     <Card style={{ width: "23rem" }} className="m-auto">
@@ -76,26 +72,36 @@ const Account = () => {
           <br />
           Uid:- {user?.uid}
           <br />
-          auth key :-{" "}
-          {key ? (<>
+          <div style={{display: "flex"}}>
+
+          auth key :-
+          {key ? (< >
+           <p  id= "key" onClick={() => {
+            navigator.clipboard.writeText(key);
+            document.getElementById("key").style.color = "grey";
+          }}>
+            
             {key}
+            
+            </p> 
             <DeleteIcon onClick={() => {
-            deleteKey();
-            setKey(null);
-          }} style={{ color: "red" }} />
+              deleteKey();
+              setKey(null);
+            }} style={{ color: "red" }} />
           
           
           </>
           ) : (
             <Button
-              id="authKeybtn"
-              onClick={() => {
-                token();
-              }}
+            id="authKeybtn"
+            onClick={() => {
+              token();
+            }}
             >
               generate
             </Button>
           )}
+          </div>
 
         </Card.Text>
       </Card.Body>

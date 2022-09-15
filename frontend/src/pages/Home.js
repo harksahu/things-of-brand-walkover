@@ -207,7 +207,7 @@ function Home({ searchBrandData=[], getSearchBrand }) {
                 style={{ width: "18rem" }}
                 className="m-3"
                 onClick={() => {
-                  setModalShow(true);
+                  setModalShow(+true);
 
                   opendata(brand);
 

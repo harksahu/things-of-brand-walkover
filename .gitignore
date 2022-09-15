@@ -10,3 +10,7 @@ uploads/
 
 .env
 
+.vscode
+
+
+app.yaml

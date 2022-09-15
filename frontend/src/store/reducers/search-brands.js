@@ -13,16 +13,16 @@ const initialState = {
   };
 
 const searchBrandStart = (state) => {
-    return { ...state, isLoading: true, error: null, isError: false };
+    return { ...state, isLoading: +true, error: null, isError: false };
   };
   
   const searchBrandSuccess = (state, action) => {
     // console.log(action);
-    return { ...state, data: action?.data || [], isDone: true, isLoading: false };
+    return { ...state, data: action?.data || [], isDone: +true, isLoading: false };
   };
   
   const searchBrandFailure = (state, action) => {
-    return { ...state, error: action.data, isLoading: false, isError: true };
+    return { ...state, error: action.data, isLoading: false, isError: +true };
   };
   
   const reducer = (state = initialState, action) => {
