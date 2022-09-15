@@ -46,12 +46,12 @@ const Addfile = () => {
   const [title, setTitle] = useState();
 
   const onSubmitClick = async () => {
-    console.log("IN onSubmitClick");
-    console.log(file)
+    // console.log("IN onSubmitClick");
+    // console.log(file)
     // const fileUrl = await uploadSingleFileAndGetURL(file);
     try {
       const data = await getS3SignUrl(file);
-      console.log(data);
+      // console.log(data);
       setModalShow(true);
       const imageUrl = data.split('?')[0];
 
@@ -61,66 +61,52 @@ const Addfile = () => {
         description: "Description",
         email: user?.email,
       });
-      console.log(a)
+      // console.log(a)
     } catch (error) {
-      console.log("cha")
-      console.log(error)
+      // console.log("cha")
+      // console.log(error)
     }
-    
-    // console.log(fileUrl);
-
-    // //check
-    // console.log(
-    //   "aaaa"+
-    //   URL +
-    //     "/" +
-    //     fileUrl +
-    //     " " +
-    //     title +
-    //     " " +
-    //     "Description" +
-    //     " " +
-    //     user?.email
-    // );
   };
   return (
-    <>
+    <React.Fragment>
+
 <Card style={{ width: '30rem' }} className="text-center m-auto">
 
-      <Card.Body>
-        <Card.Header>File to Upload</Card.Header>
-        <br/>
-        <Card.Text>
-        <Stack gap={3}>
-        <InputGroup>
-          <InputGroup.Text id="btnGroupAddon">Title</InputGroup.Text>
-          <Form.Control
-            type="text"
-            placeholder="Input group example"
-            aria-label="Input group example"
-            aria-describedby="btnGroupAddon"
-            onChange={(e) => setTitle(e.target.value)}
-          />
-           </InputGroup>
-           <Form.Group controlId="formFileSm" className="mb-3">
-        <Form.Control type="file" size="m"
-        onChange={(e) => {
-            debugger;
-            setFile(e.target.files[0]);}}
-            accept=".svg"
-         />
-      </Form.Group>
-      </Stack>
-        </Card.Text>
-        <Button variant="primary" onClick={onSubmitClick}>Submit</Button>
-      </Card.Body>
+<Card.Body>
+  <Card.Header>File to Upload</Card.Header>
+  <br/>
+  {/* <Card.Text> */}
+  <Stack gap={3}>
+  <InputGroup>
+    <InputGroup.Text id="btnGroupAddon">Title</InputGroup.Text>
+    <Form.Control
+      type="text"
+      placeholder="Input group example"
+      aria-label="Input group example"
+      aria-describedby="btnGroupAddon"
+      onChange={(e) => setTitle(e.target.value)}
+    />
+     </InputGroup>
+     <Form.Group controlId="formFileSm" className="mb-3">
+  <Form.Control type="file" size="m"
+  onChange={(e) => {
+      debugger;
+      setFile(e.target.files[0]);}}
+      accept=".svg"
+   />
+</Form.Group>
+</Stack>
+  {/* </Card.Text> */}
+  <Button variant="primary" onClick={onSubmitClick}>Submit</Button>
+</Card.Body>
 
-    </Card>
-    <MyVerticallyCenteredModal
-    show={modalShow}
-    onHide={() => setModalShow(false)}
-  />
-    </>
+</Card>
+<MyVerticallyCenteredModal
+show={modalShow}
+onHide={() => setModalShow(false)}
+/>
+
+    </React.Fragment>
   );
 };
 

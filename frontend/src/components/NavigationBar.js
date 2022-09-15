@@ -52,6 +52,7 @@ function NavigationBar({
       await logOut();
     } catch (error) {
       console.log(error);
+
     }
   };
 
@@ -59,7 +60,16 @@ function NavigationBar({
     <>
       <Navbar bg="light" expand="lg" sticky="top">
         <Container className="mb-3" fill>
-          <Navbar.Brand onClick={() => { navigate("/"); } } className="bo">Things of Brand</Navbar.Brand>
+          <Navbar.Brand onClick={() => { navigate("/"); } } className="bo">
+          {/* <img
+              alt="Things of Brand"
+              src="./logo/TOF.png"
+              width="200"
+              height="50"
+              className="d-inline-block align-top"
+            /> */}
+Things of Brand
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
 

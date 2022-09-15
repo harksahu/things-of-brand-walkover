@@ -24,14 +24,18 @@ const deleteBrand = async (req,res)=>{
 
 
 const UpdateBrand = async (req,res)=>{
-    console.log(req.params?.data?.props)
+    // console.log("deletedata");
+    var name = req.query.title
+    
+    var id = req.query._id
+    // console.log(id)
+    // console.log(name)
     try {
-        const data = await BrandModel.find({
-            _id: req.params.data.id
+        const data = await BrandModel.updateOne({
+            _id : id
         },{
             $set: {
-                title: req.params.data.name,
-                // description: req.params.description,
+                title: name,
             }
         });
         res.json({
@@ -52,7 +56,7 @@ const UpdateBrand = async (req,res)=>{
 
 const searchBrandName = async (req,res)=>{
     try {
-        console.log(req.params.email)
+        // console.log(req.params.email)
         const data = await BrandModel.find({
             $and: [
                 { email : req.params.email },

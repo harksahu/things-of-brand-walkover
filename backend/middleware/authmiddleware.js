@@ -16,7 +16,7 @@ class Middleware{
             }
         }
         catch(e){
-            console.log(e)
+            // console.log(e)
             res.status(401).json({message: "Unauthorization User"});
     
         }

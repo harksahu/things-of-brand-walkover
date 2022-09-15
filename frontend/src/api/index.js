@@ -37,8 +37,9 @@ const sendMydeleteStuffAPI = async (email) => {
 const restoreMyStuffAPI = async (id) => {
   return await axios.delete(URL + "/api/deteteItems/" + id);
 };
-const saveMyStuffAPI = async (data) => {
-  return await axios.put(URL + "/api/Mystuff/" + data);
+const saveMyStuffAPI = async ({_id ="" , title = "" }) => {
+
+  return await axios.put(URL + "/api/Mystuff?_id=" + _id+"&title="+title);
 };
 const storeAuthKey =  async (authdata)=>{
 const data = {
@@ -63,9 +64,9 @@ const setAuthKey =  async (email)=>{
 
 const getS3SignUrl = async (file ) => {
   const { url } = await fetch(URL + "/s3url").then(res => res.json())
-  console.log(file)
+  // console.log(file)
 
-  console.log(url)
+  // console.log(url)
   // const imageUrl = url.split('?')[0]
   // // console.log("urlimg"+imageUrl)
   await fetch(url, {

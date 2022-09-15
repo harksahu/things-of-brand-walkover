@@ -18,7 +18,7 @@ const searchBrandName = async (req,res)=>{
             "data":data || []
         }).status(200);
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         res.status(400).send({
             message:"Some Error on Server",
             error

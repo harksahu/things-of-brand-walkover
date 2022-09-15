@@ -39,8 +39,8 @@ app.use('/api/storeKey',authKeyRouters);
 app.use('/api/deleteKey',authKeyRouters);
 
 app.get('/s3url',async(req,res)=>{
-    console.log("file:-");
-    console.log(req)
+    // console.log("file:-");
+    // console.log(req)
     const url = await generateUploadURL()
 
     res.send({url});

@@ -10,6 +10,7 @@ import { Canvg, presets } from "canvg";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Modal from "react-bootstrap/Modal";
+import "../utils/svginline.css"
 
 import { connect } from "react-redux";
 
@@ -21,10 +22,10 @@ import SvgInline from '../utils/SvgInline.js';
 
 function MyVerticallyCenteredModal(props) {
 
-  const [mwidth, setWidth] = useState();
+  const [mwidth, setWidth] = useState(250);
 
-  const [mheight, setHeight] = useState();
-  const [name, setName] = useState();
+  const [mheight, setHeight] = useState(250);
+
 
   function size(img) {
     setWidth(document.getElementById(img).clientWidth);
@@ -47,7 +48,7 @@ function MyVerticallyCenteredModal(props) {
 
     async function toPng(data) {
       const { width, height } = data;
-      console.log(width);
+      // console.log(width);
       const canvas = new OffscreenCanvas(width, height);
       const ctx = canvas.getContext("2d");
       const v = await Canvg.from(ctx, img, preset);
@@ -188,7 +189,7 @@ Data not found
 }
 
 function Home({ searchBrandData=[], getSearchBrand }) {
-  console.log(searchBrandData)
+  // console.log(searchBrandData)
   const [modalShow, setModalShow] = React.useState(false);
   const [open, opendata] = useState([]);
 
@@ -201,7 +202,7 @@ function Home({ searchBrandData=[], getSearchBrand }) {
         { searchBrandData?.data?.length ===0?<Not_found/>: searchBrandData?.data?.map((brand) => {
           // console.log(brand);
           return (
-            <Col>
+            <Col key= { brand._id}>
               <Card
                 style={{ width: "18rem" }}
                 className="m-3"

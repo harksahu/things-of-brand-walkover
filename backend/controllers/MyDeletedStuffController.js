@@ -51,7 +51,7 @@ const UpdateBrand = async (req,res)=>{
 
 const searchBrandName = async (req,res)=>{
     try {
-        console.log(req.params.email)
+        // console.log(req.params.email)
         const data = await BrandModel.find({
             $and: [
                 { email : req.params.email },

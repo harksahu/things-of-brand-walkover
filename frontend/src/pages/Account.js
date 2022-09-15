@@ -7,51 +7,64 @@ import { storeAuthKey } from "../api";
 import { setAuthKey } from "../api";
 import { deleteAuthKey } from "../api";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Link, useNavigate } from "react-router-dom";
 
 const Account = () => {
-  const { user } = UserAuth();
+  const { user } =  UserAuth();
   const [key, setKey] = useState();
+  const navigate = useNavigate();
+  
   const rand = () => {
     return Math.random().toString(36).substr(2);
   };
 
+
+
   const token = async () => {
     try {
       const keyValue = rand() + rand();
-      setKey(keyValue);
       document.getElementById("authKeybtn").style.display = "none";
-      console.log("in token");
+      // console.log("in token");
       const data = await storeAuthKey({
         authKey: keyValue,
         email: user?.email,
       });
-      console.log("data - " + data);
+      // console.log( data);
+      setKey(keyValue);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
   const setAuth = async () => {
+
+   try {
     const x = await setAuthKey(user.email);
-    console.log("hello = ");
     const authinfo = x?.data?.data[0];
-    console.log(authinfo);
+    // console.log(authinfo);
 
     setKey(authinfo.authKey);
+    
+   } catch (e) {
+    
+   }
+
   };
 
   const deleteKey = async () => {
     // console.log(key);
-    console.log("delete authKey");
+    // console.log("delete authKey");
     const data = await deleteAuthKey({
       authKey: key ,
       email: user?.email
     });
   };
-
   useEffect(() => {
-    setAuth();
-  }, []);
+    // console.log(user);
+    if(user && user.email){
+      setAuth()
+    }
+  }, [user]);
 
   return (
     <Card style={{ width: "23rem" }} className="m-auto">
@@ -68,6 +81,7 @@ const Account = () => {
             {key}
             <DeleteIcon onClick={() => {
             deleteKey();
+            setKey(null);
           }} style={{ color: "red" }} />
           
           
@@ -79,19 +93,10 @@ const Account = () => {
                 token();
               }}
             >
-              generate{" "}
+              generate
             </Button>
           )}
-{/* {key ? (
-         
-          ) : (
-            "a"
-          ) */}
 
-{/* } */}
-
-          {/* <Button  id = "authKeybtn" onClick={() => {token()}} style={{display: 'none'}}> delete </Button> */}
-          {/* <p></p> */}
         </Card.Text>
       </Card.Body>
     </Card>

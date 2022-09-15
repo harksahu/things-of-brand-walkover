@@ -2,7 +2,7 @@ import AuthKeyModel from '../models/AuthKeyModel.js'
 
 const storeAuthKey = async (req,res)=>{
     try {
-        console.log(req.body.email);
+        // console.log(req.body.email);
         const data = await AuthKeyModel.create(
            { 
             ...req.body,

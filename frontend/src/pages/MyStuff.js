@@ -12,7 +12,6 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Modal from 'react-bootstrap/Modal';
 import SvgInline from '../utils/SvgInline.js';
-
 function MyVerticallyCenteredModal(props) {
   const [mwidth, setWidth] = useState();
   const [mheight, setHeight] = useState();
@@ -45,7 +44,7 @@ const DownloadToPng = async (img,w,h) => {
       width,
       height
     } = data
-    console.log(width)
+    // console.log(width)
     const canvas = new OffscreenCanvas(width, height)
     const ctx = canvas.getContext('2d')
     const v = await Canvg.from(ctx, img, preset)
@@ -152,11 +151,14 @@ const DownloadToPng = async (img,w,h) => {
       </Modal.Body>
       <Modal.Footer>
       <Button onClick={async()=>{
-    await saveMyStuffAPI(props.user
-      , name)
+        const new_data ={
+          _id :props.user._id,
+          title: name
+        }
+    await saveMyStuffAPI(new_data)
     alert("saved")
     
-  }}  variant="success" disabled>save</Button>
+  }} variant="success">save</Button>
         <Button onClick={async()=>{
     await deleteMyStuffAPI(props.user._id)
     alert("Deleted")
@@ -180,12 +182,12 @@ function MydeletedStuff(props) {
 
 
 const DownloadToPng = async (img,w,h) => {
-  if(w==undefined){
+  if(w===undefined){
     const x = document.getElementById(img).clientWidth
     setWidth(x)
     w=x
   }
-  if(h==undefined){
+  if(h===undefined){
     const y = document.getElementById(img).clientHeight
     setHeight(y)
     h=y
@@ -199,7 +201,7 @@ const DownloadToPng = async (img,w,h) => {
       width,
       height
     } = data
-    console.log(width)
+    // console.log(width)
     const canvas = new OffscreenCanvas(width, height)
     const ctx = canvas.getContext('2d')
     const v = await Canvg.from(ctx, img, preset)
@@ -307,11 +309,15 @@ const DownloadToPng = async (img,w,h) => {
       </Modal.Body>
       <Modal.Footer>
       <Button onClick={async()=>{
-    await saveMyStuffAPI(props.user
-      , name)
+        const new_data ={
+          _id :props.user._id,
+          title: name
+        }
+        // console.log(new_data)
+    await saveMyStuffAPI(new_data)
     alert("saved")
     
-  }}  variant="success" disabled>save</Button>
+  }}  variant="success" >save</Button>
         <Button onClick={async()=>{
     await restoreMyStuffAPI(props.user._id)
     alert("Restore")
@@ -351,7 +357,7 @@ function Home() {
 {listOfbrands.map(brand=>{
   // console.log(brand);
   return (
-    <Col>
+    <Col key= { brand._id}>
     
     
     <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow(true);opendata(brand)}}>
@@ -396,7 +402,7 @@ function Home() {
 {listOfdeletedbrands.map(brand=>{
   // console.log(brand);
   return (
-    <Col>
+    <Col key= { brand._id}>
     
     
     <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow2(true);opendata(brand)}}>
