@@ -62,7 +62,7 @@ const DownloadToPng = async (img,w,h) => {
     width: w,
     height: h
   }).then((pngUrl) => {  
-    saveas(pngUrl)
+    saveas(pngUrl,props.user.title)
   })
 
 }
@@ -144,7 +144,7 @@ const DownloadToPng = async (img,w,h) => {
             Download PNG
           </Button>{" "}
           <Button variant="outline-secondary" size="sm" onClick={()=>
-          saveas(props.user.url)}>
+          saveas(props.user.url,props.user.title)}>
             Download SVG
           </Button>{" "}
           </Col>
@@ -220,7 +220,7 @@ const DownloadToPng = async (img,w,h) => {
     width: w,
     height: h
   }).then((pngUrl) => {  
-    saveas(pngUrl)
+    saveas(pngUrl,props.user.title)
   })
 
 }
@@ -303,7 +303,7 @@ const DownloadToPng = async (img,w,h) => {
             Download PNG
           </Button>{" "}
           <Button variant="outline-secondary" size="sm" onClick={()=>
-          saveas(props.user.url)}>
+          saveas(props.user.url,props.user.title)}>
             Download SVG
           </Button>{" "}
           </Col>
@@ -331,7 +331,7 @@ const DownloadToPng = async (img,w,h) => {
 }
 
 
-function Home() {
+function Mystuff() {
   const [modalShow, setModalShow] = React.useState(false);
   const [modalShow2, setModalShow2] = React.useState(false);
   const { user } = UserAuth();
@@ -426,7 +426,7 @@ function Home() {
       <MydeletedStuff
         show={modalShow2}
         onHide={() => setModalShow2(false)}
-        user = {brand}
+        user = {open}
       />
 </Col>
       )
@@ -442,4 +442,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Mystuff;
