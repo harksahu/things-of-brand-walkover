@@ -62,7 +62,7 @@ const DownloadToPng = async (img,w,h) => {
     width: w,
     height: h
   }).then((pngUrl) => {  
-    saveas(pngUrl)
+    saveas(pngUrl,props.user.title)
   })
 
 }
@@ -70,7 +70,7 @@ const DownloadToPng = async (img,w,h) => {
   return (
     <Modal
       {...props}
-      size="lg"
+      fullscreen= {true}
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
@@ -93,6 +93,7 @@ const DownloadToPng = async (img,w,h) => {
         <Row>
         <Col 
         style={{overflow:"auto"}}
+        id="popup_img"
          >
 
 <SvgInline {...props.user}/>
@@ -143,7 +144,7 @@ const DownloadToPng = async (img,w,h) => {
             Download PNG
           </Button>{" "}
           <Button variant="outline-secondary" size="sm" onClick={()=>
-          saveas(props.user.url)}>
+          saveas(props.user.url,props.user.title)}>
             Download SVG
           </Button>{" "}
           </Col>
@@ -220,7 +221,7 @@ const DownloadToPng = async (img,w,h) => {
     width: w,
     height: h
   }).then((pngUrl) => {  
-    saveas(pngUrl)
+    saveas(pngUrl,props.user.title)
   })
 
 }
@@ -228,7 +229,7 @@ const DownloadToPng = async (img,w,h) => {
   return (
     <Modal
       {...props}
-      size="lg"
+      fullscreen= {true}
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
@@ -252,6 +253,7 @@ const DownloadToPng = async (img,w,h) => {
         <Row>
         <Col 
         style={{overflow:"auto"}}
+        id="popup_img"
          >
 
 <SvgInline {...props.user}/>
@@ -302,7 +304,7 @@ const DownloadToPng = async (img,w,h) => {
             Download PNG
           </Button>{" "}
           <Button variant="outline-secondary" size="sm" onClick={()=>
-          saveas(props.user.url)}>
+          saveas(props.user.url,props.user.title)}>
             Download SVG
           </Button>{" "}
           </Col>
@@ -332,7 +334,7 @@ const DownloadToPng = async (img,w,h) => {
 }
 
 
-function Home() {
+function Mystuff() {
   const [modalShow, setModalShow] = React.useState(false);
   const [modalShow2, setModalShow2] = React.useState(false);
   const { user } = UserAuth();
@@ -364,7 +366,7 @@ function Home() {
     
     
     <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow(+true);opendata(brand)}}>
-    <div  style={{ overflow: "auto" }}>
+    <div  style={{ overflow: "auto" }} id="img_size">
 
 <SvgInline {...brand}/>
 
@@ -410,7 +412,7 @@ function Home() {
     
         
     <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow2(+true);opendata(brand)}}>
-    <div  style={{ overflow: "auto" }}>
+    <div  style={{ overflow: "auto" }} id="img_size">
 
 <SvgInline {...brand}/>
 
@@ -428,7 +430,7 @@ function Home() {
       <MydeletedStuff
         show={modalShow2}
         onHide={() => setModalShow2(false)}
-        user = {brand}
+        user = {open}
       />
 </Col>
       )
@@ -444,4 +446,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Mystuff;
