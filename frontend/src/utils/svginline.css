@@ -1,4 +1,9 @@
-.svgInline svg{
+#img_size .svgInline svg{
     width: 250px;
     height: 250px;
+}
+
+#popup_img .svgInline svg{
+    width: 600px;
+    height: 600px;
 }
