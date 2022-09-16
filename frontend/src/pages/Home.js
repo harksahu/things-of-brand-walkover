@@ -72,7 +72,7 @@ function MyVerticallyCenteredModal(props) {
   return (
     <Modal fullscreen={fullscreen}
       {...props}
-      size="lg"
+      fullscreen = {true}
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
@@ -87,7 +87,7 @@ function MyVerticallyCenteredModal(props) {
 
         <Row>
 
-        <Col   style={{ overflow: "auto" }} id="popUp">
+        <Col style={{ overflow: "auto"}} className="popup_img">
 
               <SvgInline {...props.user}/>
 
@@ -101,7 +101,7 @@ function MyVerticallyCenteredModal(props) {
 
           </Col>
 
-          <div className="vr" style={{height:500}}/>
+          <div className="vr" style={{height: "75vh"}}/>
 
           <Col>
             <Accordion flush>
@@ -155,6 +155,7 @@ function MyVerticallyCenteredModal(props) {
               variant="outline-secondary"
               size="sm"
               onClick={() => saveas(props.user.url)}
+              // onClick={() => saveas(props.user.title)}
             >
               Download SVG
             </Button>{" "}
@@ -217,7 +218,7 @@ function Home({ searchBrandData=[], getSearchBrand }) {
 
               >
 
-                <div  style={{ overflow: "auto" }} >
+                <div  style={{ overflow: "auto" }} id="img_size">
 
                 <SvgInline {...brand}/>
 

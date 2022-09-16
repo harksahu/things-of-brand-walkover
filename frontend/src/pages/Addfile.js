@@ -90,14 +90,12 @@ else{
   <Stack gap={3}>
      <Form.Group controlId="formFileSm" className="mb-3">
   <Form.Control type="file" size="m"
-  required
   onChange={(e) => {
-      // debugger;
       setFile(e.target.files[0])
-      setTitle(e.target.files[0].name.replace(".svg", ""));
-    
+       setTitle((e.target.files[0].name).replace(".svg", ""))
     }}
       accept=".svg"
+
    />
 </Form.Group>
   <InputGroup>
@@ -110,8 +108,6 @@ else{
       // onChange={(e) => setTitle(e.target.value)}
       onChange={(e) => setTitle(e.target.value)}
       value={title}
-
-
     />
      </InputGroup>
 </Stack>
