@@ -26,6 +26,8 @@ function MyVerticallyCenteredModal(props) {
 
   const [mheight, setHeight] = useState(250);
 
+  const [fullscreen, setFullscreen] = useState(true);
+
 
   function size(img) {
     setWidth(document.getElementById(img).clientWidth);
@@ -68,7 +70,7 @@ function MyVerticallyCenteredModal(props) {
   };
 
   return (
-    <Modal
+    <Modal fullscreen={fullscreen}
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
@@ -85,7 +87,7 @@ function MyVerticallyCenteredModal(props) {
 
         <Row>
 
-        <Col style={{ overflow: "auto" }}>
+        <Col   style={{ overflow: "auto" }} id="popUp">
 
               <SvgInline {...props.user}/>
 
@@ -99,11 +101,11 @@ function MyVerticallyCenteredModal(props) {
 
           </Col>
 
-          <div className="vr" />
+          <div className="vr" style={{height:500}}/>
 
           <Col>
             <Accordion flush>
-              <Accordion.Item eventKey="0" size="sm">
+              <Accordion.Item eventKey="0" size="sm" >
                 <Accordion.Header
                   onClick={() => {
                     size(props.user.url);
@@ -111,7 +113,7 @@ function MyVerticallyCenteredModal(props) {
                 >
                   Adjust Size
                 </Accordion.Header>
-                <Accordion.Body>
+                <Accordion.Body >
                   <InputGroup size="sm" className="mb-3">
                     <InputGroup.Text id="inputGroup-sizing-sm">
                       Width
@@ -215,7 +217,7 @@ function Home({ searchBrandData=[], getSearchBrand }) {
 
               >
 
-                <div  style={{ overflow: "auto" }}>
+                <div  style={{ overflow: "auto" }} >
 
                 <SvgInline {...brand}/>
 

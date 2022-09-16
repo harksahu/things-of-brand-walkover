@@ -95,7 +95,11 @@ else{
       placeholder="Input group example"
       aria-label="Input group example"
       aria-describedby="btnGroupAddon"
+      // onChange={(e) => setTitle(e.target.value)}
       onChange={(e) => setTitle(e.target.value)}
+      value={title}
+
+
     />
      </InputGroup>
      <Form.Group controlId="formFileSm" className="mb-3">
@@ -103,7 +107,10 @@ else{
   required
   onChange={(e) => {
       // debugger;
-      setFile(e.target.files[0]);}}
+      setFile(e.target.files[0])
+      setTitle(e.target.files[0].name.replace(".svg", ""));
+    
+    }}
       accept=".svg"
 
    />
