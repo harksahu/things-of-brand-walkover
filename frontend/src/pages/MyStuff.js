@@ -70,7 +70,7 @@ const DownloadToPng = async (img,w,h) => {
   return (
     <Modal
       {...props}
-      size="lg"
+      fullscreen= {true}
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
@@ -227,7 +227,7 @@ const DownloadToPng = async (img,w,h) => {
   return (
     <Modal
       {...props}
-      size="lg"
+      fullscreen= {true}
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
