@@ -158,11 +158,12 @@ const DownloadToPng = async (img,w,h) => {
         }
     await saveMyStuffAPI(new_data)
     alert("saved")
-    
+    window.location.reload()
   }} variant="success">save</Button>
         <Button onClick={async()=>{
     await deleteMyStuffAPI(props.user._id)
     alert("Deleted")
+    window.location.reload()
   }} variant="danger">delete</Button>
 
         <Button onClick={props.onHide}>Close</Button>
@@ -318,11 +319,13 @@ const DownloadToPng = async (img,w,h) => {
         // console.log(new_data)
     await saveMyStuffAPI(new_data)
     alert("saved")
+    window.location.reload()
     
   }}  variant="success" >save</Button>
         <Button onClick={async()=>{
     await restoreMyStuffAPI(props.user._id)
     alert("Restore")
+    window.location.reload()
   }} variant="info">Restore</Button>
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
@@ -407,6 +410,7 @@ function Mystuff() {
     <Col key= { brand._id}>
     
     
+        
     <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow2(+true);opendata(brand)}}>
     <div  style={{ overflow: "auto" }} id="img_size">
 

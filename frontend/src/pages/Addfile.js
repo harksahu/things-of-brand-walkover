@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { createBrandAPI } from "../api";
 import { UserAuth } from "../context/AuthContext";
-// import { uploadSingleFileAndGetURL ,getS3SignUrl ,pushProfilePhotoToS3} from "../utils/fileUpload";
+
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -49,6 +49,8 @@ const Addfile = () => {
     // console.log("IN onSubmitClick");
     // console.log(file)
     // const fileUrl = await uploadSingleFileAndGetURL(file);
+if(title){
+  if(file){
     try {
       const data = await getS3SignUrl(file);
       // console.log(data);
@@ -66,6 +68,15 @@ const Addfile = () => {
       // console.log("cha")
       // console.log(error)
     }
+  }
+  else{
+    alert("Image imput required")
+  }
+
+}
+else{
+  alert("title is required")
+}
   };
   return (
     <React.Fragment>
