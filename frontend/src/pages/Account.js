@@ -25,7 +25,7 @@ const Account = () => {
 
 
 
-  
+
 
   const token = async () => {
     try {
@@ -107,6 +107,7 @@ const Account = () => {
             id="authKeybtn"
             onClick={() => {
               token();
+              console.log("")
             }}
             >
               generate
