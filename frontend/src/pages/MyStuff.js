@@ -93,6 +93,7 @@ const DownloadToPng = async (img,w,h) => {
         <Row>
         <Col 
         style={{overflow:"auto"}}
+        id="popup_img"
          >
 
 <SvgInline {...props.user}/>
@@ -251,6 +252,7 @@ const DownloadToPng = async (img,w,h) => {
         <Row>
         <Col 
         style={{overflow:"auto"}}
+        id="popup_img"
          >
 
 <SvgInline {...props.user}/>
@@ -361,7 +363,7 @@ function Home() {
     
     
     <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow(+true);opendata(brand)}}>
-    <div  style={{ overflow: "auto" }}>
+    <div  style={{ overflow: "auto" }} id="img_size">
 
 <SvgInline {...brand}/>
 
@@ -406,7 +408,7 @@ function Home() {
     
     
     <Card style={{ width: "18rem" }} className="m-3" onClick={() => {setModalShow2(+true);opendata(brand)}}>
-    <div  style={{ overflow: "auto" }}>
+    <div  style={{ overflow: "auto" }} id="img_size">
 
 <SvgInline {...brand}/>
 
