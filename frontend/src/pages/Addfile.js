@@ -88,6 +88,18 @@ else{
   <br/>
   {/* <Card.Text> */}
   <Stack gap={3}>
+     <Form.Group controlId="formFileSm" className="mb-3">
+  <Form.Control type="file" size="m"
+  required
+  onChange={(e) => {
+      // debugger;
+      setFile(e.target.files[0])
+      setTitle(e.target.files[0].name.replace(".svg", ""));
+    
+    }}
+      accept=".svg"
+   />
+</Form.Group>
   <InputGroup>
     <InputGroup.Text id="btnGroupAddon">Title</InputGroup.Text>
     <Form.Control
@@ -102,19 +114,6 @@ else{
 
     />
      </InputGroup>
-     <Form.Group controlId="formFileSm" className="mb-3">
-  <Form.Control type="file" size="m"
-  required
-  onChange={(e) => {
-      // debugger;
-      setFile(e.target.files[0])
-      setTitle(e.target.files[0].name.replace(".svg", ""));
-    
-    }}
-      accept=".svg"
-
-   />
-</Form.Group>
 </Stack>
   {/* </Card.Text> */}
   <Button variant="primary" onClick={onSubmitClick}>Submit</Button>
