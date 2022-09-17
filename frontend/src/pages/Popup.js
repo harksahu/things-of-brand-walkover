@@ -32,6 +32,11 @@ function MyVerticallyCenteredModal(params) {
       setHeight(document.getElementById(img).clientHeight);
     }
   
+   function changeHW(){
+      document.getElementById(props.url).style.width = mwidth + "px";
+      document.getElementById(props.url).style.height = mheight + "px";
+  
+   }
     const DownloadToPng = async (img, w, h) => {
       if (w === undefined) {
         const x = document.getElementById(img).clientWidth;
@@ -156,6 +161,13 @@ function MyVerticallyCenteredModal(params) {
                 // onClick={() => saveas(props.title)}
               >
                 Download SVG
+              </Button>{" "}
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                onClick={() => changeHW()}
+              >
+                Show
               </Button>{" "}
             </Col>
           </Row>

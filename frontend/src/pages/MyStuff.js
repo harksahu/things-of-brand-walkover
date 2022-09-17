@@ -5,6 +5,7 @@ import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import {Link} from "react-router-dom";
 import {
   sendMyStuffAPI,
   deleteMyStuffAPI,
@@ -18,322 +19,324 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Modal from "react-bootstrap/Modal";
 import SvgInline from "../utils/SvgInline.js";
-function MyVerticallyCenteredModal(props) {
-  const [mwidth, setWidth] = useState();
-  const [mheight, setHeight] = useState();
-  const [name, setName] = useState();
 
-  function size(img) {
-    setWidth(document.getElementById(img).clientWidth);
-    setHeight(document.getElementById(img).clientHeight);
-  }
+// function MyVerticallyCenteredModal(props) {
+//   const [mwidth, setWidth] = useState();
+//   const [mheight, setHeight] = useState();
+//   const [name, setName] = useState();
 
-  const DownloadToPng = async (img, w, h) => {
-    if (w === undefined) {
-      const x = document.getElementById(img).clientWidth;
-      setWidth(x);
-      w = x;
-    }
-    if (h === undefined) {
-      const y = document.getElementById(img).clientHeight;
-      setHeight(y);
-      h = y;
-    }
+//   function size(img) {
+//     setWidth(document.getElementById(img).clientWidth);
+//     setHeight(document.getElementById(img).clientHeight);
+//   }
 
-    const preset = presets.offscreen();
+//   const DownloadToPng = async (img, w, h) => {
+//     if (w === undefined) {
+//       const x = document.getElementById(img).clientWidth;
+//       setWidth(x);
+//       w = x;
+//     }
+//     if (h === undefined) {
+//       const y = document.getElementById(img).clientHeight;
+//       setHeight(y);
+//       h = y;
+//     }
 
-    async function toPng(data) {
-      const { width, height } = data;
-      // console.log(width)
-      const canvas = new OffscreenCanvas(width, height);
-      const ctx = canvas.getContext("2d");
-      const v = await Canvg.from(ctx, img, preset);
-      v.resize(width, height, "xMidYMid meet");
-      await v.render();
-      const blob = await canvas.convertToBlob();
-      const pngUrl = URL.createObjectURL(blob);
-      return pngUrl;
-    }
+//     const preset = presets.offscreen();
 
-    toPng({
-      width: w,
-      height: h,
-    }).then((pngUrl) => {
-      saveas(pngUrl,props.user.title);
-    });
-  };
+//     async function toPng(data) {
+//       const { width, height } = data;
+//       // console.log(width)
+//       const canvas = new OffscreenCanvas(width, height);
+//       const ctx = canvas.getContext("2d");
+//       const v = await Canvg.from(ctx, img, preset);
+//       v.resize(width, height, "xMidYMid meet");
+//       await v.render();
+//       const blob = await canvas.convertToBlob();
+//       const pngUrl = URL.createObjectURL(blob);
+//       return pngUrl;
+//     }
 
-  return (
-    <Modal
-      {...props}
-      fullscreen={true}
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Control
-                placeholder={props.user.title}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Row>
-          <Col className="popup_img" style={{ overflow: "auto" }}>
-            <SvgInline {...props.user} />
-          </Col>
-          <div className="vr" />
-          <Col>
-            <Accordion
-              flush
-              onClick={() => {
-                size(props.user.url);
-              }}
-            >
-              <Accordion.Item eventKey="0" size="sm">
-                <Accordion.Header>Adjust Size</Accordion.Header>
-                <Accordion.Body>
-                  <InputGroup size="sm" className="mb-3">
-                    <InputGroup.Text id="inputGroup-sizing-sm">
-                      Width
-                    </InputGroup.Text>
-                    <Form.Control
-                      aria-label="Small"
-                      aria-describedby="inputGroup-sizing-sm"
-                      onChange={(e) => setWidth(e.target.value)}
-                      // placeholder={mwidth}
-                      value={mwidth}
-                    />
-                  </InputGroup>
-                  <InputGroup size="sm" className="mb-3">
-                    <InputGroup.Text id="inputGroup-sizing-sm">
-                      Height
-                    </InputGroup.Text>
-                    <Form.Control
-                      aria-label="Small"
-                      aria-describedby="inputGroup-sizing-sm"
-                      onChange={(e) => setHeight(e.target.value)}
-                      // placeholder={mheight}
-                      value={mheight}
-                      // name={document.getElementById(brand.url).clientHeight}
-                    />
-                  </InputGroup>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-            <Button
-              variant="outline-primary"
-              size="sm"
-              onClick={() => {
-                DownloadToPng(props.user.url, mwidth, mheight);
-              }}
-            >
-              Download PNG
-            </Button>{" "}
-            <Button
-              variant="outline-secondary"
-              size="sm"
-              onClick={() => saveas(props.user.url,props.user.title)}
-            >
-              Download SVG
-            </Button>{" "}
-          </Col>
-        </Row>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button
-          onClick={async () => {
-            const new_data = {
-              _id: props.user._id,
-              title: name,
-            };
-            await saveMyStuffAPI(new_data);
-            alert("saved");
-            window.location.reload();
-          }}
-          variant="success"
-        >
-          save
-        </Button>
-        <Button
-          onClick={async () => {
-            await deleteMyStuffAPI(props.user._id);
-            alert("Deleted");
-            window.location.reload();
-          }}
-          variant="danger"
-        >
-          delete
-        </Button>
+//     toPng({
+//       width: w,
+//       height: h,
+//     }).then((pngUrl) => {
+//       saveas(pngUrl,props.user.title);
+//     });
+//   };
 
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
-function MydeletedStuff(props) {
-  const [mwidth, setWidth] = useState();
-  const [mheight, setHeight] = useState();
-  const [name, setName] = useState();
+//   return (
+//     <Modal
+//       {...props}
+//       fullscreen={true}
+//       aria-labelledby="contained-modal-title-vcenter"
+//       centered
+//     >
+//       <Modal.Header closeButton>
+//         <Modal.Title id="contained-modal-title-vcenter">
+//           <Form>
+//             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+//               <Form.Control
+//                 placeholder={props.user.title}
+//                 onChange={(e) => setName(e.target.value)}
+//               />
+//             </Form.Group>
+//           </Form>
+//         </Modal.Title>
+//       </Modal.Header>
+//       <Modal.Body>
+//         <Row>
+//           <Col className="popup_img" style={{ overflow: "auto" }}>
+//             <SvgInline {...props.user} />
+//           </Col>
+//           <div className="vr" />
+//           <Col>
+//             <Accordion
+//               flush
+//               onClick={() => {
+//                 size(props.user.url);
+//               }}
+//             >
+//               <Accordion.Item eventKey="0" size="sm">
+//                 <Accordion.Header>Adjust Size</Accordion.Header>
+//                 <Accordion.Body>
+//                   <InputGroup size="sm" className="mb-3">
+//                     <InputGroup.Text id="inputGroup-sizing-sm">
+//                       Width
+//                     </InputGroup.Text>
+//                     <Form.Control
+//                       aria-label="Small"
+//                       aria-describedby="inputGroup-sizing-sm"
+//                       onChange={(e) => setWidth(e.target.value)}
+//                       // placeholder={mwidth}
+//                       value={mwidth}
+//                     />
+//                   </InputGroup>
+//                   <InputGroup size="sm" className="mb-3">
+//                     <InputGroup.Text id="inputGroup-sizing-sm">
+//                       Height
+//                     </InputGroup.Text>
+//                     <Form.Control
+//                       aria-label="Small"
+//                       aria-describedby="inputGroup-sizing-sm"
+//                       onChange={(e) => setHeight(e.target.value)}
+//                       // placeholder={mheight}
+//                       value={mheight}
+//                       // name={document.getElementById(brand.url).clientHeight}
+//                     />
+//                   </InputGroup>
+//                 </Accordion.Body>
+//               </Accordion.Item>
+//             </Accordion>
+//             <Button
+//               variant="outline-primary"
+//               size="sm"
+//               onClick={() => {
+//                 DownloadToPng(props.user.url, mwidth, mheight);
+//               }}
+//             >
+//               Download PNG
+//             </Button>{" "}
+//             <Button
+//               variant="outline-secondary"
+//               size="sm"
+//               onClick={() => saveas(props.user.url,props.user.title)}
+//             >
+//               Download SVG
+//             </Button>{" "}
+//           </Col>
+//         </Row>
+//       </Modal.Body>
+//       <Modal.Footer>
+//         <Button
+//           onClick={async () => {
+//             const new_data = {
+//               _id: props.user._id,
+//               title: name,
+//             };
+//             await saveMyStuffAPI(new_data);
+//             alert("saved");
+//             window.location.reload();
+//           }}
+//           variant="success"
+//         >
+//           save
+//         </Button>
+//         <Button
+//           onClick={async () => {
+//             await deleteMyStuffAPI(props.user._id);
+//             alert("Deleted");
+//             window.location.reload();
+//           }}
+//           variant="danger"
+//         >
+//           delete
+//         </Button>
 
-  function size(img) {
-    setWidth(document.getElementById(img).clientWidth);
-    setHeight(document.getElementById(img).clientHeight);
-  }
+//         <Button onClick={props.onHide}>Close</Button>
+//       </Modal.Footer>
+//     </Modal>
+//   );
+// }
+// function MydeletedStuff(props) {
+//   const [mwidth, setWidth] = useState();
+//   const [mheight, setHeight] = useState();
+//   const [name, setName] = useState();
 
-  const DownloadToPng = async (img, w, h) => {
-    if (w === undefined) {
-      const x = document.getElementById(img).clientWidth;
-      setWidth(x);
-      w = x;
-    }
-    if (h === undefined) {
-      const y = document.getElementById(img).clientHeight;
-      setHeight(y);
-      h = y;
-    }
+//   function size(img) {
+//     setWidth(document.getElementById(img).clientWidth);
+//     setHeight(document.getElementById(img).clientHeight);
+//   }
 
-    const preset = presets.offscreen();
+//   const DownloadToPng = async (img, w, h) => {
+//     if (w === undefined) {
+//       const x = document.getElementById(img).clientWidth;
+//       setWidth(x);
+//       w = x;
+//     }
+//     if (h === undefined) {
+//       const y = document.getElementById(img).clientHeight;
+//       setHeight(y);
+//       h = y;
+//     }
 
-    async function toPng(data) {
-      const { width, height } = data;
-      // console.log(width)
-      const canvas = new OffscreenCanvas(width, height);
-      const ctx = canvas.getContext("2d");
-      const v = await Canvg.from(ctx, img, preset);
-      v.resize(width, height, "xMidYMid meet");
-      await v.render();
-      const blob = await canvas.convertToBlob();
-      const pngUrl = URL.createObjectURL(blob);
-      return pngUrl;
-    }
+//     const preset = presets.offscreen();
 
-    toPng({
-      width: w,
-      height: h,
-    }).then((pngUrl) => {
-      saveas(pngUrl,props.user.title);
-    });
-  };
+//     async function toPng(data) {
+//       const { width, height } = data;
+//       // console.log(width)
+//       const canvas = new OffscreenCanvas(width, height);
+//       const ctx = canvas.getContext("2d");
+//       const v = await Canvg.from(ctx, img, preset);
+//       v.resize(width, height, "xMidYMid meet");
+//       await v.render();
+//       const blob = await canvas.convertToBlob();
+//       const pngUrl = URL.createObjectURL(blob);
+//       return pngUrl;
+//     }
 
-  return (
-    <Modal
-      {...props}
-      fullscreen={true}
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Control
-                placeholder={props.user.title}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Row>
-          <Col style={{ overflow: "auto" }} className="popup_img">
-            <SvgInline {...props.user} />
-          </Col>
-          <div className="vr" />
-          <Col>
-            <Accordion
-              flush
-              onClick={() => {
-                size(props.user.url);
-              }}
-            >
-              <Accordion.Item eventKey="0" size="sm">
-                <Accordion.Header>Adjust Size</Accordion.Header>
-                <Accordion.Body>
-                  <InputGroup size="sm" className="mb-3">
-                    <InputGroup.Text id="inputGroup-sizing-sm">
-                      Width
-                    </InputGroup.Text>
-                    <Form.Control
-                      aria-label="Small"
-                      aria-describedby="inputGroup-sizing-sm"
-                      onChange={(e) => setWidth(e.target.value)}
-                      // placeholder={mwidth}
-                      value={mwidth}
-                    />
-                  </InputGroup>
-                  <InputGroup size="sm" className="mb-3">
-                    <InputGroup.Text id="inputGroup-sizing-sm">
-                      Height
-                    </InputGroup.Text>
-                    <Form.Control
-                      aria-label="Small"
-                      aria-describedby="inputGroup-sizing-sm"
-                      onChange={(e) => setHeight(e.target.value)}
-                      // placeholder={mheight}
-                      value={mheight}
-                      // name={document.getElementById(brand.url).clientHeight}
-                    />
-                  </InputGroup>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-            <Button
-              variant="outline-primary"
-              size="sm"
-              onClick={() => {
-                DownloadToPng(props.user.url, mwidth, mheight);
-              }}
-            >
-              Download PNG
-            </Button>{" "}
-            <Button
-              variant="outline-secondary"
-              size="sm"
-              onClick={() => saveas(props.user.url,props.user.title)}
-            >
-              Download SVG
-            </Button>{" "}
-          </Col>
-        </Row>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button
-          onClick={async () => {
-            const new_data = {
-              _id: props.user._id,
-              title: name,
-            };
-            // console.log(new_data)
-            await saveMyStuffAPI(new_data);
-            alert("saved");
-            window.location.reload();
-          }}
-          variant="success"
-        >
-          save
-        </Button>
-        <Button
-          onClick={async () => {
-            await restoreMyStuffAPI(props.user._id);
-            alert("Restore");
-            window.location.reload();
-          }}
-          variant="info"
-        >
-          Restore
-        </Button>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
+//     toPng({
+//       width: w,
+//       height: h,
+//     }).then((pngUrl) => {
+//       saveas(pngUrl,props.user.title);
+//     });
+//   };
+
+//   return (
+//     <Modal
+    
+//       {...props}
+//       fullscreen={true}
+//       aria-labelledby="contained-modal-title-vcenter"
+//       centered
+//     >
+//       <Modal.Header closeButton>
+//         <Modal.Title id="contained-modal-title-vcenter">
+//           <Form>
+//             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+//               <Form.Control
+//                 placeholder={props.user.title}
+//                 onChange={(e) => setName(e.target.value)}
+//               />
+//             </Form.Group>
+//           </Form>
+//         </Modal.Title>
+//       </Modal.Header>
+//       <Modal.Body>
+//         <Row>
+//           <Col style={{ overflow: "auto" }} className="popup_img">
+//             <SvgInline {...props.user} />
+//           </Col>
+//           <div className="vr" />
+//           <Col>
+//             <Accordion
+//               flush
+//               onClick={() => {
+//                 size(props.user.url);
+//               }}
+//             >
+//               <Accordion.Item eventKey="0" size="sm">
+//                 <Accordion.Header>Adjust Size</Accordion.Header>
+//                 <Accordion.Body>
+//                   <InputGroup size="sm" className="mb-3">
+//                     <InputGroup.Text id="inputGroup-sizing-sm">
+//                       Width
+//                     </InputGroup.Text>
+//                     <Form.Control
+//                       aria-label="Small"
+//                       aria-describedby="inputGroup-sizing-sm"
+//                       onChange={(e) => setWidth(e.target.value)}
+//                       // placeholder={mwidth}
+//                       value={mwidth}
+//                     />
+//                   </InputGroup>
+//                   <InputGroup size="sm" className="mb-3">
+//                     <InputGroup.Text id="inputGroup-sizing-sm">
+//                       Height
+//                     </InputGroup.Text>
+//                     <Form.Control
+//                       aria-label="Small"
+//                       aria-describedby="inputGroup-sizing-sm"
+//                       onChange={(e) => setHeight(e.target.value)}
+//                       // placeholder={mheight}
+//                       value={mheight}
+//                       // name={document.getElementById(brand.url).clientHeight}
+//                     />
+//                   </InputGroup>
+//                 </Accordion.Body>
+//               </Accordion.Item>
+//             </Accordion>
+//             <Button
+//               variant="outline-primary"
+//               size="sm"
+//               onClick={() => {
+//                 DownloadToPng(props.user.url, mwidth, mheight);
+//               }}
+//             >
+//               Download PNG
+//             </Button>{" "}
+//             <Button
+//               variant="outline-secondary"
+//               size="sm"
+//               onClick={() => saveas(props.user.url,props.user.title)}
+//             >
+//               Download SVG
+//             </Button>{" "}
+//           </Col>
+//         </Row>
+//       </Modal.Body>
+//       <Modal.Footer>
+//         <Button
+//           onClick={async () => {
+//             const new_data = {
+//               _id: props.user._id,
+//               title: name,
+//             };
+//             // console.log(new_data)
+//             await saveMyStuffAPI(new_data);
+//             alert("saved");
+//             window.location.reload();
+//           }}
+//           variant="success"
+//         >
+//           save
+//         </Button>
+//         <Button
+//           onClick={async () => {
+//             await restoreMyStuffAPI(props.user._id);
+//             alert("Restore");
+//             window.location.reload();
+//           }}
+//           variant="info"
+//         >
+//           Restore
+//         </Button>
+//         <Button onClick={props.onHide}>Close</Button>
+//       </Modal.Footer>
+//     </Modal>
+//   );
+// }
 
 function Home() {
   const [modalShow, setModalShow] = React.useState(false);
@@ -363,7 +366,9 @@ function Home() {
           {listOfbrands.map((brand) => {
             // console.log(brand);
             return (
+                
               <Col key={brand._id}>
+                <Link to = "/popup-mystuff" state={brand}>
                 <Card
                   style={{ width: "18rem" }}
                   className="m-3"
@@ -383,11 +388,8 @@ function Home() {
                   </Card.Body>
                   <Card.Body></Card.Body>
                 </Card>
-                <MyVerticallyCenteredModal
-                  show={modalShow}
-                  onHide={() => setModalShow(false)}
-                  user={open}
-                />
+
+              </Link>
               </Col>
             );
           })}
@@ -405,6 +407,7 @@ function Home() {
             // console.log(brand);
             return (
               <Col key={brand._id}>
+                <Link to = "/popup-mystuff" state={brand}>
                 <Card
                   style={{ width: "18rem" }}
                   className="m-3"
@@ -424,11 +427,8 @@ function Home() {
                   </Card.Body>
                   <Card.Body></Card.Body>
                 </Card>
-                <MydeletedStuff
-                  show={modalShow2}
-                  onHide={() => setModalShow2(false)}
-                  user={brand}
-                />
+                </Link>
+                
               </Col>
             );
           })}
