@@ -13,13 +13,14 @@ import Row from "react-bootstrap/Row";
 import Modal from "react-bootstrap/Modal";
 import "../utils/svginline.css";
 import SvgInline from '../utils/SvgInline.js';
-import { useLocation } from 'react-router-dom';
+import { useLocation , useNavigate } from 'react-router-dom';
 
 function MyVerticallyCenteredModal(params) {
     // const props= params;
     const [mwidth, setWidth] = useState(250);
   
     const [mheight, setHeight] = useState(250);
+    const navigate = useNavigate();
   
     const [fullscreen, setFullscreen] = useState(true);
   
@@ -89,8 +90,8 @@ function MyVerticallyCenteredModal(params) {
     //     <Modal.Body>
   
           <Row>
-  
           <Col style={{ overflow: "auto"}} className="popup_img">
+            <button onClick={()=>navigate(-1)}>back</button>
   
                 <SvgInline {...props}/>
   
