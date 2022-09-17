@@ -1,9 +1,15 @@
 #img_size .svgInline svg{
     width: 250px;
     height: 250px;
+    background-image: url("../constants/grid.png");
+    margin-left: 15px;
+    margin-top: 15px;
 }
 
 .popup_img .svgInline svg{
     width: 600px;
     height: 500px;
+    background-image: url("../constants/grid.png");
+    margin-left: 40px;
+    margin-top: 15px;
 }
