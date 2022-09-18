@@ -21,6 +21,8 @@ dotenv.config({path:'../.env'})
 const app = express();
 const __dirname = path.resolve();
 connectDB();
+const PORT = process.env.PORT || 8080
+
 
 // MIDDLEWARE
 
@@ -68,6 +70,5 @@ if(process.env.NODE_ENV === 'production'){
 // console.log("abc")
 // ERROR HANDLE
 
-const PORT = process.env.PORT || 8080
 
 app.listen(PORT , console.log("listening on port "+PORT))
