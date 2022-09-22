@@ -1,6 +1,8 @@
 import axios from "../interceptor/interceptor";
 // const URL = "http://35.244.29.198/api";
+// const URL = "https://thingsofbrand.herokuapp.com";
 const URL = "http://localhost:8080";
+
 
 // const uploadSingleFileAPI = async (fileObject) => {
 //   const config = {
@@ -15,7 +17,7 @@ const createBrandAPI = async (dataToSend) => {
     ...dataToSend,
     // url: URL + "/" + dataToSend.url,
   };
-  // console.log(dataToSend)
+  console.log(dataToSend)
   return await axios.post(URL + "/api/brands", data);
 };
 

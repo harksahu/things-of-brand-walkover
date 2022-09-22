@@ -29,7 +29,8 @@ function NavigationBar({
       setItems(null);
       getSearchBrand({title: ""})
     } else {
-            getSearchBrand({title:text});
+            // getSearchBrand({title:text});
+            getSearchBrand({description:text});
     }
 
     // <Link to={{ 

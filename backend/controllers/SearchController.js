@@ -7,6 +7,7 @@ const searchBrandName = async (req,res)=>{
         var description = req.query.description === ""?{}:{description: { '$regex': req.query.description ,"$options":"i"} };
         var email = req.query.email === ""?{}:{email: req.query.email };
         var active = req.query.active === ""?{}:{active: req.query.active };
+        console.log(description)
         const data = await BrandModel.find({
                 ...title ,
                 ...email ,
@@ -17,6 +18,8 @@ const searchBrandName = async (req,res)=>{
             "message":"Related Data is Successfully Find",
             "data":data || []
         }).status(200);
+
+        // console.log(data)
     } catch (error) {
         // console.log(error);
         res.status(400).send({
