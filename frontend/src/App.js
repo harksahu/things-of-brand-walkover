@@ -5,7 +5,7 @@ import Protected from './components/Protected';
 import { AuthContextProvider, UserAuth } from './context/AuthContext';
 import Account from './pages/Account';
 import Home from './pages/Home';
-
+import Profile from './pages/profile';
 import Addfile from './pages/Addfile';
 import MyStuff from './pages/MyStuff';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -37,6 +37,7 @@ function App() {
 } />
           <Route path='/popup' element={<MyVerticallyCenteredModal  />} />
           <Route path='/popup-mystuff' element={<MyStuffPopup  />} />
+          <Route path='/profile' element={<Profile />} />
           <Route path="/addfile" element={
             <Protected>
           <Addfile />

@@ -39,6 +39,32 @@ function NavigationBar({
     //  }}/>
   };
 
+  // const sendData = async (text) => {
+  //     const searchResults = document.getElementById("search-box");
+  //     getSearchBrand({description:text}).
+  //     then(res=>res.json())
+  //     .then(data=>{
+  //       searchResults.innerHTML= '';
+  //       if(payload.length<1)
+  //       {
+  //         searchResults.innerHTML = '<p>Sorry,Nothing Found</p>';
+  //         return;
+  //       }
+  //       payload.forEach((item, index) => {
+  //         if(index>0) searchResults.innerHTML += '<hr>';
+  //         searchResults.innerHTML += '<p>${item.description}</p>';
+  //       });
+  //       return;
+  //     })
+    
+
+  //   // <Link to={{ 
+  //   //   pathname: "/search", 
+  //   //   state: listOfbrands
+  //   //  }}/>
+  // };
+
+
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
@@ -76,6 +102,7 @@ Things of Brand
 
             <Nav
               className="m-auto my-2"
+              id="search-box"
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
@@ -102,7 +129,8 @@ Things of Brand
                   Upload File
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={() => { navigate("/MyStuff"); } }>My Stuff</NavDropdown.Item>
-                <NavDropdown.Item onClick={() => { navigate("/account"); } }>Profile</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => { navigate("/account"); } }>Account</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => { navigate("/profile"); } }>Profile</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleSignOut}>
                   logout
@@ -140,7 +168,4 @@ export default  connect(
   mapStateToProp,
   mapDispatchToProp
 )(NavigationBar);
-
-
-
 

@@ -29,7 +29,12 @@ const searchBrandName = async (req,res)=>{
     }
 }
 
-
+// const searchBrandName = async (req, res) => {
+//     //   console.log(req.query.description);
+//     let payload = req.query.description.trim();
+//     let search = await BrandModel.find({ name:{$regex: new RegExp('^'+description+'.*',i)}}).exec();
+//     search = search.slice(0, 10);
+// }
 
 export {
 

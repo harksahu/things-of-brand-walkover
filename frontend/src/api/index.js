@@ -21,6 +21,13 @@ const createBrandAPI = async (dataToSend) => {
   return await axios.post(URL + "/api/brands", data);
 };
 
+const createProfile   = async (dataToSend) => {
+  const data = {
+    ...dataToSend,
+  }
+  return await axios.post(URL + "/api/profile", data);
+};
+
 const sendBrandAPI = async () => {
   return await axios.get(URL + "/api/brands/");
 };
@@ -92,5 +99,6 @@ export {
   saveMyStuffAPI,
   storeAuthKey,
   setAuthKey,
-  deleteAuthKey
+  deleteAuthKey,
+  createProfile
 };
