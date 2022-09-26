@@ -13,7 +13,7 @@ const profileSchema = new mongoose.Schema({
     },
     domain : {
         type: String,
-        // unique: true
+        unique: true
     },
     guidlines: {
         type: String,
