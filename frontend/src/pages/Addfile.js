@@ -9,7 +9,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Stack from 'react-bootstrap/Stack';
 import Modal from 'react-bootstrap/Modal';
-import {getS3SignUrl} from "../api/index.js"
+import {getS3SignUrl,getProfileDetails} from "../api/index.js"
 function MyVerticallyCenteredModal(props) {
     return (
       <Modal
@@ -70,13 +70,14 @@ if(title){
       // console.log(data);
       setModalShow(+true);
       const imageUrl = data.split('?')[0];
-
+      const result = await getProfileDetails(user.email);
       const a = createBrandAPI({
         url: imageUrl,
         title,
         description:tags,
         // description: "description",
         email: user?.email,
+        domain: result.data.data[0].domain,
       });
       // console.log(a)
     } catch (error) {

@@ -20,8 +20,8 @@ function Profile() {
   const [backgroundColors, setBackgroundColors] = useState();
   const { user } =  UserAuth();
   const [links, setLinks] = React.useState([]);
-
-  var result;
+  const [results, setResults] = useState();
+  var fresult;
 
   const addLinks = event => {
     if (event.key === "Enter" && event.target.value !== "") {
@@ -42,14 +42,14 @@ useEffect(()=>{
 },[user])
 
   const storeProfileValue = async(req,res)=>{
-    console.log(result)
-    if(name){
+    console.log(results)
+    if(results){
       
       updateProfileValue();
       alert("updated successfully");
     }
     else{
-      console.log(result);
+      console.warn(fresult);
       try{
         const data = await createProfile({
             name,
@@ -91,18 +91,18 @@ useEffect(()=>{
   const profileDetails = async(req,res) => {
     // console.warn(params)
 
-    result = await getProfileDetails(user.email);
-    
-    console.warn(result);
-    setName(result.data.data[0].name);
-    setAboutus(result.data.data[0].aboutus);
-    setLinks(result.data.data[0].links);
-    setDomain(result.data.data[0].domain);
-    setGuidlines(result.data.data[0].guidlines);
-    setFontSize(result.data.data[0].fontSize);
-    setPrimaryColors(result.data.data[0].PrimaryColors);
-    setSecondaryColors(result.data.data[0].secondaryColors);
-    setBackgroundColors(result.data.data[0].backgroundColors);
+    fresult = await getProfileDetails(user.email);
+    setResults(fresult);
+    console.warn(fresult);
+    setName(fresult.data.data[0].name);
+    setAboutus(fresult.data.data[0].aboutus);
+    setLinks(fresult.data.data[0].links);
+    setDomain(fresult.data.data[0].domain);
+    setGuidlines(fresult.data.data[0].guidlines);
+    setFontSize(fresult.data.data[0].fontSize);
+    setPrimaryColors(fresult.data.data[0].PrimaryColors);
+    setSecondaryColors(fresult.data.data[0].secondaryColors);
+    setBackgroundColors(fresult.data.data[0].backgroundColors);
     // console.log(result.data.data[0].name)
     // console.log(result.data.data[0].aboutus)
   }

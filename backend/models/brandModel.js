@@ -21,6 +21,9 @@ const brandsSchema = new mongoose.Schema({
         type: Boolean,
         default: 1
     },
+    domain:{
+        type: String
+    }
     })
 
     const Brand = mongoose.model("brands",brandsSchema)
