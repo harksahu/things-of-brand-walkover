@@ -20,6 +20,14 @@ import Row from "react-bootstrap/Row";
 import Modal from "react-bootstrap/Modal";
 import SvgInline from "../utils/SvgInline.js";
 
+import { connect } from "react-redux";
+
+
+import { searchBrand } from "../store/actions/search-brands";
+
+import Figure from 'react-bootstrap/Figure';
+
+
 // function MyVerticallyCenteredModal(props) {
 //   const [mwidth, setWidth] = useState();
 //   const [mheight, setHeight] = useState();
@@ -337,8 +345,32 @@ import SvgInline from "../utils/SvgInline.js";
 //     </Modal>
 //   );
 // }
+// function Home() {
 
-function Home() {
+  function Not_found(){
+    return(
+  
+  
+  <Figure
+  className="text-center flex justify-cont"
+  >
+  <Figure.Image
+    width={500}
+    height={500}
+    alt="171x180"
+    src="https://i.pinimg.com/564x/f4/e0/d9/f4e0d998d00d96269eeb30c8c625031b.jpg"
+  
+  />
+  <Figure.Caption>
+  Data not found
+  </Figure.Caption>
+  </Figure>
+    )
+  }
+
+
+
+function Home({ searchBrandData=[], getSearchBrand }) {
   const [modalShow, setModalShow] = React.useState(false);
   const [modalShow2, setModalShow2] = React.useState(false);
   const { user } = UserAuth();
@@ -355,6 +387,10 @@ function Home() {
   };
   useEffect(() => {
     printIt();
+    getSearchBrand({
+            email: user.email,
+            active: "1",
+    });
   }, [user]);
   return (
     <>
@@ -363,7 +399,9 @@ function Home() {
 
         <Row md={4} className="g-4">
           {/* {Array.from({ length: listOfbrands.length }).map((_, idx) => ( */}
-          {listOfbrands.map((brand) => {
+          {/* {listOfbrands.map((brand) => { */}
+        { searchBrandData?.data?.length ===0?<Not_found/>: searchBrandData?.data?.map((brand) => {
+
             // console.log(brand);
             return (
                 
@@ -439,4 +477,14 @@ function Home() {
   );
 }
 
-export default Home;
+const mapStateToProp = (state, ownProps) => {
+  return { ...ownProps, searchBrandData: state.searchBrandReducer };
+};
+
+const mapDispatchToProp = (dispatch) => {
+  return {
+    getSearchBrand: (payload) => dispatch(searchBrand(payload)),
+  };
+};
+
+export default connect(mapStateToProp, mapDispatchToProp)(Home);

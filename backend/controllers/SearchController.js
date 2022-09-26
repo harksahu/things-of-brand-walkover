@@ -9,10 +9,12 @@ const searchBrandName = async (req,res)=>{
         var active = req.query.active === ""?{}:{active: req.query.active };
         console.log(description)
         const data = await BrandModel.find({
-                ...title ,
+
+
+             $or: [ { ...title  }, { ...description } ] ,
                 ...email ,
                 ...active ,
-                ...description
+                
         });
         res.json({
             "message":"Related Data is Successfully Find",
