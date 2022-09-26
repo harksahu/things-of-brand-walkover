@@ -39,15 +39,21 @@ const getProfileDetails = async (req,res)=>{
 }
 
 const updateProfile = async (req,res)=>{
-    
-    console.log("data :-" , req.query)
+    let link = req.query.links;
+    link = link.split(",");
+    console.log(link)
+    const f_data = {
+        ...req.query,
+        links: link
+    }
+    // console.log("data :-" , req.query)
     try{
         const data = await profileModel.updateOne(
             {
                 data: req.query.data
             },
             {
-                $set:req.query
+                $set:f_data
             }
         )
         console.log(data);

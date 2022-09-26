@@ -5,12 +5,13 @@ import {createProfile} from "../api/index.js"
 import { UserAuth } from "../context/AuthContext";
 import {getProfileDetails} from "../api/index.js";
 import {updateProfileFields} from "../api/index.js";
+import CloseIcon from '@mui/icons-material/Close';
+
 
 
 function Profile() {
   const [name, setName] = useState();
   const [aboutus, setAboutus] = useState();
-  const [links, setLinks] = useState();
   const [domain, setDomain] = useState();
   const [guidlines, setGuidlines] = useState();
   const [fontSize, setFontSize] = useState();
@@ -18,7 +19,21 @@ function Profile() {
   const [secondaryColors, setSecondaryColors] = useState();
   const [backgroundColors, setBackgroundColors] = useState();
   const { user } =  UserAuth();
+  const [links, setLinks] = React.useState([]);
+
   var result;
+
+  const addLinks = event => {
+    if (event.key === "Enter" && event.target.value !== "") {
+      setLinks([...links, event.target.value]);
+      // props.selectedTags([...tags, event.target.value]);
+      event.target.value = "";
+  }
+};
+
+const removeLinks = index => {
+  setLinks([...links.filter(link => links.indexOf(link) !== index)]);
+};
 
 useEffect(()=>{
     if(user){
@@ -118,7 +133,7 @@ useEffect(()=>{
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        {/* <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Social Links</Form.Label>
           <Form.Control
             type="links"
@@ -126,7 +141,29 @@ useEffect(()=>{
             onChange={(e) => setLinks(e.target.value)}
               value={links}
           />
-        </Form.Group>
+        </Form.Group> */}
+
+        <div className="tags-input mb-3" style={{margin:"auto"}}>
+          <h6>Social Links</h6>
+            <ul>
+            {links.map((link, index) => (
+                <li key={index}>
+              <span>{link}</span>
+              <i
+                  className="material-icons"
+                  onClick={() => removeLinks(index)} 
+              >
+                  <CloseIcon/>
+              </i>
+          </li>
+))}
+            </ul>
+            <input
+                type="text"
+                onKeyUp={event => addLinks(event)}
+                placeholder="Press enter to add tags"
+            />
+        </div>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Domain</Form.Label>

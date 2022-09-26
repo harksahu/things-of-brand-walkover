@@ -30,9 +30,18 @@ const createProfile   = async (dataToSend) => {
 const getProfileDetails = async (email) => {
   return await axios.get(URL + "/api/profile/"+email);
 }
+
+
 const updateProfileFields = async({name="",aboutus="",links="",domain="",guidlines="",fontSize="",PrimaryColors="",secondaryColors="",backgroundColors="",email=""}) => {
-  console.log("name=" + name + "&aboutus=" + aboutus + "&links=" + links + "&domain=" + domain + "&guidlines=" + guidlines + "&fontSize=" + fontSize + "&PrimaryColors="+ PrimaryColors+ "&secondaryColors=" + secondaryColors + "&backgroundColors=" + backgroundColors + "&email=" + email)
+  // let link = links.split(",");
+// const data = {
+//   ...dataToSend
+// }
+// console.log(data)
+// console.log(data.links)
+  // console.log("name=" + name + "&aboutus=" + aboutus + "&links=" + link + "&domain=" + domain + "&guidlines=" + guidlines + "&fontSize=" + fontSize + "&PrimaryColors="+ PrimaryColors+ "&secondaryColors=" + secondaryColors + "&backgroundColors=" + backgroundColors + "&email=" + email)
   return await axios.put(URL + "/api/profile?name=" + name + "&aboutus=" + aboutus + "&links=" + links + "&domain=" + domain + "&guidlines=" + guidlines + "&fontSize=" + fontSize + "&PrimaryColors="+ PrimaryColors+ "&secondaryColors=" + secondaryColors + "&backgroundColors=" + backgroundColors + "&email=" + email);
+  // return await axios.put(URL + "/api/profile?data="+data);
 }
 
 const sendBrandAPI = async () => {
