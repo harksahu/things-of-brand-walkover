@@ -6,7 +6,7 @@ import { storeAuthKey } from "../api";
 import { setAuthKey } from "../api";
 import { deleteAuthKey } from "../api";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import RichtextEditor from "../utils/editer.js";
 const Account = () => {
   const { user } =  UserAuth();
   const [key, setKey] = useState();
@@ -55,6 +55,8 @@ const Account = () => {
       email: user?.email
     });
   };
+  const [value, setValue] = useState("") ;
+
   useEffect(() => {
     // console.log(user);
     if(user && user.email){
@@ -63,6 +65,7 @@ const Account = () => {
   }, [setAuth, user]);
 
   return (
+    <>
     <Card style={{ width: "23rem" }} className="m-auto">
       <Card.Img variant="top" src={user?.photoURL} />
       <Card.Body>
@@ -106,6 +109,9 @@ const Account = () => {
         </Card.Text>
       </Card.Body>
     </Card>
+            <RichtextEditor setValue={setValue}/>
+            {value}
+    </>
   );
 };
 
