@@ -105,6 +105,7 @@ else{
       placeholder="Input group example"
       aria-label="Input group example"
       aria-describedby="btnGroupAddon"
+      // onChange={(e) => setTitle(e.target.value)}
       onChange={(e) => setTitle(e.target.value)}
       value={title}
     />

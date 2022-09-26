@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {Link} from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
@@ -11,6 +12,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Modal from "react-bootstrap/Modal";
 import "../utils/svginline.css"
+import MyVerticallyCenteredModal from "./Popup";
 
 import { connect } from "react-redux";
 
@@ -20,151 +22,154 @@ import Figure from 'react-bootstrap/Figure';
 
 import SvgInline from '../utils/SvgInline.js';
 
-function MyVerticallyCenteredModal(props) {
+// function MyVerticallyCenteredModal(props) {
 
-  const [mwidth, setWidth] = useState(250);
+//   const [mwidth, setWidth] = useState(250);
 
-  const [mheight, setHeight] = useState(250);
+//   const [mheight, setHeight] = useState(250);
 
-
-  function size(img) {
-    setWidth(document.getElementById(img).clientWidth);
-    setHeight(document.getElementById(img).clientHeight);
-  }
-
-  const DownloadToPng = async (img, w, h) => {
-    if (w === undefined) {
-      const x = document.getElementById(img).clientWidth;
-      setWidth(x);
-      w = x;
-    }
-    if (h === undefined) {
-      const y = document.getElementById(img).clientHeight;
-      setHeight(y);
-      h = y;
-    }
-
-    const preset = presets.offscreen();
-
-    async function toPng(data) {
-      const { width, height } = data;
-      // console.log(width);
-      const canvas = new OffscreenCanvas(width, height);
-      const ctx = canvas.getContext("2d");
-      const v = await Canvg.from(ctx, img, preset);
-      v.resize(width, height, "xMidYMid meet");
-      await v.render();
-      const blob = await canvas.convertToBlob();
-      const pngUrl = URL.createObjectURL(blob);
-      return pngUrl;
-    }
-
-    toPng({
-      width: w,
-      height: h,
-    }).then((pngUrl) => {
-      saveas(pngUrl);
-    });
-  };
-
-  return (
-    <Modal
-      {...props}
-      fullscreen= {true}
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          {props.user.title}
-        </Modal.Title>
-
-      </Modal.Header>
-
-      <Modal.Body>
-
-        <Row>
-
-        <Col style={{ overflow: "auto"}} id="popup_img">
-
-              <SvgInline {...props.user}/>
+//   const [fullscreen, setFullscreen] = useState(true);
 
 
+//   function size(img) {
+//     setWidth(document.getElementById(img).clientWidth);
+//     setHeight(document.getElementById(img).clientHeight);
+//   }
 
+//   const DownloadToPng = async (img, w, h) => {
+//     if (w === undefined) {
+//       const x = document.getElementById(img).clientWidth;
+//       setWidth(x);
+//       w = x;
+//     }
+//     if (h === undefined) {
+//       const y = document.getElementById(img).clientHeight;
+//       setHeight(y);
+//       h = y;
+//     }
 
+//     const preset = presets.offscreen();
+
+//     async function toPng(data) {
+//       const { width, height } = data;
+//       // console.log(width);
+//       const canvas = new OffscreenCanvas(width, height);
+//       const ctx = canvas.getContext("2d");
+//       const v = await Canvg.from(ctx, img, preset);
+//       v.resize(width, height, "xMidYMid meet");
+//       await v.render();
+//       const blob = await canvas.convertToBlob();
+//       const pngUrl = URL.createObjectURL(blob);
+//       return pngUrl;
+//     }
+
+//     toPng({
+//       width: w,
+//       height: h,
+//     }).then((pngUrl) => {
+//       saveas(pngUrl);
+//     });
+//   };
+
+//   return (
+//     <Modal fullscreen={fullscreen}
+//       {...props}
+//       fullscreen = {true}
+//       aria-labelledby="contained-modal-title-vcenter"
+//       centered
+//     >
+//       <Modal.Header closeButton>
+//         <Modal.Title id="contained-modal-title-vcenter">
+//           {props.user.title}
+//         </Modal.Title>
+
+//       </Modal.Header>
+
+//       <Modal.Body>
+
+//         <Row>
+
+//         <Col style={{ overflow: "auto"}} className="popup_img">
+
+//               <SvgInline {...props.user}/>
 
 
 
 
 
-          </Col>
 
-          <div className="vr" style={{height: "78vh"}}/>
 
-          <Col>
-            <Accordion flush>
-              <Accordion.Item eventKey="0" size="sm">
-                <Accordion.Header
-                  onClick={() => {
-                    size(props.user.url);
-                  }}
-                >
-                  Adjust Size
-                </Accordion.Header>
-                <Accordion.Body>
-                  <InputGroup size="sm" className="mb-3">
-                    <InputGroup.Text id="inputGroup-sizing-sm">
-                      Width
-                    </InputGroup.Text>
-                    <Form.Control
-                      aria-label="Small"
-                      aria-describedby="inputGroup-sizing-sm"
-                      onChange={(e) => setWidth(e.target.value)}
-                      // placeholder={mwidth}
-                      value={mwidth}
-                    />
-                  </InputGroup>
-                  <InputGroup size="sm" className="mb-3">
-                    <InputGroup.Text id="inputGroup-sizing-sm">
-                      Height
-                    </InputGroup.Text>
-                    <Form.Control
-                      aria-label="Small"
-                      aria-describedby="inputGroup-sizing-sm"
-                      onChange={(e) => setHeight(e.target.value)}
-                      // placeholder={mheight}
-                      value={mheight}
-                      // name={document.getElementById(brand.url).clientHeight}
-                    />
-                  </InputGroup>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-            <Button
-              variant="outline-primary"
-              size="sm"
-              onClick={() => {
-                DownloadToPng(props.user.url, mwidth, mheight);
-              }}
-            >
-              Download PNG
-            </Button>{" "}
-            <Button
-              variant="outline-secondary"
-              size="sm"
-              onClick={() => saveas(props.user.url)}
-            >
-              Download SVG
-            </Button>{" "}
-          </Col>
-        </Row>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
+
+
+//           </Col>
+
+//           <div className="vr" style={{height: "75vh"}}/>
+
+//           <Col>
+//             <Accordion flush>
+//               <Accordion.Item eventKey="0" size="sm" >
+//                 <Accordion.Header
+//                   onClick={() => {
+//                     size(props.user.url);
+//                   }}
+//                 >
+//                   Adjust Size
+//                 </Accordion.Header>
+//                 <Accordion.Body >
+//                   <InputGroup size="sm" className="mb-3">
+//                     <InputGroup.Text id="inputGroup-sizing-sm">
+//                       Width
+//                     </InputGroup.Text>
+//                     <Form.Control
+//                       aria-label="Small"
+//                       aria-describedby="inputGroup-sizing-sm"
+//                       onChange={(e) => setWidth(e.target.value)}
+//                       // placeholder={mwidth}
+//                       value={mwidth}
+//                     />
+//                   </InputGroup>
+//                   <InputGroup size="sm" className="mb-3">
+//                     <InputGroup.Text id="inputGroup-sizing-sm">
+//                       Height
+//                     </InputGroup.Text>
+//                     <Form.Control
+//                       aria-label="Small"
+//                       aria-describedby="inputGroup-sizing-sm"
+//                       onChange={(e) => setHeight(e.target.value)}
+//                       // placeholder={mheight}
+//                       value={mheight}
+//                       // name={document.getElementById(brand.url).clientHeight}
+//                     />
+//                   </InputGroup>
+//                 </Accordion.Body>
+//               </Accordion.Item>
+//             </Accordion>
+//             <Button
+//               variant="outline-primary"
+//               size="sm"
+//               onClick={() => {
+//                 DownloadToPng(props.user.url, mwidth, mheight);
+//               }}
+//             >
+//               Download PNG
+//             </Button>{" "}
+//             <Button
+//               variant="outline-secondary"
+//               size="sm"
+//               onClick={() => saveas(props.user.url)}
+//               // onClick={() => saveas(props.user.title)}
+//             >
+//               Download SVG
+//             </Button>{" "}
+//           </Col>
+//         </Row>
+//       </Modal.Body>
+//       <Modal.Footer>
+//         <Button onClick={props.onHide}>Close</Button>
+//       </Modal.Footer>
+//     </Modal>
+//   );
+// }
 
 
 function Not_found(){
@@ -188,10 +193,14 @@ Data not found
   )
 }
 
+
+
+
 function Home({ searchBrandData=[], getSearchBrand }) {
   // console.log(searchBrandData)
   const [modalShow, setModalShow] = React.useState(false);
   const [open, opendata] = useState([]);
+
 
   useEffect(() => {
     getSearchBrand({});
@@ -203,12 +212,13 @@ function Home({ searchBrandData=[], getSearchBrand }) {
           // console.log(brand);
           return (
             <Col key= { brand._id}>
+             
+             
+             <Link to = "/popup" state={brand}>
               <Card
                 style={{ width: "18rem" }}
                 className="m-3"
                 onClick={() => {
-                  setModalShow(+true);
-
                   opendata(brand);
 
                 }}
@@ -229,17 +239,13 @@ function Home({ searchBrandData=[], getSearchBrand }) {
 
                 <Card.Body>
 
-                  <Card.Title className="text-center">{brand.title}</Card.Title>
+                  <Card.Title style={{ textDecoration: 'none' }} className="text-center">{brand.title}</Card.Title>
 
                   <Card.Text></Card.Text>
                 </Card.Body>
                 <Card.Body></Card.Body>
               </Card>
-              <MyVerticallyCenteredModal
-                show={modalShow}
-                onHide={() => setModalShow(false)}
-                user={open}
-              />
+              </Link>
             </Col>
           );
         })}
