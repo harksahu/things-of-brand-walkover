@@ -30,6 +30,9 @@ const profileSchema = new mongoose.Schema({
     },
     backgroundColors:{
         type: String
+    },
+    email:{
+        type: String
     }
     })
 

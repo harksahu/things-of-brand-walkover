@@ -1,6 +1,5 @@
 import axios from "../interceptor/interceptor";
-// const URL = "http://35.244.29.198/api";
-// const URL = "https://thingsofbrand.herokuapp.com";
+// const URL = "http://13.233.183.23";
 const URL = "http://localhost:8080";
 
 
@@ -27,6 +26,14 @@ const createProfile   = async (dataToSend) => {
   }
   return await axios.post(URL + "/api/profile", data);
 };
+
+const getProfileDetails = async (email) => {
+  return await axios.get(URL + "/api/profile/"+email);
+}
+const updateProfileFields = async({name="",aboutus="",links="",domain="",guidlines="",fontSize="",PrimaryColors="",secondaryColors="",backgroundColors="",email=""}) => {
+  console.log("name=" + name + "&aboutus=" + aboutus + "&links=" + links + "&domain=" + domain + "&guidlines=" + guidlines + "&fontSize=" + fontSize + "&PrimaryColors="+ PrimaryColors+ "&secondaryColors=" + secondaryColors + "&backgroundColors=" + backgroundColors + "&email=" + email)
+  return await axios.put(URL + "/api/profile?name=" + name + "&aboutus=" + aboutus + "&links=" + links + "&domain=" + domain + "&guidlines=" + guidlines + "&fontSize=" + fontSize + "&PrimaryColors="+ PrimaryColors+ "&secondaryColors=" + secondaryColors + "&backgroundColors=" + backgroundColors + "&email=" + email);
+}
 
 const sendBrandAPI = async () => {
   return await axios.get(URL + "/api/brands/");
@@ -100,5 +107,7 @@ export {
   storeAuthKey,
   setAuthKey,
   deleteAuthKey,
-  createProfile
+  createProfile,
+  getProfileDetails,
+  updateProfileFields
 };

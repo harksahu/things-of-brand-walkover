@@ -19,7 +19,7 @@ const SvgInline = (props) => {
   }, [props.url]);
 
   useEffect(() => {
-  console.log(svg);
+  // console.log(svg);
   }, [svg]);
 
   return (

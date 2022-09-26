@@ -8,7 +8,9 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from 'react-bootstrap/Form';
 import Container from "react-bootstrap/Container";
-import { sendSearchAPI } from "../api";
+// import { sendSearchAPI } from "../api";
+import { sendSearchAPI } from "../api/index.js";
+
 import { searchBrand , clearSearchBrand } from '../store/actions/search-brands'
 import { connect } from "react-redux";
 
@@ -31,6 +33,7 @@ function NavigationBar({
     } else {
             // getSearchBrand({title:text});
             getSearchBrand({description:text});
+            // sendSearchAPI({description:text})
     }
 
     // <Link to={{ 

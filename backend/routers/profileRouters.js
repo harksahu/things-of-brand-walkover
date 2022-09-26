@@ -1,10 +1,14 @@
 import express from "express";
-import createProfile from "../controllers/profileController.js";
+import {createProfile,getProfileDetails,updateProfile} from "../controllers/profileController.js";
 
 
 const routes = express.Router();
 
 
 routes.route('/').post(createProfile)
+routes.route('/:email').get(getProfileDetails);
+routes.route('/').put(updateProfile);
+
 
 export default routes;
+
