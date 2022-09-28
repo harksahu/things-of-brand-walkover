@@ -1,6 +1,6 @@
 import axios from "../interceptor/interceptor";
-// const URL = "http://13.233.183.23";
-const URL = "http://localhost:8080";
+const URL = "http://13.233.183.23";
+// const URL = "http://localhost:8080";
 
 
 // const uploadSingleFileAPI = async (fileObject) => {
