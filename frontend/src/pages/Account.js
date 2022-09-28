@@ -109,8 +109,8 @@ const Account = () => {
         </Card.Text>
       </Card.Body>
     </Card>
-            <RichtextEditor setValue={setValue}/>
-            {value}
+            {/* <RichtextEditor setValue={setValue}/>
+            {value} */}
     </>
   );
 };

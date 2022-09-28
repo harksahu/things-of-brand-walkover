@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Accordion from "react-bootstrap/Accordion";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import saveas from "file-saver";
+import saveAs from "file-saver";
 import { Canvg, presets } from "canvg";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -92,7 +92,7 @@ function MyStuffPopup(params) {
       width: w,
       height: h,
     }).then((pngUrl) => {
-      saveas(pngUrl);
+      saveAs(pngUrl);
     });
   };
   function Set_Name() {
@@ -195,7 +195,7 @@ function MyStuffPopup(params) {
             variant="outline-secondary"
             size="sm"
             onClick={() => DownloadToSvg(props.url,props.title)}
-            // onClick={() => saveas(props.title)}
+            // onClick={() => saveAs(props.title)}
           >
             Download SVG
           </Button>{" "}
