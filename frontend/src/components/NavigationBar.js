@@ -10,38 +10,35 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 // import { sendSearchAPI } from "../api";
 import { sendSearchAPI } from "../api/index.js";
+import Dropdown from "react-bootstrap/Dropdown";
 
 import { searchBrand, clearSearchBrand } from "../store/actions/search-brands";
 import { connect } from "react-redux";
 
-function NavigationBar({ getSearchBrand, clearSearchBrand }) {
+function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
   const [listOfbrands, setListOfBrands] = useState([]);
+  const [show, setShow] = useState(true);
 
   const [searchItem, setItems] = useState();
 
-
-  
   const sendData = async (text) => {
-    console.log(window.location.pathname);
+    // console.log(window.location.pathname);
     text = text.trimStart();
     setItems(text);
     if (text === "") {
       setItems(null);
       if (window.location.pathname === "/MyStuff") {
-        
         await getSearchBrand({
           title: "",
           email: user.email,
           active: "1",
           description: "",
         });
-      }
-      else{
+      } else {
         getSearchBrand({ title: "" });
-
       }
     } else {
       // getSearchBrand({title:text});
@@ -63,42 +60,10 @@ function NavigationBar({ getSearchBrand, clearSearchBrand }) {
           description: text,
         });
       }
-      // sendSearchAPI({description:text})
     }
-
- 
-
-
-    // <Link to={{
-    //   pathname: "/search",
-    //   state: listOfbrands
-    //  }}/>
   };
 
-  // const sendData = async (text) => {
-  //     const searchResults = document.getElementById("search-box");
-  //     getSearchBrand({description:text}).
-  //     then(res=>res.json())
-  //     .then(data=>{
-  //       searchResults.innerHTML= '';
-  //       if(payload.length<1)
-  //       {
-  //         searchResults.innerHTML = '<p>Sorry,Nothing Found</p>';
-  //         return;
-  //       }
-  //       payload.forEach((item, index) => {
-  //         if(index>0) searchResults.innerHTML += '<hr>';
-  //         searchResults.innerHTML += '<p>${item.description}</p>';
-  //       });
-  //       return;
-  //     })
-
-  //   // <Link to={{
-  //   //   pathname: "/search",
-  //   //   state: listOfbrands
-  //   //  }}/>
-  // };
-
+  var numbers = [1, 2, 3, 4, 5];
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
@@ -126,13 +91,6 @@ function NavigationBar({ getSearchBrand, clearSearchBrand }) {
             }}
             className="bo"
           >
-            {/* <img
-              alt="Things of Brand"
-              src="./logo/TOF.png"
-              width="200"
-              height="50"
-              className="d-inline-block align-top"
-            /> */}
             Things of Brand
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -149,18 +107,22 @@ function NavigationBar({ getSearchBrand, clearSearchBrand }) {
                   placeholder="Search"
                   className="me-2"
                   aria-label="Search"
+                  show={true}
                   onChange={(e) => {
                     sendData(e.target.value);
                   }}
                   value={searchItem || ""}
+                  list="browsers"
+                  name="myBrowser"
                 />
+                <datalist id="browsers">
+                  {searchBrandData.data.map((brandData) => {
+                    return(<option value={brandData.title}/>);
+                  })}
+                </datalist>
               </Form>
             </Nav>
-            {/* <img
-            className="w-8 h-8 rounded-full"
-            src={user?.photoURL}
-            alt={user?.displayName}
-          /> */}
+
             {user?.displayName ? (
               <NavDropdown
                 title={user?.displayName}
@@ -216,7 +178,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand }) {
 }
 
 const mapStateToProp = (state, ownProps) => {
-  return { ...ownProps };
+  return { ...ownProps, searchBrandData: state.searchBrandReducer };
 };
 const mapDispatchToProp = (dispatch) => {
   return {

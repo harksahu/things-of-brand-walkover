@@ -389,9 +389,10 @@ function Home({ searchBrandData=[], getSearchBrand }) {
     printIt();
     getSearchBrand({
             email: user.email,
-            active: "1",
+            active: "",
     });
   }, [user]);
+
   return (
     <>
       <div className=" m-3 flex">
