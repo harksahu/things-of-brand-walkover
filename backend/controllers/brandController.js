@@ -1,9 +1,11 @@
 import BrandModel from '../models/brandModel.js'
 const createBrand = async (req,res)=>{
     try {
+        console.log(req.body);
         const data = await BrandModel.create({
             ...req.body,
             Url:req.body.url
+        
         });
         res.json({
             "message":"Successfully Created",

@@ -2,14 +2,14 @@
 import React, { useState } from "react";
 import { createBrandAPI } from "../api";
 import { UserAuth } from "../context/AuthContext";
-
+import CloseIcon from '@mui/icons-material/Close';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Stack from 'react-bootstrap/Stack';
 import Modal from 'react-bootstrap/Modal';
-import {getS3SignUrl} from "../api/index.js"
+import {getS3SignUrl,getProfileDetails} from "../api/index.js"
 function MyVerticallyCenteredModal(props) {
     return (
       <Modal
@@ -44,6 +44,20 @@ const Addfile = () => {
   const [modalShow, setModalShow] = React.useState(false);
   const [file, setFile] = useState();
   const [title, setTitle] = useState();
+  const [tags, setTags] = React.useState([]);
+
+  const addTags = event => {
+    if (event.key === "Enter" && event.target.value !== "") {
+      setTags([...tags, event.target.value]);
+      // props.selectedTags([...tags, event.target.value]);
+      event.target.value = "";
+  }
+};
+
+const removeTags = index => {
+  setTags([...tags.filter(tag => tags.indexOf(tag) !== index)]);
+};
+
 
   const onSubmitClick = async () => {
     // console.log("IN onSubmitClick");
@@ -56,12 +70,14 @@ if(title){
       // console.log(data);
       setModalShow(+true);
       const imageUrl = data.split('?')[0];
-
+      const result = await getProfileDetails(user.email);
       const a = createBrandAPI({
         url: imageUrl,
         title,
-        description: "Description",
+        description:tags,
+        // description: "description",
         email: user?.email,
+        domain: result.data.data[0].domain,
       });
       // console.log(a)
     } catch (error) {
@@ -110,6 +126,26 @@ else{
       value={title}
     />
      </InputGroup>
+     <div className="tags-input">
+            <ul>
+            {tags.map((tag, index) => (
+    <li key={index}>
+        <span>{tag}</span>
+        <i
+            className="material-icons"
+            onClick={() => removeTags(index)} 
+        >
+            <CloseIcon/>
+        </i>
+    </li>
+))}
+            </ul>
+            <input
+                type="text"
+                onKeyUp={event => addTags(event)}
+                placeholder="Press enter to add tags"
+            />
+        </div>
 </Stack>
   {/* </Card.Text> */}
   <Button variant="primary" onClick={onSubmitClick}>Submit</Button>
