@@ -1,5 +1,5 @@
 import axios from "../interceptor/interceptor";
-const URL = "http://43.205.241.98";
+const URL = "https://thingsofbrand.com";
 
 // const URL = "http://localhost:8080";
 
