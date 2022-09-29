@@ -6,7 +6,6 @@ import { storeAuthKey } from "../api";
 import { setAuthKey } from "../api";
 import { deleteAuthKey } from "../api";
 import DeleteIcon from "@mui/icons-material/Delete";
-import RichtextEditor from "../utils/editer.js";
 const Account = () => {
   const { user } =  UserAuth();
   const [key, setKey] = useState();
@@ -109,8 +108,6 @@ const Account = () => {
         </Card.Text>
       </Card.Body>
     </Card>
-            {/* <RichtextEditor setValue={setValue}/>
-            {value} */}
     </>
   );
 };
