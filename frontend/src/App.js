@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Profile from './pages/profile';
 import Addfile from './pages/Addfile';
 import MyStuff from './pages/MyStuff';
+import Search from "./pages/Search"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { auth } from './firebase.js';
 import MyVerticallyCenteredModal from './pages/Popup';
@@ -34,6 +35,10 @@ function App() {
           <Route path='/' element={
 
           <Home />
+} />
+<Route path='/search' element={
+
+<Search />
 } />
           <Route path='/popup' element={<MyVerticallyCenteredModal  />} />
           <Route path='/popup-mystuff' element={<MyStuffPopup  />} />
