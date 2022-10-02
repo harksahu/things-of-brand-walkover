@@ -10,6 +10,7 @@ import Addfile from './pages/Addfile';
 import MyStuff from './pages/MyStuff';
 import Search from "./pages/Search"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 import { auth } from './firebase.js';
 import MyVerticallyCenteredModal from './pages/Popup';
 import MyStuffPopup from './pages/MyStuffpopup';
@@ -25,7 +26,7 @@ function App() {
     setIsUserLoaded(true)
   }
   return (
-    <div>
+    <>
 
       {
         isUserLoaded && 
@@ -63,7 +64,7 @@ function App() {
         </Routes>
       </AuthContextProvider>
           }
-    </div>
+    </>
   );
 }
 
