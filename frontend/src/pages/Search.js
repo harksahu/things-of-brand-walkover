@@ -206,18 +206,16 @@ function Home({ searchBrandData=[], getSearchBrand }) {
     getSearchBrand({});
   }, []);
   return (
-    <div className=" m-3 flex">
-      <Row md={4} className="g-4">
+    <div className="p-3 flex bg-light">
+      <div className="d-flex flex-wrap justify-content-center">
         { searchBrandData?.data?.length ===0?<Not_found/>: searchBrandData?.data?.map((brand) => {
           // console.log(brand);
           return (
-            <Col key= { brand._id}>
+            <div key= { brand._id} className="d-flex justify-content-center item">
              
              
              <Link to = "/popup" state={brand}>
-              <Card
-                style={{ width: "18rem" }}
-                className="m-3"
+              <Card                
                 onClick={() => {
                   opendata(brand);
 
@@ -225,7 +223,7 @@ function Home({ searchBrandData=[], getSearchBrand }) {
 
               >
 
-                <div  style={{ overflow: "auto" }} id="img_size">
+                <div  style={{ overflow: "auto" }} className="img_size">
 
                 <SvgInline {...brand}/>
 
@@ -240,17 +238,15 @@ function Home({ searchBrandData=[], getSearchBrand }) {
                 <Card.Body>
 
                   <Card.Title style={{ textDecoration: 'none' }} className="text-center">{brand.title}</Card.Title>
-
                   <Card.Text></Card.Text>
-                </Card.Body>
-                <Card.Body></Card.Body>
+                </Card.Body>                
               </Card>
               </Link>
-            </Col>
+            </div>
           );
         })}
         {/* ))} */}
-      </Row>
+      </div>
     </div>
   );
 }

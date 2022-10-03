@@ -5,6 +5,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "../utils/svginline.css"
 import "./home.css"
+import { UserAuth } from "../context/AuthContext";
+import { GoogleButton } from "react-google-button";
 
 // import Button from "react-bootstrap/Button";
 // import Card from "react-bootstrap/Card";
@@ -25,8 +27,17 @@ import "./home.css"
 
 
 function Home({ searchBrandData=[], getSearchBrand }) {
-  // console.log(searchBrandData)
-
+    const { logOut } = UserAuth();
+    const { googleSignIn, user } = UserAuth();
+    // console.log(searchBrandData)
+    const handleGoogleSignIn = async () => {
+        try {
+        await googleSignIn();
+        // console.log(object);
+        } catch (error) {
+        console.log(error);
+        }
+    };
   return (
 <>
 <Container className="h-100 d-flex flex-column h-100">
@@ -34,6 +45,9 @@ function Home({ searchBrandData=[], getSearchBrand }) {
         <Col xs={12} md={8} lg={6} className="mx-auto text-center">            
             <h1 className="display-4 heading">Where are your brand guidelines?</h1>    
             <p className="mt-4">Collect all your <strong>brand things</strong> under one station and providing you the capability to manage every little thing from one place .</p>            
+            <div className="d-flex justify-content-center">
+                <GoogleButton label='Sign in with Google' onClick={handleGoogleSignIn} />
+            </div>
         </Col>
     </Row>
     <Row className="mt-5">
