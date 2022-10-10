@@ -43,3 +43,7 @@
     margin: auto;
     display: block;
 }
+.mystuff_img .svgInline svg{
+    height: 5px;
+    width: 20px;
+}

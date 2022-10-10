@@ -19,6 +19,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Modal from "react-bootstrap/Modal";
 import SvgInline from "../utils/SvgInline.js";
+import "../utils/svginline.css"
 
 import { connect } from "react-redux";
 
@@ -395,10 +396,10 @@ function Home({ searchBrandData=[], getSearchBrand }) {
 
   return (
     <>
-      <div className=" m-3 flex">
+      <div className=" m-3 ">
         <h1 className="text-center">Public Items</h1>
 
-        <Row md={4} className="g-4">
+        <Row md={4} className="g-4 flex p-3 bg-light">
           {/* {Array.from({ length: listOfbrands.length }).map((_, idx) => ( */}
           {/* {listOfbrands.map((brand) => { */}
         { searchBrandData?.data?.length ===0?<Not_found/>: searchBrandData?.data?.map((brand) => {
@@ -406,7 +407,7 @@ function Home({ searchBrandData=[], getSearchBrand }) {
             // console.log(brand);
             return (
                 
-              <Col key={brand._id}>
+              <Col key={brand._id} className="d-flex justify-content-center item ">
                 <Link to = "/popup-mystuff" state={brand}>
                 <Card
                   style={{ width: "18rem" }}
@@ -433,6 +434,7 @@ function Home({ searchBrandData=[], getSearchBrand }) {
             );
           })}
           {/* ))} */}
+
         </Row>
       </div>
 
@@ -455,7 +457,7 @@ function Home({ searchBrandData=[], getSearchBrand }) {
                     opendata(brand);
                   }}
                 >
-                  <div style={{ overflow: "auto" }}>
+                  <div style={{ overflow: "auto" }}  className="img_size">
                     <SvgInline {...brand} />
                   </div>
                   <Card.Body>
