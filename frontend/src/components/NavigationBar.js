@@ -14,7 +14,6 @@ import Dropdown from "react-bootstrap/Dropdown";
 
 import { searchBrand, clearSearchBrand } from "../store/actions/search-brands";
 import { connect } from "react-redux";
-import { dividerClasses } from "@mui/material";
 
 function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const { logOut } = UserAuth();
@@ -22,7 +21,6 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const navigate = useNavigate();
   const [listOfbrands, setListOfBrands] = useState([]);
   const [show, setShow] = useState(true);
-  const [showGoogleBtn, setshowGoogleBtn] = useState(false);
 
   const [searchItem, setItems] = useState();
 
@@ -85,8 +83,8 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
 
   return (
     <>
-      <Navbar expand="lg bg-white" sticky="top">
-        <Container className="" fill>
+      <Navbar bg="light" expand="lg" sticky="top">
+        <Container className="mb-3" fill>
           <Navbar.Brand
             onClick={() => {
               navigate("/");
@@ -165,8 +163,12 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                   logout
                 </NavDropdown.Item>
               </NavDropdown>
-            ) : (       
-                <button type="button" class="btn btn-outline-primary" onClick={handleGoogleSignIn}>Get started</button>
+            ) : (
+              <div>
+                <div>
+                  <GoogleButton onClick={handleGoogleSignIn} />
+                </div>
+              </div>
             )}
           </Navbar.Collapse>
         </Container>

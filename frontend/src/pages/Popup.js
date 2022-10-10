@@ -1,16 +1,17 @@
 import react from "react";
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Card from "react-bootstrap/Card";
+import Accordion from "react-bootstrap/Accordion";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import { sendBrandAPI } from "../api";
 import saveAs from "file-saver";
 import { Canvg, presets } from "canvg";
-import Container from 'react-bootstrap/Container';
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Modal from "react-bootstrap/Modal";
 import "../utils/svginline.css";
-import "./popup.css"
 import SvgInline from "../utils/SvgInline.js";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -97,65 +98,63 @@ function MyVerticallyCenteredModal(params) {
       //     </Modal.Header>
 
       //     <Modal.Body>
-      <Container fluid>
-      <Row className="h-100">
-        <Col className="popup_img">          
+
+      <Row>
+        <Col style={{ overflow: "auto" }} className="popup_img">
+          <button onClick={() => navigate(-1)}>back</button>
+
           <SvgInline {...props} />
-        </Col>        
-        <Col className="rightbar">
-          <div>
-            <button className="tob-btn-trans" onClick={() => navigate(-1)}>
-              <span class="material-symbols-rounded d-block">
-                close
-              </span>
-            </button>
-          </div>
-          <label className="small fw-bold mb-1">Size</label>
-          <Row>
+        </Col>
 
+        <div className="vr" style={{ height: "75vh" }} />
 
-          <Col>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>W</Form.Label>
-              <Form.Control                 
-                  onChange={(e) => setWidth(e.target.value)}                    
-                  value={mwidth}
-                  size="sm"
-                />
-            </Form.Group>            
-          </Col>
-          <Col>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>H</Form.Label>
-              <Form.Control
-                onChange={(e) => setHeight(e.target.value)}
-                value={mheight}
-                size="sm"
-              />
-            </Form.Group>          
-          </Col>
-          </Row>
-                
-                
-                <Button
-            variant="outline-secondary"
-            size="sm"
-            onClick={() => changeHW()}
-          >
-            Show
-          </Button>{" "}
-          <div className="mt-4 mb-1">
-            <label className="small fw-bold">Download</label>                
-          </div>
+        <Col>
+          <Accordion flush>
+            <Accordion.Item eventKey="0" size="sm">
+              <Accordion.Header
+                onClick={() => {
+                  size(props.url);
+                }}
+              >
+                Adjust Size
+              </Accordion.Header>
+              <Accordion.Body>
+                <InputGroup size="sm" className="mb-3">
+                  <InputGroup.Text id="inputGroup-sizing-sm">
+                    Width
+                  </InputGroup.Text>
+                  <Form.Control
+                    aria-label="Small"
+                    aria-describedby="inputGroup-sizing-sm"
+                    onChange={(e) => setWidth(e.target.value)}
+                    // placeholder={mwidth}
+                    value={mwidth}
+                  />
+                </InputGroup>
+                <InputGroup size="sm" className="mb-3">
+                  <InputGroup.Text id="inputGroup-sizing-sm">
+                    Height
+                  </InputGroup.Text>
+                  <Form.Control
+                    aria-label="Small"
+                    aria-describedby="inputGroup-sizing-sm"
+                    onChange={(e) => setHeight(e.target.value)}
+                    // placeholder={mheight}
+                    value={mheight}
+                    // name={document.getElementById(brand.url).clientHeight}
+                  />
+                </InputGroup>
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
           <Button
-            variant="outline-secondary"
+            variant="outline-primary"
             size="sm"
             onClick={() => {
               DownloadToPng(props.url, mwidth, mheight);
             }}
-            className=""
           >
-            PNG
+            Download PNG
           </Button>{" "}
           <Button
             variant="outline-secondary"
@@ -165,11 +164,17 @@ function MyVerticallyCenteredModal(params) {
             }}
             // onClick={() => saveAs(props.title)}
           >
-            SVG
-          </Button>{" "}          
+            Download SVG
+          </Button>{" "}
+          <Button
+            variant="outline-secondary"
+            size="sm"
+            onClick={() => changeHW()}
+          >
+            Show
+          </Button>{" "}
         </Col>
       </Row>
-      </Container>
       //     </Modal.Body>
       //     <Modal.Footer>
       //       <Button onClick={props.onHide}>Close</Button>
