@@ -24,8 +24,8 @@ const SvgInline = (props) => {
 
   return (
     <div
-      className={`svgInline svgInline--${isLoaded ? "loaded" : "loading"} ${
-        isErrored ? "svgInline--errored" : ""
+      className={`d-grid svgInline svgInline--${isLoaded ? "loaded" : "loading"} ${
+        isErrored ? "svgInline--errored" : "" 
       }`}
       // id={props.url}
       dangerouslySetInnerHTML={{ __html: svg }}

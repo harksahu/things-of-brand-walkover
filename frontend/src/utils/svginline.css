@@ -27,9 +27,19 @@
     height: 250px;
     background-image: url("../constants/grid.png");
 }
-
+.popup_img{
+    padding: 0 !important;
+    min-width: 200px;
+    background-color: #ccc;
+}
+.popup_img .svgInline{
+    background-image: url("../constants/grid.png");    
+    height: 100vh;
+    overflow: auto;
+}
 .popup_img .svgInline svg{
     width: 600px;
     height: 500px;
-    background-image: url("../constants/grid.png");    
+    margin: auto;
+    display: block;
 }

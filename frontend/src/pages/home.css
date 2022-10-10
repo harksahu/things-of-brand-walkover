@@ -1,6 +1,9 @@
 .heading{
     font-weight: 800!important;
 }
+.w,.q{
+    color: #888;
+}
 .brands-wrp{
     margin: 24px 0;
 }

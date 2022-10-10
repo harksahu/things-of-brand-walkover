@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
 import Protected from './components/Protected';
 import { AuthContextProvider, UserAuth } from './context/AuthContext';
@@ -17,6 +17,8 @@ import MyStuffPopup from './pages/MyStuffpopup';
 
 
 function App() {
+  var isPopup = useLocation().pathname === '/popup' ? true : false;
+  console.log('isPopup', isPopup);
   const [isUserLoaded , setIsUserLoaded] = useState(false);
   useEffect(()=>{
     fetchUser()
@@ -31,39 +33,19 @@ function App() {
       {
         isUserLoaded && 
         <AuthContextProvider>
-        <NavigationBar />
-        <Routes>
-          <Route path='/' element={
-
-          <Home />
-} />
-<Route path='/search' element={
-
-<Search />
-} />
-          <Route path='/popup' element={<MyVerticallyCenteredModal  />} />
-          <Route path='/popup-mystuff' element={<MyStuffPopup  />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path="/addfile" element={
-            <Protected>
-          <Addfile />
-           </Protected>}/>
-          <Route path="/MyStuff" element={
-            <Protected>
-          <MyStuff />
-           </Protected>
-          } />
-          <Route
-            path='/account'
-            element={
-              <Protected>
-                <Account />
-               </Protected>
-            }
-            />
-        </Routes>
-      </AuthContextProvider>
-          }
+          { isPopup ? null : <NavigationBar /> }          
+          <Routes>
+            <Route path='/' element={ <Home />} />
+            <Route path='/search' element={ <Search /> } />
+            <Route path='/popup' element={ <MyVerticallyCenteredModal  />} />
+            <Route path='/popup-mystuff' element={ <MyStuffPopup  />} />
+            <Route path='/profile' element={ <Profile />} />
+            <Route path="/addfile" element={ <Protected> <Addfile /> </Protected>}/>
+            <Route path="/MyStuff" element={ <Protected> <MyStuff /> </Protected>}/>
+            <Route path='/account' element={ <Protected> <Account /> </Protected>}/>
+          </Routes>
+        </AuthContextProvider>
+      }
     </>
   );
 }
