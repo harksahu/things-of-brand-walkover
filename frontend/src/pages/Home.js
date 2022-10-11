@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -6,30 +6,12 @@ import Col from "react-bootstrap/Col";
 import "../utils/svginline.css";
 import "./home.css";
 import { UserAuth } from "../context/AuthContext";
-import { GoogleButton } from "react-google-button";
-// import {  } from 'react-router-dom';
-// import Button from "react-bootstrap/Button";
-// import Card from "react-bootstrap/Card";
-// import Accordion from "react-bootstrap/Accordion";
-// import Form from "react-bootstrap/Form";
-// import InputGroup from "react-bootstrap/InputGroup";
-// import { sendBrandAPI } from "../api";
-// import saveas from "file-saver";
-// import { Canvg, presets } from "canvg";
-// import Modal from "react-bootstrap/Modal";
-// import MyVerticallyCenteredModal from "./Popup";
-// import { connect } from "react-redux";
-// import { searchBrand } from "../store/actions/search-brands";
-// import Figure from 'react-bootstrap/Figure';
-// import SvgInline from '../utils/SvgInline.js';
-// import { Divide } from '../../../node_modules/mongoose/types/expressions.d';
 
-function Home({ searchBrandData = [], getSearchBrand }) {
-  const { logOut } = UserAuth();
+function Home() {
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
 
-  // console.log(searchBrandData)
+  
   const handleGoogleSignIn = async () => {
     try {
       if (user) {
@@ -38,18 +20,11 @@ function Home({ searchBrandData = [], getSearchBrand }) {
         await googleSignIn();
       }
 
-      // console.log(object);
+      
     } catch (error) {
       console.log(error);
     }
   };
-  //     useEffect(() => {
-  //         if (user) {
-  //     console.log(user);
-  //     navigate('/MyStuff');
-
-  // }
-  //     },[user]);
   return (
     <>
       <Container className="h-100 d-flex flex-column h-100">
@@ -68,7 +43,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
             <div className="d-flex justify-content-center">
               <button
                 type="button"
-                class="btn btn-primary btn-lg"
+                className="btn btn-primary btn-lg"
                 onClick={handleGoogleSignIn}
               >
                 Get started
@@ -120,4 +95,3 @@ function Home({ searchBrandData = [], getSearchBrand }) {
 
 export default Home;
 
-// export default Home

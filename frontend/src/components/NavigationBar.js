@@ -166,7 +166,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (       
-                <button type="button" class="btn btn-outline-primary" onClick={handleGoogleSignIn}>Get started</button>
+                <button type="button" className="btn btn-outline-primary" onClick={handleGoogleSignIn}>Get started</button>
             )}
           </Navbar.Collapse>
         </Container>
