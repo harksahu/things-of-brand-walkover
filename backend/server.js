@@ -11,7 +11,8 @@ import SearchRouters from "./routers/SearchRouters.js";
 import MyStuffdeleteitemRouters from "./routers/MyStuffdeleteitemRouters.js";
 import {generateUploadURL} from './services/s3.js';
 import profileRouters from "./routers/profileRouters.js";
-
+import puppy from "./details_feacher/getData.js"
+import getUpdatedData from "./details_feacher/gettingdata.js";
 
 import dotenv from 'dotenv'
 
@@ -66,6 +67,29 @@ if(process.env.NODE_ENV === 'production'){
      })
 }
 
+
+
+app.post("/getdata", async (req, res) => {
+    const url = req.body.link;
+    // console.log( "get:-"+url)
+  
+    const data = await puppy(url);
+    // console.log("app:-"+data);
+   res.send({
+      data: data,
+    });
+  });
+  
+  app.post("/getUpdatedData", async (req, res) => {
+    const url = req.body.url
+    const xpath = req.body.xpath;
+     console.log("url"+url);
+     console.log("xapth"+xpath);
+    const data = await getUpdatedData(url,xpath);
+   res.send({
+      data: data,
+    });
+  });
 
 
 

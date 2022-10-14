@@ -37,12 +37,15 @@
     "heroku": "^7.63.4",
     "mongoose": "^6.5.2",
     "multer": "^1.4.5-lts.1",
+    "puppeteer": "^18.2.1",
     "react-bootstrap": "^2.5.0",
     "react-redux": "^8.0.2",
     "request-image-size": "^2.2.0",
     "resize-image": "^0.1.0",
     "save-svg-as-png": "^1.4.17",
-    "svg-to-png": "^4.0.0"
+    "svg-to-png": "^4.0.0",
+    "xmldom": "^0.6.0",
+    "xpath": "^0.0.32"
   },
   "devDependencies": {
     "concurrently": "^6.0.0",
