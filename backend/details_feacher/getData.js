@@ -1,4 +1,5 @@
-import puppeteer from "puppeteer";
+import rp from "request-promise";
+
 
 const puppy = async(name) => {
     

@@ -41,6 +41,7 @@
     "react-bootstrap": "^2.5.0",
     "react-redux": "^8.0.2",
     "request-image-size": "^2.2.0",
+    "request-promise": "^4.2.6",
     "resize-image": "^0.1.0",
     "save-svg-as-png": "^1.4.17",
     "svg-to-png": "^4.0.0",
