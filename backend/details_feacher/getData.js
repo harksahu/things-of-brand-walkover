@@ -1,17 +1,21 @@
 import puppeteer from "puppeteer";
 
 const puppy = async(name) => {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    // console.log("url_pup:-"+ name);
+    
+rp(url)
+.then(function(html){
+  
+  //success!
 
-    await page.goto(name, { waitUntil: "domcontentloaded" });
-    const data = await page.content();
-    // console.log("a done")
-    await browser.close();
-    console.log("done")
+  console.log(html);
+  console.log(url);
+  return html;
 
-    return data;
+})
+.catch(function(err){
+  //handle error
+  console.log(err);
+});
   };
 
   export default puppy;
