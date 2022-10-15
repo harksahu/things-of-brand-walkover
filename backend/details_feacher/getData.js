@@ -1,15 +1,15 @@
 import rp from "request-promise";
 
 
-const puppy = async(name) => {
-    
-rp(url)
+const puppy = async(url) => {
+   
+return rp(url)
 .then(function(html){
   
   //success!
 
-  console.log(html);
-  console.log(url);
+  // console.log(html);
+  // console.log(url);
   return html;
 
 })
@@ -17,6 +17,7 @@ rp(url)
   //handle error
   console.log(err);
 });
+
   };
 
   export default puppy;
