@@ -86,7 +86,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   return (
     <>
       <Navbar expand="lg bg-white" sticky="top">
-        <Container className="" fill>
+        <Container className="" >
           <Navbar.Brand
             onClick={() => {
               navigate("/");
@@ -109,7 +109,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                   placeholder="Search"
                   className="me-2"
                   aria-label="Search"
-                  show={true}
+                  
                   onChange={(e) => {
                     sendData(e.target.value);
                   }}
@@ -119,7 +119,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                 />
                 <datalist id="browsers">
                   {searchBrandData.data.map((brandData) => {
-                    return(<option value={brandData.title}/>);
+                    return(<option key={brandData._id} value={brandData.title}/>);
                   })}
                 </datalist>
               </Form>
@@ -166,7 +166,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (       
-                <button type="button" class="btn btn-outline-primary" onClick={handleGoogleSignIn}>Get started</button>
+                <button type="button" className="btn btn-outline-primary" onClick={handleGoogleSignIn}>Get started</button>
             )}
           </Navbar.Collapse>
         </Container>
@@ -175,7 +175,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   );
 }
 
-const mapStateToProp = (state, ownProps) => {
+const mapStateToProp = (state, ownProps) => {  
   return { ...ownProps, searchBrandData: state.searchBrandReducer };
 };
 const mapDispatchToProp = (dispatch) => {

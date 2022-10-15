@@ -47,7 +47,7 @@ function Home({ searchBrandData=[], getSearchBrand }) {
             <h1 className="display-4 heading"><span className="w">W</span>here are your brand guidelines<span className="q">?</span></h1>    
             <p className="mt-4">Collect all your <strong>brand things</strong> under one station and providing you the capability to manage every little thing from one place .</p>            
             <div className="d-flex justify-content-center">
-                <button type="button" class="btn btn-primary btn-lg" onClick={handleGoogleSignIn}>Get started</button>                
+                <button type="button" className="btn btn-primary btn-lg" onClick={handleGoogleSignIn}>Get started</button>                
             </div>
         </Col>
     </Row>

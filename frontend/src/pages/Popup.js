@@ -32,7 +32,10 @@ function MyVerticallyCenteredModal(params) {
     setHeight(document.getElementById(img).clientHeight);
   }
 
-  function changeHW() {
+  function changeHW(w,h) {
+    //document.getElementById(props.url).style.width = mwidth + "px";
+    setWidth(w);
+    setHeight(h);
     document.getElementById(props.url).style.width = mwidth + "px";
     document.getElementById(props.url).style.height = mheight + "px";
   }
@@ -105,7 +108,7 @@ function MyVerticallyCenteredModal(params) {
         <Col className="rightbar">
           <div>
             <button className="tob-btn-trans" onClick={() => navigate(-1)}>
-              <span class="material-symbols-rounded d-block">
+              <span className="material-symbols-rounded d-block">
                 close
               </span>
             </button>
@@ -118,7 +121,7 @@ function MyVerticallyCenteredModal(params) {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>W</Form.Label>
               <Form.Control                 
-                  onChange={(e) => setWidth(e.target.value)}                    
+                  onChange={(e) => changeHW(e.target.value)}                    
                   value={mwidth}
                   size="sm"
                 />

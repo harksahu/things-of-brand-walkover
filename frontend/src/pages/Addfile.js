@@ -153,7 +153,7 @@ else{
 
 </Card>
 <MyVerticallyCenteredModal
-show={modalShow}
+
 onHide={() => setModalShow(false)}
 />
 

@@ -17,8 +17,7 @@ import MyStuffPopup from './pages/MyStuffpopup';
 
 
 function App() {
-  var isPopup = useLocation().pathname === '/popup' ? true : false;
-  console.log('isPopup', isPopup);
+  var isPopup = useLocation().pathname === '/popup' ? true : false;  
   const [isUserLoaded , setIsUserLoaded] = useState(false);
   useEffect(()=>{
     fetchUser()
