@@ -196,7 +196,7 @@ Data not found
 
 
 
-function Home({ searchBrandData=[], getSearchBrand }) {
+function Home({ searchBrandData=[],getSearchBrand }) {
   // console.log(searchBrandData)
   const [modalShow, setModalShow] = React.useState(false);
   const [open, opendata] = useState([]);
@@ -214,7 +214,8 @@ function Home({ searchBrandData=[], getSearchBrand }) {
             <Col key= { brand._id}>
              
              
-             <Link to = "/popup" state={brand}>
+             <Link to = "/popup" state={brand._id}>
+              {/* changes */}
               <Card
                 style={{ width: "18rem" }}
                 className="m-3"

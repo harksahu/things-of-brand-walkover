@@ -11,6 +11,7 @@ const URL = "http://localhost:8080";
 //   return data;
 // };
 
+
 const createBrandAPI = async (dataToSend) => {
   const data = {
     ...dataToSend,
@@ -63,7 +64,6 @@ const restoreMyStuffAPI = async (id) => {
   return await axios.delete(URL + "/api/deteteItems/" + id);
 };
 const saveMyStuffAPI = async ({_id ="" , title = "" }) => {
-
   return await axios.put(URL + "/api/Mystuff?_id=" + _id+"&title="+title);
 };
 const storeAuthKey =  async (authdata)=>{
@@ -118,5 +118,5 @@ export {
   deleteAuthKey,
   createProfile,
   getProfileDetails,
-  updateProfileFields
+  updateProfileFields,
 };

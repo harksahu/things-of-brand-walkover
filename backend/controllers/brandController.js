@@ -70,7 +70,7 @@ const UpdateBrand = async (req,res)=>{
 
 const searchBrandName = async (req,res)=>{
     const titles = req.params.title.split(","); 
-    // console.log(titles);
+    // console.log("check");
     try {
         const data = await BrandModel.find({
             title: { $in: titles} 
@@ -94,7 +94,7 @@ export {
     createBrand,
     deleteBrand,
     searchBrandName,
-    UpdateBrand 
+    UpdateBrand ,
 
 }
 

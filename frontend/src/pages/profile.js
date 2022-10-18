@@ -133,15 +133,6 @@ useEffect(()=>{
           />
         </Form.Group>
 
-        {/* <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Social Links</Form.Label>
-          <Form.Control
-            type="links"
-            placeholder="Enter linkes"
-            onChange={(e) => setLinks(e.target.value)}
-              value={links}
-          />
-        </Form.Group> */}
 
         <div className="tags-input mb-3" style={{margin:"auto"}}>
           <h6>Social Links</h6>

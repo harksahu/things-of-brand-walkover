@@ -14,6 +14,7 @@ import Modal from "react-bootstrap/Modal";
 import "../utils/svginline.css";
 import SvgInline from "../utils/SvgInline.js";
 import { useLocation, useNavigate } from "react-router-dom";
+import  {getImageUrlFromBackend} from "../api/index.js"
 
 function MyVerticallyCenteredModal(params) {
   // const props= params;
@@ -26,7 +27,7 @@ function MyVerticallyCenteredModal(params) {
 
   const location = useLocation();
   const props = location.state;
-  // console.log(props);
+  console.log(props);
 
   function size(img) {
     setWidth(document.getElementById(img).clientWidth);

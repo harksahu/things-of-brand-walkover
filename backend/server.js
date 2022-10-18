@@ -11,6 +11,7 @@ import SearchRouters from "./routers/SearchRouters.js";
 import MyStuffdeleteitemRouters from "./routers/MyStuffdeleteitemRouters.js";
 import {generateUploadURL} from './services/s3.js';
 import profileRouters from "./routers/profileRouters.js";
+import getBrandsRouters from "./routers/getBrandsRouters.js";
 
 
 import dotenv from 'dotenv'
