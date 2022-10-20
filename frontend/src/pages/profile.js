@@ -6,6 +6,7 @@ import { UserAuth } from "../context/AuthContext";
 import {getProfileDetails} from "../api/index.js";
 import {updateProfileFields} from "../api/index.js";
 import CloseIcon from '@mui/icons-material/Close';
+import RichtextEditor from "./jodit.js";
 
 
 
@@ -21,6 +22,8 @@ function Profile() {
   const { user } =  UserAuth();
   const [links, setLinks] = React.useState([]);
   const [results, setResults] = useState();
+const [value, setValue] = useState("") ;
+
   var fresult;
 
   const addLinks = event => {
@@ -177,12 +180,8 @@ useEffect(()=>{
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Guidlines</Form.Label>
-          <Form.Control
-            type="guidlines"
-            placeholder="Enter guidlines"
-            onChange={(e) => setGuidlines(e.target.value)}
-              value={guidlines}
-          />
+          <RichtextEditor setValue={setValue}/>
+            {/* {value} */}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">

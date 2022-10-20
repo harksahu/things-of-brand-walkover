@@ -24,7 +24,7 @@ function Not_found() {
 function Home({ searchBrandData = [], getSearchBrand }) {
 
   useEffect(() => {
-    getSearchBrand({});
+    getSearchBrand({active: "1"});
   }, []);
   return (
     <div className="p-3 flex bg-light">
