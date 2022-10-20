@@ -37,7 +37,7 @@ function App() {
           <Routes>
             <Route path='/' element={ <Home />} />
             <Route path='/search' element={ <Search /> } />
-            <Route path='/popup' element={ <MyVerticallyCenteredModal  />} />
+            <Route path='/popup/:id' element={ <MyVerticallyCenteredModal  />} />
             <Route path='/popup-mystuff' element={ <MyStuffPopup  />} />
             <Route path='/profile' element={ <Profile />} />
             <Route path="/addfile" element={ <Protected> <Addfile /> </Protected>}/>

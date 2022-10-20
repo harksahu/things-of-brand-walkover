@@ -60,6 +60,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
           email: "",
           active: "1",
           description: text,
+          _id: "",
         });
       }
     }

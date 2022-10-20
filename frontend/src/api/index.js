@@ -1,7 +1,7 @@
 import axios from "../interceptor/interceptor";
-const URL = "https://thingsofbrand.com";
+// const URL = "https://thingsofbrand.com";
 
-// const URL = "http://localhost:8080";
+const URL = "http://localhost:8080";
 
 
 // const uploadSingleFileAPI = async (fileObject) => {
@@ -31,6 +31,9 @@ const createProfile   = async (dataToSend) => {
 const getProfileDetails = async (email) => {
   return await axios.get(URL + "/api/profile/"+email);
 }
+const searchBrandApi = async (id) => {
+  return await axios.get(URL + "/api/brands/"+id);
+}
 
 
 const updateProfileFields = async({name="",aboutus="",links="",domain="",guidlines="",fontSize="",PrimaryColors="",secondaryColors="",backgroundColors="",email=""}) => {
@@ -54,8 +57,8 @@ const sendMyStuffAPI = async (email) => {
 const deleteMyStuffAPI = async (id) => {
   return await axios.delete(URL + "/api/Mystuff/" + id);
 };
-const sendSearchAPI = async ({title = "" , email = "" , active = "1",description=""}) => {
-  return await axios.get(URL + "/api/search?title=" + title+"&email="+email+"&active="+active+"&description="+description);
+const sendSearchAPI = async ({title = "" , email = "" , active = "1",description="",_id=""}) => {
+  return await axios.get(URL + "/api/search?title=" + title+"&email="+email+"&active="+active+"&description="+description+"&_id=" + _id);
 };
 const sendMydeleteStuffAPI = async (email) => {
   return await axios.get(URL + "/api/deteteItems/" + email);
@@ -105,7 +108,7 @@ return url;
 
 export {
   getS3SignUrl,
-  // uploadSingleFileAPI,
+  searchBrandApi,
   createBrandAPI,
   sendBrandAPI,
   sendMyStuffAPI,

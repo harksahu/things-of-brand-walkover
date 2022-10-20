@@ -5,7 +5,7 @@ import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   sendMyStuffAPI,
   deleteMyStuffAPI,
@@ -19,15 +19,13 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Modal from "react-bootstrap/Modal";
 import SvgInline from "../utils/SvgInline.js";
-import "../utils/svginline.css"
+import "../utils/svginline.css";
 
 import { connect } from "react-redux";
 
-
 import { searchBrand } from "../store/actions/search-brands";
 
-import Figure from 'react-bootstrap/Figure';
-
+import Figure from "react-bootstrap/Figure";
 
 // function MyVerticallyCenteredModal(props) {
 //   const [mwidth, setWidth] = useState();
@@ -234,7 +232,7 @@ import Figure from 'react-bootstrap/Figure';
 
 //   return (
 //     <Modal
-    
+
 //       {...props}
 //       fullscreen={true}
 //       aria-labelledby="contained-modal-title-vcenter"
@@ -348,30 +346,21 @@ import Figure from 'react-bootstrap/Figure';
 // }
 // function Home() {
 
-  function Not_found(){
-    return(
-  
-  
-  <Figure
-  className="text-center flex justify-cont"
-  >
-  <Figure.Image
-    width={500}
-    height={500}
-    alt="171x180"
-    src="https://i.pinimg.com/564x/f4/e0/d9/f4e0d998d00d96269eeb30c8c625031b.jpg"
-  
-  />
-  <Figure.Caption>
-  Data not found
-  </Figure.Caption>
-  </Figure>
-    )
-  }
+function Not_found() {
+  return (
+    <Figure className="text-center flex justify-cont">
+      <Figure.Image
+        width={500}
+        height={500}
+        alt="171x180"
+        src="https://i.pinimg.com/564x/f4/e0/d9/f4e0d998d00d96269eeb30c8c625031b.jpg"
+      />
+      <Figure.Caption>Data not found</Figure.Caption>
+    </Figure>
+  );
+}
 
-
-
-function Home({ searchBrandData=[], getSearchBrand }) {
+function Home({ searchBrandData = [], getSearchBrand }) {
   const [modalShow, setModalShow] = React.useState(false);
   const [modalShow2, setModalShow2] = React.useState(false);
   const { user } = UserAuth();
@@ -389,8 +378,8 @@ function Home({ searchBrandData=[], getSearchBrand }) {
   useEffect(() => {
     printIt();
     getSearchBrand({
-            email: user.email,
-            active: "",
+      email: user.email,
+      active: "",
     });
   }, [user]);
 
@@ -402,39 +391,41 @@ function Home({ searchBrandData=[], getSearchBrand }) {
         <Row md={4} className="g-4 flex p-3 bg-light">
           {/* {Array.from({ length: listOfbrands.length }).map((_, idx) => ( */}
           {/* {listOfbrands.map((brand) => { */}
-        { searchBrandData?.data?.length ===0?<Not_found/>: searchBrandData?.data?.map((brand) => {
-
-            // console.log(brand);
-            return (
-                
-              <Col key={brand._id} className="d-flex justify-content-center item ">
-                <Link to = "/popup-mystuff" state={brand}>
-                <Card
-                  style={{ width: "18rem" }}
-                  className="m-3"
-                  onClick={() => {
-                    setModalShow(+true);
-                    opendata(brand);
-                  }}
+          {searchBrandData?.data?.length === 0 ? (
+            <Not_found />
+          ) : (
+            searchBrandData?.data?.map((brand) => {
+              return (
+                <Col
+                  key={brand._id}
+                  className="d-flex justify-content-center item "
                 >
-                  <div style={{ overflow: "auto" }}>
-                    <SvgInline {...brand} />
-                  </div>
-                  <Card.Body>
-                    <Card.Title className="text-center">
-                      {brand.title}
-                    </Card.Title>
-                    <Card.Text></Card.Text>
-                  </Card.Body>
-                  <Card.Body></Card.Body>
-                </Card>
-
-              </Link>
-              </Col>
-            );
-          })}
+                  <Link to={"/popup/" + brand._id} state={brand}>
+                    <Card
+                      style={{ width: "18rem" }}
+                      className="m-3"
+                      onClick={() => {
+                        setModalShow(+true);
+                        opendata(brand);
+                      }}
+                    >
+                      <div style={{ overflow: "auto" }}>
+                        <SvgInline {...brand} />
+                      </div>
+                      <Card.Body>
+                        <Card.Title className="text-center">
+                          {brand.title}
+                        </Card.Title>
+                        <Card.Text></Card.Text>
+                      </Card.Body>
+                      <Card.Body></Card.Body>
+                    </Card>
+                  </Link>
+                </Col>
+              );
+            })
+          )}
           {/* ))} */}
-
         </Row>
       </div>
 
@@ -448,28 +439,27 @@ function Home({ searchBrandData=[], getSearchBrand }) {
             // console.log(brand);
             return (
               <Col key={brand._id}>
-                <Link to = "/popup-mystuff" state={brand}>
-                <Card
-                  style={{ width: "18rem" }}
-                  className="m-3"
-                  onClick={() => {
-                    setModalShow2(+true);
-                    opendata(brand);
-                  }}
-                >
-                  <div style={{ overflow: "auto" }}  className="img_size">
-                    <SvgInline {...brand} />
-                  </div>
-                  <Card.Body>
-                    <Card.Title className="text-center">
-                      {brand.title}
-                    </Card.Title>
-                    <Card.Text></Card.Text>
-                  </Card.Body>
-                  <Card.Body></Card.Body>
-                </Card>
+                <Link to={"/popup/" + brand._id} state={brand}>
+                  <Card
+                    style={{ width: "18rem" }}
+                    className="m-3"
+                    onClick={() => {
+                      setModalShow2(+true);
+                      opendata(brand);
+                    }}
+                  >
+                    <div style={{ overflow: "auto" }} className="img_size">
+                      <SvgInline {...brand} />
+                    </div>
+                    <Card.Body>
+                      <Card.Title className="text-center">
+                        {brand.title}
+                      </Card.Title>
+                      <Card.Text></Card.Text>
+                    </Card.Body>
+                    <Card.Body></Card.Body>
+                  </Card>
                 </Link>
-                
               </Col>
             );
           })}

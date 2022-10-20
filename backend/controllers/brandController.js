@@ -69,11 +69,11 @@ const UpdateBrand = async (req,res)=>{
 
 
 const searchBrandName = async (req,res)=>{
-    const titles = req.params.title.split(","); 
+    const id = req.params.id
     // console.log(titles);
     try {
         const data = await BrandModel.find({
-            title: { $in: titles} 
+            _id: id
 
         });
         res.json({

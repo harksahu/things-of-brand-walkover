@@ -214,7 +214,7 @@ function Home({ searchBrandData=[], getSearchBrand }) {
             <div key= { brand._id} className="d-flex justify-content-center item">
              
              
-             <Link to = "/popup" state={brand}>
+             <Link to = {"/popup/"+brand._id}>
               <Card                
                 onClick={() => {
                   opendata(brand);
