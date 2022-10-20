@@ -117,7 +117,7 @@ function MyVerticallyCenteredModal(params) {
         <Col className="rightbar">
           <div>
             <button className="tob-btn-trans" onClick={() => navigate(-1)}>
-              <span class="material-symbols-rounded d-block">close</span>
+              <span className="material-symbols-rounded d-block">close</span>
             </button>
           </div>
           <div>

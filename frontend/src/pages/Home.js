@@ -53,7 +53,7 @@ function Home() {
             <div className="d-flex justify-content-center">
               <button
                 type="button"
-                class="btn btn-primary btn-lg"
+                className="btn btn-primary btn-lg"
                 onClick={handleGoogleSignIn}
               >
                 Get started

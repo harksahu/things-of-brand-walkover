@@ -19,7 +19,7 @@ import Brand from './pages/Brand.js';
 
 function App() {
   var isPopup = useLocation().pathname === '/popup' ? true : false;
-  console.log('isPopup', isPopup);
+  // console.log('isPopup', isPopup);
   const [isUserLoaded , setIsUserLoaded] = useState(false);
   useEffect(()=>{
     fetchUser()
