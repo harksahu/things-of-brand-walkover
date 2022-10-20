@@ -68,7 +68,7 @@ if(process.env.NODE_ENV === 'production'){
      })
 }
 
-app.get("/croneUpdatedata", async (req, res) => {
+app.post("/croneUpdatedata", async (req, res) => {
   // console.log("app:-");
   const timeDelay = () => {
     setTimeout(() => {
