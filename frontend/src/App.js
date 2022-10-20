@@ -14,6 +14,7 @@ import './App.css';
 import { auth } from './firebase.js';
 import MyVerticallyCenteredModal from './pages/Popup';
 import MyStuffPopup from './pages/MyStuffpopup';
+import Brand from './pages/Brand.js';
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route path='/' element={ <Home />} />
             <Route path='/search' element={ <Search /> } />
             <Route path='/popup/:id' element={ <MyVerticallyCenteredModal  />} />
+            <Route path='/brand' element={ <Brand  />} />
             <Route path='/popup-mystuff' element={ <MyStuffPopup  />} />
             <Route path='/profile' element={ <Profile />} />
             <Route path="/addfile" element={ <Protected> <Addfile /> </Protected>}/>
