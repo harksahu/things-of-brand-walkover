@@ -13,8 +13,9 @@ import {generateUploadURL} from './services/s3.js';
 import profileRouters from "./routers/profileRouters.js";
 import puppy from "./details_feacher/getData.js"
 import getUpdatedData from "./details_feacher/gettingdata.js";
-
+import {setConfigTable,getUrlFromTable} from "./details_feacher/getUrlFromTable.js";
 import dotenv from 'dotenv'
+import { log } from "console";
 
 dotenv.config({path:'../.env'})
 
@@ -67,30 +68,35 @@ if(process.env.NODE_ENV === 'production'){
      })
 }
 
-
-
+app.get("/croneUpdatedata", async (req, res) => {
+  // console.log("app:-");
+  const timeDelay = () => {
+    setTimeout(() => {
+      getUrlFromTable();
+    }, 2000);
+  }
+  timeDelay();
+  setConfigTable();
+  res.send("crone run succesfully");
+});
 app.post("/getdata", async (req, res) => {
-    const url = req.body.link;
-    // console.log( "get:-"+url)
-  
-    const data = await puppy(url);
-    // console.log("app:-"+data);
-   res.send({
+  const url = req.body.link;
+  const data = await puppy(url);
+  res.send({
+    data: data 
+  });
+});
+app.post("/getUpdatedData", async (req, res) => {
+  const url = req.body.link
+  const xpath = req.body.xpath;
+  // console.log(url,xpath)
+  //  console.log("url"+url);
+  //  console.log("xapth"+xpath);
+  const data = await getUpdatedData(url,xpath);
+    res.send({
       data: data,
     });
-  });
-  
-  app.post("/getUpdatedData", async (req, res) => {
-    const url = req.body.url
-    const xpath = req.body.xpath;
-     console.log("url"+url);
-     console.log("xapth"+xpath);
-    const data = await getUpdatedData(url,xpath);
-   res.send({
-      data: data,
-    });
-  });
-
+});
 
 
 // console.log("abc")
