@@ -3,10 +3,10 @@ import JoiditEditer from 'jodit-react';
 
 
 
-const RichtextEditor = ({setGuidlines}) =>{
+const RichtextEditor = ({guidlines, setGuidlines}) =>{
     const editor =useRef(null);
 
-    return (<JoiditEditer ref={editor} onChange={content => setGuidlines(content)}/>);
+    return (<JoiditEditer ref={editor} value={guidlines} onChange={content => setGuidlines(content)}/>);
 }
 
 export default RichtextEditor;

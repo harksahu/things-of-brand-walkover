@@ -22,7 +22,7 @@ function Profile() {
   const { user } =  UserAuth();
   const [links, setLinks] = React.useState([]);
   const [results, setResults] = useState();
-// const [value, setValue] = useState("") ;
+
 
   var fresult;
 
@@ -94,7 +94,7 @@ useEffect(()=>{
   const profileDetails = async(req,res) => {
     // console.warn(params)
 
-    fresult = await getProfileDetails(user.email);
+    fresult = await getProfileDetails({email:user.email});
     setResults(fresult);
     console.warn(fresult);
     setName(fresult.data.data[0].name);
@@ -108,6 +108,8 @@ useEffect(()=>{
     setBackgroundColors(fresult.data.data[0].backgroundColors);
     // console.log(result.data.data[0].name)
     // console.log(result.data.data[0].aboutus)
+
+    
   }
 
   return (
@@ -180,7 +182,7 @@ useEffect(()=>{
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Guidlines</Form.Label>
-          <RichtextEditor setGuidlines={setGuidlines}/>
+          <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines}/>
             {/* {value} */}
         </Form.Group>
 

@@ -27,7 +27,9 @@ function Home({ searchBrandData = [], getSearchBrand }) {
     getSearchBrand({active: "1"});
   }, []);
   return (
+
     <div className="p-3 flex bg-light">
+      {console.log(searchBrandData)}
       <div className="d-flex flex-wrap justify-content-center">
         {searchBrandData?.data?.length === 0 ? (
           <Not_found />

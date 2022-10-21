@@ -1,7 +1,7 @@
 import axios from "../interceptor/interceptor";
-const URL = "https://thingsofbrand.com";
+// const URL = "https://thingsofbrand.com";
 
-// const URL = "http://localhost:8080";
+const URL = "http://localhost:8080";
 
 
 // const uploadSingleFileAPI = async (fileObject) => {
@@ -28,23 +28,23 @@ const createProfile   = async (dataToSend) => {
   return await axios.post(URL + "/api/profile", data);
 };
 
-const getProfileDetails = async (email) => {
-  return await axios.get(URL + "/api/profile/"+email);
+const getProfileDetails = async ({email="",domain=""}) => {
+  return await axios.get(URL + "/api/profile?email="+email+"&domain="+domain);
 }
 const searchBrandApi = async (id) => {
   return await axios.get(URL + "/api/brands/"+id);
 }
 
 
-const updateProfileFields = async({name="",aboutus="",links="",domain="",guidlines="",fontSize="",PrimaryColors="",secondaryColors="",backgroundColors="",email=""}) => {
+const updateProfileFields = async(dataToSend) => {
   // let link = links.split(",");
-// const data = {
-//   ...dataToSend
-// }
+const data = {
+  ...dataToSend
+}
 // console.log(data)
 // console.log(data.links)
   // console.log("name=" + name + "&aboutus=" + aboutus + "&links=" + link + "&domain=" + domain + "&guidlines=" + guidlines + "&fontSize=" + fontSize + "&PrimaryColors="+ PrimaryColors+ "&secondaryColors=" + secondaryColors + "&backgroundColors=" + backgroundColors + "&email=" + email)
-  return await axios.put(URL + "/api/profile?name=" + name + "&aboutus=" + aboutus + "&links=" + links + "&domain=" + domain + "&guidlines=" + guidlines + "&fontSize=" + fontSize + "&PrimaryColors="+ PrimaryColors+ "&secondaryColors=" + secondaryColors + "&backgroundColors=" + backgroundColors + "&email=" + email);
+  return await axios.put(URL + "/api/profile",data);
   // return await axios.put(URL + "/api/profile?data="+data);
 }
 
@@ -57,8 +57,8 @@ const sendMyStuffAPI = async (email) => {
 const deleteMyStuffAPI = async (id) => {
   return await axios.delete(URL + "/api/Mystuff/" + id);
 };
-const sendSearchAPI = async ({title = "" , email = "" , active = "",description="",_id=""}) => {
-  return await axios.get(URL + "/api/search?title=" + title+"&email="+email+"&active="+active+"&description="+description+"&_id=" + _id);
+const sendSearchAPI = async ({title = "" , email = "" , active = "",description="",_id="",domain=""}) => {
+  return await axios.get(URL + "/api/search?title=" + title+"&email="+email+"&active="+active+"&description="+description+"&_id=" + _id+ "&domain=" + domain);
 };
 const sendMydeleteStuffAPI = async (email) => {
   return await axios.get(URL + "/api/deteteItems/" + email);

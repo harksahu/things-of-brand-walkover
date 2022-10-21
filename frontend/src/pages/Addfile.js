@@ -68,16 +68,16 @@ const Addfile = () => {
             const imageUrl = data.split("?")[0];
             tags.push(domain);
             console.log(tags);
-            // const result = await getProfileDetails(user.email);
-            // const a = createBrandAPI({
-            //   url: imageUrl,
-            //   title,
-            //   description:tags,
-            //   // description: "description",
-            //   email: user?.email,
-            //   domain: domain,
-            // });
-            // console.log(a)
+            const result = await getProfileDetails(user.email);
+            const a = createBrandAPI({
+              url: imageUrl,
+              title,
+              description:tags,
+              // description: "description",
+              email: user?.email,
+              domain: domain,
+            });
+            console.log(a)
           } catch (error) {
             // console.log("cha")
             // console.log(error)
