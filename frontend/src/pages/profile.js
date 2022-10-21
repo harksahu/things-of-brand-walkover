@@ -22,7 +22,7 @@ function Profile() {
   const { user } =  UserAuth();
   const [links, setLinks] = React.useState([]);
   const [results, setResults] = useState();
-const [value, setValue] = useState("") ;
+// const [value, setValue] = useState("") ;
 
   var fresult;
 
@@ -180,7 +180,7 @@ useEffect(()=>{
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Guidlines</Form.Label>
-          <RichtextEditor setValue={setValue}/>
+          <RichtextEditor setGuidlines={setGuidlines}/>
             {/* {value} */}
         </Form.Group>
 

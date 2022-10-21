@@ -14,7 +14,7 @@ function Brand() {
 
 
   return (
-    <>
+    <div className="m-5">
       <div><h1>thingsofbrand</h1></div>
       <div>Lorem ipsum dolor sit amet consec expedita optio esse fugit aliquid ullam, tenetur, voluptate quia ad nobis vel nesciunt.</div><br/>
       <div><a href="http://thingsofbrand.com" target="_blank" rel="noopener noreferrer">thingsofbrand.com</a></div><br/>
@@ -26,10 +26,23 @@ function Brand() {
       
       
       </div>
-      <div><h5>Colors</h5></div>
-      <div><h5>Fonts</h5></div>
-
-    </>
+      <div><h5>Colors</h5>
+      <div className="d-flex">
+      <div id="primary" style={{width: 50 , height: 50 , backgroundColor : "black" , margin: 5}}></div>
+      <div id="secondary" style={{width: 50 , height: 50 , backgroundColor : "black" , margin: 5}}></div>
+      </div>
+      
+      </div>
+      <div><h5>Fonts Size</h5>
+      <div style={{fontFamily: '"Times New Roman", Times, serif'}}>"Times New Roman", Times, serif</div>
+      </div>
+<br />
+      <div><h5>background Colors</h5>
+      <div className="d-flex">
+      <div id="secondary" style={{width: 50 , height: 50 , backgroundColor : "black" , margin: 5}}></div>
+      </div>
+      </div>
+    </div>
   );
 }
 
