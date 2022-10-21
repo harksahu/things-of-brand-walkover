@@ -33,6 +33,7 @@ const Addfile = () => {
   const [title, setTitle] = useState();
   const [tags, setTags] = React.useState([]);
   const [domain, setDomain] = useState();
+  const [id, setId] = useState();
 
   const addTags = (event) => {
     if (event.key === "Enter" && event.target.value !== "") {
@@ -51,6 +52,7 @@ const Addfile = () => {
     // console.log("first");
     const fresult = await getProfileDetails(user.email);
     setDomain(fresult?.data?.data[0]?.domain);
+    setId(fresult?.data?.data[0]?._id);
     // console.log(fresult);
   };
 
@@ -64,7 +66,7 @@ const Addfile = () => {
           try {
             const data = await getS3SignUrl(file);
             // console.log(data);
-            // setModalShow(+true);
+            setModalShow(+true);
             const imageUrl = data.split("?")[0];
             tags.push(domain);
             console.log(tags);
@@ -75,7 +77,7 @@ const Addfile = () => {
               description:tags,
               // description: "description",
               email: user?.email,
-              domain: domain,
+              domain: id,
             });
             console.log(a)
           } catch (error) {
