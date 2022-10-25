@@ -6,12 +6,14 @@ import Col from "react-bootstrap/Col";
 import "../utils/svginline.css";
 import "./home.css";
 import { UserAuth } from "../context/AuthContext";
-import { getProfileDetails,sendSearchAPI } from "../api/index.js";
+import {
+  getProfileDetails,
+  sendSearchAPI,
+  updateProfileFields,
+} from "../api/index.js";
 import SvgInline from "../utils/SvgInline.js";
 import Card from "react-bootstrap/Card";
 import Figure from "react-bootstrap/Figure";
-
-
 
 function Not_found() {
   return (
@@ -32,12 +34,14 @@ function Brand() {
   const [name, setName] = useState();
   const [aboutus, setAboutus] = useState();
   const [domain, setDomain] = useState();
+  const [logo, setlogo] = useState();
   const [guidlines, setGuidlines] = useState();
   const [fontSize, setFontSize] = useState();
   const [PrimaryColors, setPrimaryColors] = useState();
   const [secondaryColors, setSecondaryColors] = useState();
   const [backgroundColors, setBackgroundColors] = useState();
-  const { user } =  UserAuth();
+  const [email, setEmail] = useState();
+  const { user } = UserAuth();
   const [links, setLinks] = React.useState([]);
   const [results, setResults] = useState();
   const [DomainPost, setDomainPost] = useState();
@@ -45,16 +49,15 @@ function Brand() {
   const title = useParams();
   // console.log(title.title);
 
+  const getbrandslogo = async () => {
+    console.log(domain);
+    if (domain) {
+      const data = await sendSearchAPI({ domain: id });
+      console.log(data);
+      setDomainPost(data?.data?.data);
+    }
+  };
 
-const getbrandslogo = async ()=>{
-  console.log(domain);
-  if(domain){
-  const data = await sendSearchAPI({domain:id})
-  console.log(data);
-  setDomainPost(data?.data?.data)
-  }
-}
-   
   const getbrand = async () => {
     const fresult = await getProfileDetails({ domain: title.title });
     console.log(fresult);
@@ -70,144 +73,174 @@ const getbrandslogo = async ()=>{
     setFontSize(fresult.data.data[0].fontSize);
     setPrimaryColors(fresult.data.data[0].PrimaryColors);
     setSecondaryColors(fresult.data.data[0].secondaryColors);
+    setlogo(fresult.data.data[0].logo);
     setBackgroundColors(fresult.data.data[0].backgroundColors);
+    setEmail(fresult.data.data[0].email);
 
+    getbrandslogo();
+  };
 
-    getbrandslogo()
-
+  const updateLogo = async () => {
+    const data = {
+      name: name,
+      aboutus: aboutus,
+      logo: logo,
+      links: links,
+      domain: domain,
+      guidlines: guidlines,
+      fontSize: fontSize,
+      PrimaryColors: PrimaryColors,
+      secondaryColors: secondaryColors,
+      backgroundColors: backgroundColors,
+      email: email,
+    };
+    await updateProfileFields(data);
   };
 
   useEffect(() => {
     getbrand();
-    if(domain){
-      getbrandslogo()
+    if (domain) {
+      getbrandslogo();
     }
   }, [domain]);
 
   return (
-<>
-{
-  domain ? 
-  <div className="m-5">
-  <div>
-    <h1>{name}</h1>
-  </div>
-  <div>
-    {aboutus}
-  </div>
-  <br />
-  <div>
-    <a
-      href={"https://"+domain}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {domain}
-    </a>
-  </div>
-  <br />
-  <div>
-    Guidelines
-    <p>
-      <a target="_blank" rel="noopener noreferrer">
-        {" "}
-        How to create ads
-      </a>
-    </p>
-    <p>
-      <a target="_blank" rel="noopener noreferrer">
-        {" "}
-        How to use fonts
-      </a>
-    </p>
-  </div>
-  <div>
-    <h5>Logos</h5>
-    <div>
-{
-DomainPost?.map((brand) => {
-// console.log(brand);
-return (
-  <div
-    key={brand._id}
-    className="d-flex justify-content-center item"
-  >
+    <>
+      {domain ? (
+        <div className="m-5">
+          <div>
+            <h1>{name}</h1>
+          </div>
+          <div>{aboutus}</div>
+          <br />
+          <div>
+            <a
+              href={"https://" + domain}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {domain}
+            </a>
+          </div>
+          <br />
+          <div>
+            Guidelines
+            <p>
+              <a target="_blank" rel="noopener noreferrer">
+                {" "}
+                How to create ads
+              </a>
+            </p>
+            <p>
+              <a target="_blank" rel="noopener noreferrer">
+                {" "}
+                How to use fonts
+              </a>
+            </p>
+          </div>
+          <div>
+            <h5>Logos</h5>
+            <div className="d-flex flex-wrap justify-content-center">
+              {DomainPost?.map((brand) => {
+                // console.log(brand);
+                return (
+                  <div>
+                    <div key={brand._id} className=" flex-wrap item">
+                      <Link to={"/popup/" + brand._id}>
+                        <Card>
+                          <div
+                            style={{ overflow: "auto" }}
+                            className="img_size"
+                          >
+                            <SvgInline {...brand} />
+                          </div>
 
-    <Link to={"/popup/" + brand._id}>
-      <Card>
-        <div style={{ overflow: "auto" }} className="img_size">
-          <SvgInline {...brand} />
+                          <Card.Body>
+                            <Card.Title
+                              style={{ textDecoration: "none" }}
+                              className="text-center"
+                            >
+                              {brand.title}
+                            </Card.Title>
+                            <Card.Text></Card.Text>
+                          </Card.Body>
+                        </Card>
+                      </Link>
+                    </div>
+                    {email === user.email ? (
+                      logo === brand.url ? (
+                        <button
+                        className="d-flex m-auto btn btn-success"
+                        disabled
+                      >
+                        default logo
+                      </button>
+                      ) : (
+                        <button
+                          className="d-flex m-auto btn btn-primary"
+                          onClick={() => {
+                            setlogo(brand.url);
+                            updateLogo();
+                          }}
+                        >
+                          Make default
+                        </button>
+                      )
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <h5>Colors</h5>
+            <div className="d-flex">
+              <div
+                id="primary"
+                style={{
+                  width: 50,
+                  height: 50,
+                  backgroundColor: PrimaryColors,
+                  margin: 5,
+                }}
+              ></div>
+              <div
+                id="secondary"
+                style={{
+                  width: 50,
+                  height: 50,
+                  backgroundColor: secondaryColors,
+                  margin: 5,
+                }}
+              ></div>
+            </div>
+          </div>
+          <div>
+            <h5>Fonts Size</h5>
+            <div style={{ fontSize: fontSize + "px" }}>{fontSize + "px"}</div>
+          </div>
+          <br />
+          <div>
+            <h5>background Colors</h5>
+            <div className="d-flex">
+              <div
+                id="background"
+                style={{
+                  width: 50,
+                  height: 50,
+                  backgroundColor: backgroundColors,
+                  margin: 5,
+                }}
+              ></div>
+            </div>
+          </div>
         </div>
-
-        <Card.Body>
-          <Card.Title
-            style={{ textDecoration: "none" }}
-            className="text-center"
-          >
-            {brand.title}
-          </Card.Title>
-          <Card.Text></Card.Text>
-        </Card.Body>
-      </Card>
-    </Link>
-  </div>
-);
-})
-}
-
-  
-    </div>
-  </div>
-  <div>
-    <h5>Colors</h5>
-    <div className="d-flex">
-      <div
-        id="primary"
-        style={{
-          width: 50,
-          height: 50,
-          backgroundColor: PrimaryColors,
-          margin: 5,
-        }}
-      ></div>
-      <div
-        id="secondary"
-        style={{
-          width: 50,
-          height: 50,
-          backgroundColor: secondaryColors,
-          margin: 5,
-        }}
-      ></div>
-    </div>
-  </div>
-  <div>
-    <h5>Fonts Size</h5>
-    <div style={{ fontSize: fontSize+"px" }}>{fontSize+"px"}</div>
-  </div>
-  <br />
-  <div>
-    <h5>background Colors</h5>
-    <div className="d-flex">
-      <div
-        id="background"
-        style={{
-          width: 50,
-          height: 50,
-          backgroundColor: backgroundColors,
-          margin: 5,
-        }}
-      ></div>
-    </div>
-  </div>
-</div>
-
-:
-
-<Not_found />
-}
-
-</>
+      ) : (
+        <Not_found />
+      )}
+    </>
   );
 }
 

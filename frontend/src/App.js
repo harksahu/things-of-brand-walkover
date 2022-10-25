@@ -34,7 +34,7 @@ function App() {
       {
         isUserLoaded && 
         <AuthContextProvider>
-          { isPopup ? null : <NavigationBar /> }          
+<NavigationBar/>
           <Routes>
             <Route path='/' element={ <Home />} />
             <Route path='/search' element={ <Search /> } />

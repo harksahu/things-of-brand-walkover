@@ -8,6 +8,10 @@ const profileSchema = new mongoose.Schema({
     aboutus:  {
         type: String,
     },
+    logo:  {
+        type: String,
+        default: null
+    },
     links :{
         type: [String]
     },
