@@ -47,9 +47,9 @@ useEffect(()=>{
   const storeProfileValue = async(req,res)=>{
     console.log(results)
     if(results){
+        updateProfileValue();
+        alert("updated successfully");
       
-      updateProfileValue();
-      alert("updated successfully");
     }
     else{
       console.warn(fresult);
