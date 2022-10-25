@@ -43,13 +43,10 @@ const deleteBrand = async (req,res)=>{
 
 
 const UpdateBrand = async (req,res)=>{
+    console.log(req.body.email)
     try {
-        const data = await BrandModel.findAll({
+        const data = await BrandModel.find({
             email: req.body.email
-        },{
-            $push: {
-                domain: req.body.domain
-            }
         });
         res.json({
             "message":"Successfully Updated",
