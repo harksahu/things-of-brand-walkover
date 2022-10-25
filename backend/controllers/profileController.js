@@ -53,7 +53,7 @@ const updateProfile = async (req,res)=>{
     try{
         const data = await profileModel.updateOne(
             {
-                data: req.body.data
+                email: req.body.email
             },
             {
                 $set:f_data
