@@ -47,7 +47,7 @@ const UpdateBrand = async (req,res)=>{
         const data = await BrandModel.findAll({
             email: req.body.email
         },{
-            $set: {
+            $push: {
                 domain: req.body.domain
             }
         });
