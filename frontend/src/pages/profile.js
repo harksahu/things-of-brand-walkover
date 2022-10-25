@@ -79,13 +79,13 @@ function Profile() {
       name: name,
       aboutus: aboutus,
       links: links,
-      domain: domain,
+     domain: domain,
       guidlines: guidlines,
       fontSize: fontSize,
       PrimaryColors: PrimaryColors,
       secondaryColors: secondaryColors,
       backgroundColors: backgroundColors,
-      email: user.email,
+      email : user?.email
     };
     await updateProfileFields(data);
   };
