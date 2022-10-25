@@ -44,7 +44,7 @@ const data = {
 console.log(data)
 // console.log(data.links)
   // console.log("name=" + name + "&aboutus=" + aboutus + "&links=" + link + "&domain=" + domain + "&guidlines=" + guidlines + "&fontSize=" + fontSize + "&PrimaryColors="+ PrimaryColors+ "&secondaryColors=" + secondaryColors + "&backgroundColors=" + backgroundColors + "&email=" + email)
-  return await axios.put(URL + "/api/profile",data);
+  return await axios.put(URL + "/api/brands",data);
   // return await axios.put(URL + "/api/profile?data="+data);
 }
 
