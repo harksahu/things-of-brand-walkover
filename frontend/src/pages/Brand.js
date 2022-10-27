@@ -10,13 +10,15 @@ import {
   getProfileDetails,
   sendSearchAPI,
   updateProfileFields,
+  getTXT
 } from "../api/index.js";
 import SvgInline from "../utils/SvgInline.js";
 import Card from "react-bootstrap/Card";
 import Figure from "react-bootstrap/Figure";
-import { FcApproval ,FcHighPriority} from "react-icons/fc";
+import { FcApproval, FcHighPriority } from "react-icons/fc";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 function Not_found() {
   return (
@@ -56,13 +58,38 @@ function Brand() {
 
 
 
+  const verifyDomain = async()=>{
+    const TXT = await getTXT(domain)
+    console.log(TXT?.data?.data[0][0]);
+    console.log(TXT?.data?.data);
+    // console.log("['abcdefghijklmnop']");
+    console.log("abcdefghijklmnop");
+    console.log(TXT?.data?.data[0] == "abcdefghijklmnop");
+    console.log(verify)
+
+  }
+
+
+  function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+
+
+
   const title = useParams();
   // console.log(title.title);
 
   const getbrandslogo = async () => {
     console.log(domain);
     if (domain) {
-      const data = await sendSearchAPI({ domain: id ,active:1 });
+      const data = await sendSearchAPI({ domain: id, active: 1 });
       console.log(data);
       setDomainPost(data?.data?.data);
     }
@@ -86,7 +113,7 @@ function Brand() {
     setlogo(fresult.data.data[0].logo);
     setBackgroundColors(fresult.data.data[0].backgroundColors);
     setEmail(fresult.data.data[0].email);
-    setVerify(fresult.data.data[0].verify);
+    // setVerify(fresult.data.data[0].verify);
 
     getbrandslogo();
   };
@@ -134,12 +161,12 @@ function Brand() {
             </a>
             {
               email === user.email ? (
-              verify?(<FcApproval/>):
-             (<> <FcHighPriority/> 
-             <button
-             className="m-auto btn btn-primary"
-                          onClick={() => {handleShow()}}>verify</button></>)
-              ):""
+                (verify==="true") ? (<FcApproval />) :
+                  (<> <FcHighPriority />
+                    <button
+                      className="m-auto btn btn-primary"
+                      onClick={() => { handleShow() }}>verify</button></>)
+              ) :  ""
             }
           </div>
           <br />
@@ -190,11 +217,11 @@ function Brand() {
                     {email === user.email ? (
                       logo === brand.url ? (
                         <button
-                        className="d-flex m-auto btn btn-success"
-                        disabled
-                      >
-                        default logo
-                      </button>
+                          className="d-flex m-auto btn btn-success"
+                          disabled
+                        >
+                          default logo
+                        </button>
                       ) : (
                         <button
                           className="d-flex m-auto btn btn-primary"
@@ -265,17 +292,37 @@ function Brand() {
 
 
 
-<Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>PLease verify domain {domain}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+          
+        <ListGroup variant="flush">
+      <ListGroup.Item>Step 1: Get your verification code</ListGroup.Item>
+      <ListGroup.Item>Step 2: Sign in to your domain host</ListGroup.Item>
+      <ListGroup.Item>Step 3: Add the verification record to your domain's DNS records</ListGroup.Item>
+      <ListGroup.Item>Step 4: Tell Thingsofbrand Workspace to check your verification code</ListGroup.Item>
+    </ListGroup>
+    <ListGroup.Item className="m-auto">
+        {
+        verify != undefined || verify != null?
+       verify
+       :
+      makeid(15)
+      //  console.log(verify)
+
+        }
+</ListGroup.Item>
+
+
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
+          <Button variant="primary" onClick={()=>{verifyDomain()}}>
+            verify
           </Button>
         </Modal.Footer>
       </Modal>
