@@ -70,13 +70,29 @@ function Brand() {
   }
 
 
-  function makeid(length) {
+  async function makeid(length) {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
     for ( var i = 0; i < length; i++ ) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
+    setVerify(result)
+    const data = {
+      name: name,
+      aboutus: aboutus,
+      logo: logo,
+      links: links,
+      domain: domain,
+      guidlines: guidlines,
+      fontSize: fontSize,
+      PrimaryColors: PrimaryColors,
+      secondaryColors: secondaryColors,
+      backgroundColors: backgroundColors,
+      email: email,
+      verify: verify
+    };
+    await updateProfileFields(data);
     return result;
 }
 
@@ -113,7 +129,7 @@ function Brand() {
     setlogo(fresult.data.data[0].logo);
     setBackgroundColors(fresult.data.data[0].backgroundColors);
     setEmail(fresult.data.data[0].email);
-    // setVerify(fresult.data.data[0].verify);
+    setVerify(fresult.data.data[0].verify);
 
     getbrandslogo();
   };
@@ -131,6 +147,7 @@ function Brand() {
       secondaryColors: secondaryColors,
       backgroundColors: backgroundColors,
       email: email,
+      verify: verify
     };
     await updateProfileFields(data);
   };
@@ -165,7 +182,7 @@ function Brand() {
                   (<> <FcHighPriority />
                     <button
                       className="m-auto btn btn-primary"
-                      onClick={() => { handleShow() }}>verify</button></>)
+                      onClick={() => { handleShow();makeid() }}>verify</button></>)
               ) :  ""
             }
           </div>
