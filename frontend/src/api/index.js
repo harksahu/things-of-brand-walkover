@@ -86,6 +86,12 @@ const setAuthKey =  async (email)=>{
   // console.log(email);
   return await axios.get(URL + "/api/storeKey/"+email);
 }
+const getTXT =  async (link)=>{
+  const data = {
+    link
+  }
+  return await axios.post(URL + "/getDomainTXT",data);
+}
 
 
 
@@ -105,6 +111,7 @@ return url;
 export {
   getS3SignUrl,
   searchBrandApi,
+  getTXT,
   createBrandAPI,
   sendBrandAPI,
   sendMyStuffAPI,
