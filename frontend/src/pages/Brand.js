@@ -14,6 +14,9 @@ import {
 import SvgInline from "../utils/SvgInline.js";
 import Card from "react-bootstrap/Card";
 import Figure from "react-bootstrap/Figure";
+import { FcApproval ,FcHighPriority} from "react-icons/fc";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 function Not_found() {
   return (
@@ -45,6 +48,13 @@ function Brand() {
   const [links, setLinks] = React.useState([]);
   const [results, setResults] = useState();
   const [DomainPost, setDomainPost] = useState();
+  const [verify, setVerify] = useState();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
+
 
   const title = useParams();
   // console.log(title.title);
@@ -52,7 +62,7 @@ function Brand() {
   const getbrandslogo = async () => {
     console.log(domain);
     if (domain) {
-      const data = await sendSearchAPI({ domain: id });
+      const data = await sendSearchAPI({ domain: id ,active:1 });
       console.log(data);
       setDomainPost(data?.data?.data);
     }
@@ -76,15 +86,16 @@ function Brand() {
     setlogo(fresult.data.data[0].logo);
     setBackgroundColors(fresult.data.data[0].backgroundColors);
     setEmail(fresult.data.data[0].email);
+    setVerify(fresult.data.data[0].verify);
 
     getbrandslogo();
   };
 
-  const updateLogo = async () => {
+  const updateLogo = async (logo_url) => {
     const data = {
       name: name,
       aboutus: aboutus,
-      logo: logo,
+      logo: logo_url,
       links: links,
       domain: domain,
       guidlines: guidlines,
@@ -121,6 +132,15 @@ function Brand() {
             >
               {domain}
             </a>
+            {
+              email === user.email ? (
+              verify?(<FcApproval/>):
+             (<> <FcHighPriority/> 
+             <button
+             className="m-auto btn btn-primary"
+                          onClick={() => {handleShow()}}>verify</button></>)
+              ):""
+            }
           </div>
           <br />
           <div>
@@ -180,7 +200,7 @@ function Brand() {
                           className="d-flex m-auto btn btn-primary"
                           onClick={() => {
                             setlogo(brand.url);
-                            updateLogo();
+                            updateLogo(brand.url);
                           }}
                         >
                           Make default
@@ -240,6 +260,25 @@ function Brand() {
       ) : (
         <Not_found />
       )}
+
+
+
+
+
+<Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
