@@ -1,0 +1,38 @@
+import { vectorsAngle } from "canvg";
+import React, { useEffect, useState } from "react";
+import { Canvg, presets } from "canvg";
+const SvgInline = (props) => {
+  // console.log(props.url);
+
+  const [svg, setSvg] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isErrored, setIsErrored] = useState(false);
+  useEffect(() => {
+    fetch(props.url)
+    .then((res) => res.text())
+    .then((res)=>{
+      var svgToHe = res.toString();
+      svgToHe = svgToHe?.replace("<svg ", `<svg id="${props.url}" `)
+      setSvg(svgToHe);
+    })
+    .catch(setIsErrored)
+  }, [props.url]);
+
+  useEffect(() => {
+  // console.log(svg);
+  }, [svg]);
+
+  return (
+    <div
+      className={`d-grid svgInline svgInline--${isLoaded ? "loaded" : "loading"} ${
+        isErrored ? "svgInline--errored" : "" 
+      }`}
+      // id={props.url}
+      dangerouslySetInnerHTML={{ __html: svg }}
+      offset="30%"
+      style={{}}
+    />
+  );
+};
+
+export default SvgInline;

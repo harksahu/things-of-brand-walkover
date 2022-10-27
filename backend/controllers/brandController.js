@@ -1,9 +1,11 @@
 import BrandModel from '../models/brandModel.js'
 const createBrand = async (req,res)=>{
     try {
+        console.log(req.body);
         const data = await BrandModel.create({
             ...req.body,
             Url:req.body.url
+        
         });
         res.json({
             "message":"Successfully Created",
@@ -67,9 +69,13 @@ const UpdateBrand = async (req,res)=>{
 
 
 const searchBrandName = async (req,res)=>{
+    const titles = req.params.title.split(","); 
+    // console.log(titles);
     try {
-        const data = await BrandModel.find(
-        );
+        const data = await BrandModel.find({
+            title: { $in: titles} 
+
+        });
         res.json({
             "message":"Related Data is Successfully Find",
             "data":data

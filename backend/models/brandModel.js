@@ -15,12 +15,15 @@ const brandsSchema = new mongoose.Schema({
         require: true
     },
     description : {
-        type: String
+        type: [String]
     },
     active: {
         type: Boolean,
         default: 1
     },
+    domain:{
+        type: String
+    }
     })
 
     const Brand = mongoose.model("brands",brandsSchema)

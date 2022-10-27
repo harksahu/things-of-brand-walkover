@@ -1,0 +1,5 @@
+.rightbar{
+    min-width: 300px !important;
+    max-width: 300px !important;
+    border-left: 1px solid #ccc;
+}
