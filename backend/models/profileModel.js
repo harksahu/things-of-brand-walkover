@@ -39,7 +39,7 @@ const profileSchema = new mongoose.Schema({
         type: String
     },
     verify:{
-        type:Boolean
+        type:String
     }
     })
 
