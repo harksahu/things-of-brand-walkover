@@ -55,7 +55,7 @@ const UpdateBrand = async (req,res)=>{
         // });
         const data = await BrandModel.updateMany(
             { email: req.body.email }, 
-            { $push: { domain: req.body.domain} },
+            { $push: { domain: req.body.domain}},
         )
         res.json({
             "message":"Successfully Updated",

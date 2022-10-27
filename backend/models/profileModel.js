@@ -37,6 +37,9 @@ const profileSchema = new mongoose.Schema({
     },
     email:{
         type: String
+    },
+    verify:{
+        type:Boolean
     }
     })
 

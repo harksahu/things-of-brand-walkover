@@ -35,7 +35,6 @@ const searchBrandApi = async (id) => {
   return await axios.get(URL + "/api/brands/"+id);
 }
 
-
 const updateProfileFields = async(dataToSend) => {
   // let link = links.split(",");
 const data = {
@@ -74,7 +73,6 @@ const storeAuthKey =  async (authdata)=>{
 const data = {
   ...authdata
 }
-
   return await axios.post(URL + "/api/storeKey",data);
 }
 
@@ -101,9 +99,7 @@ const getS3SignUrl = async (file ) => {
     body: file
   })
 return url;
-  
 };
-
 
 
 export {
