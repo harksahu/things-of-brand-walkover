@@ -20,6 +20,7 @@ const createProfile = async (req,res)=>{
     }
 }
 
+
 const getProfileDetails = async (req,res)=>{ 
     console.log(req.query.email);
     var email = req.query.email === ""?{}:{email: req.query.email };
@@ -75,5 +76,5 @@ const updateProfile = async (req,res)=>{
 export {
     createProfile,
     getProfileDetails,
-    updateProfile
+    updateProfile,
 }

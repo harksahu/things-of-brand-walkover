@@ -10,7 +10,7 @@ const profileSchema = new mongoose.Schema({
     },
     logo:  {
         type: String,
-        default: null
+        // default: null
     },
     links :{
         type: [String]

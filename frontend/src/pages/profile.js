@@ -36,6 +36,7 @@ function Profile() {
   };
 
   useEffect(() => {
+
     if (user) {
       if (user?.email) {
         profileDetails();
@@ -94,6 +95,8 @@ function Profile() {
     // console.warn(params)
 
     fresult = await getProfileDetails({ email: user.email });
+    // fresult = await getProfileDetails();
+    console.log(fresult)
     setResults(fresult.data.data[0]);
     console.warn(fresult);
     console.warn(fresult.data.data[0]);
@@ -176,6 +179,7 @@ function Profile() {
             onChange={(e) => setDomain(e.target.value)}
             value={domain}
           />
+         
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">

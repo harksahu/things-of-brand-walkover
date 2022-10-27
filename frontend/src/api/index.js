@@ -12,6 +12,8 @@ const URL = "http://localhost:8080";
 //   return data;
 // };
 
+
+
 const createBrandAPI = async (dataToSend) => {
   const data = {
     ...dataToSend,
@@ -129,5 +131,5 @@ export {
   deleteAuthKey,
   createProfile,
   getProfileDetails,
-  updateProfileFields
+  updateProfileFields,
 };
