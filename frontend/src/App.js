@@ -15,16 +15,17 @@ import { auth } from './firebase.js';
 import MyVerticallyCenteredModal from './pages/Popup';
 import MyStuffPopup from './pages/MyStuffpopup';
 import Brand from './pages/Brand.js';
+import HomeLogo from './pages/Searchlogo.js';
 
 
 function App() {
   var isPopup = useLocation().pathname === '/popup' ? true : false;
   // console.log('isPopup', isPopup);
-  const [isUserLoaded , setIsUserLoaded] = useState(false);
-  useEffect(()=>{
+  const [isUserLoaded, setIsUserLoaded] = useState(false);
+  useEffect(() => {
     fetchUser()
-  },[])
-  const fetchUser = async ()=>{
+  }, [])
+  const fetchUser = async () => {
     await auth.currentUser
     setIsUserLoaded(true)
   }
@@ -32,19 +33,20 @@ function App() {
     <>
 
       {
-        isUserLoaded && 
+        isUserLoaded &&
         <AuthContextProvider>
-<NavigationBar/>
+          <NavigationBar />
           <Routes>
-            <Route path='/' element={ <Home />} />
-            <Route path='/search' element={ <Search /> } />
-            <Route path='/popup/:id' element={ <MyVerticallyCenteredModal  />} />
-            <Route path='/:title' element={ <Brand  />} />
-            <Route path='/popup-mystuff' element={ <MyStuffPopup  />} />
-            <Route path='/profile' element={ <Profile />} />
-            <Route path="/addfile" element={ <Protected> <Addfile /> </Protected>}/>
-            <Route path="/MyStuff" element={ <Protected> <MyStuff /> </Protected>}/>
-            <Route path='/account' element={ <Protected> <Account /> </Protected>}/>
+            <Route path='/' element={<Home />} />
+            <Route path='/search' element={<Search />} />
+            <Route path='/searchlogo' element={<HomeLogo />} />
+            <Route path='/popup/:id' element={<MyVerticallyCenteredModal />} />
+            <Route path='/:title' element={<Brand />} />
+            <Route path='/popup-mystuff' element={<MyStuffPopup />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
+            <Route path="/MyStuff" element={<Protected> <MyStuff /> </Protected>} />
+            <Route path='/account' element={<Protected> <Account /> </Protected>} />
           </Routes>
         </AuthContextProvider>
       }

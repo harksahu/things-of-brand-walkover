@@ -6,8 +6,6 @@ import { connect } from "react-redux";
 import { searchBrand } from "../store/actions/search-brands";
 import Figure from "react-bootstrap/Figure";
 import SvgInline from "../utils/SvgInline.js";
-import {getProfileDetails} from "../api/index.js";
-import { async } from "@firebase/util";
 
 function Not_found() {
   return (
@@ -23,17 +21,10 @@ function Not_found() {
   );
 }
 
-// function Home({ searchBrandData = [], getSearchBrand }) {
-function Home() {
+function HomeLogo({ searchBrandData = [], getSearchBrand }) {
 
-const [searchBrandData,setSearchBrandData] = useState()
-
-const getProfile = async () =>{
-  setSearchBrandData(await getProfileDetails({}));
-
-}
   useEffect(() => {
-    getProfile()
+    getSearchBrand({active: "1"});
   }, []);
   return (
 
@@ -43,17 +34,17 @@ const getProfile = async () =>{
         {searchBrandData?.data?.length === 0 ? (
           <Not_found />
         ) : (
-          searchBrandData?.data?.data?.map((Company) => {
+          searchBrandData?.data?.map((brand) => {
             // console.log(brand);
             return (
               <div
-                key={Company._id}
+                key={brand._id}
                 className="d-flex justify-content-center item"
               >
-                <Link to={"/" + Company.domain}>
+                <Link to={"/popup/" + brand._id}>
                   <Card>
                     <div style={{ overflow: "auto" }} className="img_size">
-                    <SvgInline url={Company.logo} />
+                      <SvgInline url={brand.url} />
                     </div>
 
                     <Card.Body>
@@ -61,7 +52,7 @@ const getProfile = async () =>{
                         style={{ textDecoration: "none" }}
                         className="text-center"
                       >
-                        {Company.name}
+                        {brand.title}
                       </Card.Title>
                       <Card.Text></Card.Text>
                     </Card.Body>
@@ -76,16 +67,15 @@ const getProfile = async () =>{
   );
 }
 
-// const mapStateToProp = (state, ownProps) => {
-//   return { ...ownProps, searchBrandData: state.searchBrandReducer };
-// };
+const mapStateToProp = (state, ownProps) => {
+  return { ...ownProps, searchBrandData: state.searchBrandReducer };
+};
 
-// const mapDispatchToProp = (dispatch) => {
-//   return {
-//     getSearchBrand: (payload) => dispatch(searchBrand(payload)),
-//   };
-// };
+const mapDispatchToProp = (dispatch) => {
+  return {
+    getSearchBrand: (payload) => dispatch(searchBrand(payload)),
+  };
+};
 
-// export default connect(mapStateToProp, mapDispatchToProp)(Home);
+export default connect(mapStateToProp, mapDispatchToProp)(HomeLogo);
 
-export default Home;
