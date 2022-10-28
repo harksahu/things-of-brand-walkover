@@ -24,10 +24,13 @@ const getProfileDetails = async (req,res)=>{
     console.log(req.query.email);
     var email = req.query.email === ""?{}:{email: req.query.email };
     var domain = req.query.domain === ""?{}:{domain: req.query.domain };
+    var name = req.query.name === ""?{}:{name: { '$regex': req.query.name ,"$options":"i"} };
+
     try {
         const data = await profileModel.find({
             ...email,
-            ...domain
+            ...domain,
+            ...name
         });
         res.json({
             "message":"Related Data is Successfully Find",

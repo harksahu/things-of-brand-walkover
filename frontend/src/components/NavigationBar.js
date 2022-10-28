@@ -15,12 +15,34 @@ import { useLocation } from "react-router-dom";
 import { searchBrand, clearSearchBrand } from "../store/actions/search-brands";
 import { connect } from "react-redux";
 import { dividerClasses } from "@mui/material";
+import { async } from "@firebase/util";
 
 function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+
+
+
+const getcompany = async() =>{
+// console.log(searchBrandData);
+var set = new Set(searchBrandData?.data?.domain[0]);
+// down.innerHTML = JSON.stringify([...set])
+console.log(set);
+
+
+
+}
+
+
+useEffect(()=>{
+getcompany()
+},[searchBrandData])
+
+
+
 
   const [searchItem, setItems] = useState();
 

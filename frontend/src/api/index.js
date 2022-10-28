@@ -28,8 +28,8 @@ const createProfile   = async (dataToSend) => {
   return await axios.post(URL + "/api/profile", data);
 };
 
-const getProfileDetails = async ({email="",domain=""}) => {
-  return await axios.get(URL + "/api/profile?email="+email+"&domain="+domain);
+const getProfileDetails = async ({email="",domain="",name=""}) => {
+  return await axios.get(URL + "/api/profile?email="+email+"&domain="+domain+"&name="+name);
 }
 const searchBrandApi = async (id) => {
   return await axios.get(URL + "/api/brands/"+id);

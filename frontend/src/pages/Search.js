@@ -23,18 +23,18 @@ function Not_found() {
   );
 }
 
-// function Home({ searchBrandData = [], getSearchBrand }) {
-function Home() {
+function Home({ searchBrandData = [], getSearchBrand }) {
+// function Home() {
 
-const [searchBrandData,setSearchBrandData] = useState()
+// const [searchBrandData,setSearchBrandData] = useState()
 
-const getProfile = async () =>{
-  setSearchBrandData(await getProfileDetails({}));
+// const getProfile = async () =>{
+//   setSearchBrandData(await getProfileDetails({}));
 
-}
-  useEffect(() => {
-    getProfile()
-  }, []);
+// }
+useEffect(() => {
+  getSearchBrand({});
+}, []);
   return (
 
     <div className="p-3 flex bg-light">
@@ -43,7 +43,7 @@ const getProfile = async () =>{
         {searchBrandData?.data?.length === 0 ? (
           <Not_found />
         ) : (
-          searchBrandData?.data?.data?.map((Company) => {
+          searchBrandData?.data?.map((Company) => {
             // console.log(brand);
             return (
               <div
@@ -76,16 +76,16 @@ const getProfile = async () =>{
   );
 }
 
-// const mapStateToProp = (state, ownProps) => {
-//   return { ...ownProps, searchBrandData: state.searchBrandReducer };
-// };
+const mapStateToProp = (state, ownProps) => {
+  return { ...ownProps, searchBrandData: state.searchBrandReducer };
+};
 
-// const mapDispatchToProp = (dispatch) => {
-//   return {
-//     getSearchBrand: (payload) => dispatch(searchBrand(payload)),
-//   };
-// };
+const mapDispatchToProp = (dispatch) => {
+  return {
+    getSearchBrand: (payload) => dispatch(searchBrand(payload)),
+  };
+};
 
-// export default connect(mapStateToProp, mapDispatchToProp)(Home);
+export default connect(mapStateToProp, mapDispatchToProp)(Home);
 
-export default Home;
+// export default Home;
