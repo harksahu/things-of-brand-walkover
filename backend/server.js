@@ -87,7 +87,8 @@ app.post("/getdata", async (req, res) => {
   });
 });
 app.post("/getUpdatedData", async (req, res) => {
-  const url = req.body.link
+ try {
+  const url = req.body.url
   const xpath = req.body.xpath;
   // console.log(url,xpath)
   //  console.log("url"+url);
@@ -96,6 +97,11 @@ app.post("/getUpdatedData", async (req, res) => {
     res.send({
       data: data,
     });
+ } catch (error) {
+  res.send({
+    data: error,
+  });
+ }
 });
 
 
