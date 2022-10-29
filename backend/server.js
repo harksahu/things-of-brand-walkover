@@ -16,7 +16,7 @@ import getUpdatedData from "./details_feacher/gettingdata.js";
 import {setConfigTable,getUrlFromTable} from "./details_feacher/getUrlFromTable.js";
 import dotenv from 'dotenv'
 import { log } from "console";
-
+import dns from "dns";
 dotenv.config({path:'../.env'})
 
 
@@ -96,6 +96,25 @@ app.post("/getUpdatedData", async (req, res) => {
     res.send({
       data: data,
     });
+});
+app.post("/getDomainTXT", async (req, res) => {
+  const url = req.body.link
+  console.log(req.body);
+  const xpath = req.body.xpath;
+  dns.resolve(url, 'TXT', ( error,record)=>{
+    if (error) {
+      res.send({
+        error: error,
+      });
+    }
+  else{
+    res.send({
+      data: record,
+    });
+  }
+
+ })
+    
 });
 
 

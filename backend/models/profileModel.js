@@ -39,8 +39,9 @@ const profileSchema = new mongoose.Schema({
         type: String
     },
     verify:{
-        type:String
-    }
+        type: String
+    },
+
     })
 
     const Profile = mongoose.model("profiles",profileSchema)

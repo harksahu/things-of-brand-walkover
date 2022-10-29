@@ -61,7 +61,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
                             style={{ overflow: "auto" }}
                             className="img_size"
                           >
-                            <SvgInline {...brand} />
+                           <SvgInline url={brand.url} />
                           </div>
 
                           <Card.Body>
@@ -106,7 +106,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
                             style={{ overflow: "auto" }}
                             className="img_size"
                           >
-                            <SvgInline {...brand} />
+                           <SvgInline url={brand.url} />
                           </div>
 
                           <Card.Body>
