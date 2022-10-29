@@ -20,6 +20,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { async } from "@firebase/util";
+import { AiFillPlusCircle } from "react-icons/ai";
 
 function Not_found() {
   return (
@@ -89,8 +90,8 @@ function Brand() {
     for (var i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-
-    if (verify === undefined && verify === null) {
+    if (verify == undefined && verify == null) {
+      console.log(verify);
 
       setVerify(result)
 
@@ -134,7 +135,7 @@ function Brand() {
   };
 
   const getbrand = async () => {
-    const fresult = await getProfileDetails({ domain: title.title });
+    const fresult = await getProfileDetails({ domain: title.title ,searchfrom:true});
     console.log(fresult);
 
     console.warn(fresult.data.data[0]);
@@ -185,6 +186,12 @@ function Brand() {
     <>
       {domain ? (
         <div className="m-5">
+          {email === user.email ? (
+           
+              <Link to={"/addfile"}>
+                <AiFillPlusCircle style={{ float: "right", fontSize: 40 }} />
+              </Link>): ""
+            }
           <div>
             <h1>{name}</h1>
           </div>
@@ -232,7 +239,7 @@ function Brand() {
                 return (
                   <div>
                     <div key={brand._id} className=" flex-wrap item">
-                      <Link to={"/popup/" + brand._id}>
+                      <Link to={"/stuff/" + brand._id}>
                         <Card>
                           <div
                             style={{ overflow: "auto" }}
@@ -349,11 +356,11 @@ function Brand() {
           >
             <div className="ms-2 me-auto">
               <div className="fw-bold">verification code</div>
-             <div  style={{border: "2px solid #d4d4d4" , backgroundColor: "#ececec"}}>
-             {
-                verify
-              }
-             </div>
+              <div style={{ border: "2px solid #d4d4d4", backgroundColor: "#ececec" }}>
+                {
+                  verify
+                }
+              </div>
             </div>
 
           </ListGroup.Item>

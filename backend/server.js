@@ -97,25 +97,23 @@ app.post("/getUpdatedData", async (req, res) => {
       data: data,
     });
 });
-app.post("/getDomainTXT", async (req, res) => {
-  const url = req.body.link
-  console.log(req.body);
-  const xpath = req.body.xpath;
-  dns.resolve(url, 'TXT', ( error,record)=>{
-    if (error) {
-      res.send({
-        error: error,
-      });
-    }
-  else{
-    res.send({
-      data: record,
-    });
+app.post("/getUpdatedData", async (req, res) => {
+  try {
+   const url = req.body.url
+   const xpath = req.body.xpath;
+   // console.log(url,xpath)
+   //  console.log("url"+url);
+   //  console.log("xapth"+xpath);
+   const data = await getUpdatedData(url,xpath);
+     res.send({
+       data: data,
+     });
+  } catch (error) {
+   res.send({
+     data: error,
+   });
   }
-
- })
-    
-});
+ });
 
 
 // console.log("abc")

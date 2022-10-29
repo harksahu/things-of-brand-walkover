@@ -104,7 +104,7 @@ const Addfile = () => {
     <React.Fragment>
       <Card style={{ width: "30rem" }} className="text-center m-auto">
         <Card.Body>
-          <Card.Header>File to Upload</Card.Header>
+          <Card.Header>File to <h3>{domain}</h3></Card.Header>
           <br />
           {/* <Card.Text> */}
           <Stack gap={3}>

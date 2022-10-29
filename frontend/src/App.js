@@ -40,7 +40,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/search' element={<Search />} />
             <Route path='/searchlogo' element={<HomeLogo />} />
-            <Route path='/popup/:id' element={<MyVerticallyCenteredModal />} />
+            <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />
             <Route path='/:title' element={<Brand />} />
             <Route path='/popup-mystuff' element={<MyStuffPopup />} />
             <Route path='/profile' element={<Profile />} />

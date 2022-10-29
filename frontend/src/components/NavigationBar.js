@@ -79,11 +79,13 @@ getcompany()
         }
       } else {
         getSearchBrand({
-          title: text,
-          email: "",
-          active: "1",
-          description: text,
-          _id: "",
+          // title: text,
+          // email: "",
+          // active: "1",
+          // description: text,
+          // _id: "",
+          name :text,
+          domain:text,
         });
       }
     }
@@ -127,26 +129,30 @@ getcompany()
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Form className="justify-content-center">
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="me-2"
-                  aria-label="Search"
-                  show={true}
-                  onChange={(e) => {
-                    sendData(e.target.value);
-                  }}
-                  value={searchItem || ""}
-                  list="browsers"
-                  name="myBrowser"
-                />
-                <datalist id="browsers">
-                  {searchBrandData.data.map((brandData) => {
-                    return(<option value={brandData.title}/>);
-                  })}
-                </datalist>
-              </Form>
+             {
+              location.pathname === "/search"?
+               <Form className="justify-content-center">
+               <Form.Control
+                 type="search"
+                 placeholder="Search"
+                 className="me-2"
+                 aria-label="Search"
+                 show={true}
+                 onChange={(e) => {
+                   sendData(e.target.value);
+                 }}
+                 value={searchItem || ""}
+                 list="browsers"
+                 name="myBrowser"
+               />
+               <datalist id="browsers">
+                 {searchBrandData.data.map((brandData) => {
+                   return(<option value={brandData.title}/>);
+                 })}
+               </datalist>
+             </Form>
+             :""
+             }
             </Nav>
 
             {user?.displayName ? (
