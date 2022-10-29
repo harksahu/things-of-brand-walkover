@@ -186,11 +186,13 @@ function Brand() {
     <>
       {domain ? (
         <div className="m-5">
-          {email === user.email ? (
+
+          {user?
+          email === user.email ? (
            
               <Link to={"/addfile"}>
                 <AiFillPlusCircle style={{ float: "right", fontSize: 40 }} />
-              </Link>): ""
+              </Link>): "":""
             }
           <div>
             <h1>{name}</h1>
@@ -205,14 +207,14 @@ function Brand() {
             >
               {domain}
             </a>
-            {
+            {user?
               email === user.email ? (
                 (verify === "true") ? (<FcApproval />) :
                   (<> <FcHighPriority />
                     <button
                       className="m-auto btn btn-primary"
                       onClick={() => { handleShow(); makeid(15) }}>verify</button></>)
-              ) : ""
+              ) : "":""
             }
           </div>
           <br />
@@ -260,7 +262,8 @@ function Brand() {
                         </Card>
                       </Link>
                     </div>
-                    {email === user.email ? (
+                    {user?
+                    email === user.email ? (
                       logo === brand.url ? (
                         <button
                           className="d-flex m-auto btn btn-success"
@@ -281,7 +284,7 @@ function Brand() {
                       )
                     ) : (
                       ""
-                    )}
+                    ):""}
                   </div>
                 );
               })}
