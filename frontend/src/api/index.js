@@ -1,7 +1,7 @@
 import axios from "../interceptor/interceptor";
-// const URL = "https://thingsofbrand.com";
+const URL = "https://thingsofbrand.com";
 
-const URL = "http://localhost:8080";
+// const URL = "http://localhost:8080";
 
 
 // const uploadSingleFileAPI = async (fileObject) => {
@@ -30,8 +30,8 @@ const createProfile   = async (dataToSend) => {
   return await axios.post(URL + "/api/profile", data);
 };
 
-const getProfileDetails = async ({email="",domain=""}) => {
-  return await axios.get(URL + "/api/profile?email="+email+"&domain="+domain);
+const getProfileDetails = async ({email="",domain="",name="",searchfrom="false"}) => {
+  return await axios.get(URL + "/api/profile?email="+email+"&domain="+domain+"&name="+name+"&searchfrom="+searchfrom);
 }
 const searchBrandApi = async (id) => {
   return await axios.get(URL + "/api/brands/"+id);
