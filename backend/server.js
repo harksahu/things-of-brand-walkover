@@ -16,7 +16,7 @@ import getUpdatedData from "./details_feacher/gettingdata.js";
 import {setConfigTable,getUrlFromTable} from "./details_feacher/getUrlFromTable.js";
 import dotenv from 'dotenv'
 import { log } from "console";
-
+import dns from "dns";
 dotenv.config({path:'../.env'})
 
 
@@ -103,6 +103,23 @@ app.post("/getUpdatedData", async (req, res) => {
   });
  }
 });
+app.post("/getUpdatedData", async (req, res) => {
+  try {
+   const url = req.body.url
+   const xpath = req.body.xpath;
+   // console.log(url,xpath)
+   //  console.log("url"+url);
+   //  console.log("xapth"+xpath);
+   const data = await getUpdatedData(url,xpath);
+     res.send({
+       data: data,
+     });
+  } catch (error) {
+   res.send({
+     data: error,
+   });
+  }
+ });
 
 
 // console.log("abc")

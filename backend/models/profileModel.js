@@ -37,7 +37,11 @@ const profileSchema = new mongoose.Schema({
     },
     email:{
         type: String
-    }
+    },
+    verify:{
+        type: String
+    },
+
     })
 
     const Profile = mongoose.model("profiles",profileSchema)
