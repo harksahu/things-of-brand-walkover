@@ -50,7 +50,7 @@ const Addfile = () => {
   const profileDetails = async (req, res) => {
     // console.warn(params)
     // console.log("first");
-    const fresult = await getProfileDetails(user.email);
+    const fresult = await getProfileDetails({email:user.email});
     setDomain(fresult?.data?.data[0]?.domain);
     setId(fresult?.data?.data[0]?._id);
     // console.log(fresult);
@@ -70,7 +70,7 @@ const Addfile = () => {
             const imageUrl = data.split("?")[0];
             tags.push(domain);
             console.log(tags);
-            const result = await getProfileDetails(user.email);
+            const result = await getProfileDetails({email:user.email});
             const a = createBrandAPI({
               url: imageUrl,
               title,
