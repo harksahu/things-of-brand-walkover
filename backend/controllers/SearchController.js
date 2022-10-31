@@ -7,6 +7,8 @@ const searchBrandName = async (req,res)=>{
         var description = req.query.description === ""?{}:{description: { '$regex': req.query.description ,"$options":"i"} };
         var email = req.query.email === ""?{}:{email: req.query.email };
         var active = req.query.active === ""?{}:{active: req.query.active };
+        var _id = req.query._id === ""?{}:{_id: req.query._id };
+        var domain = req.query.domain === ""?{}:{domain: req.query.domain };
         // console.log(description)
         const data = await BrandModel.find({
 
@@ -14,6 +16,8 @@ const searchBrandName = async (req,res)=>{
              $or: [ { ...title  }, { ...description } ] ,
                 ...email ,
                 ...active ,
+                ..._id,
+                ...domain
                 
         });
         res.json({

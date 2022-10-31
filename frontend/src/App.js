@@ -14,11 +14,12 @@ import './App.css';
 import { auth } from './firebase.js';
 import MyVerticallyCenteredModal from './pages/Popup';
 import MyStuffPopup from './pages/MyStuffpopup';
+import Brand from './pages/Brand.js';
 
 
 function App() {
   var isPopup = useLocation().pathname === '/popup' ? true : false;
-  console.log('isPopup', isPopup);
+  // console.log('isPopup', isPopup);
   const [isUserLoaded , setIsUserLoaded] = useState(false);
   useEffect(()=>{
     fetchUser()
@@ -33,11 +34,12 @@ function App() {
       {
         isUserLoaded && 
         <AuthContextProvider>
-          { isPopup ? null : <NavigationBar /> }          
+<NavigationBar/>
           <Routes>
             <Route path='/' element={ <Home />} />
             <Route path='/search' element={ <Search /> } />
-            <Route path='/popup' element={ <MyVerticallyCenteredModal  />} />
+            <Route path='/popup/:id' element={ <MyVerticallyCenteredModal  />} />
+            <Route path='/:title' element={ <Brand  />} />
             <Route path='/popup-mystuff' element={ <MyStuffPopup  />} />
             <Route path='/profile' element={ <Profile />} />
             <Route path="/addfile" element={ <Protected> <Addfile /> </Protected>}/>

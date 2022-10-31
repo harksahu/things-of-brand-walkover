@@ -6,25 +6,10 @@ import Col from "react-bootstrap/Col";
 import "../utils/svginline.css";
 import "./home.css";
 import { UserAuth } from "../context/AuthContext";
-import { GoogleButton } from "react-google-button";
-// import {  } from 'react-router-dom';
-// import Button from "react-bootstrap/Button";
-// import Card from "react-bootstrap/Card";
-// import Accordion from "react-bootstrap/Accordion";
-// import Form from "react-bootstrap/Form";
-// import InputGroup from "react-bootstrap/InputGroup";
-// import { sendBrandAPI } from "../api";
-// import saveas from "file-saver";
-// import { Canvg, presets } from "canvg";
-// import Modal from "react-bootstrap/Modal";
-// import MyVerticallyCenteredModal from "./Popup";
-// import { connect } from "react-redux";
-// import { searchBrand } from "../store/actions/search-brands";
-// import Figure from 'react-bootstrap/Figure';
-// import SvgInline from '../utils/SvgInline.js';
-// import { Divide } from '../../../node_modules/mongoose/types/expressions.d';
 
-function Home({ searchBrandData = [], getSearchBrand }) {
+
+
+function Home() {
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
@@ -68,7 +53,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
             <div className="d-flex justify-content-center">
               <button
                 type="button"
-                class="btn btn-primary btn-lg"
+                className="btn btn-primary btn-lg"
                 onClick={handleGoogleSignIn}
               >
                 Get started

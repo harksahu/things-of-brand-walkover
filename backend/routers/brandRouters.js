@@ -6,6 +6,6 @@ const routes = express.Router();
 
 
 routes.route('/').post(createBrand).put(UpdateBrand).delete(deleteBrand);
-routes.route('/:title').get(searchBrandName);
+routes.route('/:id').get(searchBrandName);
 
 export default routes;

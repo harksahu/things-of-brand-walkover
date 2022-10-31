@@ -6,7 +6,7 @@ const routes = express.Router();
 
 
 routes.route('/').post(createProfile)
-routes.route('/:email').get(getProfileDetails);
+routes.route('/').get(getProfileDetails);
 routes.route('/').put(updateProfile);
 
 

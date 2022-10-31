@@ -11,7 +11,7 @@ import Container from "react-bootstrap/Container";
 // import { sendSearchAPI } from "../api";
 import { sendSearchAPI } from "../api/index.js";
 import Dropdown from "react-bootstrap/Dropdown";
-
+import { useLocation } from "react-router-dom";
 import { searchBrand, clearSearchBrand } from "../store/actions/search-brands";
 import { connect } from "react-redux";
 import { dividerClasses } from "@mui/material";
@@ -20,37 +20,38 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
-  const [listOfbrands, setListOfBrands] = useState([]);
-  const [show, setShow] = useState(true);
-  const [showGoogleBtn, setshowGoogleBtn] = useState(false);
+  const location = useLocation();
 
   const [searchItem, setItems] = useState();
 
   const sendData = async (text) => {
-    // console.log(window.location.pathname);
+    console.log(location.pathname);
     text = text.trimStart();
     setItems(text);
     if (text === "") {
       setItems(null);
-      if (window.location.pathname === "/MyStuff") {
+      console.log(location.pathname === "/MyStuff");
+      if (location.pathname === "/MyStuff") {
+        console.log("first")
         await getSearchBrand({
           title: "",
           email: user.email,
-          active: "1",
+          active: "",
           description: "",
         });
       } else {
-        getSearchBrand({ title: "" });
+        await getSearchBrand({ title: "" ,active: "1"});
       }
     } else {
       // getSearchBrand({title:text});
-      if (window.location.pathname === "/MyStuff") {
+      if (location.pathname === "/MyStuff") {
+        console.log("Sec");
         if (user.email) {
           console.log(user.email);
           await getSearchBrand({
             title: text,
             email: user.email,
-            active: "1",
+            active: "",
             description: text,
           });
         }
@@ -60,6 +61,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
           email: "",
           active: "1",
           description: text,
+          _id: "",
         });
       }
     }
@@ -166,7 +168,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (       
-                <button type="button" class="btn btn-outline-primary" onClick={handleGoogleSignIn}>Get started</button>
+                <button type="button" className="btn btn-outline-primary" onClick={handleGoogleSignIn}>Get started</button>
             )}
           </Navbar.Collapse>
         </Container>

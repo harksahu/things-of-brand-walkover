@@ -2,7 +2,7 @@ import profileModel from '../models/profileModel.js'
 
 const createProfile = async (req,res)=>{
     try {
-        // console.log(req.body);
+        console.log(req.body);
         const data = await profileModel.create({
             ...req.body,
             Url:req.body.url
@@ -21,10 +21,13 @@ const createProfile = async (req,res)=>{
 }
 
 const getProfileDetails = async (req,res)=>{ 
-    console.log(req.params.email);
+    console.log(req.query.email);
+    var email = req.query.email === ""?{}:{email: req.query.email };
+    var domain = req.query.domain === ""?{}:{domain: req.query.domain };
     try {
         const data = await profileModel.find({
-            email: req.params.email
+            ...email,
+            ...domain
         });
         res.json({
             "message":"Related Data is Successfully Find",
@@ -39,18 +42,18 @@ const getProfileDetails = async (req,res)=>{
 }
 
 const updateProfile = async (req,res)=>{
-    let link = req.query.links;
-    link = link.split(",");
+    let link = req.body.links;
+    console.log(req.body)
     console.log(link)
     const f_data = {
-        ...req.query,
+        ...req.body,
         links: link
     }
     // console.log("data :-" , req.query)
     try{
         const data = await profileModel.updateOne(
             {
-                data: req.query.data
+                email: req.body.email
             },
             {
                 $set:f_data
