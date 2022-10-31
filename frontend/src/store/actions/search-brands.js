@@ -1,5 +1,5 @@
 import * as actionTypes from '../enums';
-import {sendSearchAPI} from '../../api/index';
+import {getProfileDetails} from '../../api/index';
 
 export const clearSearchBrand = () => {
   return {
@@ -10,7 +10,7 @@ export const clearSearchBrand = () => {
 export const searchBrand = (payload) => {
   return (dispatch) => {
     dispatch(searchBrandInitiate());
-    sendSearchAPI(payload)
+    getProfileDetails(payload)
 
       .then((response) => {
         // console.log(response);

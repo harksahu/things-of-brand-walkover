@@ -23,11 +23,17 @@ const createProfile = async (req,res)=>{
 const getProfileDetails = async (req,res)=>{ 
     console.log(req.query.email);
     var email = req.query.email === ""?{}:{email: req.query.email };
+    var searchfrom = req.query.searchfrom 
     var domain = req.query.domain === ""?{}:{domain: req.query.domain };
+    var name = req.query.name === ""?{}:{name: { '$regex': req.query.name ,"$options":"i"} };
+    console.log(searchfrom);
+   if (searchfrom == "true") {
     try {
         const data = await profileModel.find({
+              ...domain ,
             ...email,
-            ...domain
+            // ...domain
+
         });
         res.json({
             "message":"Related Data is Successfully Find",
@@ -39,6 +45,25 @@ const getProfileDetails = async (req,res)=>{
             error
         }).status(400);
     }
+   } else {
+    try {
+        const data = await profileModel.find({
+            $or: [  { ...name  },{  ...domain } ] ,
+            ...email,
+            // ...domain
+
+        });
+        res.json({
+            "message":"Related Data is Successfully Find",
+            "data":data
+        }).status(200);
+    } catch (error) {
+        res.send({
+            message:"Some Error on Server",
+            error
+        }).status(400);
+    }
+   }
 }
 
 const updateProfile = async (req,res)=>{

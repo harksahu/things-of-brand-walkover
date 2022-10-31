@@ -50,7 +50,7 @@ const Addfile = () => {
   const profileDetails = async (req, res) => {
     // console.warn(params)
     // console.log("first");
-    const fresult = await getProfileDetails(user.email);
+    const fresult = await getProfileDetails({email:user.email});
     setDomain(fresult?.data?.data[0]?.domain);
     setId(fresult?.data?.data[0]?._id);
     // console.log(fresult);
@@ -70,7 +70,7 @@ const Addfile = () => {
             const imageUrl = data.split("?")[0];
             tags.push(domain);
             console.log(tags);
-            const result = await getProfileDetails(user.email);
+            const result = await getProfileDetails({email:user.email});
             const a = createBrandAPI({
               url: imageUrl,
               title,
@@ -104,7 +104,7 @@ const Addfile = () => {
     <React.Fragment>
       <Card style={{ width: "30rem" }} className="text-center m-auto">
         <Card.Body>
-          <Card.Header>File to Upload</Card.Header>
+          <Card.Header>File to <h3>{domain}</h3></Card.Header>
           <br />
           {/* <Card.Text> */}
           <Stack gap={3}>

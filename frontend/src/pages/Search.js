@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 import { searchBrand } from "../store/actions/search-brands";
 import Figure from "react-bootstrap/Figure";
 import SvgInline from "../utils/SvgInline.js";
+import {getProfileDetails} from "../api/index.js";
+import { async } from "@firebase/util";
 
 function Not_found() {
   return (
@@ -22,10 +24,17 @@ function Not_found() {
 }
 
 function Home({ searchBrandData = [], getSearchBrand }) {
+// function Home() {
 
-  useEffect(() => {
-    getSearchBrand({active: "1"});
-  }, []);
+// const [searchBrandData,setSearchBrandData] = useState()
+
+// const getProfile = async () =>{
+//   setSearchBrandData(await getProfileDetails({}));
+
+// }
+useEffect(() => {
+  getSearchBrand({});
+}, []);
   return (
 
     <div className="p-3 flex bg-light">
@@ -34,17 +43,17 @@ function Home({ searchBrandData = [], getSearchBrand }) {
         {searchBrandData?.data?.length === 0 ? (
           <Not_found />
         ) : (
-          searchBrandData?.data?.map((brand) => {
+          searchBrandData?.data?.map((Company) => {
             // console.log(brand);
             return (
               <div
-                key={brand._id}
+                key={Company._id}
                 className="d-flex justify-content-center item"
               >
-                <Link to={"/popup/" + brand._id}>
+                <Link to={"/" + Company.domain}>
                   <Card>
                     <div style={{ overflow: "auto" }} className="img_size">
-                      <SvgInline {...brand} />
+                    <SvgInline url={Company.logo} />
                     </div>
 
                     <Card.Body>
@@ -52,7 +61,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
                         style={{ textDecoration: "none" }}
                         className="text-center"
                       >
-                        {brand.title}
+                        {Company.name}
                       </Card.Title>
                       <Card.Text></Card.Text>
                     </Card.Body>
@@ -79,3 +88,4 @@ const mapDispatchToProp = (dispatch) => {
 
 export default connect(mapStateToProp, mapDispatchToProp)(Home);
 
+// export default Home;

@@ -15,12 +15,34 @@ import { useLocation } from "react-router-dom";
 import { searchBrand, clearSearchBrand } from "../store/actions/search-brands";
 import { connect } from "react-redux";
 import { dividerClasses } from "@mui/material";
+import { async } from "@firebase/util";
 
 function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+
+
+
+const getcompany = async() =>{
+// console.log(searchBrandData);
+var set = new Set(searchBrandData?.data?.domain[0]);
+// down.innerHTML = JSON.stringify([...set])
+console.log(set);
+
+
+
+}
+
+
+useEffect(()=>{
+getcompany()
+},[searchBrandData])
+
+
+
 
   const [searchItem, setItems] = useState();
 
@@ -57,11 +79,13 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
         }
       } else {
         getSearchBrand({
-          title: text,
-          email: "",
-          active: "1",
-          description: text,
-          _id: "",
+          // title: text,
+          // email: "",
+          // active: "1",
+          // description: text,
+          // _id: "",
+          name :text,
+          domain:text,
         });
       }
     }
@@ -105,26 +129,30 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Form className="justify-content-center">
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="me-2"
-                  aria-label="Search"
-                  show={true}
-                  onChange={(e) => {
-                    sendData(e.target.value);
-                  }}
-                  value={searchItem || ""}
-                  list="browsers"
-                  name="myBrowser"
-                />
-                <datalist id="browsers">
-                  {searchBrandData.data.map((brandData) => {
-                    return(<option value={brandData.title}/>);
-                  })}
-                </datalist>
-              </Form>
+             {
+              location.pathname === "/search"?
+               <Form className="justify-content-center">
+               <Form.Control
+                 type="search"
+                 placeholder="Search"
+                 className="me-2"
+                 aria-label="Search"
+                 show={true}
+                 onChange={(e) => {
+                   sendData(e.target.value);
+                 }}
+                 value={searchItem || ""}
+                 list="browsers"
+                 name="myBrowser"
+               />
+               <datalist id="browsers">
+                 {searchBrandData.data.map((brandData) => {
+                   return(<option value={brandData.title}/>);
+                 })}
+               </datalist>
+             </Form>
+             :""
+             }
             </Nav>
 
             {user?.displayName ? (

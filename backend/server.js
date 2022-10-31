@@ -16,7 +16,7 @@ import getUpdatedData from "./details_feacher/gettingdata.js";
 import {setConfigTable,getUrlFromTable} from "./details_feacher/getUrlFromTable.js";
 import dotenv from 'dotenv'
 import { log } from "console";
-
+import dns from "dns";
 dotenv.config({path:'../.env'})
 
 
@@ -80,14 +80,23 @@ app.post("/croneUpdatedata", async (req, res) => {
   res.send("crone run succesfully");
 });
 app.post("/getdata", async (req, res) => {
-  const url = req.body.link;
-  const data = await puppy(url);
+  
+  try {
+    const url = req.body.link;
+    const data = await puppy(url);
+    // console.log(data);
   res.send({
     data: data 
   });
+  } catch (error) {
+    res.send({
+      data: error,
+    });
+  }
 });
 app.post("/getUpdatedData", async (req, res) => {
-  const url = req.body.link
+ try {
+  const url = req.body.url
   const xpath = req.body.xpath;
   // console.log(url,xpath)
   //  console.log("url"+url);
@@ -96,7 +105,29 @@ app.post("/getUpdatedData", async (req, res) => {
     res.send({
       data: data,
     });
+ } catch (error) {
+  res.send({
+    data: error,
+  });
+ }
 });
+app.post("/getUpdatedData", async (req, res) => {
+  try {
+   const url = req.body.url
+   const xpath = req.body.xpath;
+   // console.log(url,xpath)
+   //  console.log("url"+url);
+   //  console.log("xapth"+xpath);
+   const data = await getUpdatedData(url,xpath);
+     res.send({
+       data: data,
+     });
+  } catch (error) {
+   res.send({
+     data: error,
+   });
+  }
+ });
 
 
 // console.log("abc")

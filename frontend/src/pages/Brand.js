@@ -10,13 +10,17 @@ import {
   getProfileDetails,
   sendSearchAPI,
   updateProfileFields,
+  getTXT
 } from "../api/index.js";
 import SvgInline from "../utils/SvgInline.js";
 import Card from "react-bootstrap/Card";
 import Figure from "react-bootstrap/Figure";
-import { FcApproval ,FcHighPriority} from "react-icons/fc";
+import { FcApproval, FcHighPriority } from "react-icons/fc";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import ListGroup from 'react-bootstrap/ListGroup';
+import { async } from "@firebase/util";
+import { AiFillPlusCircle } from "react-icons/ai";
 
 function Not_found() {
   return (
@@ -56,20 +60,82 @@ function Brand() {
 
 
 
+  const verifyDomain = async () => {
+    const TXT = await getTXT(domain)
+    // console.log(TXT?.data?.data[0][0]);
+    // console.log(TXT?.data?.data);
+    for (let i = 0; i < TXT?.data?.data.length; i++) {
+      // text += cars[i] + "<br>";
+      // console.log(TXT?.data?.data[i][0]);
+      if (TXT?.data?.data[i][0] == verify) {
+        updateVerify("true");
+        break;
+      }
+      else {
+
+        console.log("not verify");
+      }
+      document.getElementById("error").innerHTML = "not verify";
+    }
+    // console.log(TXT?.data?.data[i] == "abcdefghijklmnop");
+    // console.log(verify)
+
+  }
+
+
+  async function makeid(length) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    if (verify == undefined && verify == null) {
+      console.log(verify);
+
+      setVerify(result)
+
+      await updateVerify(result)
+    }
+    return result;
+  }
+
+  const updateVerify = async (result) => {
+    const data = {
+      name: name,
+      aboutus: aboutus,
+      logo: logo,
+      links: links,
+      domain: domain,
+      guidlines: guidlines,
+      fontSize: fontSize,
+      PrimaryColors: PrimaryColors,
+      secondaryColors: secondaryColors,
+      backgroundColors: backgroundColors,
+      email: email,
+      verify: result
+    };
+    console.log(verify);
+    // console.log();
+    if (verify === undefined && verify === null) {
+      await updateProfileFields(data)
+    }
+  }
+
   const title = useParams();
-  // console.log(title.title);
+
 
   const getbrandslogo = async () => {
     console.log(domain);
     if (domain) {
-      const data = await sendSearchAPI({ domain: id ,active:1 });
+      const data = await sendSearchAPI({ domain: id, active: 1 });
       console.log(data);
       setDomainPost(data?.data?.data);
     }
   };
 
   const getbrand = async () => {
-    const fresult = await getProfileDetails({ domain: title.title });
+    const fresult = await getProfileDetails({ domain: title.title ,searchfrom:true});
     console.log(fresult);
 
     console.warn(fresult.data.data[0]);
@@ -104,6 +170,7 @@ function Brand() {
       secondaryColors: secondaryColors,
       backgroundColors: backgroundColors,
       email: email,
+      verify: verify
     };
     await updateProfileFields(data);
   };
@@ -119,6 +186,14 @@ function Brand() {
     <>
       {domain ? (
         <div className="m-5">
+
+          {user?
+          email === user.email ? (
+           
+              <Link to={"/addfile"}>
+                <AiFillPlusCircle style={{ float: "right", fontSize: 40 }} />
+              </Link>): "":""
+            }
           <div>
             <h1>{name}</h1>
           </div>
@@ -132,14 +207,14 @@ function Brand() {
             >
               {domain}
             </a>
-            {
+            {user?
               email === user.email ? (
-              verify?(<FcApproval/>):
-             (<> <FcHighPriority/> 
-             <button
-             className="m-auto btn btn-primary"
-                          onClick={() => {handleShow()}}>verify</button></>)
-              ):""
+                (verify === "true") ? (<FcApproval />) :
+                  (<> <FcHighPriority />
+                    <button
+                      className="m-auto btn btn-primary"
+                      onClick={() => { handleShow(); makeid(15) }}>verify</button></>)
+              ) : "":""
             }
           </div>
           <br />
@@ -166,7 +241,7 @@ function Brand() {
                 return (
                   <div>
                     <div key={brand._id} className=" flex-wrap item">
-                      <Link to={"/popup/" + brand._id}>
+                      <Link to={"/stuff/" + brand._id}>
                         <Card>
                           <div
                             style={{ overflow: "auto" }}
@@ -187,14 +262,15 @@ function Brand() {
                         </Card>
                       </Link>
                     </div>
-                    {email === user.email ? (
+                    {user?
+                    email === user.email ? (
                       logo === brand.url ? (
                         <button
-                        className="d-flex m-auto btn btn-success"
-                        disabled
-                      >
-                        default logo
-                      </button>
+                          className="d-flex m-auto btn btn-success"
+                          disabled
+                        >
+                          default logo
+                        </button>
                       ) : (
                         <button
                           className="d-flex m-auto btn btn-primary"
@@ -208,7 +284,7 @@ function Brand() {
                       )
                     ) : (
                       ""
-                    )}
+                    ):""}
                   </div>
                 );
               })}
@@ -265,17 +341,44 @@ function Brand() {
 
 
 
-<Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>PLease verify domain {domain}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+          <div style={{ color: "red" }} id="error"></div>
+          <ListGroup variant="flush">
+            <ListGroup.Item>Step 1: Get your verification code</ListGroup.Item>
+            <ListGroup.Item>Step 2: Sign in to your domain host</ListGroup.Item>
+            <ListGroup.Item>Step 3: Add the verification record to your domain's DNS records</ListGroup.Item>
+            <ListGroup.Item>Step 4: Tell Thingsofbrand Workspace to check your verification code</ListGroup.Item>
+          </ListGroup>
+          <ListGroup.Item
+            as="li"
+            className="d-flex justify-content-center align-items-start"
+          >
+            <div className="ms-2 me-auto">
+              <div className="fw-bold">verification code</div>
+              <div style={{ border: "2px solid #d4d4d4", backgroundColor: "#ececec" }}>
+                {
+                  verify
+                }
+              </div>
+            </div>
+
+          </ListGroup.Item>
+          <ListGroup.Item className="m-auto">
+
+          </ListGroup.Item>
+
+
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
+          <Button variant="primary" onClick={() => { verifyDomain() }}>
+            verify
           </Button>
         </Modal.Footer>
       </Modal>

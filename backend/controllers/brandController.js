@@ -43,10 +43,14 @@ const deleteBrand = async (req,res)=>{
 
 
 const UpdateBrand = async (req,res)=>{
-    console.log(req.body.email)
     try {
         const data = await BrandModel.find({
-            email: req.body.email
+            url: req.body.url
+        },{
+            $set: {
+                title: req.body.title,
+                description: req.body.description,
+            }
         });
         res.json({
             "message":"Successfully Updated",
@@ -59,29 +63,6 @@ const UpdateBrand = async (req,res)=>{
         }).status(400);
     }
 }
-
-
-// const UpdateBrand = async (req,res)=>{
-//     try {
-//         const data = await BrandModel.find({
-//             url: req.body.url
-//         },{
-//             $set: {
-//                 title: req.body.title,
-//                 description: req.body.description,
-//             }
-//         });
-//         res.json({
-//             "message":"Successfully Updated",
-//             "data":data
-//         }).status(200);
-//     } catch (error) {
-//         res.send({
-//             message:"Some Error on Server",
-//             error
-//         }).status(400);
-//     }
-// }
 
 
 
