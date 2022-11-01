@@ -42,8 +42,8 @@ function Profile(props) {
   };
 
   useEffect(() => {
-    console.log(location.state.data)
-    setId(location.state.data._id)
+    // console.log(location?.state?.data)
+    setId(location?.state?.data?._id)
     if (user) {
       if (user?.email) {
         profileDetails();
@@ -96,13 +96,9 @@ function Profile(props) {
   };
 
   const profileDetails = async (req, res) => {
-//     const fresult = await getCompanyDetails(
-//       id
-// )
-    // console.log(location.state.data._id)
-    // setResults(fresult.data.data[0]);
-    if(location.state.data !=null){
-        console.log("gnfbvc")
+
+    if(location.state?.data !=null){
+        // console.log("gnfbvc")
       setName(location.state.data.name);
       setAboutus(location.state.data.aboutus);
       setLinks(location.state.data.links);
@@ -113,7 +109,7 @@ function Profile(props) {
       setSecondaryColors(location.state.data.secondaryColors);
       setBackgroundColors(location.state.data.backgroundColors);
     }
-    console.log("gnihvcihvjcnihvcjnfbvc")
+    // console.log("gnihvcihvjcnihvcjnfbvc")
     // window.location.reload();
     // if (profiledata == null && profiledata == undefined) {
     //   const d = await getProfileDetails({});
@@ -137,124 +133,124 @@ function Profile(props) {
   };
 
   return (
-    <h1>mbkm</h1>
-    // <>
-    //   <Form style={{ width: "30rem" }} className="text-center m-auto">
-    //     <Form.Group className="mb-3" controlId="formBasicEmail">
-    //       <Form.Label>name</Form.Label>
-    //       <Form.Control
-    //         type="name"
-    //         placeholder="Enter name"
-    //         onChange={(e) => {
-    //           setName(e.target.value);
-    //           console.log(e.target.value);
-    //         }}
-    //         value={name}
-    //       />
-    //     </Form.Group>
+    <>
+    {/* <h1>mbkm</h1> */}
+      <Form style={{ width: "30rem" }} className="text-center m-auto">
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>name</Form.Label>
+          <Form.Control
+            type="name"
+            placeholder="Enter name"
+            onChange={(e) => {
+              setName(e.target.value);
+              console.log(e.target.value);
+            }}
+            value={name}
+          />
+        </Form.Group>
 
-    //     <Form.Group className="mb-3" controlId="formBasicPassword ">
-    //       <Form.Label>About us</Form.Label>
-    //       <Form.Control
-    //         type="aboutus"
-    //         placeholder="AboutUs"
-    //         onChange={(e) => setAboutus(e.target.value)}
-    //         value={aboutus}
-    //       />
-    //     </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPassword ">
+          <Form.Label>About us</Form.Label>
+          <Form.Control
+            type="aboutus"
+            placeholder="AboutUs"
+            onChange={(e) => setAboutus(e.target.value)}
+            value={aboutus}
+          />
+        </Form.Group>
 
-    //     <div className="tags-input mb-3" style={{ margin: "auto" }}>
-    //       <h6>Social Links</h6>
-    //       <ul>
-    //         {links.map((link, index) => (
-    //           <li key={index}>
-    //             <span>{link}</span>
-    //             <i
-    //               className="material-icons"
-    //               onClick={() => removeLinks(index)}
-    //             >
-    //               <CloseIcon />
-    //             </i>
-    //           </li>
-    //         ))}
-    //       </ul>
-    //       <input
-    //         type="text"
-    //         onKeyUp={(event) => addLinks(event)}
-    //         placeholder="Press enter to add tags"
-    //       />
-    //     </div>
+        <div className="tags-input mb-3" style={{ margin: "auto" }}>
+          <h6>Social Links</h6>
+          <ul>
+            {links.map((link, index) => (
+              <li key={index}>
+                <span>{link}</span>
+                <i
+                  className="material-icons"
+                  onClick={() => removeLinks(index)}
+                >
+                  <CloseIcon />
+                </i>
+              </li>
+            ))}
+          </ul>
+          <input
+            type="text"
+            onKeyUp={(event) => addLinks(event)}
+            placeholder="Press enter to add tags"
+          />
+        </div>
 
-    //     <Form.Group className="mb-3" controlId="formBasicPassword">
-    //       <Form.Label>Domain</Form.Label>
-    //       <Form.Control
-    //         type="domain"
-    //         placeholder="Enter domain name"
-    //         list="doaminBrowsers"
-    //         name="myBrowser"
-    //         onChange={(e) => {
-    //           setDomain(e.target.value);
-    //           checkDomain(e.target.value);
-    //         }}
-    //         value={domain}
-    //       />
-    //       <datalist id="doaminBrowsers">
-    //         {profiledata?.data?.data.map((brandData) => {
-    //           return <option key={brandData._id} value={brandData.domain} />;
-    //         })}
-    //       </datalist>
-    //       <div id="domain" style={{ color: "red" }}></div>
-    //     </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Domain</Form.Label>
+          <Form.Control
+            type="domain"
+            placeholder="Enter domain name"
+            list="doaminBrowsers"
+            name="myBrowser"
+            onChange={(e) => {
+              setDomain(e.target.value);
+              checkDomain(e.target.value);
+            }}
+            value={domain}
+          />
+          <datalist id="doaminBrowsers">
+            {profiledata?.data?.data.map((brandData) => {
+              return <option key={brandData._id} value={brandData.domain} />;
+            })}
+          </datalist>
+          <div id="domain" style={{ color: "red" }}></div>
+        </Form.Group>
 
-    //     <Form.Group className="mb-3" controlId="formBasicPassword">
-    //       <Form.Label>Guidlines</Form.Label>
-    //       <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines} />
-    //       {/* {value} */}
-    //     </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Guidlines</Form.Label>
+          <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines} />
+          {/* {value} */}
+        </Form.Group>
 
-    //     <Form.Group className="mb-3" controlId="formBasicPassword">
-    //       <Form.Label>Colors</Form.Label>
-    //       <Form.Control
-    //         type="color"
-    //         placeholder="Choose colors"
-    //         onChange={(e) => setPrimaryColors(e.target.value)}
-    //         value={PrimaryColors}
-    //       ></Form.Control>
-    //       <Form.Control
-    //         type="color"
-    //         placeholder="Choose colors"
-    //         onChange={(e) => setSecondaryColors(e.target.value)}
-    //         value={secondaryColors}
-    //       />
-    //     </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Colors</Form.Label>
+          <Form.Control
+            type="color"
+            placeholder="Choose colors"
+            onChange={(e) => setPrimaryColors(e.target.value)}
+            value={PrimaryColors}
+          ></Form.Control>
+          <Form.Control
+            type="color"
+            placeholder="Choose colors"
+            onChange={(e) => setSecondaryColors(e.target.value)}
+            value={secondaryColors}
+          />
+        </Form.Group>
 
-    //     <Form.Group className="mb-3" controlId="formBasicPassword">
-    //       <Form.Label>Font size</Form.Label>
-    //       <Form.Control
-    //         type="guidlines"
-    //         placeholder="Enter fontSize"
-    //         onChange={(e) => setFontSize(e.target.value)}
-    //         value={fontSize}
-    //       />
-    //     </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Font size</Form.Label>
+          <Form.Control
+            type="guidlines"
+            placeholder="Enter fontSize"
+            onChange={(e) => setFontSize(e.target.value)}
+            value={fontSize}
+          />
+        </Form.Group>
 
-    //     <Form.Group className="mb-3" controlId="formBasicPassword">
-    //       <Form.Label>Backround color</Form.Label>
-    //       <Form.Control
-    //         type="color"
-    //         placeholder="Choose colors"
-    //         onChange={(e) => setBackgroundColors(e.target.value)}
-    //         value={backgroundColors}
-    //       ></Form.Control>
-    //     </Form.Group>
-    //     <Button variant="primary" onClick={() => storeProfileValue()}>
-    //       Submit
-    //     </Button>
-    //     <Button variant="primary" onClick={() => updateProfileValue()}>
-    //       Update
-    //     </Button>
-    //   </Form>
-    // </>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Backround color</Form.Label>
+          <Form.Control
+            type="color"
+            placeholder="Choose colors"
+            onChange={(e) => setBackgroundColors(e.target.value)}
+            value={backgroundColors}
+          ></Form.Control>
+        </Form.Group>
+        <Button variant="primary" onClick={() => storeProfileValue()}>
+          Submit
+        </Button>
+        <Button variant="primary" onClick={() => updateProfileValue()}>
+          Update
+        </Button>
+      </Form>
+    </>
   );
 }
 
