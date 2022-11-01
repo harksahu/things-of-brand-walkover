@@ -98,8 +98,30 @@ const updateProfile = async (req,res)=>{
     }
 }
 
+
+const getCompanyDetailss = async(req,res)=>{
+    try {
+        // console.log(req.params)
+        const data = await profileModel.find({
+              _id : req.params.id 
+             
+        });
+        res.json({
+            "message":"Related Data is Successfully Find",
+            "data":data
+        }).status(200);
+    } catch (error) {
+        res.send({
+            message:"Some Error on Server",
+            error
+        }).status(400);
+    }
+}
+
+
 export {
     createProfile,
     getProfileDetails,
     updateProfile,
+    getCompanyDetailss
 }

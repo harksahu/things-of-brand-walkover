@@ -1,7 +1,7 @@
 import axios from "../interceptor/interceptor";
-const URL = "https://thingsofbrand.com";
+// const URL = "https://thingsofbrand.com";
 
-// const URL = "http://localhost:8080";
+const URL = "http://localhost:8080";
 
 
 // const uploadSingleFileAPI = async (fileObject) => {
@@ -33,6 +33,8 @@ const createProfile   = async (dataToSend) => {
 const getProfileDetails = async ({email="",domain="",name="",searchfrom="false"}) => {
   return await axios.get(URL + "/api/profile?email="+email+"&domain="+domain+"&name="+name+"&searchfrom="+searchfrom);
 }
+
+
 const searchBrandApi = async (id) => {
   return await axios.get(URL + "/api/brands/"+id);
 }
@@ -40,11 +42,11 @@ const searchBrandApi = async (id) => {
 
 const updateProfileFields = async(dataToSend) => {
   // let link = links.split(",");
-const data = {
-  ...dataToSend
-}
-console.log(data)
-// console.log(data.links)
+  const data = {
+    ...dataToSend
+  }
+  console.log(data)
+  // console.log(data.links)
   // console.log("name=" + name + "&aboutus=" + aboutus + "&links=" + link + "&domain=" + domain + "&guidlines=" + guidlines + "&fontSize=" + fontSize + "&PrimaryColors="+ PrimaryColors+ "&secondaryColors=" + secondaryColors + "&backgroundColors=" + backgroundColors + "&email=" + email)
   return await axios.put(URL + "/api/profile",data);
   // return await axios.put(URL + "/api/profile?data="+data);
@@ -62,6 +64,12 @@ const deleteMyStuffAPI = async (id) => {
 const sendSearchAPI = async ({title = "" , email = "" , active = "",description="",_id="",domain=""}) => {
   return await axios.get(URL + "/api/search?title=" + title+"&email="+email+"&active="+active+"&description="+description+"&_id=" + _id+ "&domain=" + domain);
 };
+
+const getCompanyDetails = async (id) => {
+  console.log(id)
+  return await axios.get(URL + "/api/profile/" +  id );
+}
+
 const sendMydeleteStuffAPI = async (email) => {
   return await axios.get(URL + "/api/deteteItems/" + email);
 };
@@ -132,4 +140,5 @@ export {
   createProfile,
   getProfileDetails,
   updateProfileFields,
+  getCompanyDetails
 };

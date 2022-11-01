@@ -185,6 +185,13 @@ getcompany()
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   onClick={() => {
+                    navigate("/company");
+                  }}
+                >
+                  Company
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  onClick={() => {
                     navigate("/profile");
                   }}
                 >
