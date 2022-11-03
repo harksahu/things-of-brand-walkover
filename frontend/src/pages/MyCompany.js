@@ -22,14 +22,14 @@ function MyCompany() {
   }, [user]);
   let fresult;
   const profileDetails = async (req, res) => {
-    // console.warn(params)
+
     fresult = await getProfileDetails({ email: user.email });
     setCompany(fresult.data.data);
-    // fresult = await getProfileDetails();
-    console.log(fresult.data.data);
+
+    // console.log(fresult.data.data);
     if (Array.isArray(fresult.data.data) && fresult.data.data.length) {
-    // if(fresult.data.data?.length ===0)
-    console.log("efsad");
+
+    // console.log("efsad");
     }
     else{
 
