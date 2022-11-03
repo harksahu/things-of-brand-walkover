@@ -4,7 +4,8 @@ const brandsSchema = new mongoose.Schema({
     sno_id:String,
     email: {
         type: String,
-        require: true
+        require: true,
+        unique:false
     },
     url:  {
         type: String,

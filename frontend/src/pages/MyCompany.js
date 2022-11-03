@@ -25,7 +25,7 @@ function MyCompany() {
     fresult = await getProfileDetails({ email: user.email });
     setCompany(fresult.data.data);
     // fresult = await getProfileDetails();
-    console.log(fresult);
+    // console.log(fresult);
   };
   
   

@@ -4,15 +4,14 @@ const createProfile = async (req,res)=>{
     try {
         console.log(req.body);
         const data = await profileModel.create({
-            ...req.body,
-            Url:req.body.url
-        
+            ...req.body
         });
         res.json({
             "message":"Successfully Created",
             "data":data
         }).status(200);
     } catch (error) {
+        console.log("err" + error)
         res.send({
             message:"Some Error on Server",
             error
@@ -22,12 +21,12 @@ const createProfile = async (req,res)=>{
 
 
 const getProfileDetails = async (req,res)=>{ 
-    console.log(req.query.email);
+    // console.log(req.query.email);
     var email = req.query.email === ""?{}:{email: req.query.email };
     var searchfrom = req.query.searchfrom 
     var domain = req.query.domain === ""?{}:{domain: req.query.domain };
     var name = req.query.name === ""?{}:{name: { '$regex': req.query.name ,"$options":"i"} };
-    console.log(searchfrom);
+    // console.log(searchfrom);
    if (searchfrom == "true") {
     try {
         const data = await profileModel.find({

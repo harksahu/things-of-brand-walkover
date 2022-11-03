@@ -9,8 +9,7 @@ const profileSchema = new mongoose.Schema({
         type: String,
     },
     logo:  {
-        type: String,
-        // default: null
+        type: String
     },
     links :{
         type: [String]
@@ -36,10 +35,11 @@ const profileSchema = new mongoose.Schema({
         type: String
     },
     email:{
-        type: String
+        type: String,
+        unique: false
     },
     verify:{
-        type: String
+        type: String,
     },
 
     })

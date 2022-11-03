@@ -190,13 +190,6 @@ getcompany()
                 >
                   Company
                 </NavDropdown.Item>
-                <NavDropdown.Item
-                  onClick={() => {
-                    navigate("/profile");
-                  }}
-                >
-                  Profile
-                </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleSignOut}>
                   logout

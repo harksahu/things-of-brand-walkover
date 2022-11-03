@@ -26,6 +26,8 @@ function Profile(props) {
   const [profiledata, setProfile] = useState("");
   const [check, setCheck] = useState(true);
   const [id,setId] = useState("");
+  const [logo,setLogo] = useState("null");
+  const [verify,setVerify] = useState("false");
   const location = useLocation();
   var fresult;
 
@@ -52,11 +54,9 @@ function Profile(props) {
   }, [user]);
 
   const storeProfileValue = async (req, res) => {
-    console.log(results);
     if (check) {
       if (user) {
         if (user?.email) {
-            console.warn(fresult);
             try {
               const data = await createProfile({
                 name,
@@ -68,6 +68,8 @@ function Profile(props) {
                 PrimaryColors,
                 secondaryColors,
                 backgroundColors,
+                logo,
+                verify,
                 email: user?.email,
               });
               console.log(data);
@@ -134,7 +136,6 @@ function Profile(props) {
 
   return (
     <>
-    {/* <h1>mbkm</h1> */}
       <Form style={{ width: "30rem" }} className="text-center m-auto">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>name</Form.Label>
@@ -246,9 +247,11 @@ function Profile(props) {
         <Button variant="primary" onClick={() => storeProfileValue()}>
           Submit
         </Button>
+        
         <Button variant="primary" onClick={() => updateProfileValue()}>
           Update
         </Button>
+        
       </Form>
     </>
   );
