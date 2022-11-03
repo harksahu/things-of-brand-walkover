@@ -90,7 +90,7 @@ function Brand() {
     for (var i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    if (verify == undefined && verify == null) {
+    if (verify == undefined && verify == null) {  
       console.log(verify);
 
       setVerify(result)
@@ -236,10 +236,10 @@ function Brand() {
           <div>
             <h5>Logos</h5>
             <div className="d-flex flex-wrap justify-content-center">
-              {DomainPost?.map((brand) => {
+              {DomainPost?.map((brand,index) => {
                 // console.log(brand);
                 return (
-                  <div>
+                  <div key = {index}>
                     <div key={brand._id} className=" flex-wrap item">
                       <Link to={"/stuff/" + brand._id}>
                         <Card>
@@ -277,9 +277,11 @@ function Brand() {
                           onClick={() => {
                             setlogo(brand.url);
                             updateLogo(brand.url);
+                            console.log("brand.url",brand.url);
                           }}
                         >
                           Make default
+                          
                         </button>
                       )
                     ) : (

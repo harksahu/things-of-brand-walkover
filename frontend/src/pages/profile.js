@@ -108,7 +108,7 @@ function Profile(props) {
       setGuidlines(location.state.data.guidlines);
       setFontSize(location.state.data.fontSize);
       setPrimaryColors(location.state.data.PrimaryColors);
-      setSecondaryColors(location.state.data.secondaryColors);
+      setSecondaryColors(location.state.data.secondaryColors);  
       setBackgroundColors(location.state.data.backgroundColors);
     }
     // console.log("gnihvcihvjcnihvcjnfbvc")

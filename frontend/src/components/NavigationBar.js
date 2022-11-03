@@ -94,7 +94,7 @@ getcompany()
   var numbers = [1, 2, 3, 4, 5];
   const handleGoogleSignIn = async () => {
     try {
-      await googleSignIn();
+      await googleSignIn()
       // console.log(object);
     } catch (error) {
       console.log(error);

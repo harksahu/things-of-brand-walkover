@@ -25,7 +25,7 @@ const getProfileDetails = async (req,res)=>{
     var email = req.query.email === ""?{}:{email: req.query.email };
     var searchfrom = req.query.searchfrom 
     var domain = req.query.domain === ""?{}:{domain: req.query.domain };
-    var name = req.query.name === ""?{}:{name: { '$regex': req.query.name ,"$options":"i"} };
+    var name = req.query.name === ""?{}:{name: { '$regex': req.query.name ,"$options":"i"}};
     // console.log(searchfrom);
    if (searchfrom == "true") {
     try {

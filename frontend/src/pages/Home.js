@@ -28,13 +28,13 @@ function Home() {
       console.log(error);
     }
   };
-  //     useEffect(() => {
-  //         if (user) {
-  //     console.log(user);
-  //     navigate('/MyStuff');
+      useEffect(() => {
+          if (user) {
+      console.log(user);
+      navigate('/company');
 
-  // }
-  //     },[user]);
+  }
+      },[user]);
   return (
     <>
       <Container className="h-100 d-flex flex-column h-100">
