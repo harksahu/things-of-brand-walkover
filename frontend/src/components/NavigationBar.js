@@ -27,10 +27,10 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
 
 
 const getcompany = async() =>{
-// console.log(searchBrandData);
-var set = new Set(searchBrandData?.data?.domain[0]);
-// down.innerHTML = JSON.stringify([...set])
-console.log(set);
+// // console.log(searchBrandData);
+// var set = new Set(searchBrandData?.data?.domain[0]);
+// // down.innerHTML = JSON.stringify([...set])
+// console.log(set);
 
 
 
@@ -94,7 +94,7 @@ getcompany()
   var numbers = [1, 2, 3, 4, 5];
   const handleGoogleSignIn = async () => {
     try {
-      await googleSignIn();
+      await googleSignIn()
       // console.log(object);
     } catch (error) {
       console.log(error);
@@ -185,10 +185,10 @@ getcompany()
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   onClick={() => {
-                    navigate("/profile");
+                    navigate("/company");
                   }}
                 >
-                  Profile
+                  Company
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleSignOut}>
