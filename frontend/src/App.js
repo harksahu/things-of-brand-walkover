@@ -8,7 +8,8 @@ import Home from './pages/Home';
 import Profile from './pages/profile';
 import Addfile from './pages/Addfile';
 import MyStuff from './pages/MyStuff';
-import Search from "./pages/Search"
+import Search from "./pages/Search";
+import MyCompany from "./pages/MyCompany";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { auth } from './firebase.js';
@@ -16,6 +17,7 @@ import MyVerticallyCenteredModal from './pages/Popup';
 import MyStuffPopup from './pages/MyStuffpopup';
 import Brand from './pages/Brand.js';
 import HomeLogo from './pages/Searchlogo.js';
+
 
 
 function App() {
@@ -47,6 +49,7 @@ function App() {
             <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
             <Route path="/MyStuff" element={<Protected> <MyStuff /> </Protected>} />
             <Route path='/account' element={<Protected> <Account /> </Protected>} />
+            <Route path='/company' element={<Protected> <MyCompany/> </Protected>} />
           </Routes>
         </AuthContextProvider>
       }

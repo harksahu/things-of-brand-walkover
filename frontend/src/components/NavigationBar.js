@@ -27,10 +27,10 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
 
 
 const getcompany = async() =>{
-// console.log(searchBrandData);
-var set = new Set(searchBrandData?.data?.domain[0]);
-// down.innerHTML = JSON.stringify([...set])
-console.log(set);
+// // console.log(searchBrandData);
+// var set = new Set(searchBrandData?.data?.domain[0]);
+// // down.innerHTML = JSON.stringify([...set])
+// console.log(set);
 
 
 
@@ -185,10 +185,10 @@ getcompany()
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   onClick={() => {
-                    navigate("/profile");
+                    navigate("/company");
                   }}
                 >
-                  Profile
+                  Company
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleSignOut}>

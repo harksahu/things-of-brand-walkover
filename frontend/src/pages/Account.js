@@ -64,7 +64,7 @@ const Account = () => {
   }, [setAuth, user]);
 
   return (
-    <>
+    <p>
     <Card style={{ width: "23rem" }} className="m-auto">
       <Card.Img variant="top" src={user?.photoURL} />
       <Card.Body>
@@ -108,7 +108,7 @@ const Account = () => {
         </Card.Text>
       </Card.Body>
     </Card>
-    </>
+    </p>
   );
 };
 
