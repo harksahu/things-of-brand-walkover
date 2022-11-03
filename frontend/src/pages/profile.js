@@ -244,14 +244,18 @@ function Profile(props) {
             value={backgroundColors}
           ></Form.Control>
         </Form.Group>
-        <Button variant="primary" onClick={() => storeProfileValue()}>
-          Submit
-        </Button>
+
+
+        {name?
         
+      
         <Button variant="primary" onClick={() => updateProfileValue()}>
           Update
-        </Button>
-        
+        </Button>:
+        <Button variant="primary" onClick={() => storeProfileValue()}>
+        Submit
+      </Button>
+        }
       </Form>
     </>
   );
