@@ -7,11 +7,12 @@ import SvgInline from "../utils/SvgInline.js";
 import "../utils/svginline.css";
 import { AiFillPlusCircle } from "react-icons/ai";
 import Row from "react-bootstrap/Row";
-
+import { useNavigate } from "react-router-dom";
 
 function MyCompany() {
   const [company, setCompany] = useState();
   const { user } = UserAuth();
+  const navigate = useNavigate();
   useEffect(() => {
     if (user) {
       if (user?.email) {
@@ -21,52 +22,62 @@ function MyCompany() {
   }, [user]);
   let fresult;
   const profileDetails = async (req, res) => {
-    // console.warn(params)
+
     fresult = await getProfileDetails({ email: user.email });
     setCompany(fresult.data.data);
-    // fresult = await getProfileDetails();
-    // console.log(fresult);
+
+    // console.log(fresult.data.data);
+    if (Array.isArray(fresult.data.data) && fresult.data.data.length) {
+
+    // console.log("efsad");
+    }
+    else{
+
+      navigate("/profile");
+    }
   };
-  
-  
+
+
   return (
     <>
-    <div className=" m-3 ">
-      <Link to="/profile">
-        <AiFillPlusCircle style={{float: "right" , fontSize: 40}}/>
+   
+      <div className=" m-3 ">
+        <Link to="/profile">
+          <AiFillPlusCircle style={{ float: "right", fontSize: 40 }} />
         </Link>
         <h1 className="text-center">Your Company</h1>
 
         <Row md={4} className="g-4 flex p-3 bg-light">
-        {company?.map((Company) => {
-          return (
-      <div key={Company._id} className="d-flex justify-content-center item">
-        <Link to="/profile" state={{ data: Company}}
-        >
-          <Card>
-            <div style={{ overflow: "auto" }} className="img_size">
-              <SvgInline url={Company.logo} />
-            </div>
-            <Card.Body>
-              <Card.Title
-                style={{ textDecoration: "none" }}
-                className="text-center"
-              >
-                {Company.name}
-              </Card.Title>
-              <Card.Text></Card.Text>
-            </Card.Body>
-          </Card>
-        </Link>
-      </div>
-    );
-  })}
+          {company?.map((Company) => {
+            return (
+              <div key={Company._id} className="d-flex justify-content-center item">
+                <Link to="/profile" state={{ data: Company }}
+                >
+                  <Card>
+                    <div style={{ overflow: "auto" }} className="img_size">
+                      <SvgInline url={Company.logo} />
+                    </div>
+                    <Card.Body>
+                      <Card.Title
+                        style={{ textDecoration: "none" }}
+                        className="text-center"
+                      >
+                        {Company.name}
+                      </Card.Title>
+                      <Card.Text></Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Link>
+              </div>
+            );
+          })}
         </Row>
       </div>
-      </>
-  
+     
+    </>
+
   );
-  
+
 }
 
 export default MyCompany;
