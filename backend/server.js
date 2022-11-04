@@ -80,11 +80,19 @@ app.post("/croneUpdatedata", async (req, res) => {
   res.send("crone run succesfully");
 });
 app.post("/getdata", async (req, res) => {
-  const url = req.body.link;
-  const data = await puppy(url);
+  
+  try {
+    const url = req.body.link;
+    const data = await puppy(url);
+    // console.log(data);
   res.send({
     data: data 
   });
+  } catch (error) {
+    res.send({
+      data: error,
+    });
+  }
 });
 app.post("/getUpdatedData", async (req, res) => {
  try {
