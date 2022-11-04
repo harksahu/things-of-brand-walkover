@@ -59,7 +59,6 @@ const Addfile = () => {
     setDomain(fresult?.data?.data[0]?.domain);
     setId(fresult?.data?.data[0]?._id);
 
-    console.log("rkbdchyvesult");
     console.log(user);
     // console.log(fresult.data.data);
   };
@@ -114,11 +113,10 @@ const Addfile = () => {
       <Card style={{ width: "30rem" }} className="text-center m-auto">
         <Card.Body>
           <Card.Header>
+            <h5>Choose the domain first</h5>
             <select onChange={(e) => {
-                 {console.log("target in on chnage = ",e.target.value);}
                  setDomain(e.target.value);
                 }}>
-              <option>choose the domain</option>
               {ffresult &&
                 ffresult.map((domainName,index) => (
                   <option value={domainName._id} key={index}>{domainName.domain}</option>
