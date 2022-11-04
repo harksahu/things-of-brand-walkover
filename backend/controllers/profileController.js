@@ -67,21 +67,48 @@ const getProfileDetails = async (req,res)=>{
 }
 
 const updateProfile = async (req,res)=>{
-    let link = req.body.links;
-    console.log(req.body)
-    console.log(link)
-    const f_data = {
-        ...req.body,
-        links: link
-    }
+    console.log("logo url in backend",req.body.logo_url);
+    let name=req.body.name;
+      let aboutus=req.body.aboutus;
+      let logo=req.body.logo_url;
+      let links=req.body.links;
+      let domain=req.body.domain;
+     let  guidlines=req.body.guidlines;
+      let fontSize=req.body.fontSize;
+      let PrimaryColors=req.body.PrimaryColors;
+      let secondaryColors=req.body.secondaryColors;
+      let backgroundColors=req.body.backgroundColors;
+      let email=req.body.email;
+      let verify=req.body.verify
+      let link = req.body.links;
+    // console.log(req.body)
+    // console.log(link)
+    // const f_data = {
+    //     ...req.body,
+    //     links: link
+    // }
     // console.log("data :-" , req.query)
+    console.log("logo url in backend 2 ",logo);
     try{
-        const data = await profileModel.updateOne(
+        const data = await profileModel.updateMany(
             {
-                email: req.body.email
+                domain: domain
             },
             {
-                $set:f_data
+                $set:{
+                    name,
+                    aboutus,
+                    logo,
+                    links,
+                    guidlines,
+                    fontSize,
+                    PrimaryColors,
+                    secondaryColors,
+                    backgroundColors,
+                    email,
+                    verify,
+                    link
+                }
             }
         )
         console.log(data);
@@ -90,6 +117,7 @@ const updateProfile = async (req,res)=>{
             "data":data
         }).status(200);
     }catch (error) {
+        console.log("error", error);
         res.send({
             message:"Some Error on Server",
             error
