@@ -116,11 +116,11 @@ getcompany()
         <Container className="" fill>
           <Navbar.Brand
             onClick={() => {
-              navigate("/");
+              navigate("/home");
             }}
             className="bo"
           >
-            Things of Brand
+            Things of Brand     
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

@@ -28,11 +28,9 @@ function MyCompany() {
 
     // console.log(fresult.data.data);
     if (Array.isArray(fresult.data.data) && fresult.data.data.length) {
-
     // console.log("efsad");
     }
     else{
-
       navigate("/profile");
     }
   };
