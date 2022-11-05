@@ -148,7 +148,7 @@ getcompany()
                />
                <datalist id="browsers">
                  {searchBrandData.data.map((brandData) => {
-                   return(<option value={brandData.title}/>);
+                   return(<option value={brandData.name}/>);
                  })}
                </datalist>
              </Form>

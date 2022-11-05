@@ -161,7 +161,7 @@ function Brand() {
     const data = {
       name: name,
       aboutus: aboutus,
-      logo: logo_url,
+      logo_url: logo_url,
       links: links,
       domain: domain,
       guidlines: guidlines,
@@ -172,6 +172,7 @@ function Brand() {
       email: email,
       verify: verify
     };
+    console.log("data in updatelogo",data);
     await updateProfileFields(data);
   };
 
@@ -179,6 +180,7 @@ function Brand() {
     getbrand();
     if (domain) {
       getbrandslogo();
+      console.log(logo);
     }
   }, [domain]);
 
