@@ -342,12 +342,13 @@ function Brand() {
           </div>
           <div>
             <h5>Fonts Size</h5>
-            <div style={{ fontSize: fontSize + "px" }}>{fontSize + "px"}</div>
+            {/* <div style={{ fontSize: fontSize + "px" }}>{fontSize + "px"}</div> */}
+            <a href={fontSize} target ="_blank">{fontSize}</a>
           </div>
           <br />
           <div>
           {allColor?.map(color=>{
-            <h1>{color.colorName}</h1>,
+            <h1>{color.colorName}</h1>
             // <h1>{color.colorValue}</h1>
           })}
             {/* <h5>background Colors</h5> */}

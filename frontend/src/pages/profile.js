@@ -238,22 +238,6 @@ function Profile(props) {
           <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines} />
         </Form.Group>
 
-        {/* <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Colors</Form.Label>
-          <Form.Control
-            type="color"
-            placeholder="Choose colors"
-            onChange={(e) => setPrimaryColors(e.target.value)}
-            value={PrimaryColors}
-          ></Form.Control>
-
-          <Form.Control
-            type="color"
-            placeholder="Choose colors"
-            onChange={(e) => setSecondaryColors(e.target.value)}
-            value={secondaryColors}
-          />
-        </Form.Group> */}
         <div id="list" className="hide formbold-chatbox-form">
                 <div id="error" className="error"></div>
                 <div id="demo"></div>
@@ -288,19 +272,7 @@ function Profile(props) {
                         setcount([...tempCount]);
                       }}
                     />
-                    {/* <select
-                      name="user_table_input"
-                      id="user_table_input"
-                      value={color[index].colorName}
-                      onChange={(e) => {
-                        let tempCount = color;
-                        tempCount[index].colorName = e.target.value;
-                        setcount([...tempCount]);
-                      }}
-                      className="contact-form-area"
-                    >
-                      
-                    </select> */}
+            
                     {index ? (
                       <button
                         type="button"
@@ -325,24 +297,15 @@ function Profile(props) {
                 </div>
               </div>
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Font size</Form.Label>
+          <Form.Label>Font link</Form.Label>
           <Form.Control
-            type="guidlines"
+            type="url"
             placeholder="Enter fontSize"
             onChange={(e) => setFontSize(e.target.value)}
             value={fontSize}
           />
         </Form.Group> 
 
-        {/* <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Backround color</Form.Label>
-          <Form.Control
-            type="color"
-            placeholder="Choose colors"
-            onChange={(e) => setBackgroundColors(e.target.value)}
-            value={backgroundColors}
-          ></Form.Control>
-        </Form.Group> */}
 
         {location.state?.data ? (
           <Button variant="primary" onClick={() => updateProfileValue()}>
