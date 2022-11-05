@@ -28,8 +28,8 @@ const profileSchema = new mongoose.Schema({
     //     type: String
     // },
 
-    fontSize:{
-        type: String
+    fontLink:{
+        type: [String]
     },
     // backgroundColors:{
     //     type: String

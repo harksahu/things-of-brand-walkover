@@ -17,7 +17,7 @@ function Profile(props) {
   const [aboutus, setAboutus] = useState("");
   const [domain, setDomain] = useState("");
   const [guidlines, setGuidlines] = useState("");
-  const [fontSize, setFontSize] = useState("");
+  const [fontSize, setFontSize] = useState([]);
   const [PrimaryColors, setPrimaryColors] = useState("");
   const [secondaryColors, setSecondaryColors] = useState("");
   const [backgroundColors, setBackgroundColors] = useState("");
@@ -30,10 +30,14 @@ function Profile(props) {
   const [logo,setLogo] = useState("null");
   const [verify,setVerify] = useState("false");
   const [color, setcount] = useState([{ colorName: "", colorValue: "" }]);
+  const [fontLink, setFontLink] = useState([""]);
+  const [linkCount, setLinkCount] = useState(1);
   const [countTracker, setCountTracker] = useState(1);
   const [valid, setvalid] = useState([false]);
+  const [valid2, setvalid2] = useState([false]);
   const location = useLocation();
   let countTemp = countTracker;
+  let countTemp2 = linkCount
   var fresult
 
   const addLinks = (event) => {
@@ -63,13 +67,14 @@ function Profile(props) {
       if (user) {
         if (user?.email) {
           try {
+            // 
             const data = await createProfile({
               name,
               aboutus,
               links,
               domain,
               guidlines,
-              fontSize,
+              fontLink,
               color,
               logo,
               verify,
@@ -92,11 +97,12 @@ function Profile(props) {
       links: links,
       domain: domain,
       guidlines: guidlines,
-      fontSize: fontSize,
+      fontLink: fontLink,
       PrimaryColors: PrimaryColors,
       secondaryColors: secondaryColors,
       backgroundColors: backgroundColors,
       email: user?.email,
+      color: color
     };
     await updateProfileFields(data);
   };
@@ -120,6 +126,9 @@ function Profile(props) {
       setPrimaryColors(location.state.data.PrimaryColors);
       setSecondaryColors(location.state.data.secondaryColors);
       setBackgroundColors(location.state.data.backgroundColors);
+      setFontLink(location.state.data.fontLink);
+      setcount(location.state.data.color);
+
     }
 
     // console.log(profiledata)
@@ -149,6 +158,22 @@ function Profile(props) {
       setCountTracker(countTemp + 1);
       // console.log(countTracker);
   };
+  let addFontFields = () => {
+    setFontLink([...fontLink ,""]);
+    setLinkCount(countTemp2 + 1);
+    
+};
+let removeFontFields = (i) => {
+  setLinkCount(countTemp2 - 1);
+  document.getElementById("add_input").classList.remove("hide");
+  let newFormValues = [...fontLink];
+  newFormValues.splice(i, 1);
+  setFontLink(newFormValues);
+  let newFormVaild = [...valid2];
+  newFormVaild.splice(i, 1);
+  setvalid2(newFormVaild);
+
+};
   let removeFormFields = (i) => {
     setCountTracker(countTemp - 1);
     document.getElementById("add_input").classList.remove("hide");
@@ -208,7 +233,6 @@ function Profile(props) {
             placeholder="Press enter to add tags"
           />
         </div>
-        {console.log("profile data in return  = ", results)}
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Domain</Form.Label>
           <Form.Control
@@ -239,16 +263,12 @@ function Profile(props) {
         </Form.Group>
 
         <div id="list" className="hide formbold-chatbox-form">
-                <div id="error" className="error"></div>
-                <div id="demo"></div>
                 {color.map((element, index) => (
                   <div id="fetch" key={index}>
-                    
-                   
                     <input
                       type="text"
                        name="user_table_input"
-                      id="user_table_input"
+                      id={index}
                       placeholder="Enter color name"
                       value={color[index].colorName}
                       onChange={(e) => {
@@ -258,21 +278,24 @@ function Profile(props) {
                       }}
                       className="contact-form-area"
                     />
-                    {console.log(" colors :",color)}
-                    {console.log("count of colors :",countTracker)}
                      <input
                       type="color"
                       name="user_input"
-                      id="user_input"
+                      id={`colorinput${index}`}
                       value={color[index].colorValue}
                       className="user_input hide formbold-form-input"
                       onChange={(e) => {
+                        document.getElementById( "colorinputbytext" + index).value = e.target.value;
+                        console.log("e.target.value" +e.target.value);
                         let tempCount = color;
                         tempCount[index].colorValue = e.target.value;
                         setcount([...tempCount]);
                       }}
                     />
-            
+                    <input type = "text" id = {`colorinputbytext${index}`} maxLength="7" placeholder="Enter hex value of color" 
+                    onChange={(e) => {
+                      document.getElementById( "colorinput" + index).value = e.target.value;
+                    }}/>
                     {index ? (
                       <button
                         type="button"
@@ -296,14 +319,54 @@ function Profile(props) {
                   </button>
                 </div>
               </div>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Font link</Form.Label>
-          <Form.Control
-            type="url"
+        <Form.Group className="mb-3 my-3" controlId="formBasicPassword">
+          <Form.Label>Font  links</Form.Label>
+          <div id="list" className="hide formbold-chatbox-form">
+                {fontLink.map((element, index) => (
+                  <div id="fetch" key={index}>
+                    <input
+                      type="url"
+                       name="user_table_input"
+                      id={index}
+                      placeholder="Enter font url "
+                      value={fontLink[index]}
+                      onChange={(e) => {
+                        let tempCount = fontLink;
+                        tempCount[index] = e.target.value;
+                        setFontLink([...tempCount]);
+                      }}
+                      className="contact-form-area"
+                    />      
+                    {index ? (
+                      <button
+                        type="button"
+                        className="name noselect"
+                        onClick={() => removeFontFields(index)}
+                        style={{ border: "1px solid #C43434" }}
+                      >
+                        <FcFullTrash />
+                        delete
+                      </button>
+                    ) : null}
+                  </div>
+                ))}
+                <div className="button-section">
+                  <button
+                    className="name noselect m-20 "
+                    type="button"
+                    id="add_input"
+                    onClick={() => addFontFields()}
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+          {/* <Form.Control
+            type="guidlines"
             placeholder="Enter fontSize"
             onChange={(e) => setFontSize(e.target.value)}
             value={fontSize}
-          />
+          /> */}
         </Form.Group> 
 
 

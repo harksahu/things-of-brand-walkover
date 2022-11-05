@@ -57,6 +57,7 @@ function Brand() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [allColor , setAllColor] = useState();
+  const [fontLink,setFontLink]= useState([]);
 
   const verifyDomain = async () => {
     const TXT = await getTXT(domain);
@@ -103,10 +104,11 @@ function Brand() {
       links: links,
       domain: domain,
       guidlines: guidlines,
-      fontSize: fontSize,
+      // fontSize: fontSize,
       // PrimaryColors: PrimaryColors,
       // secondaryColors: secondaryColors,
       // backgroundColors: backgroundColors,
+      // fontLink:fontLink,
       color:allColor,
       email: email,
       verify: result,
@@ -145,6 +147,7 @@ function Brand() {
     setDomain(fresult.data.data[0].domain);
     setGuidlines(fresult.data.data[0].guidlines);
     setFontSize(fresult.data.data[0].fontSize);
+    setFontLink(fresult.data.data[0].fontLink)
     // setPrimaryColors(fresult.data.data[0].PrimaryColors);
     // setSecondaryColors(fresult.data.data[0].secondaryColors);
     // setBackgroundColors(fresult.data.data[0].backgroundColors);
@@ -164,7 +167,7 @@ function Brand() {
       links: links,
       domain: domain,
       guidlines: guidlines,
-      fontSize: fontSize,
+      // fontSize: fontSize,
       // PrimaryColors: PrimaryColors,
       // secondaryColors: secondaryColors,
       // backgroundColors: backgroundColors,
@@ -317,7 +320,6 @@ function Brand() {
             </div>
           </div>
           <div>
-            <h5>Colors</h5>
             {/* map function to use here */}
             <div className="d-flex">
               {/* <div
@@ -341,14 +343,39 @@ function Brand() {
             </div>
           </div>
           <div>
-            <h5>Fonts Size</h5>
+            <h5>Fonts link</h5>
             {/* <div style={{ fontSize: fontSize + "px" }}>{fontSize + "px"}</div> */}
-            <a href={fontSize} target ="_blank">{fontSize}</a>
+            {fontLink?.map(link=>{
+              return (
+                <div>
+                  {/* <h4>{color.colorName}</h4> */}
+                 <a href = {link} target ="_blank">{link}</a>
+                </div>
+              )
+            // <h1>{color.colorName}</h1>
+            // <h1>{color.colorValue}</h1>
+          })}
           </div>
           <br />
           <div>
+          <h5>Colors</h5>
+
           {allColor?.map(color=>{
-            <h1>{color.colorName}</h1>
+              return (
+                <div>
+                  <h4>{color.colorName}</h4>
+                  <div
+                id="background"
+                style={{
+                  width: 50,
+                  height: 50,
+                  backgroundColor: color.colorValue,
+                  margin: 5,
+                }}
+              ></div>
+                </div>
+              )
+            // <h1>{color.colorName}</h1>
             // <h1>{color.colorValue}</h1>
           })}
             {/* <h5>background Colors</h5> */}
