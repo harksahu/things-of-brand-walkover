@@ -56,6 +56,7 @@ function Brand() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [allColor , setAllColor] = useState();
 
   const verifyDomain = async () => {
     const TXT = await getTXT(domain);
@@ -103,9 +104,10 @@ function Brand() {
       domain: domain,
       guidlines: guidlines,
       fontSize: fontSize,
-      PrimaryColors: PrimaryColors,
-      secondaryColors: secondaryColors,
-      backgroundColors: backgroundColors,
+      // PrimaryColors: PrimaryColors,
+      // secondaryColors: secondaryColors,
+      // backgroundColors: backgroundColors,
+      color:allColor,
       email: email,
       verify: result,
     };
@@ -143,10 +145,11 @@ function Brand() {
     setDomain(fresult.data.data[0].domain);
     setGuidlines(fresult.data.data[0].guidlines);
     setFontSize(fresult.data.data[0].fontSize);
-    setPrimaryColors(fresult.data.data[0].PrimaryColors);
-    setSecondaryColors(fresult.data.data[0].secondaryColors);
+    // setPrimaryColors(fresult.data.data[0].PrimaryColors);
+    // setSecondaryColors(fresult.data.data[0].secondaryColors);
+    // setBackgroundColors(fresult.data.data[0].backgroundColors);
+    setAllColor(fresult.data.data[0].color)
     setlogo(fresult.data.data[0].logo);
-    setBackgroundColors(fresult.data.data[0].backgroundColors);
     setEmail(fresult.data.data[0].email);
     setVerify(fresult.data.data[0].verify);
 
@@ -162,9 +165,10 @@ function Brand() {
       domain: domain,
       guidlines: guidlines,
       fontSize: fontSize,
-      PrimaryColors: PrimaryColors,
-      secondaryColors: secondaryColors,
-      backgroundColors: backgroundColors,
+      // PrimaryColors: PrimaryColors,
+      // secondaryColors: secondaryColors,
+      // backgroundColors: backgroundColors,
+      color:allColor,
       email: email,
       verify: verify,
     };
@@ -182,6 +186,7 @@ function Brand() {
 
   return (
     <>
+    {console.log("all color = ",allColor)}
       {domain ? (
         <div className="m-5">
           {user ? (
@@ -313,8 +318,9 @@ function Brand() {
           </div>
           <div>
             <h5>Colors</h5>
+            {/* map function to use here */}
             <div className="d-flex">
-              <div
+              {/* <div
                 id="primary"
                 style={{
                   width: 50,
@@ -331,7 +337,7 @@ function Brand() {
                   backgroundColor: secondaryColors,
                   margin: 5,
                 }}
-              ></div>
+              ></div> */}
             </div>
           </div>
           <div>
@@ -340,8 +346,12 @@ function Brand() {
           </div>
           <br />
           <div>
-            <h5>background Colors</h5>
-            <div className="d-flex">
+          {allColor?.map(color=>{
+            <h1>{color.colorName}</h1>,
+            // <h1>{color.colorValue}</h1>
+          })}
+            {/* <h5>background Colors</h5> */}
+            {/* <div className="d-flex">
               <div
                 id="background"
                 style={{
@@ -351,7 +361,7 @@ function Brand() {
                   margin: 5,
                 }}
               ></div>
-            </div>
+            </div> */}
           </div>
         </div>
       ) : (
