@@ -208,7 +208,6 @@ function Profile(props) {
             placeholder="Press enter to add tags"
           />
         </div>
-        {console.log("profile data in return  = ", results)}
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Domain</Form.Label>
           <Form.Control
@@ -259,12 +258,10 @@ function Profile(props) {
                 <div id="demo"></div>
                 {color.map((element, index) => (
                   <div id="fetch" key={index}>
-                    
-                   
                     <input
                       type="text"
                        name="user_table_input"
-                      id="user_table_input"
+                      id={index}
                       placeholder="Enter color name"
                       value={color[index].colorName}
                       onChange={(e) => {
@@ -279,15 +276,22 @@ function Profile(props) {
                      <input
                       type="color"
                       name="user_input"
-                      id="user_input"
+                      id={`colorinput${index}`}
                       value={color[index].colorValue}
                       className="user_input hide formbold-form-input"
                       onChange={(e) => {
+                        document.getElementById( "colorinputbytext" + index).value = e.target.value;
+                        console.log("e.target.value" +e.target.value);
                         let tempCount = color;
                         tempCount[index].colorValue = e.target.value;
                         setcount([...tempCount]);
                       }}
                     />
+                    <input type = "text" id = {`colorinputbytext${index}`} maxLength="7" 
+                    placeholder="Enter hex value of color" 
+                    onChange={(e) => {
+                      document.getElementById( "colorinput" + index).value = e.target.value;
+                    }}/>
                     {/* <select
                       name="user_table_input"
                       id="user_table_input"

@@ -347,7 +347,21 @@ function Brand() {
           <br />
           <div>
           {allColor?.map(color=>{
-            <h1>{color.colorName}</h1>,
+              return (
+                <div>
+                  <h4>{color.colorName}</h4>
+                  <div
+                id="background"
+                style={{
+                  width: 50,
+                  height: 50,
+                  backgroundColor: color.colorValue,
+                  margin: 5,
+                }}
+              ></div>
+                </div>
+              )
+            // <h1>{color.colorName}</h1>
             // <h1>{color.colorValue}</h1>
           })}
             {/* <h5>background Colors</h5> */}
