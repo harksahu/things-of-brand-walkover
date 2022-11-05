@@ -21,19 +21,23 @@ const profileSchema = new mongoose.Schema({
     guidlines: {
         type: String,
     },
-    PrimaryColors:{
-        type: String
-    },
-    secondaryColors:{
-        type: String
-    },
+    // PrimaryColors:{
+    //     type: String
+    // },
+    // secondaryColors:{
+    //     type: String
+    // },
 
     fontSize:{
         type: String
     },
-    backgroundColors:{
-        type: String
-    },
+    // backgroundColors:{
+    //     type: String
+    // },
+    color:[{
+        colorName: String,
+        colorValue: String
+    }],
     email:{
         type: String,
         unique: false

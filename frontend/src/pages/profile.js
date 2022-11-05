@@ -9,6 +9,7 @@ import { updateProfileFields } from "../api/index.js";
 import CloseIcon from "@mui/icons-material/Close";
 import RichtextEditor from "./jodit.js";
 import { async } from "@firebase/util";
+import { FcFullTrash } from "react-icons/fc";
 import { useLocation } from "react-router-dom";
 
 function Profile(props) {
@@ -25,11 +26,15 @@ function Profile(props) {
   const [results, setResults] = useState("");
   const [profiledata, setProfile] = useState("");
   const [check, setCheck] = useState(true);
-  const [id, setId] = useState("");
-  const [logo, setLogo] = useState("null");
-  const [verify, setVerify] = useState("false");
+  const [id,setId] = useState("");
+  const [logo,setLogo] = useState("null");
+  const [verify,setVerify] = useState("false");
+  const [color, setcount] = useState([{ colorName: "", colorValue: "" }]);
+  const [countTracker, setCountTracker] = useState(1);
+  const [valid, setvalid] = useState([false]);
   const location = useLocation();
-  var fresult;
+  let countTemp = countTracker;
+  var fresult
 
   const addLinks = (event) => {
     if (event.key === "Enter" && event.target.value !== "") {
@@ -65,9 +70,7 @@ function Profile(props) {
               domain,
               guidlines,
               fontSize,
-              PrimaryColors,
-              secondaryColors,
-              backgroundColors,
+              color,
               logo,
               verify,
               email: user?.email,
@@ -141,7 +144,23 @@ function Profile(props) {
       }
     }
   };
+  let addFormFields = () => {
+      setcount([...color, { colorName: "",colorValue : "#000000" }]);
+      setCountTracker(countTemp + 1);
+      // console.log(countTracker);
+  };
+  let removeFormFields = (i) => {
+    setCountTracker(countTemp - 1);
+    document.getElementById("add_input").classList.remove("hide");
+    // console.log(countTracker);
+    let newFormValues = [...color];
+    newFormValues.splice(i, 1);
+    setcount(newFormValues);
+    let newFormVaild = [...valid];
+    newFormVaild.splice(i, 1);
+    setvalid(newFormVaild);
 
+  };
   return (
     <>
       <Form style={{ width: "30rem" }} className="text-center m-auto">
@@ -219,7 +238,7 @@ function Profile(props) {
           <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines} />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        {/* <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Colors</Form.Label>
           <Form.Control
             type="color"
@@ -234,8 +253,77 @@ function Profile(props) {
             onChange={(e) => setSecondaryColors(e.target.value)}
             value={secondaryColors}
           />
-        </Form.Group>
-
+        </Form.Group> */}
+        <div id="list" className="hide formbold-chatbox-form">
+                <div id="error" className="error"></div>
+                <div id="demo"></div>
+                {color.map((element, index) => (
+                  <div id="fetch" key={index}>
+                    
+                   
+                    <input
+                      type="text"
+                       name="user_table_input"
+                      id="user_table_input"
+                      placeholder="Enter color name"
+                      value={color[index].colorName}
+                      onChange={(e) => {
+                        let tempCount = color;
+                        tempCount[index].colorName = e.target.value;
+                        setcount([...tempCount]);
+                      }}
+                      className="contact-form-area"
+                    />
+                    {console.log(" colors :",color)}
+                    {console.log("count of colors :",countTracker)}
+                     <input
+                      type="color"
+                      name="user_input"
+                      id="user_input"
+                      value={color[index].colorValue}
+                      className="user_input hide formbold-form-input"
+                      onChange={(e) => {
+                        let tempCount = color;
+                        tempCount[index].colorValue = e.target.value;
+                        setcount([...tempCount]);
+                      }}
+                    />
+                    {/* <select
+                      name="user_table_input"
+                      id="user_table_input"
+                      value={color[index].colorName}
+                      onChange={(e) => {
+                        let tempCount = color;
+                        tempCount[index].colorName = e.target.value;
+                        setcount([...tempCount]);
+                      }}
+                      className="contact-form-area"
+                    >
+                      
+                    </select> */}
+                    {index ? (
+                      <button
+                        type="button"
+                        className="name noselect"
+                        onClick={() => removeFormFields(index)}
+                        style={{ border: "1px solid #C43434" }}
+                      >
+                        <FcFullTrash />
+                      </button>
+                    ) : null}
+                  </div>
+                ))}
+                <div className="button-section">
+                  <button
+                    className="name noselect m-20 "
+                    type="button"
+                    id="add_input"
+                    onClick={() => addFormFields()}
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Font size</Form.Label>
           <Form.Control
@@ -246,7 +334,7 @@ function Profile(props) {
           />
         </Form.Group> 
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        {/* <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Backround color</Form.Label>
           <Form.Control
             type="color"
@@ -254,7 +342,7 @@ function Profile(props) {
             onChange={(e) => setBackgroundColors(e.target.value)}
             value={backgroundColors}
           ></Form.Control>
-        </Form.Group>
+        </Form.Group> */}
 
         {location.state?.data ? (
           <Button variant="primary" onClick={() => updateProfileValue()}>

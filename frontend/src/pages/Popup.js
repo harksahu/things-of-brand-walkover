@@ -25,10 +25,11 @@ function MyVerticallyCenteredModal(params) {
   const id = useParams();
   console.log(id.id);
   // const props= params;
+  const navigate = useNavigate();
   const [mwidth, setWidth] = useState(250);
   const [name, setName] = useState("");
   const [mheight, setHeight] = useState(250);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { user } = UserAuth();
 
   const [fullscreen, setFullscreen] = useState(true);
