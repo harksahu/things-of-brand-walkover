@@ -10,15 +10,15 @@ import {
   getProfileDetails,
   sendSearchAPI,
   updateProfileFields,
-  getTXT
+  getTXT,
 } from "../api/index.js";
 import SvgInline from "../utils/SvgInline.js";
 import Card from "react-bootstrap/Card";
 import Figure from "react-bootstrap/Figure";
 import { FcApproval, FcHighPriority } from "react-icons/fc";
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import ListGroup from 'react-bootstrap/ListGroup';
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import ListGroup from "react-bootstrap/ListGroup";
 import { async } from "@firebase/util";
 import { AiFillPlusCircle } from "react-icons/ai";
 
@@ -57,11 +57,8 @@ function Brand() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-
-
-
   const verifyDomain = async () => {
-    const TXT = await getTXT(domain)
+    const TXT = await getTXT(domain);
     // console.log(TXT?.data?.data[0][0]);
     // console.log(TXT?.data?.data);
     for (let i = 0; i < TXT?.data?.data.length; i++) {
@@ -70,32 +67,29 @@ function Brand() {
       if (TXT?.data?.data[i][0] == verify) {
         updateVerify("true");
         break;
-      }
-      else {
-
+      } else {
         console.log("not verify");
       }
       document.getElementById("error").innerHTML = "not verify";
     }
     // console.log(TXT?.data?.data[i] == "abcdefghijklmnop");
     // console.log(verify)
-
-  }
-
+  };
 
   async function makeid(length) {
-    var result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = "";
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     var charactersLength = characters.length;
     for (var i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    if (verify == undefined && verify == null) {  
+    if (verify == undefined && verify == null) {
       console.log(verify);
 
-      setVerify(result)
+      setVerify(result);
 
-      await updateVerify(result)
+      await updateVerify(result);
     }
     return result;
   }
@@ -113,17 +107,16 @@ function Brand() {
       secondaryColors: secondaryColors,
       backgroundColors: backgroundColors,
       email: email,
-      verify: result
+      verify: result,
     };
     console.log(verify);
     // console.log();
     if (verify === undefined && verify === null) {
-      await updateProfileFields(data)
+      await updateProfileFields(data);
     }
-  }
+  };
 
   const title = useParams();
-
 
   const getbrandslogo = async () => {
     console.log(domain);
@@ -135,7 +128,10 @@ function Brand() {
   };
 
   const getbrand = async () => {
-    const fresult = await getProfileDetails({ domain: title.title ,searchfrom:true});
+    const fresult = await getProfileDetails({
+      domain: title.title,
+      searchfrom: true,
+    });
     console.log(fresult);
 
     console.warn(fresult.data.data[0]);
@@ -170,9 +166,9 @@ function Brand() {
       secondaryColors: secondaryColors,
       backgroundColors: backgroundColors,
       email: email,
-      verify: verify
+      verify: verify,
     };
-    console.log("data in updatelogo",data);
+    console.log("data in updatelogo", data);
     await updateProfileFields(data);
   };
 
@@ -188,14 +184,17 @@ function Brand() {
     <>
       {domain ? (
         <div className="m-5">
-
-          {user?
-          email === user.email ? (
-           
+          {user ? (
+            email === user.email ? (
               <Link to={"/addfile"}>
                 <AiFillPlusCircle style={{ float: "right", fontSize: 40 }} />
-              </Link>): "":""
-            }
+              </Link>
+            ) : (
+              ""
+            )
+          ) : (
+            ""
+          )}
           <div>
             <h1>{name}</h1>
           </div>
@@ -209,15 +208,31 @@ function Brand() {
             >
               {domain}
             </a>
-            {user?
+            {user ? (
               email === user.email ? (
-                (verify === "true") ? (<FcApproval />) :
-                  (<> <FcHighPriority />
+                verify === "true" ? (
+                  <FcApproval />
+                ) : (
+                  <>
+                    {" "}
+                    <FcHighPriority />
                     <button
                       className="m-auto btn btn-primary"
-                      onClick={() => { handleShow(); makeid(15) }}>verify</button></>)
-              ) : "":""
-            }
+                      onClick={() => {
+                        handleShow();
+                        makeid(15);
+                      }}
+                    >
+                      verify
+                    </button>
+                  </>
+                )
+              ) : (
+                ""
+              )
+            ) : (
+              ""
+            )}
           </div>
           <br />
           <div>
@@ -238,10 +253,10 @@ function Brand() {
           <div>
             <h5>Logos</h5>
             <div className="d-flex flex-wrap justify-content-center">
-              {DomainPost?.map((brand,index) => {
+              {DomainPost?.map((brand, index) => {
                 // console.log(brand);
                 return (
-                  <div key = {index}>
+                  <div key={index}>
                     <div key={brand._id} className=" flex-wrap item">
                       <Link to={"/stuff/" + brand._id}>
                         <Card>
@@ -264,31 +279,33 @@ function Brand() {
                         </Card>
                       </Link>
                     </div>
-                    {user?
-                    email === user.email ? (
-                      logo === brand.url ? (
-                        <button
-                          className="d-flex m-auto btn btn-success"
-                          disabled
-                        >
-                          default logo
-                        </button>
+                    {user ? (
+                      email === user.email ? (
+                        logo === brand.url ? (
+                          <button
+                            className="d-flex m-auto btn btn-success"
+                            disabled
+                          >
+                            default logo
+                          </button>
+                        ) : (
+                          <button
+                            className="d-flex m-auto btn btn-primary"
+                            onClick={() => {
+                              setlogo(brand.url);
+                              updateLogo(brand.url);
+                              console.log("brand.url", brand.url);
+                            }}
+                          >
+                            Make default
+                          </button>
+                        )
                       ) : (
-                        <button
-                          className="d-flex m-auto btn btn-primary"
-                          onClick={() => {
-                            setlogo(brand.url);
-                            updateLogo(brand.url);
-                            console.log("brand.url",brand.url);
-                          }}
-                        >
-                          Make default
-                          
-                        </button>
+                        ""
                       )
                     ) : (
                       ""
-                    ):""}
+                    )}
                   </div>
                 );
               })}
@@ -341,10 +358,6 @@ function Brand() {
         <Not_found />
       )}
 
-
-
-
-
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>PLease verify domain {domain}</Modal.Title>
@@ -354,8 +367,13 @@ function Brand() {
           <ListGroup variant="flush">
             <ListGroup.Item>Step 1: Get your verification code</ListGroup.Item>
             <ListGroup.Item>Step 2: Sign in to your domain host</ListGroup.Item>
-            <ListGroup.Item>Step 3: Add the verification record to your domain's DNS records</ListGroup.Item>
-            <ListGroup.Item>Step 4: Tell Thingsofbrand Workspace to check your verification code</ListGroup.Item>
+            <ListGroup.Item>
+              Step 3: Add the verification record to your domain's DNS records
+            </ListGroup.Item>
+            <ListGroup.Item>
+              Step 4: Tell Thingsofbrand Workspace to check your verification
+              code
+            </ListGroup.Item>
           </ListGroup>
           <ListGroup.Item
             as="li"
@@ -363,25 +381,28 @@ function Brand() {
           >
             <div className="ms-2 me-auto">
               <div className="fw-bold">verification code</div>
-              <div style={{ border: "2px solid #d4d4d4", backgroundColor: "#ececec" }}>
-                {
-                  verify
-                }
+              <div
+                style={{
+                  border: "2px solid #d4d4d4",
+                  backgroundColor: "#ececec",
+                }}
+              >
+                {verify}
               </div>
             </div>
-
           </ListGroup.Item>
-          <ListGroup.Item className="m-auto">
-
-          </ListGroup.Item>
-
-
+          <ListGroup.Item className="m-auto"></ListGroup.Item>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => { verifyDomain() }}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              verifyDomain();
+            }}
+          >
             verify
           </Button>
         </Modal.Footer>

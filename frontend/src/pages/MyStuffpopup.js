@@ -10,7 +10,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import "../utils/svginline.css";
 import SvgInline from "../utils/SvgInline.js";
-import { useLocation , useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   sendMyStuffAPI,
   deleteMyStuffAPI,
@@ -37,29 +37,23 @@ function MyStuffPopup(params) {
   const navigate = useNavigate();
   console.log(props);
 
-
-   function changeHW(){
-      document.getElementById(props.url).style.width = mwidth + "px";
-      document.getElementById(props.url).style.height = mheight + "px";
-  
-   }
+  function changeHW() {
+    document.getElementById(props.url).style.width = mwidth + "px";
+    document.getElementById(props.url).style.height = mheight + "px";
+  }
   function size(img) {
     setWidth(document.getElementById(img).clientWidth);
     setHeight(document.getElementById(img).clientHeight);
   }
 
-
-  
-  const DownloadToSvg = async (svg ,fileName) => {
-    var svg = document.querySelector('svg');
+  const DownloadToSvg = async (svg, fileName) => {
+    var svg = document.querySelector("svg");
     var xml = new XMLSerializer().serializeToString(svg);
     var svg64 = btoa(xml); //for utf8: btoa(unescape(encodeURIComponent(xml)))
-    var b64start = 'data:image/svg+xml;base64,';
+    var b64start = "data:image/svg+xml;base64,";
     var image64 = b64start + svg64;
-    saveAs( image64,fileName);
-
-  }
-
+    saveAs(image64, fileName);
+  };
 
   const DownloadToPng = async (img, w, h) => {
     if (w === undefined) {
@@ -194,18 +188,18 @@ function MyStuffPopup(params) {
           <Button
             variant="outline-secondary"
             size="sm"
-            onClick={() => DownloadToSvg(props.url,props.title)}
+            onClick={() => DownloadToSvg(props.url, props.title)}
             // onClick={() => saveAs(props.title)}
           >
             Download SVG
           </Button>{" "}
           <Button
-                variant="outline-secondary"
-                size="sm"
-                onClick={() => changeHW()}
-              >
-                Show
-              </Button>{" "}
+            variant="outline-secondary"
+            size="sm"
+            onClick={() => changeHW()}
+          >
+            Show
+          </Button>{" "}
           <br />
           <br />
           <br />
@@ -214,10 +208,10 @@ function MyStuffPopup(params) {
         {props.active === false ? (
           <Button
             onClick={async () => {
-              console.log("object")
+              console.log("object");
               await restoreMyStuffAPI(props?._id);
               // alert("restore")
-              navigate(-1)
+              navigate(-1);
             }}
             variant="info"
           >
@@ -229,7 +223,7 @@ function MyStuffPopup(params) {
               await deleteMyStuffAPI(props?._id);
               // alert("Deleted");
               // window.location.reload();
-              navigate(-1)
+              navigate(-1);
             }}
             variant="danger"
           >

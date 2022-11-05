@@ -8,24 +8,22 @@ import "./home.css";
 import { UserAuth } from "../context/AuthContext";
 import Home2 from "./Home2";
 
-
 function Home() {
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
 
-      useEffect(() => {
-          if (user) {
+  useEffect(() => {
+    if (user) {
       console.log(user);
-      navigate('/company');
-
-  }
-      },[user]);
+      navigate("/company");
+    }
+  }, [user]);
   return (
     <>
-      <Home2/>
+      <Home2 />
     </>
-  )
+  );
 }
 
 export default Home;

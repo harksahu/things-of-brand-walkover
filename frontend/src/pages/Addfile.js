@@ -114,12 +114,16 @@ const Addfile = () => {
         <Card.Body>
           <Card.Header>
             <h5>Choose the domain first</h5>
-            <select onChange={(e) => {
-                 setDomain(e.target.value);
-                }}>
+            <select
+              onChange={(e) => {
+                setDomain(e.target.value);
+              }}
+            >
               {ffresult &&
-                ffresult.map((domainName,index) => (
-                  <option value={domainName._id} key={index}>{domainName.domain}</option>
+                ffresult.map((domainName, index) => (
+                  <option value={domainName._id} key={index}>
+                    {domainName.domain}
+                  </option>
                 ))}
             </select>
           </Card.Header>

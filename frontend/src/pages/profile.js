@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import { createProfile } from "../api/index.js";
 import { UserAuth } from "../context/AuthContext";
 import { getProfileDetails } from "../api/index.js";
-import {getCompanyDetails} from "../api/index.js";
+import { getCompanyDetails } from "../api/index.js";
 import { updateProfileFields } from "../api/index.js";
 import CloseIcon from "@mui/icons-material/Close";
 import RichtextEditor from "./jodit.js";
@@ -25,11 +25,11 @@ function Profile(props) {
   const [results, setResults] = useState("");
   const [profiledata, setProfile] = useState("");
   const [check, setCheck] = useState(true);
-  const [id,setId] = useState("");
-  const [logo,setLogo] = useState("null");
-  const [verify,setVerify] = useState("false");
+  const [id, setId] = useState("");
+  const [logo, setLogo] = useState("null");
+  const [verify, setVerify] = useState("false");
   const location = useLocation();
-  var fresult
+  var fresult;
 
   const addLinks = (event) => {
     if (event.key === "Enter" && event.target.value !== "") {
@@ -45,7 +45,7 @@ function Profile(props) {
 
   useEffect(() => {
     // console.log(location?.state?.data)
-    setId(location?.state?.data?._id)
+    setId(location?.state?.data?._id);
     if (user) {
       if (user?.email) {
         profileDetails();
@@ -57,28 +57,28 @@ function Profile(props) {
     if (check) {
       if (user) {
         if (user?.email) {
-            try {
-              const data = await createProfile({
-                name,
-                aboutus,
-                links,
-                domain,
-                guidlines,
-                fontSize,
-                PrimaryColors,
-                secondaryColors,
-                backgroundColors,
-                logo,
-                verify,
-                email: user?.email,
-              });
-              console.log(data);
-              alert("saved successfully");
-            } catch (err) {
-              console.log(err);
-              alert("Profile is not created");
-            }
+          try {
+            const data = await createProfile({
+              name,
+              aboutus,
+              links,
+              domain,
+              guidlines,
+              fontSize,
+              PrimaryColors,
+              secondaryColors,
+              backgroundColors,
+              logo,
+              verify,
+              email: user?.email,
+            });
+            console.log(data);
+            alert("saved successfully");
+          } catch (err) {
+            console.log(err);
+            alert("Profile is not created");
           }
+        }
       }
     }
   };
@@ -97,19 +97,16 @@ function Profile(props) {
     };
     await updateProfileFields(data);
   };
- 
+
   const profileDetails = async (req, res) => {
+    fresult = await getProfileDetails({ email: user.email });
+    console.log(fresult.data.data);
+    // console.log("profiledata = ",profiledata);
+    setResults(fresult.data.data);
+    // console.log("profiledata = ",profiledata);
 
-  
-      fresult = await getProfileDetails({ email: user.email });
-      console.log(fresult.data.data);
-      // console.log("profiledata = ",profiledata);
-      setResults(fresult.data.data);
-      // console.log("profiledata = ",profiledata);
-    
-      if(location.state?.data !=null){
-
-        // console.log("gnfbvc")
+    if (location.state?.data != null) {
+      // console.log("gnfbvc")
       // setProfile(location.state.data)
       setName(location.state.data.name);
       setAboutus(location.state.data.aboutus);
@@ -118,10 +115,10 @@ function Profile(props) {
       setGuidlines(location.state.data.guidlines);
       setFontSize(location.state.data.fontSize);
       setPrimaryColors(location.state.data.PrimaryColors);
-      setSecondaryColors(location.state.data.secondaryColors);  
+      setSecondaryColors(location.state.data.secondaryColors);
       setBackgroundColors(location.state.data.backgroundColors);
     }
-    
+
     // console.log(profiledata)
     // console.log("gnihvcihvjcnihvcjnfbvc")
     // window.location.reload();
@@ -129,11 +126,10 @@ function Profile(props) {
     //   const d = await getProfileDetails({});
     //   setProfile(d);
     // }
-    
   };
 
-  const checkDomain = (datta) => {
 
+  const checkDomain = (datta) => {
     for (let i = 0; i < profiledata?.data?.data?.length; i++) {
       if (datta == profiledata?.data?.data[i].domain) {
         const domainId = document.getElementById("domain");
@@ -148,7 +144,7 @@ function Profile(props) {
 
   return (
     <>
-      <Form style={{ width: "30rem" }} className="text-center m-auto">  
+      <Form style={{ width: "30rem" }} className="text-center m-auto">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>name</Form.Label>
           <Form.Control
@@ -193,7 +189,7 @@ function Profile(props) {
             placeholder="Press enter to add tags"
           />
         </div>
-        {console.log("profile data in return  = ",results)}
+        {console.log("profile data in return  = ", results)}
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Domain</Form.Label>
           <Form.Control
@@ -207,18 +203,13 @@ function Profile(props) {
             }}
             value={domain}
           />
-          {/* <datalist id="doaminBrowsers"> */}
-            {/* {location.state?.data.map((brandData) => {
-              console.log(brandData.domain);
-              // console.log("hello")
-              return <option key={brandData._id} value={brandData.domain} />;
-            })} */}
-          {/* </datalist> */}
+
           <datalist id="doaminBrowsers">
-            {results&&results.map((brandData) => {
-              console.log(brandData.domain);
-              return <option key={brandData._id} value={brandData.domain} />;
-            })}
+            {results &&
+              results.map((brandData) => {
+                console.log(brandData.domain);
+                return <option key={brandData._id} value={brandData.domain} />;
+              })}
           </datalist>
           {/* <div id="domain" style={{ color: "red" }}></div> */}
         </Form.Group>
@@ -226,7 +217,6 @@ function Profile(props) {
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Guidlines</Form.Label>
           <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines} />
-          {/* {value} */}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -234,10 +224,10 @@ function Profile(props) {
           <Form.Control
             type="color"
             placeholder="Choose colors"
-            
             onChange={(e) => setPrimaryColors(e.target.value)}
             value={PrimaryColors}
           ></Form.Control>
+
           <Form.Control
             type="color"
             placeholder="Choose colors"
@@ -254,7 +244,7 @@ function Profile(props) {
             onChange={(e) => setFontSize(e.target.value)}
             value={fontSize}
           />
-        </Form.Group>
+        </Form.Group> 
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Backround color</Form.Label>
@@ -266,17 +256,15 @@ function Profile(props) {
           ></Form.Control>
         </Form.Group>
 
-
-        {location.state?.data?
-        
-      
-        <Button variant="primary" onClick={() => updateProfileValue()}>
-          Update
-        </Button>:
-        <Button variant="primary" onClick={() => storeProfileValue()}>
-        Submit
-      </Button>
-        }
+        {location.state?.data ? (
+          <Button variant="primary" onClick={() => updateProfileValue()}>
+            Update
+          </Button>
+        ) : (
+          <Button variant="primary" onClick={() => storeProfileValue()}>
+            Submit
+          </Button>
+        )}
       </Form>
     </>
   );

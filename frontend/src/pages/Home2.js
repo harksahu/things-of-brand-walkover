@@ -7,7 +7,6 @@ import "../utils/svginline.css";
 import "./home.css";
 import { UserAuth } from "../context/AuthContext";
 
-
 function Home2() {
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();

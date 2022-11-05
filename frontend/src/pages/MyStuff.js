@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import SvgInline from "../utils/SvgInline.js";
 import "../utils/svginline.css";
-import {sendSearchAPI} from "../api/index.js"
+import { sendSearchAPI } from "../api/index.js";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { connect } from "react-redux";
 
@@ -30,31 +30,36 @@ function Not_found() {
 // function Home({ searchBrandData = [], getSearchBrand }) {
 function Home() {
   const { user } = UserAuth();
-const [searchBrandData,setSearchBrandData] = useState()
+  const [searchBrandData, setSearchBrandData] = useState();
 
-const getbrand =async () =>{
-const data = await sendSearchAPI({
-          email: user.email,
-        active: "",
-})
-setSearchBrandData(data?.data)
-}
+  const getbrand = async () => {
+    const data = await sendSearchAPI({
+      email: user.email,
+      active: "",
+    });
+    setSearchBrandData(data?.data);
+  };
 
   useEffect(() => {
-    if(user !== null && user !== undefined && user && Object.keys(user).length > 0){
+    if (
+      user !== null &&
+      user !== undefined &&
+      user &&
+      Object.keys(user).length > 0
+    ) {
       // getSearchBrand({
       //   email: user.email,
       //   active: "",
       // })
-      getbrand()
+      getbrand();
     }
   }, [user]);
 
   return (
     <>
       <div className=" m-3 ">
-      <Link to={"/addfile"}>
-        <AiFillPlusCircle style={{float: "right" , fontSize: 40}}/>
+        <Link to={"/addfile"}>
+          <AiFillPlusCircle style={{ float: "right", fontSize: 40 }} />
         </Link>
         <h1 className="text-center">Public Items</h1>
 
@@ -76,7 +81,7 @@ setSearchBrandData(data?.data)
                             style={{ overflow: "auto" }}
                             className="img_size"
                           >
-                           <SvgInline url={brand.url} />
+                            <SvgInline url={brand.url} />
                           </div>
 
                           <Card.Body>
@@ -121,7 +126,7 @@ setSearchBrandData(data?.data)
                             style={{ overflow: "auto" }}
                             className="img_size"
                           >
-                           <SvgInline url={brand.url} />
+                            <SvgInline url={brand.url} />
                           </div>
 
                           <Card.Body>

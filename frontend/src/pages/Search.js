@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { searchBrand } from "../store/actions/search-brands";
 import Figure from "react-bootstrap/Figure";
 import SvgInline from "../utils/SvgInline.js";
-import {getProfileDetails} from "../api/index.js";
+import { getProfileDetails } from "../api/index.js";
 import { async } from "@firebase/util";
 
 function Not_found() {
@@ -24,19 +24,18 @@ function Not_found() {
 }
 
 function Home({ searchBrandData = [], getSearchBrand }) {
-// function Home() {
+  // function Home() {
 
-// const [searchBrandData,setSearchBrandData] = useState()
+  // const [searchBrandData,setSearchBrandData] = useState()
 
-// const getProfile = async () =>{
-//   setSearchBrandData(await getProfileDetails({}));
+  // const getProfile = async () =>{
+  //   setSearchBrandData(await getProfileDetails({}));
 
-// }
-useEffect(() => {
-  getSearchBrand({});
-}, []);
+  // }
+  useEffect(() => {
+    getSearchBrand({});
+  }, []);
   return (
-
     <div className="p-3 flex bg-light">
       {console.log(searchBrandData)}
       <div className="d-flex flex-wrap justify-content-center">
@@ -53,7 +52,7 @@ useEffect(() => {
                 <Link to={"/" + Company.domain}>
                   <Card>
                     <div style={{ overflow: "auto" }} className="img_size">
-                    <SvgInline url={Company.logo} />
+                      <SvgInline url={Company.logo} />
                     </div>
 
                     <Card.Body>

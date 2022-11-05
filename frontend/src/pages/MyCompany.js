@@ -22,23 +22,19 @@ function MyCompany() {
   }, [user]);
   let fresult;
   const profileDetails = async (req, res) => {
-
     fresult = await getProfileDetails({ email: user.email });
     setCompany(fresult.data.data);
 
     // console.log(fresult.data.data);
     if (Array.isArray(fresult.data.data) && fresult.data.data.length) {
-    // console.log("efsad");
-    }
-    else{
+      // console.log("efsad");
+    } else {
       navigate("/profile");
     }
   };
 
-
   return (
     <>
-   
       <div className=" m-3 ">
         <Link to="/profile">
           <AiFillPlusCircle style={{ float: "right", fontSize: 40 }} />
@@ -48,9 +44,11 @@ function MyCompany() {
         <Row md={4} className="g-4 flex p-3 bg-light">
           {company?.map((Company) => {
             return (
-              <div key={Company._id} className="d-flex justify-content-center item">
-                <Link to="/profile" state={{ data: Company }}
-                >
+              <div
+                key={Company._id}
+                className="d-flex justify-content-center item"
+              >
+                <Link to="/profile" state={{ data: Company }}>
                   <Card>
                     <div style={{ overflow: "auto" }} className="img_size">
                       <SvgInline url={Company.logo} />
@@ -71,11 +69,8 @@ function MyCompany() {
           })}
         </Row>
       </div>
-     
     </>
-
   );
-
 }
 
 export default MyCompany;
