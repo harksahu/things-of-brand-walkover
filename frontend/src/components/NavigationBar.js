@@ -94,7 +94,7 @@ getcompany()
   var numbers = [1, 2, 3, 4, 5];
   const handleGoogleSignIn = async () => {
     try {
-      await googleSignIn();
+      await googleSignIn()
       // console.log(object);
     } catch (error) {
       console.log(error);
@@ -104,6 +104,7 @@ getcompany()
   const handleSignOut = async () => {
     try {
       await logOut();
+      navigate("/home");
     } catch (error) {
       console.log(error);
     }
@@ -115,11 +116,11 @@ getcompany()
         <Container className="" fill>
           <Navbar.Brand
             onClick={() => {
-              navigate("/");
+              navigate("/home");
             }}
             className="bo"
           >
-            Things of Brand
+            Things of Brand     
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

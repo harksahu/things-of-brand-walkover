@@ -29,7 +29,7 @@ function Profile(props) {
   const [logo,setLogo] = useState("null");
   const [verify,setVerify] = useState("false");
   const location = useLocation();
-  var fresult;
+  var fresult
 
   const addLinks = (event) => {
     if (event.key === "Enter" && event.target.value !== "") {
@@ -76,6 +76,7 @@ function Profile(props) {
               alert("saved successfully");
             } catch (err) {
               console.log(err);
+              alert("Profile is not created");
             }
           }
       }
@@ -96,11 +97,20 @@ function Profile(props) {
     };
     await updateProfileFields(data);
   };
-
+ 
   const profileDetails = async (req, res) => {
 
-    if(location.state?.data !=null){
+  
+      fresult = await getProfileDetails({ email: user.email });
+      console.log(fresult.data.data);
+      // console.log("profiledata = ",profiledata);
+      setResults(fresult.data.data);
+      // console.log("profiledata = ",profiledata);
+    
+      if(location.state?.data !=null){
+
         // console.log("gnfbvc")
+      // setProfile(location.state.data)
       setName(location.state.data.name);
       setAboutus(location.state.data.aboutus);
       setLinks(location.state.data.links);
@@ -108,19 +118,21 @@ function Profile(props) {
       setGuidlines(location.state.data.guidlines);
       setFontSize(location.state.data.fontSize);
       setPrimaryColors(location.state.data.PrimaryColors);
-      setSecondaryColors(location.state.data.secondaryColors);
+      setSecondaryColors(location.state.data.secondaryColors);  
       setBackgroundColors(location.state.data.backgroundColors);
     }
+    
+    // console.log(profiledata)
     // console.log("gnihvcihvjcnihvcjnfbvc")
     // window.location.reload();
     // if (profiledata == null && profiledata == undefined) {
     //   const d = await getProfileDetails({});
     //   setProfile(d);
     // }
+    
   };
 
   const checkDomain = (datta) => {
-    console.log(datta);
 
     for (let i = 0; i < profiledata?.data?.data?.length; i++) {
       if (datta == profiledata?.data?.data[i].domain) {
@@ -136,7 +148,7 @@ function Profile(props) {
 
   return (
     <>
-      <Form style={{ width: "30rem" }} className="text-center m-auto">
+      <Form style={{ width: "30rem" }} className="text-center m-auto">  
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>name</Form.Label>
           <Form.Control
@@ -181,7 +193,7 @@ function Profile(props) {
             placeholder="Press enter to add tags"
           />
         </div>
-
+        {console.log("profile data in return  = ",results)}
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Domain</Form.Label>
           <Form.Control
@@ -195,12 +207,20 @@ function Profile(props) {
             }}
             value={domain}
           />
+          {/* <datalist id="doaminBrowsers"> */}
+            {/* {location.state?.data.map((brandData) => {
+              console.log(brandData.domain);
+              // console.log("hello")
+              return <option key={brandData._id} value={brandData.domain} />;
+            })} */}
+          {/* </datalist> */}
           <datalist id="doaminBrowsers">
-            {profiledata?.data?.data.map((brandData) => {
+            {results&&results.map((brandData) => {
+              console.log(brandData.domain);
               return <option key={brandData._id} value={brandData.domain} />;
             })}
           </datalist>
-          <div id="domain" style={{ color: "red" }}></div>
+          {/* <div id="domain" style={{ color: "red" }}></div> */}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -214,6 +234,7 @@ function Profile(props) {
           <Form.Control
             type="color"
             placeholder="Choose colors"
+            
             onChange={(e) => setPrimaryColors(e.target.value)}
             value={PrimaryColors}
           ></Form.Control>
@@ -246,7 +267,7 @@ function Profile(props) {
         </Form.Group>
 
 
-        {name?
+        {location.state?.data?
         
       
         <Button variant="primary" onClick={() => updateProfileValue()}>

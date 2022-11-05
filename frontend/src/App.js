@@ -17,6 +17,7 @@ import MyVerticallyCenteredModal from './pages/Popup';
 import MyStuffPopup from './pages/MyStuffpopup';
 import Brand from './pages/Brand.js';
 import HomeLogo from './pages/Searchlogo.js';
+import Home2 from './pages/Home2';
 
 
 
@@ -40,6 +41,7 @@ function App() {
           <NavigationBar />
           <Routes>
             <Route path='/' element={<Home />} />
+            <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
             <Route path='/search' element={<Search />} />
             <Route path='/searchlogo' element={<HomeLogo />} />
             <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />

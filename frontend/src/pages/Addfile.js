@@ -34,6 +34,7 @@ const Addfile = () => {
   const [tags, setTags] = React.useState([]);
   const [domain, setDomain] = useState();
   const [id, setId] = useState();
+  const [ffresult, setResult] = useState();
 
   const addTags = (event) => {
     if (event.key === "Enter" && event.target.value !== "") {
@@ -50,10 +51,16 @@ const Addfile = () => {
   const profileDetails = async (req, res) => {
     // console.warn(params)
     // console.log("first");
-    const fresult = await getProfileDetails({email:user.email});
+    let fresult = "";
+    if (user.email) {
+      fresult = await getProfileDetails({ email: user.email });
+      setResult(fresult.data.data);
+    }
     setDomain(fresult?.data?.data[0]?.domain);
     setId(fresult?.data?.data[0]?._id);
-    // console.log(fresult);
+
+    console.log(user);
+    // console.log(fresult.data.data);
   };
 
   const onSubmitClick = async () => {
@@ -70,16 +77,17 @@ const Addfile = () => {
             const imageUrl = data.split("?")[0];
             tags.push(domain);
             console.log(tags);
-            const result = await getProfileDetails({email:user.email});
+            const result = await getProfileDetails({ email: user.email });
+            // console.log(result);
             const a = createBrandAPI({
               url: imageUrl,
               title,
-              description:tags,
+              description: tags,
               // description: "description",
               email: user?.email,
-              domain: id,
+              domain: domain,
             });
-            console.log(a)
+            console.log(a);
           } catch (error) {
             // console.log("cha")
             // console.log(error)
@@ -104,7 +112,17 @@ const Addfile = () => {
     <React.Fragment>
       <Card style={{ width: "30rem" }} className="text-center m-auto">
         <Card.Body>
-          <Card.Header>File to <h3>{domain}</h3></Card.Header>
+          <Card.Header>
+            <h5>Choose the domain first</h5>
+            <select onChange={(e) => {
+                 setDomain(e.target.value);
+                }}>
+              {ffresult &&
+                ffresult.map((domainName,index) => (
+                  <option value={domainName._id} key={index}>{domainName.domain}</option>
+                ))}
+            </select>
+          </Card.Header>
           <br />
           {/* <Card.Text> */}
           <Stack gap={3}>
