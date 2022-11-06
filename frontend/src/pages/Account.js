@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { UserAuth } from "../context/AuthContext";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
+import {Container, Row, Col, Card, Button } from "react-bootstrap";
 import { storeAuthKey } from "../api";
 import { setAuthKey } from "../api";
 import { deleteAuthKey } from "../api";
 import DeleteIcon from "@mui/icons-material/Delete";
+import SideBar from '../components/SideBar';
+
 const Account = () => {
   const { user } = UserAuth();
   const [key, setKey] = useState();
@@ -57,52 +58,59 @@ const Account = () => {
   }, [setAuth, user]);
 
   return (
-    <p>
-      <Card style={{ width: "23rem" }} className="m-auto">
-        <Card.Img variant="top" src={user?.photoURL} />
-        <Card.Body>
-          <Card.Title>Welcome, {user?.displayName}</Card.Title>
-          <Card.Text>
-            Mail id:- {user?.email}
-            <br />
-            Uid:- {user?.uid}
-            <br />
-            <div style={{ display: "flex" }}>
-              auth key :-
-              {key ? (
-                <>
-                  <p
-                    id="key"
-                    onClick={() => {
-                      navigator.clipboard.writeText(key);
-                      document.getElementById("key").style.color = "grey";
-                    }}
-                  >
-                    {key}
-                  </p>
-                  <DeleteIcon
-                    onClick={() => {
-                      deleteKey();
-                      setKey(null);
-                    }}
-                    style={{ color: "red" }}
-                  />
-                </>
-              ) : (
-                <Button
-                  id="authKeybtn"
-                  onClick={() => {
-                    token();
-                  }}
-                >
-                  generate
-                </Button>
-              )}
-            </div>
-          </Card.Text>
-        </Card.Body>
-      </Card>
-    </p>
+    <Container fluid >
+      <Row>
+        <Col md={3} lg={2}>
+          <SideBar/>
+        </Col>
+        <Col md={9} lg={10}>
+          <Card style={{ width: "23rem" }} className="m-auto">
+            <Card.Img variant="top" src={user?.photoURL} />
+            <Card.Body>
+              <Card.Title>Welcome, {user?.displayName}</Card.Title>
+              <Card.Text>
+                Mail id:- {user?.email}
+                <br />
+                Uid:- {user?.uid}
+                <br />
+                <div style={{ display: "flex" }}>
+                  auth key :-
+                  {key ? (
+                    <>
+                      <p
+                        id="key"
+                        onClick={() => {
+                          navigator.clipboard.writeText(key);
+                          document.getElementById("key").style.color = "grey";
+                        }}
+                      >
+                        {key}
+                      </p>
+                      <DeleteIcon
+                        onClick={() => {
+                          deleteKey();
+                          setKey(null);
+                        }}
+                        style={{ color: "red" }}
+                      />
+                    </>
+                  ) : (
+                    <Button
+                      id="authKeybtn"
+                      onClick={() => {
+                        token();
+                      }}
+                    >
+                      generate
+                    </Button>
+                  )}
+                </div>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

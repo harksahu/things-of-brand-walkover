@@ -113,7 +113,7 @@ getcompany()
   return (
     <>
       <Navbar expand="lg bg-white" sticky="top">
-        <Container className="" fill>
+        <Container fluid >
           <Navbar.Brand
             onClick={() => {
               navigate("/home");
