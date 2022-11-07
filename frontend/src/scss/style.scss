@@ -1,0 +1,30 @@
+@import 'theme';
+.tags{
+    padding:0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap !important;
+    .tag-item{
+        display: flex;
+        background-color: var(--tag-color);
+        border-radius: 4px;
+        padding: 0 4px 0 8px;
+        align-items: center;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        .tag-icon{
+            display: flex;
+            border-radius: 4px;
+            margin-left: 3px;
+            &:hover{
+                background-color: rgba(0,0,0,.2);
+            }
+        }
+    }
+}
+
+.wrpr{
+    background-color: var(--bs-light);
+    padding-top: 1.5rem;
+    height: 100%;
+}

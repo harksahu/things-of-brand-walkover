@@ -10,6 +10,7 @@ import Addfile from './pages/Addfile';
 import MyStuff from './pages/MyStuff';
 import Search from "./pages/Search";
 import MyCompany from "./pages/MyCompany";
+import ThemeProvider from 'react-bootstrap/ThemeProvider';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { auth } from './firebase.js';
@@ -37,7 +38,11 @@ function App() {
 
       {
         isUserLoaded &&
-        <AuthContextProvider>
+        <ThemeProvider
+          breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
+          minBreakpoint="xxs"
+        >
+          <AuthContextProvider>
           <NavigationBar />
           <Routes>
             <Route path='/' element={<Home />} />
@@ -54,6 +59,7 @@ function App() {
             <Route path='/company' element={<Protected> <MyCompany/> </Protected>} />
           </Routes>
         </AuthContextProvider>
+        </ThemeProvider>   
       }
     </>
   );
