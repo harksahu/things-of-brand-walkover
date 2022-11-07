@@ -21,6 +21,7 @@ import Modal from "react-bootstrap/Modal";
 import ListGroup from "react-bootstrap/ListGroup";
 import { async } from "@firebase/util";
 import { AiFillPlusCircle } from "react-icons/ai";
+import { FiEdit2 } from "react-icons/fi";
 
 function Not_found() {
   return (
@@ -58,6 +59,7 @@ function Brand() {
   const handleShow = () => setShow(true);
   const [allColor , setAllColor] = useState();
   const [fontLink,setFontLink]= useState([]);
+  const [company,setCompany]= useState([]);
 
   const verifyDomain = async () => {
     const TXT = await getTXT(domain);
@@ -139,7 +141,7 @@ function Brand() {
     console.log(fresult);
 
     console.warn(fresult.data.data[0]);
-
+    setCompany(fresult.data.data[0])
     setId(fresult.data.data[0]._id);
     setName(fresult.data.data[0].name);
     setAboutus(fresult.data.data[0].aboutus);
@@ -194,9 +196,14 @@ function Brand() {
         <div className="m-5">
           {user ? (
             email === user.email ? (
+              <>
               <Link to={"/addfile"}>
                 <AiFillPlusCircle style={{ float: "right", fontSize: 40 }} />
               </Link>
+              <Link to="/profile" state={{ data: company }}>
+                <FiEdit2 style={{ float: "right", fontSize: 40 , color: "black" }} />
+              </Link>
+              </>
             ) : (
               ""
             )

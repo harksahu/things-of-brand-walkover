@@ -51,7 +51,8 @@ function MyCompany() {
                   key={Company._id}
                   className="d-flex justify-content-center item"
                 >
-                  <Link to="/profile" state={{ data: Company }}>
+                  {/* <Link to={"/profile" }state={{ data: Company }}> */}
+                  <Link to={'/'+Company.domain}>
                     <Card>
                       <div style={{ overflow: "auto" }} className="img_size">
                         <SvgInline url={Company.logo} />
