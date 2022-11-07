@@ -44,10 +44,10 @@ function Home2() {
             <div className="d-flex justify-content-center">
               <button
                 type="button"
-                className="btn btn-primary btn-lg"
+                className={`btn btn-lg ${user ? 'btn-outline-primary' : 'btn-primary'}`}
                 onClick={handleGoogleSignIn}
               >
-                Get started
+                {user ? 'Manage' : 'Get started'}
               </button>
             </div>
           </Col>
@@ -55,7 +55,7 @@ function Home2() {
         <div className="mt-5"></div>
         <Row className="mt-5">
           <Col xs={12} lg={10} className="mx-auto text-center">
-            <div className="fw-bold text-black-50">They manage their brand</div>
+            <div className="fw-bold text-black-50">They manage their brand here</div>
             <div className="d-flex brands-wrp align-items-center justify-content-center flex-wrap">
               <div>
                 <img src="walkover.svg" />
@@ -76,8 +76,8 @@ function Home2() {
                 <img src="workspace.svg" />
               </div>
             </div>
-            <Link to="/search" className="text-black-50">
-              more...
+            <Link to="/search">
+              Explore more...
             </Link>
           </Col>
         </Row>

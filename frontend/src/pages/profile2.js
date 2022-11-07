@@ -258,7 +258,7 @@ else{
             <Card.Body>
             <Stack gap={3}>
 
-              <Form style={{ width: "30rem" }}>
+              <Form>
                 <Form.Group className="mb-3 visually-hidden" id="name">
                   <Form.Label>name</Form.Label>
                   <Form.Control

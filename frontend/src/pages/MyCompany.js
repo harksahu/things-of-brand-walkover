@@ -35,7 +35,7 @@ function MyCompany() {
 
   return (
     <>
-    <Container fluid >
+    <Container fluid className="wrpr" >
       <Row>        
         <Col md={3} lg={2}>
           <SideBar/>
