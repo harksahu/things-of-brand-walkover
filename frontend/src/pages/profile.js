@@ -108,7 +108,7 @@ function Profile(props) {
   };
 
   const profileDetails = async (req, res) => {
-    fresult = await getProfileDetails({ email: user.email });
+    fresult = await getProfileDetails({});
     console.log(fresult.data.data);
     // console.log("profiledata = ",profiledata);
     setResults(fresult.data.data);
