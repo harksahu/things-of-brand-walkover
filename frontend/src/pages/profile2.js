@@ -143,7 +143,7 @@ function Profile(props) {
   };
 
 const next = ()=>{
-  // console.log(results);
+  console.log(results);
 
   if(location.state?.data)
 {
