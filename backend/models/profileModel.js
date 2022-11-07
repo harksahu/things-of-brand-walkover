@@ -9,8 +9,7 @@ const profileSchema = new mongoose.Schema({
         type: String,
     },
     logo:  {
-        type: String,
-        default: null
+        type: String
     },
     links :{
         type: [String]
@@ -22,22 +21,31 @@ const profileSchema = new mongoose.Schema({
     guidlines: {
         type: String,
     },
-    PrimaryColors:{
-        type: String
+    // PrimaryColors:{
+    //     type: String
+    // },
+    // secondaryColors:{
+    //     type: String
+    // },
+
+    fontLink:{
+        type: [String]
     },
-    secondaryColors:{
-        type: String
+    // backgroundColors:{
+    //     type: String
+    // },
+    color:[{
+        colorName: String,
+        colorValue: String
+    }],
+    email:{
+        type: String,
+        unique: false
+    },
+    verify:{
+        type: String,
     },
 
-    fontSize:{
-        type: String
-    },
-    backgroundColors:{
-        type: String
-    },
-    email:{
-        type: String
-    }
     })
 
     const Profile = mongoose.model("profiles",profileSchema)

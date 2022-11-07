@@ -12,6 +12,8 @@ const URL = "http://localhost:8080";
 //   return data;
 // };
 
+
+
 const createBrandAPI = async (dataToSend) => {
   const data = {
     ...dataToSend,
@@ -28,23 +30,26 @@ const createProfile   = async (dataToSend) => {
   return await axios.post(URL + "/api/profile", data);
 };
 
-const getProfileDetails = async ({email="",domain=""}) => {
-  return await axios.get(URL + "/api/profile?email="+email+"&domain="+domain);
+const getProfileDetails = async ({email="",domain="",name="",searchfrom="false"}) => {
+  return await axios.get(URL + "/api/profile?email="+email+"&domain="+domain+"&name="+name+"&searchfrom="+searchfrom);
 }
+
+
 const searchBrandApi = async (id) => {
   return await axios.get(URL + "/api/brands/"+id);
 }
 
 
 const updateProfileFields = async(dataToSend) => {
+  console.log(dataToSend);
   // let link = links.split(",");
-const data = {
-  ...dataToSend
-}
-console.log(data)
-// console.log(data.links)
+  const data = {
+    ...dataToSend
+  }
+  console.log(data)
+  // console.log(data.links)
   // console.log("name=" + name + "&aboutus=" + aboutus + "&links=" + link + "&domain=" + domain + "&guidlines=" + guidlines + "&fontSize=" + fontSize + "&PrimaryColors="+ PrimaryColors+ "&secondaryColors=" + secondaryColors + "&backgroundColors=" + backgroundColors + "&email=" + email)
-  return await axios.put(URL + "/api/profile",data);
+  return await axios.put(URL + "/api/profile", data);
   // return await axios.put(URL + "/api/profile?data="+data);
 }
 
@@ -60,6 +65,12 @@ const deleteMyStuffAPI = async (id) => {
 const sendSearchAPI = async ({title = "" , email = "" , active = "",description="",_id="",domain=""}) => {
   return await axios.get(URL + "/api/search?title=" + title+"&email="+email+"&active="+active+"&description="+description+"&_id=" + _id+ "&domain=" + domain);
 };
+
+const getCompanyDetails = async (id) => {
+  console.log(id)
+  return await axios.get(URL + "/api/profile/" +  id );
+}
+
 const sendMydeleteStuffAPI = async (email) => {
   return await axios.get(URL + "/api/deteteItems/" + email);
 };
@@ -88,6 +99,12 @@ const setAuthKey =  async (email)=>{
   // console.log(email);
   return await axios.get(URL + "/api/storeKey/"+email);
 }
+const getTXT =  async (link)=>{
+  const data = {
+    link
+  }
+  return await axios.post(URL + "/getDomainTXT",data);
+}
 
 
 
@@ -109,6 +126,7 @@ return url;
 export {
   getS3SignUrl,
   searchBrandApi,
+  getTXT,
   createBrandAPI,
   sendBrandAPI,
   sendMyStuffAPI,
@@ -122,5 +140,6 @@ export {
   deleteAuthKey,
   createProfile,
   getProfileDetails,
-  updateProfileFields
+  updateProfileFields,
+  getCompanyDetails
 };

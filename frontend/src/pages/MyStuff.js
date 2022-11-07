@@ -1,14 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
-import Card from "react-bootstrap/Card";
+import { Card, Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Row from "react-bootstrap/Row";
 import SvgInline from "../utils/SvgInline.js";
 import "../utils/svginline.css";
-
-import { connect } from "react-redux";
-
-import { searchBrand } from "../store/actions/search-brands";
+import { sendSearchAPI } from "../api/index.js";
+import { AiFillPlusCircle } from "react-icons/ai";
+import SideBar from '../components/SideBar';
 
 import Figure from "react-bootstrap/Figure";
 
@@ -26,120 +24,142 @@ function Not_found() {
   );
 }
 
-function Home({ searchBrandData = [], getSearchBrand }) {
+// function Home({ searchBrandData = [], getSearchBrand }) {
+function Home() {
   const { user } = UserAuth();
+  const [searchBrandData, setSearchBrandData] = useState();
+
+  const getbrand = async () => {
+    const data = await sendSearchAPI({
+      email: user.email,
+      active: "",
+    });
+    setSearchBrandData(data?.data);
+  };
 
   useEffect(() => {
-    if(user !== null && user !== undefined && user && Object.keys(user).length > 0){
-      getSearchBrand({
-        email: user.email,
-        active: "",
-      })
+    if (
+      user !== null &&
+      user !== undefined &&
+      user &&
+      Object.keys(user).length > 0
+    ) {
+      // getSearchBrand({
+      //   email: user.email,
+      //   active: "",
+      // })
+      getbrand();
     }
   }, [user]);
 
   return (
     <>
-      <div className=" m-3 ">
-        <h1 className="text-center">Public Items</h1>
+      <Container fluid className="wrpr">
+        <Row>
+          <Col md={3} lg={2}>
+            <SideBar />
+          </Col>
+          <Col md={9} lg={10}>
+            <Link to={"/addfile"}>
+              <Button variant="dark">
+                Add Stuff
+              </Button>              
+            </Link>
+            <Row md={4} className="g-4 flex p-3 bg-light">
+              {searchBrandData?.data?.length === 0 ? (
+                <Not_found />
+              ) : (
+                searchBrandData?.data?.map((brand) => {
+                  return (
+                    <>
+                      {brand.active === true ? (
+                        <div
+                          key={brand._id}
+                          className="d-flex justify-content-center item"
+                        >
+                          <Link to={"/stuff/" + brand._id}>
+                            <Card>
+                              <div
+                                style={{ overflow: "auto" }}
+                                className="img_size"
+                              >
+                                <SvgInline url={brand.url} />
+                              </div>
 
-        <Row md={4} className="g-4 flex p-3 bg-light">
-          {searchBrandData?.data?.length === 0 ? (
-            <Not_found />
-          ) : (
-            searchBrandData?.data?.map((brand) => {
-              return (
-                <>
-                  {brand.active === true ? (
-                    <div
-                      key={brand._id}
-                      className="d-flex justify-content-center item"
-                    >
-                      <Link to={"/popup/" + brand._id}>
-                        <Card>
+                              <Card.Body>
+                                <Card.Title
+                                  style={{ textDecoration: "none" }}
+                                  className="text-center"
+                                >
+                                  {brand.title}
+                                </Card.Title>
+                                <Card.Text></Card.Text>
+                              </Card.Body>
+                            </Card>
+                          </Link>
+                        </div>
+                      ) : null}
+                    </>
+                  );
+                })
+              )}
+            </Row>
+              <h5 className="text-center">Deleted Items</h5>
+              <Row md={4} className="g-4 flex p-3 bg-light">
+                {searchBrandData?.data?.length === 0 ? (
+                  <Not_found />
+                ) : (
+                  searchBrandData?.data?.map((brand) => {
+                    return (
+                      <>
+                        {brand.active === false ? (
                           <div
-                            style={{ overflow: "auto" }}
-                            className="img_size"
+                            key={brand._id}
+                            className="d-flex justify-content-center item"
                           >
-                            <SvgInline {...brand} />
+                            <Link to={"/stuff/" + brand._id}>
+                              <Card>
+                                <div
+                                  style={{ overflow: "auto" }}
+                                  className="img_size"
+                                >
+                                  <SvgInline url={brand.url} />
+                                </div>
+
+                                <Card.Body>
+                                  <Card.Title
+                                    style={{ textDecoration: "none" }}
+                                    className="text-center"
+                                  >
+                                    {brand.title}
+                                  </Card.Title>
+                                  <Card.Text></Card.Text>
+                                </Card.Body>
+                              </Card>
+                            </Link>
                           </div>
-
-                          <Card.Body>
-                            <Card.Title
-                              style={{ textDecoration: "none" }}
-                              className="text-center"
-                            >
-                              {brand.title}
-                            </Card.Title>
-                            <Card.Text></Card.Text>
-                          </Card.Body>
-                        </Card>
-                      </Link>
-                    </div>
-                  ) : null}
-                </>
-              );
-            })
-          )}
+                        ) : null}
+                      </>
+                    );
+                  })
+                )}
+              </Row>
+          </Col>
         </Row>
-      </div>
-
-      <hr />
-
-      <div className=" m-3 flex">
-        <h1 className="text-center">Deleted Items</h1>
-        <Row md={4} className="g-4 flex p-3 bg-light">
-          {searchBrandData?.data?.length === 0 ? (
-            <Not_found />
-          ) : (
-            searchBrandData?.data?.map((brand) => {
-              return (
-                <>
-                  {brand.active === false ? (
-                    <div
-                      key={brand._id}
-                      className="d-flex justify-content-center item"
-                    >
-                      <Link to={"/popup/" + brand._id}>
-                        <Card>
-                          <div
-                            style={{ overflow: "auto" }}
-                            className="img_size"
-                          >
-                            <SvgInline {...brand} />
-                          </div>
-
-                          <Card.Body>
-                            <Card.Title
-                              style={{ textDecoration: "none" }}
-                              className="text-center"
-                            >
-                              {brand.title}
-                            </Card.Title>
-                            <Card.Text></Card.Text>
-                          </Card.Body>
-                        </Card>
-                      </Link>
-                    </div>
-                  ) : null}
-                </>
-              );
-            })
-          )}
-        </Row>
-      </div>
+      </Container>
     </>
   );
 }
 
-const mapStateToProp = (state, ownProps) => {
-  return { ...ownProps, searchBrandData: state.searchBrandReducer };
-};
+// const mapStateToProp = (state, ownProps) => {
+//   return { ...ownProps, searchBrandData: state.searchBrandReducer };
+// };
 
-const mapDispatchToProp = (dispatch) => {
-  return {
-    getSearchBrand: (payload) => dispatch(searchBrand(payload)),
-  };
-};
+// const mapDispatchToProp = (dispatch) => {
+//   return {
+//     getSearchBrand: (payload) => dispatch(searchBrand(payload)),
+//   };
+// };
 
-export default connect(mapStateToProp, mapDispatchToProp)(Home);
+// export default connect(mapStateToProp, mapDispatchToProp)(Home);
+export default Home;

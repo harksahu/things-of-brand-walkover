@@ -15,12 +15,34 @@ import { useLocation } from "react-router-dom";
 import { searchBrand, clearSearchBrand } from "../store/actions/search-brands";
 import { connect } from "react-redux";
 import { dividerClasses } from "@mui/material";
+import { async } from "@firebase/util";
 
 function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+
+
+
+const getcompany = async() =>{
+// // console.log(searchBrandData);
+// var set = new Set(searchBrandData?.data?.domain[0]);
+// // down.innerHTML = JSON.stringify([...set])
+// console.log(set);
+
+
+
+}
+
+
+useEffect(()=>{
+getcompany()
+},[searchBrandData])
+
+
+
 
   const [searchItem, setItems] = useState();
 
@@ -57,11 +79,13 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
         }
       } else {
         getSearchBrand({
-          title: text,
-          email: "",
-          active: "1",
-          description: text,
-          _id: "",
+          // title: text,
+          // email: "",
+          // active: "1",
+          // description: text,
+          // _id: "",
+          name :text,
+          domain:text,
         });
       }
     }
@@ -70,7 +94,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   var numbers = [1, 2, 3, 4, 5];
   const handleGoogleSignIn = async () => {
     try {
-      await googleSignIn();
+      await googleSignIn()
       // console.log(object);
     } catch (error) {
       console.log(error);
@@ -80,6 +104,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const handleSignOut = async () => {
     try {
       await logOut();
+      navigate("/home");
     } catch (error) {
       console.log(error);
     }
@@ -88,14 +113,14 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   return (
     <>
       <Navbar expand="lg bg-white" sticky="top">
-        <Container className="" fill>
+        <Container fluid >
           <Navbar.Brand
             onClick={() => {
-              navigate("/");
+              navigate("/home");
             }}
             className="bo"
           >
-            Things of Brand
+            Things of Brand     
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -105,26 +130,30 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Form className="justify-content-center">
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="me-2"
-                  aria-label="Search"
-                  show={true}
-                  onChange={(e) => {
-                    sendData(e.target.value);
-                  }}
-                  value={searchItem || ""}
-                  list="browsers"
-                  name="myBrowser"
-                />
-                <datalist id="browsers">
-                  {searchBrandData.data.map((brandData) => {
-                    return(<option value={brandData.title}/>);
-                  })}
-                </datalist>
-              </Form>
+             {
+              location.pathname === "/search"?
+               <Form className="justify-content-center">
+               <Form.Control
+                 type="search"
+                 placeholder="Search"
+                 className="me-2"
+                 aria-label="Search"
+                 show={true}
+                 onChange={(e) => {
+                   sendData(e.target.value);
+                 }}
+                 value={searchItem || ""}
+                 list="browsers"
+                 name="myBrowser"
+               />
+               <datalist id="browsers">
+                 {searchBrandData.data.map((brandData) => {
+                   return(<option value={brandData.name}/>);
+                 })}
+               </datalist>
+             </Form>
+             :""
+             }
             </Nav>
 
             {user?.displayName ? (
@@ -157,10 +186,10 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   onClick={() => {
-                    navigate("/profile");
+                    navigate("/company");
                   }}
                 >
-                  Profile
+                  Company
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleSignOut}>

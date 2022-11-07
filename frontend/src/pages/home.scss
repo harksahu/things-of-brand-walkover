@@ -1,0 +1,29 @@
+.heading {
+	font-weight: 800 !important;    
+}
+.w {
+	color: #888;
+}
+.q {
+	color: #888;
+}
+.brands-wrp {
+	margin: 24px 0;
+	div {
+		margin: 20px;
+		img {
+			height: 28px;
+			filter: grayscale(100%);
+			opacity: .5;
+		}
+	}
+}
+.footer {
+	padding: 20px 0;
+	color: #888;
+}
+footer {
+	a {
+		color: #999;
+	}
+}
