@@ -62,7 +62,7 @@ function MyCompany() {
                           style={{ textDecoration: "none" }}
                           className="text-center"
                         >
-                          {Company.name}
+                          {Company.name?Company.name:Company.domain}
                         </Card.Title>
                         <Card.Text></Card.Text>
                       </Card.Body>

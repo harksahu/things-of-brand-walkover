@@ -165,7 +165,7 @@ function Brand() {
     const data = {
       name: name,
       aboutus: aboutus,
-      logo_url: logo_url,
+      logo: logo_url,
       links: links,
       domain: domain,
       guidlines: guidlines,
@@ -214,6 +214,7 @@ function Brand() {
             <h1>{name}</h1>
           </div>
           <div>{aboutus}</div>
+          <div>{links}</div>
           <br />
           <div>
             <a

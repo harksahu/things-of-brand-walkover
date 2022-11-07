@@ -70,7 +70,7 @@ const updateProfile = async (req,res)=>{
     console.log("logo url in backend",req.body.logo_url);
     let name=req.body.name;
       let aboutus=req.body.aboutus;
-      let logo=req.body.logo_url;
+      let logo=req.body.logo;
       let links=req.body.links;
       let domain=req.body.domain;
      let  guidlines=req.body.guidlines;
