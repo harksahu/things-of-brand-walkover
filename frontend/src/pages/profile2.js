@@ -171,41 +171,8 @@ function Profile(props) {
   const next = () => {
     // console.log(results);
 
-    if (location.state?.data) {
-      document.getElementById("name").classList.remove("visually-hidden")
-      document.getElementById("about").classList.remove("visually-hidden")
-      document.getElementById("socialLinks").classList.remove("visually-hidden")
-      document.getElementById("Guidlines").classList.remove("visually-hidden")
-      document.getElementById("list").classList.remove("visually-hidden")
-      document.getElementById("fontLink").classList.remove("visually-hidden")
-      document.getElementById("button").classList.remove("visually-hidden")
-      document.getElementById("nxt").classList.add("visually-hidden")
-
-    }
-    else {
-      var check = 2;
-      for (let i = 0; i < results.length; i++) {
-        // const e = results[i];
-        if (results[i].domain === domain) {
-          // console.log("true");
-          check = 1;
-
-          break;
-        }
-        else {
-          // console.log("false");
-          check = 0;
-
-        }
-
-      }
-      if (check === 1) {
-        console.log("old");
-        alert("Verify It's your domain")
-
-      }
-      else if (check === 0) {
-        console.log("new");
+    if(domain){
+      if (location.state?.data) {
         document.getElementById("name").classList.remove("visually-hidden")
         document.getElementById("about").classList.remove("visually-hidden")
         document.getElementById("socialLinks").classList.remove("visually-hidden")
@@ -214,16 +181,54 @@ function Profile(props) {
         document.getElementById("fontLink").classList.remove("visually-hidden")
         document.getElementById("button").classList.remove("visually-hidden")
         document.getElementById("nxt").classList.add("visually-hidden")
-
-
-        document.getElementById("domain").disabled = true;
-        storeProfileValue()
-
+  
       }
-
-
+      else {
+        var check = 2;
+        for (let i = 0; i < results.length; i++) {
+          // const e = results[i];
+          if (results[i].domain === domain) {
+            // console.log("true");
+            check = 1;
+  
+            break;
+          }
+          else {
+            // console.log("false");
+            check = 0;
+  
+          }
+  
+        }
+        if (check === 1) {
+          console.log("old");
+          alert("Verify It's your domain")
+  
+        }
+        else if (check === 0) {
+          console.log("new");
+          document.getElementById("name").classList.remove("visually-hidden")
+          document.getElementById("about").classList.remove("visually-hidden")
+          document.getElementById("socialLinks").classList.remove("visually-hidden")
+          document.getElementById("Guidlines").classList.remove("visually-hidden")
+          document.getElementById("list").classList.remove("visually-hidden")
+          document.getElementById("fontLink").classList.remove("visually-hidden")
+          document.getElementById("button").classList.remove("visually-hidden")
+          document.getElementById("nxt").classList.add("visually-hidden")
+  
+  
+          document.getElementById("domain").disabled = true;
+          storeProfileValue()
+  
+        }
+  
+  
+      }
+      
     }
-
+    else{
+        alert("enter domain name");
+    }
   }
 
   const checkDomain = (datta) => {
