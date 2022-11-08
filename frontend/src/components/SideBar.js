@@ -24,22 +24,23 @@ function SideBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
         }}
         >My Stuff</Nav.Link>
       </Nav.Item>
-
-      <Nav.Item>
-        <Nav.Link className={ location.pathname === '/account' ? 'active' : ''}
-        onClick={() => {
-          navigate("/account");
-        }}
-        href="/account">Account</Nav.Link>
-      </Nav.Item>      
       
       <Nav.Item>
         <Nav.Link className={ location.pathname === '/company' || location.pathname === '/profile' ? 'active' : ''}
         onClick={() => {
           navigate("/company");
         }}
-        href="/company">Company</Nav.Link>
-      </Nav.Item>      
+        href="/company">Projects</Nav.Link>
+      </Nav.Item>
+
+      <Nav.Item>
+        <Nav.Link className={ location.pathname === '/account' ? 'active' : ''}
+        onClick={() => {
+          navigate("/account");
+        }}
+        href="/account">User Profile</Nav.Link>
+      </Nav.Item>
+
     </Nav>      
     </>
   );

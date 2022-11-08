@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { UserAuth } from "../context/AuthContext";
-import {Container, Row, Col, Card, Button } from "react-bootstrap";
+import {Container, Row, Col, Card, Button, ListGroup, FormLabel } from "react-bootstrap";
 import { storeAuthKey } from "../api";
 import { setAuthKey } from "../api";
 import { deleteAuthKey } from "../api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SideBar from '../components/SideBar';
+import "../scss/account.scss";
 
 const Account = () => {
   const { user } = UserAuth();
@@ -58,26 +59,25 @@ const Account = () => {
   }, [setAuth, user]);
 
   return (
-    <Container fluid >
+    <Container fluid className="wrpr" >
       <Row>
         <Col md={3} lg={2}>
           <SideBar/>
         </Col>
         <Col md={9} lg={10}>
-          <Card style={{ width: "23rem" }} className="m-auto">
-            <Card.Img variant="top" src={user?.photoURL} />
+          <Card className="profile-card">
+            <Card.Img variant="top" src={user?.photoURL} height="398px" />
             <Card.Body>
-              <Card.Title>Welcome, {user?.displayName}</Card.Title>
-              <Card.Text>
-                Mail id:- {user?.email}
-                <br />
-                Uid:- {user?.uid}
-                <br />
-                <div style={{ display: "flex" }}>
-                  auth key :-
-                  {key ? (
-                    <>
-                      <p
+              <Card.Title>{user?.displayName}</Card.Title>              
+              <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
+            </Card.Body>
+            <ListGroup className="list-group-flush">
+              <ListGroup.Item>
+                <div className="small mb-1">Authkey</div>
+              {key ? (
+                    <div className="d-flex">
+                      <div
+                        className="flex-fill"
                         id="key"
                         onClick={() => {
                           navigator.clipboard.writeText(key);
@@ -85,28 +85,36 @@ const Account = () => {
                         }}
                       >
                         {key}
-                      </p>
-                      <DeleteIcon
-                        onClick={() => {
-                          deleteKey();
-                          setKey(null);
-                        }}
-                        style={{ color: "red" }}
-                      />
-                    </>
+                      </div>
+                      <div>
+                        <DeleteIcon
+                          onClick={() => {
+                            deleteKey();
+                            setKey(null);
+                          }}
+                          style={{ color: "red" }}
+                        />
+                      </div>
+                    </div>
                   ) : (
-                    <Button
-                      id="authKeybtn"
-                      onClick={() => {
-                        token();
-                      }}
-                    >
-                      generate
-                    </Button>
+                    <>                      
+                      <Button
+                        id="authKeybtn"
+                        className="btn-sm"
+                        onClick={() => {
+                          token();
+                        }}
+                      >
+                        generate
+                      </Button>
+                    </>
                   )}
-                </div>
-              </Card.Text>
-            </Card.Body>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <div className="small mb-1">User Id</div>
+                {user?.uid}
+              </ListGroup.Item>
+            </ListGroup>
           </Card>
         </Col>
       </Row>

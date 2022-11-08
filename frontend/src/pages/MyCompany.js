@@ -35,7 +35,7 @@ function MyCompany() {
 
   return (
     <>
-    <Container fluid >
+    <Container fluid className="wrpr" >
       <Row>        
         <Col md={3} lg={2}>
           <SideBar/>
@@ -62,7 +62,7 @@ function MyCompany() {
                           style={{ textDecoration: "none" }}
                           className="text-center"
                         >
-                          {Company.name}
+                          {Company.name?Company.name:Company.domain}
                         </Card.Title>
                         <Card.Text></Card.Text>
                       </Card.Body>

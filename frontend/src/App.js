@@ -19,6 +19,7 @@ import MyStuffPopup from './pages/MyStuffpopup';
 import Brand from './pages/Brand.js';
 import HomeLogo from './pages/Searchlogo.js';
 import Home2 from './pages/Home2';
+import Profile2 from './pages/profile2';
 
 
 
@@ -52,7 +53,8 @@ function App() {
             <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />
             <Route path='/:title' element={<Brand />} />
             <Route path='/popup-mystuff' element={<MyStuffPopup />} />
-            <Route path='/profile' element={<Profile />} />
+            <Route path='/test' element={<Profile />} />
+            <Route path='/profile' element={<Profile2 />} />
             <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
             <Route path="/MyStuff" element={<Protected> <MyStuff /> </Protected>} />
             <Route path='/account' element={<Protected> <Account /> </Protected>} />
