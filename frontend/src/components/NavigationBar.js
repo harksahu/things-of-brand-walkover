@@ -150,7 +150,7 @@ getcompany()
                   title={user?.displayName}
                   id="collasible-nav-dropdown"
                   align="end"                  
-                >
+                >                  
                   <NavDropdown.Item
                     onClick={() => {
                       navigate("/addfile");
@@ -171,7 +171,7 @@ getcompany()
                       navigate("/company");
                     }}
                   >
-                    Projects
+                    Brands
                   </NavDropdown.Item>
                   
                   <NavDropdown.Item
@@ -183,6 +183,17 @@ getcompany()
                   </NavDropdown.Item>
 
                   <NavDropdown.Divider />
+
+                  <NavDropdown.Item
+                    onClick={() => {
+                      navigate("/search");
+                    }}
+                  >
+                    Explore
+                  </NavDropdown.Item>
+
+                  <NavDropdown.Divider />
+
                   <NavDropdown.Item onClick={handleSignOut}>
                     logout
                   </NavDropdown.Item>

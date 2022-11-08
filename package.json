@@ -46,6 +46,7 @@
     "puppeteer": "^18.2.1",
     "react-bootstrap": "^2.5.0",
     "react-icons": "^4.6.0",
+    "react-paginate": "^8.1.4",
     "react-redux": "^8.0.2",
     "request": "^2.88.2",
     "request-image-size": "^2.2.0",

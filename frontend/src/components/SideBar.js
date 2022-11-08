@@ -30,7 +30,7 @@ function SideBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
         onClick={() => {
           navigate("/company");
         }}
-        href="/company">Projects</Nav.Link>
+        >Brands</Nav.Link>
       </Nav.Item>
 
       <Nav.Item>
@@ -38,7 +38,15 @@ function SideBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
         onClick={() => {
           navigate("/account");
         }}
-        href="/account">User Profile</Nav.Link>
+        >User Profile</Nav.Link>
+      </Nav.Item>
+      
+      <Nav.Item>
+        <Nav.Link
+        onClick={() => {
+          navigate("/search");
+        }}
+        >Explore</Nav.Link>
       </Nav.Item>
 
     </Nav>      

@@ -64,7 +64,7 @@ const Account = () => {
         <Col md={3} lg={2}>
           <SideBar/>
         </Col>
-        <Col md={9} lg={10}>
+        <Col md={9} lg={10}>          
           <Card className="profile-card">
             <Card.Img variant="top" src={user?.photoURL} height="398px" />
             <Card.Body>
