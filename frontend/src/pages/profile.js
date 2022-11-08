@@ -220,21 +220,121 @@ let removeFontFields = (i) => {
               />
             </Form.Group>
 
-            <div className="tags-input mb-3" style={{ margin: "auto" }}>
-              <h6>Social Links</h6>
-              <ul>
-                {links.map((link, index) => (
-                  <li key={index}>
-                    <span>{link}</span>
-                    <i
-                      className="material-icons"
-                      onClick={() => removeLinks(index)}
+        <div className="tags-input mb-3" style={{ margin: "auto" }}>
+          <h6>Social Links</h6>
+          <ul>
+            {links.map((link, index) => (
+              <li key={index}>
+                <span>{link}</span>
+                <i
+                  className="material-icons"
+                  onClick={() => removeLinks(index)}
+                >
+                  <CloseIcon />
+                </i>
+              </li>
+            ))}
+          </ul>
+          <input
+            type="text"
+            onKeyUp={(event) => addLinks(event)}
+            placeholder="Press enter to add tags"
+          />
+        </div>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Domain</Form.Label>
+          <Form.Control
+            type="domain"
+            placeholder="Enter domain name"
+            list="doaminBrowsers"
+            name="myBrowser"
+            onChange={(e) => {
+              setDomain(e.target.value);
+              checkDomain(e.target.value);
+            }}
+            value={domain}
+          />
+
+          <datalist id="doaminBrowsers">
+            {results &&
+              results.map((brandData) => {
+                console.log(brandData.domain);
+                return <option key={brandData._id} value={brandData.domain} />;
+              })}
+          </datalist>
+          {/* <div id="domain" style={{ color: "red" }}></div> */}
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Guidlines</Form.Label>
+          <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines} />
+        </Form.Group>
+
+        <div id="list" className="hide formbold-chatbox-form">
+                <div id="error" className="error"></div>
+                <div id="demo"></div>
+                {color.map((element, index) => (
+                  <div id="fetch" key={index}>
+                    <input
+                      type="text"
+                       name="user_table_input"
+                      id={index}
+                      placeholder="Enter color name"
+                      value={color[index].colorName}
+                      onChange={(e) => {
+                        let tempCount = color;
+                        tempCount[index].colorName = e.target.value;
+                        setcount([...tempCount]);
+                      }}
+                      className="contact-form-area"
+                    />
+                    {console.log(" colors :",color)}
+                    {console.log("count of colors :",countTracker)}
+                     <input
+                      type="color"
+                      name="user_input"
+                      id={`colorinput${index}`}
+                      value={color[index].colorValue}
+                      className="user_input hide formbold-form-input"
+                      onChange={(e) => {
+                        document.getElementById( "colorinputbytext" + index).value = e.target.value;
+                        console.log("e.target.value" +e.target.value);
+                        let tempCount = color;
+                        tempCount[index].colorValue = e.target.value;
+                        setcount([...tempCount]);
+                      }}
+                    />
+                    <input type = "text" id = {`colorinputbytext${index}`} maxLength="7" 
+                    placeholder="Enter hex value of color" 
+                    onChange={(e) => {
+                      document.getElementById( "colorinput" + index).value = e.target.value;
+                    }}/>
+                    {/* <select
+                      name="user_table_input"
+                      id="user_table_input"
+                      value={color[index].colorName}
+                      onChange={(e) => {
+                        let tempCount = color;
+                        tempCount[index].colorName = e.target.value;
+                        setcount([...tempCount]);
+                      }}
+                      className="contact-form-area"
                     >
-                      <CloseIcon />
-                    </i>
-                  </li>
+                      
+                    </select> */}
+                    {index ? (
+                      <button
+                        type="button"
+                        className="name noselect"
+                        onClick={() => removeFormFields(index)}
+                        style={{ border: "1px solid #C43434" }}
+                      >
+                        <FcFullTrash />
+                      </button>
+                    ) : null}
+                  </div>
                 ))}
-              </ul>
+              {/* </ul> */}
               <input
                 type="text"
                 onKeyUp={(event) => addLinks(event)}
