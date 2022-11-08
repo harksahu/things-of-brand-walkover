@@ -8,6 +8,9 @@ import Figure from "react-bootstrap/Figure";
 import SvgInline from "../utils/SvgInline.js";
 import { getProfileDetails } from "../api/index.js";
 import { async } from "@firebase/util";
+import ReactDOM from 'react-dom/client';
+import Pagination from "./Pagination";
+import ReactPaginate from 'react-paginate';
 
 function Not_found() {
   return (
@@ -24,25 +27,46 @@ function Not_found() {
 }
 
 function Home({ searchBrandData = [], getSearchBrand }) {
+  const [posts,setPosts] = useState([]);
+  const [loading,setLoading] = useState(false);
+  const [currentPage,setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(8);
   // function Home() {
 
   // const [searchBrandData,setSearchBrandData] = useState()
 
   // const getProfile = async () =>{
   //   setSearchBrandData(await getProfileDetails({}));
-
   // }
+
   useEffect(() => {
-    getSearchBrand({});
+    const fetchPosts = async () =>{
+      setLoading(true);
+      getSearchBrand({}); 
+      setPosts(searchBrandData.data)
+      setLoading(false);
+    }
+    
+    fetchPosts();
   }, []);
+
+
+  const indexOfLastPost = currentPage* postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  console.log(indexOfLastPost);
+  console.log(indexOfFirstPost);
+  const currentPosts = searchBrandData.data.slice(indexOfFirstPost,indexOfLastPost);
+  console.log(currentPosts);
+  const paginate = pageNumber => setCurrentPage(pageNumber)
+
   return (
     <div className="p-3 flex bg-light">
       {console.log(searchBrandData)}
       <div className="d-flex flex-wrap justify-content-center">
-        {searchBrandData?.data?.length === 0 ? (
+        {currentPosts?.data?.length === 0 ? (
           <Not_found />
         ) : (
-          searchBrandData?.data?.map((Company) => {
+          currentPosts?.map((Company) => {
             // console.log(brand);
             return (
               <div
@@ -70,10 +94,13 @@ function Home({ searchBrandData = [], getSearchBrand }) {
             );
           })
         )}
+        {console.log(posts.length)}
       </div>
+      <Pagination postsPerPage={postsPerPage} totalPosts={searchBrandData.data.length} paginate={paginate}/>
     </div>
   );
 }
+
 
 const mapStateToProp = (state, ownProps) => {
   return { ...ownProps, searchBrandData: state.searchBrandReducer };
