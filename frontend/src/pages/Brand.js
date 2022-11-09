@@ -76,6 +76,7 @@ function Brand() {
   };
 
   async function makeid(length) {
+    console.log("in make id ");
     var result = "";
     var characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -83,10 +84,10 @@ function Brand() {
     for (var i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    if (verify == undefined && verify == null) {
+    if (verify == undefined || verify == null ||verify ==="false") {
       console.log(verify);
-
       setVerify(result);
+      console.log("verification code in condtion = "+result + verify);
 
       await updateVerify(result);
     }
@@ -112,7 +113,7 @@ function Brand() {
     };
     console.log(verify);
     // console.log();
-    if (verify === undefined && verify === null) {
+    if (verify === undefined || verify === null||verify==="false") {
       await updateProfileFields(data);
     }
   };
@@ -152,6 +153,10 @@ function Brand() {
     setlogo(fresult.data.data[0].logo);
     setEmail(fresult.data.data[0].email);
     setVerify(fresult.data.data[0].verify);
+    console.log(" set verify = "+fresult.data.data[0].verify);
+
+
+
 
     getbrandslogo();
   };
@@ -405,7 +410,7 @@ function Brand() {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>PLease verify domain {domain}</Modal.Title>
+          <Modal.Title>Please verify domain {domain}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div style={{ color: "red" }} id="error"></div>
