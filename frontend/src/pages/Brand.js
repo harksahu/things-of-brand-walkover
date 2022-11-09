@@ -12,13 +12,10 @@ import {
 import SvgInline from "../utils/SvgInline.js";
 import Card from "react-bootstrap/Card";
 import Figure from "react-bootstrap/Figure";
-import { FcApproval, FcHighPriority } from "react-icons/fc";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import ListGroup from "react-bootstrap/ListGroup";
-import { async } from "@firebase/util";
-import { AiFillPlusCircle } from "react-icons/ai";
-import { FiEdit2 } from "react-icons/fi";
+import { BsFillPlusCircleFill ,BsPencilSquare,BsFillExclamationDiamondFill,BsShieldCheck } from "react-icons/bs";
 
 function Not_found() {
   return (
@@ -200,10 +197,10 @@ function Brand() {
             email === user.email ? (
               <>
               <Link to={"/addfile"}>
-                <AiFillPlusCircle style={{ float: "right", fontSize: 40 }} />
+                <BsFillPlusCircleFill style={{ float: "right", fontSize: 40 }} />
               </Link>
               <Link to="/profile" state={{ data: company }}>
-                <FiEdit2 style={{ float: "right", fontSize: 40 , color: "black" }} />
+                <BsPencilSquare style={{ float: "right", fontSize: 40 , color: "black" }} />
               </Link>
               </>
             ) : (
@@ -229,11 +226,11 @@ function Brand() {
             {user ? (
               email === user.email ? (
                 verify === "true" ? (
-                  <FcApproval />
+                  <BsShieldCheck />
                 ) : (
                   <>
                     {" "}
-                    <FcHighPriority />
+                    <BsFillExclamationDiamondFill />
                     <button
                       className="m-auto btn btn-primary"
                       onClick={() => {

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Card, Container, Row, Col, Form, Button, Stack } from "react-bootstrap";
-import { createProfile } from "../api/index.js";
 import { UserAuth } from "../context/AuthContext";
-import { getProfileDetails,updateProfileFields ,getCompanyDetails} from "../api/index.js";
+import { getProfileDetails,updateProfileFields ,getCompanyDetails,createProfile} from "../api/index.js";
 import CloseIcon from "@mui/icons-material/Close";
 import RichtextEditor from "./jodit.js";
-import { FcFullTrash } from "react-icons/fc";
+import { BsFillTrashFill } from "react-icons/bs";
 import { useLocation,useNavigate } from "react-router-dom";
 import SideBar from '../components/SideBar';
 
@@ -419,7 +418,7 @@ return (
                               onClick={() => removeFormFields(index)}
                               style={{ border: "1px solid #C43434" }}
                             >
-                              <FcFullTrash />
+                              <BsFillTrashFill />
                             </button>
                           ) : null}
                         </Form.Group>
@@ -462,7 +461,7 @@ return (
                               onClick={() => removeFontFields(index)}
                               style={{ border: "1px solid #C43434" }}
                             >
-                              <FcFullTrash />
+                              <BsFillTrashFill />
                               delete
                             </button>
                           ) : null}
