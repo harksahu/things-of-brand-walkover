@@ -16,6 +16,7 @@ import SvgInline from "../utils/SvgInline.js";
 import Accordion from 'react-bootstrap/Accordion';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useNavigate, useParams } from "react-router-dom";
+import Draggable, {DraggableCore} from 'react-draggable';
 import {
   searchBrandApi,
   deleteMyStuffAPI,
@@ -128,7 +129,7 @@ function MyVerticallyCenteredModal(params) {
 
   return (
     <Container fluid>
-      <Button variant="primary" onClick={handleShow} style={{ top: 70, right: 10, position: "fixed" }}>
+      <Button variant="primary" onClick={handleShow} style={{ top: 70, right: 10, position: "fixed" }} class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
         Edit
       </Button>
       <Row className="h-90">
@@ -136,12 +137,12 @@ function MyVerticallyCenteredModal(params) {
           <SvgInline {...props} />
         </Col>
 
-
-        <Offcanvas show={show} onHide={handleClose}>
-          <Offcanvas.Header closeButton>
+        <Draggable >
+        <Offcanvas show={show} onHide={handleClose}  style={{height:300}}>
+          {/* <Offcanvas.Header closeButton> */}
             <Offcanvas.Title>Editing bar</Offcanvas.Title>
-          </Offcanvas.Header>
-          <Offcanvas.Body>
+          {/* </Offcanvas.Header> */}
+          <Offcanvas.Body >
             <div>
               <button className="tob-btn-trans" onClick={() => navigate(-1)}>
                 <span className="material-symbols-rounded d-block">close</span>
@@ -280,9 +281,10 @@ function MyVerticallyCenteredModal(params) {
               SVG
             </Button>{" "}
             {/* </Col> */}
-
+              
           </Offcanvas.Body>
         </Offcanvas>
+        </Draggable>
       </Row>
 
     </Container>
