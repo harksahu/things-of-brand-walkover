@@ -2,9 +2,7 @@ import react from "react";
 import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import Button from "react-bootstrap/Button";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import saveAs from "file-saver";
 import { Canvg, presets } from "canvg";
 import Container from "react-bootstrap/Container";
@@ -13,7 +11,6 @@ import Row from "react-bootstrap/Row";
 import "../utils/svginline.css";
 import "./popup.css";
 import SvgInline from "../utils/SvgInline.js";
-import Accordion from 'react-bootstrap/Accordion';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -23,7 +20,6 @@ import {
   restoreMyStuffAPI,
   saveMyStuffAPI,
 } from "../api/index.js";
-import { async } from "@firebase/util";
 function MyVerticallyCenteredModal(params) {
   const id = useParams();
   console.log(id.id);

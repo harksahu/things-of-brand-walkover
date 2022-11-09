@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Card, Container, Row, Col, Form, Button, Stack } from "react-bootstrap";
-import { createProfile } from "../api/index.js";
 import { UserAuth } from "../context/AuthContext";
-import { getProfileDetails } from "../api/index.js";
-import { getCompanyDetails } from "../api/index.js";
-import { updateProfileFields } from "../api/index.js";
+import { getProfileDetails,updateProfileFields ,getCompanyDetails,createProfile} from "../api/index.js";
 import CloseIcon from "@mui/icons-material/Close";
 import RichtextEditor from "./jodit.js";
-import { async } from "@firebase/util";
-import { FcFullTrash } from "react-icons/fc";
-import { useLocation, useNavigate } from "react-router-dom";
+import { BsFillTrashFill } from "react-icons/bs";
+import { useLocation,useNavigate } from "react-router-dom";
 import SideBar from '../components/SideBar';
 
 function Profile(props) {
@@ -254,6 +250,196 @@ function Profile(props) {
       }
     }
 
+const checkDomain = (datta) => {
+  for (let i = 0; i < profiledata?.data?.data?.length; i++) {
+    if (datta == profiledata?.data?.data[i].domain) {
+      const domainId = document.getElementById("domain");
+      domainId.innerHTML = "**this domain already resister**";
+      setCheck(false);
+    } else {
+      const domainId = document.getElementById("domain");
+      setCheck(true);
+    }
+  }
+};
+let addFormFields = () => {
+  setcount([...color, { colorName: "", colorValue: "#000000" }]);
+  setCountTracker(countTemp + 1);
+  // console.log(countTracker);
+};
+let addFontFields = () => {
+  setFontLink([...fontLink, ""]);
+  setLinkCount(countTemp2 + 1);
+
+};
+let removeFontFields = (i) => {
+  setLinkCount(countTemp2 - 1);
+  document.getElementById("add_input").classList.remove("hide");
+  let newFormValues = [...fontLink];
+  newFormValues.splice(i, 1);
+  setFontLink(newFormValues);
+  let newFormVaild = [...valid2];
+  newFormVaild.splice(i, 1);
+  setvalid2(newFormVaild);
+
+};
+let removeFormFields = (i) => {
+  setCountTracker(countTemp - 1);
+  document.getElementById("add_input").classList.remove("hide");
+  // console.log(countTracker);
+  let newFormValues = [...color];
+  newFormValues.splice(i, 1);
+  setcount(newFormValues);
+  let newFormVaild = [...valid];
+  newFormVaild.splice(i, 1);
+  setvalid(newFormVaild);
+
+};
+return (
+  <>
+    <Container fluid className="wrpr">
+    <Row>
+
+        <Col md={3} lg={2}>
+          <SideBar />
+        </Col>
+        <Col md={9} lg={10}>
+    <Button onClick={()=>{
+      navigate(-1)
+    }} variant="dark">Back</Button>
+          <Card style={{ width: "35rem" }}>
+            <Card.Body>
+              <Stack gap={3}>
+
+                <Form>
+                  <Form.Group className="mb-3 visually-hidden" id="name">
+                    <Form.Label>name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter name"
+                      aria-describedby="btnGroupAddon"
+                      onChange={(e) => {
+                        setName(e.target.value);
+                        console.log(e.target.value);
+                      }}
+                      value={name}
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3 visually-hidden" id="about" >
+                    <Form.Label>About us</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      type="aboutus"
+                      placeholder="AboutUs"
+                      onChange={(e) => setAboutus(e.target.value)}
+                      value={aboutus}
+                    />
+                  </Form.Group>
+
+                  <div className="tags-input mb-3 visually-hidden" id="socialLinks" style={{ margin: "auto" }}>
+                    <h6>Social Links</h6>
+                    <ul>
+                      {links.map((link, index) => (
+                        <li key={index}>
+                          <span>{link}</span>
+                          <i
+                            className="material-icons"
+                            onClick={() => removeLinks(index)}
+                          >
+                            <CloseIcon />
+                          </i>
+                        </li>
+                      ))}
+                    </ul>
+                    <Form.Control
+                      type="text"
+                      onKeyUp={(event) => addLinks(event)}
+                      placeholder="Press enter to add tags"
+                    />
+                  </div>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Domain * <small>(example.com)</small></Form.Label>
+                    <Form.Control
+                      type="domain"
+                      placeholder="Enter domain name"
+                      list="doaminBrowsers"
+                      name="myBrowser"
+                      id="domain"
+                      onChange={(e) => {
+
+                        // setDomain(extractDomain(e.target.value));
+                        setDomain(e.target.value);
+                        checkDomain(e.target.value);
+                      }}
+                      value={domain}
+                    />
+
+                    <datalist id="doaminBrowsers">
+                      {results &&
+                        results.map((brandData) => {
+                          // console.log(brandData.domain);
+                          return <option key={brandData._id} value={brandData.domain} />;
+                        })}
+                    </datalist>
+                    {/* <div id="domain" style={{ color: "red" }}></div> */}
+                  </Form.Group>
+
+                  <Form.Group className="mb-3 visually-hidden" id="Guidlines" >
+                    <Form.Label>Guidlines</Form.Label>
+                    <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines} />
+                  </Form.Group>
+
+                  <div className="hide formbold-chatbox-form visually-hidden" id="list">
+                    {color.map((element, index) => (
+
+                      <div id="fetch" key={index}>
+                        <Form.Group className="mb-3 d-flex">
+
+                          <Form.Control
+                            type="text"
+                            name="user_table_input"
+                            id={index}
+                            placeholder="Enter color name"
+                            value={color[index].colorName}
+                            onChange={(e) => {
+                              let tempCount = color;
+                              tempCount[index].colorName = e.target.value;
+                              setcount([...tempCount]);
+                            }}
+                            className="contact-form-area"
+                          />
+                          <Form.Control
+                            type="color"
+                            name="user_input"
+                            style={{ width: "20%" }}
+                            id={`colorinput${index}`}
+                            value={color[index].colorValue}
+                            className="user_input hide formbold-form-input"
+                            onChange={(e) => {
+                              document.getElementById("colorinputbytext" + index).value = e.target.value;
+                              console.log("e.target.value" + e.target.value);
+                              let tempCount = color;
+                              tempCount[index].colorValue = e.target.value;
+                              setcount([...tempCount]);
+                            }}
+                          />
+                          <Form.Control type="text" id={`colorinputbytext${index}`} maxLength="7" placeholder="Enter hex value of color"
+                            onChange={(e) => {
+                              document.getElementById("colorinput" + index).value = e.target.value;
+                            }} />
+                          {index ? (
+                            <button
+                              type="button"
+                              className="name noselect"
+                              onClick={() => removeFormFields(index)}
+                              style={{ border: "1px solid #C43434" }}
+                            >
+                              <BsFillTrashFill />
+                            </button>
+                          ) : null}
+                        </Form.Group>
+
 
 
   };
@@ -384,52 +570,31 @@ function Profile(props) {
                       {color.map((element, index) => (
 
                         <div id="fetch" key={index}>
-                          <Form.Group className="mb-3 d-flex">
 
-                            <Form.Control
-                              type="text"
-                              name="user_table_input"
-                              id={index}
-                              placeholder="Enter color name"
-                              value={color[index].colorName}
-                              onChange={(e) => {
-                                let tempCount = color;
-                                tempCount[index].colorName = e.target.value;
-                                setcount([...tempCount]);
-                              }}
-                              className="contact-form-area"
-                            />
-                            <Form.Control
-                              type="color"
-                              name="user_input"
-                              style={{ width: "20%" }}
-                              id={`colorinput${index}`}
-                              value={color[index].colorValue}
-                              className="user_input hide formbold-form-input"
-                              onChange={(e) => {
-                                document.getElementById("colorinputbytext" + index).value = e.target.value;
-                                console.log("e.target.value" + e.target.value);
-                                let tempCount = color;
-                                tempCount[index].colorValue = e.target.value;
-                                setcount([...tempCount]);
-                              }}
-                            />
-                            <Form.Control type="text" id={`colorinputbytext${index}`} maxLength="7" placeholder="Enter hex value of color"
-                              onChange={(e) => {
-                                document.getElementById("colorinput" + index).value = e.target.value;
-                              }} />
-                            {index ? (
-                              <button
-                                type="button"
-                                className="name noselect"
-                                onClick={() => removeFormFields(index)}
-                                style={{ border: "1px solid #C43434" }}
-                              >
-                                <FcFullTrash />
-                              </button>
-                            ) : null}
-                          </Form.Group>
-
+                          <Form.Control
+                            type="url"
+                            name="user_table_input"
+                            id={index}
+                            placeholder="Enter font url "
+                            value={fontLink[index]}
+                            onChange={(e) => {
+                              let tempCount = fontLink;
+                              tempCount[index] = e.target.value;
+                              setFontLink([...tempCount]);
+                            }}
+                            className="contact-form-area"
+                          />
+                          {index ? (
+                            <button
+                              type="button"
+                              className="name noselect"
+                              onClick={() => removeFontFields(index)}
+                              style={{ border: "1px solid #C43434" }}
+                            >
+                              <BsFillTrashFill />
+                              delete
+                            </button>
+                          ) : null}
                         </div>
                       ))}
                       <div className="button-section">

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { UserAuth } from "../context/AuthContext";
 import {Container, Row, Col, Card, Button, ListGroup, FormLabel } from "react-bootstrap";
-import { storeAuthKey } from "../api";
-import { setAuthKey } from "../api";
-import { deleteAuthKey } from "../api";
-import DeleteIcon from "@mui/icons-material/Delete";
+
+import { setAuthKey,storeAuthKey,deleteAuthKey } from "../api";
+import { BsFillTrashFill } from "react-icons/bs";
+
 import SideBar from '../components/SideBar';
 import "../scss/account.scss";
 
@@ -92,12 +92,14 @@ const Account = () => {
                         {key}
                       </div>
                       <div>
-                        <DeleteIcon
-                          onClick={() => {
-                            deleteKey();
-                          }}
-                          style={{ color: "red" }}
-                        />
+
+                          <BsFillTrashFill
+                            onClick={() => {
+                              deleteKey();
+                              setKey(null);
+                            }}
+                            style={{ color: "red" }}
+                          />
                       </div>
                     </div>
                   ) : (

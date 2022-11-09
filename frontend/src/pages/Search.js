@@ -8,7 +8,6 @@ import Figure from "react-bootstrap/Figure";
 import SvgInline from "../utils/SvgInline.js";
 import { getProfileDetails } from "../api/index.js";
 import { async } from "@firebase/util";
-import ReactDOM from 'react-dom/client';
 import Pagination from "./Pagination";
 import ReactPaginate from 'react-paginate';
 
