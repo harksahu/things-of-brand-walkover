@@ -43,13 +43,15 @@ const Account = () => {
 
   const deleteKey = async () => {
     // console.log(key);
-    // console.log("delete authKey");
-    document.getElementById("key").innerHTML = ""
-    setKey("")
+    console.log("delete authKey");
+    setKey()
+    // document.getElementById("key").innerHTML = ""
+   
     const data = await deleteAuthKey({
       authKey: key,
       email: user?.email,
     });
+    setKey()
   };
   const [value, setValue] = useState("");
 
@@ -59,6 +61,7 @@ const Account = () => {
       setAuth();
     }
   }, [setAuth, user]);
+
 
   return (
     <Container fluid className="wrpr" >

@@ -140,7 +140,6 @@ function Brand() {
       searchfrom: true,
     });
     console.log(fresult);
-
     console.warn(fresult.data.data[0]);
     setCompany(fresult.data.data[0])
     setId(fresult.data.data[0]._id);
@@ -158,6 +157,7 @@ function Brand() {
     setlogo(fresult.data.data[0].logo);
     setEmail(fresult.data.data[0].email);
     setVerify(fresult.data.data[0].verify);
+    document.getElementById("aboutus").innerHTML = fresult.data.data[0].aboutus;
 
     getbrandslogo();
   };
@@ -218,7 +218,7 @@ function Brand() {
           <div>
             <h1>{name}</h1>
           </div>
-          <div>{aboutus}</div>
+          <div id="aboutus"></div>
           <div>{links}</div>
           <br />
           <div>
