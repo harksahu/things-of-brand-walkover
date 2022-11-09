@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { UserAuth } from "../context/AuthContext";
 import {Container, Row, Col, Card, Button, ListGroup, FormLabel } from "react-bootstrap";
-import { setAuthKey,storeAuthKey,deleteAuthKey } from "../api";
+import { storeAuthKey } from "../api";
+import { setAuthKey } from "../api";
+import { deleteAuthKey } from "../api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SideBar from '../components/SideBar';
 import "../scss/account.scss";

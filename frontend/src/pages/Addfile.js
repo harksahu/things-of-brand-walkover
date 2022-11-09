@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { createBrandAPI } from "../api";
 import { UserAuth } from "../context/AuthContext";
 import { Card, Form, Button, Modal, Stack, Container, Col, Row } from "react-bootstrap";
-import { getS3SignUrl, getProfileDetails,updateProfileFields,createBrandAPI} from "../api/index.js";
+import { getS3SignUrl, getProfileDetails,updateProfileFields} from "../api/index.js";
 import { BsX, BsInfoCircle } from "react-icons/bs";
 import SideBar from '../components/SideBar';
 import "../scss/style.scss";

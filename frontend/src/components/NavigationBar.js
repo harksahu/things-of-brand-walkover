@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate ,useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { Container, Row, Form, Nav, Navbar, NavDropdown} from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 import { searchBrand, clearSearchBrand } from "../store/actions/search-brands";
 import { connect } from "react-redux";
 
