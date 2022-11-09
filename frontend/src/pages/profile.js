@@ -371,7 +371,10 @@ return (
 
                   <Form.Group className="mb-3 visually-hidden" id="Guidlines" >
                     <Form.Label>Guidlines</Form.Label>
-                    <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines} />
+                    <RichtextEditor
+                     guidlines={guidlines} 
+                     setGuidlines={setGuidlines} 
+                     />
                   </Form.Group>
 
                   <div className="hide formbold-chatbox-form visually-hidden" id="list">
