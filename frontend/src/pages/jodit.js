@@ -1,16 +1,24 @@
 import React, { useRef } from "react";
-import JoiditEditer from "jodit-react";
+import JoditEditor from "jodit-react";
 
-const RichtextEditor = ({ guidlines, setGuidlines }) => {
+const config = {
+  buttons: ["bold", "italic"],
+  "toolbar": false
+};
+
+const RichTextEditor = ({ guidlines ,setGuidlines }) => {
   const editor = useRef(null);
 
   return (
-    <JoiditEditer
+    <JoditEditor
       ref={editor}
       value={guidlines}
-      onChange={(content) => setGuidlines(content)}
+      config={config}
+      tabIndex={1}
+        // onBlur={(newContent) => setGuidlines(newContent)}
+      onChange={(newContent) => setGuidlines(newContent)}
     />
   );
 };
 
-export default RichtextEditor;
+export default RichTextEditor;

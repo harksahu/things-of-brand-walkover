@@ -164,7 +164,9 @@ function Profile(props) {
     return domainName;
   }
 
-
+  const config = {
+    buttons: ["bold","italic"]
+  };
 
 
 
@@ -323,7 +325,7 @@ function Profile(props) {
 
                     <Form.Group className="mb-3 visually-hidden" id="about" >
                       <Form.Label>About us</Form.Label>
-                      <RichtextEditor guidlines={aboutus} setGuidlines={setAboutus} />
+                      <RichtextEditor guidlines={aboutus} setGuidlines={setAboutus} config={config} tabIndex={1}/>
                     </Form.Group>
 
 
@@ -377,7 +379,7 @@ function Profile(props) {
 
                     <Form.Group className="mb-3 visually-hidden" id="Guidlines" >
                       <Form.Label>Guidlines</Form.Label>
-                      <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines} />
+                      <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines} tabIndex={1}/>
                     </Form.Group>
 
                     <div className="hide formbold-chatbox-form visually-hidden" id="list">
