@@ -53,10 +53,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
 
   const indexOfLastPost = currentPage* postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  console.log(indexOfLastPost);
-  console.log(indexOfFirstPost);
   const currentPosts = searchBrandData.data.slice(indexOfFirstPost,indexOfLastPost);
-  console.log(currentPosts);
   const paginate = pageNumber => setCurrentPage(pageNumber)
 
   return (
@@ -96,7 +93,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
         )}
         {console.log(posts.length)}
       </div>
-      <Pagination postsPerPage={postsPerPage} totalPosts={searchBrandData.data.length} paginate={paginate}/>
+      <Pagination postsPerPage={postsPerPage} totalPosts={searchBrandData.data.length} paginate={paginate} />
     </div>
   );
 }
