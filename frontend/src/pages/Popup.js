@@ -1,7 +1,7 @@
 import react from "react";
 import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
-import Button from "react-bootstrap/Button";
+import { Button, Dropdown } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import saveAs from "file-saver";
 import { Canvg, presets } from "canvg";
@@ -9,11 +9,12 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import "../utils/svginline.css";
-import "./popup.css";
+import "../scss/popup.scss";
 import SvgInline from "../utils/SvgInline.js";
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useNavigate, useParams } from "react-router-dom";
-import Draggable, {DraggableCore} from 'react-draggable';
+import Draggable, { DraggableCore } from 'react-draggable';
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 import {
   searchBrandApi,
@@ -23,19 +24,17 @@ import {
   saveMyStuffAPI,
 } from "../api/index.js";
 import { async } from "@firebase/util";
+
 function MyVerticallyCenteredModal(params) {
-  const id = useParams();
-  console.log(id.id);
-  // const props= params;
+  const id = useParams();  
   const navigate = useNavigate();
   const [mwidth, setWidth] = useState(250);
   const [name, setName] = useState("");
-  const [mheight, setHeight] = useState(250);
-  // const navigate = useNavigate();
+  const [mheight, setHeight] = useState(250);  
   const { user } = UserAuth();
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleHide = () => setShow(false);
   const handleShow = () => setShow(true);
   // const debounceOnChange = React.useCallback(debounce(savedata, 400), []);
 
@@ -113,8 +112,7 @@ function MyVerticallyCenteredModal(params) {
     // console.log(props);
   };
 
-  function Set_Name() {
-    console.log("object");
+  function Set_Name() {    
     console.log(name);
     if (name === "") {
       setName(props.title);
@@ -126,37 +124,33 @@ function MyVerticallyCenteredModal(params) {
   }, []);
 
   return (
-    <Container fluid>
-      <Button variant="primary" onClick={handleShow} style={{ top: 70, right: 10, position: "fixed" }} class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-        Edit
-      </Button>
+    <Container fluid>      
       <Row className="h-90">
         <Col className="popup_img">
           <SvgInline {...props} />
-        </Col>
+        </Col>        
+      </Row>  
+      <Draggable defaultPosition={{x: 60, y: 60}}>
+        <div className="card property-box">          
+          <div class="card-header d-flex align-items-center">
+            Properties
+            <Dropdown className="ms-auto">
+              <Dropdown.Toggle variant="light" size="sm">
+                <BsThreeDotsVertical />            
+              </Dropdown.Toggle>
 
-        <Draggable >
-
-          <Offcanvas show={show} onHide={handleClose} style={{ height: 350 }}>
-            {/* <Offcanvas.Header closeButton> */}
-            <Offcanvas.Title className="m-auto">Editing bar</Offcanvas.Title>
-            {/* </Offcanvas.Header> */}
-            <Offcanvas.Body >
-              <div>
-                <button className="tob-btn-trans" onClick={() => navigate(-1)}>
-                  {/* <span className="material-symbols-rounded d-block">close</span> */}
-                  <Button onClick={() => {
-                    navigate(-1)
-                  }} variant="dark">Back</Button>
-                </button>
-              </div>
-              <div>
-                {user !== null &&
-                  user !== undefined &&
-                  user &&
-                  Object.keys(user).length > 0 ? (
+              <Dropdown.Menu>
+                <Dropdown.Item href="#/action-1">Rename</Dropdown.Item>
+                <Dropdown.Item href="#/action-2">Delete</Dropdown.Item>                
+              </Dropdown.Menu>
+            </Dropdown>            
+          </div>
+          <div className="card-body">
+            <div>
+              { user !== null && user !== undefined && user && Object.keys(user).length > 0 ?
+                (
                   user?.email === props?.email ? (
-                    <input
+                    <input 
                       type="text"
                       placeholder={props.title}
                       onClick={() => {
@@ -168,46 +162,44 @@ function MyVerticallyCenteredModal(params) {
                       }}
                       value={name}
                     ></input>
-                  ) : (
-                    ""
-                  )
-                ) : (
-                  ""
-                )}
-              </div>
-              <label className="small fw-bold mb-1">Size</label>
-              <Row>
-                <Col>
-                  <Form.Group
-                    className="mb-3"
-                    controlId="exampleForm.ControlInput1"
-                  >
-                    <Form.Label>W</Form.Label>
-                    <Form.Control
-                      onChange={(e) => (setWidth(e.target.value), changeHW(e.target.value, mheight))}
-                      value={mwidth}
-                      size="sm"
-                    />
-                  </Form.Group>
-                </Col>
-                <Col>
-                  <Form.Group
-                    className="mb-3"
-                    controlId="exampleForm.ControlInput1"
-                  >
-                    <Form.Label>H</Form.Label>
-                    <Form.Control
-                      onChange={(e) => (setHeight(e.target.value), changeHW(mwidth, e.target.value))}
-                      value={mheight}
-                      size="sm"
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-              {user !== null &&
-                user !== undefined &&
-                user &&
-                Object.keys(user).length > 0 ? (
+                  ) : ( "" )
+                ) : ( "")
+              }
+            </div>
+                
+            <label className="small fw-bold mb-1">Size</label>
+            <Row>
+              <Col>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput1"
+                >
+                  <Form.Label>W</Form.Label>
+                  <Form.Control
+                    onChange={(e) => (setWidth(e.target.value), changeHW(e.target.value, mheight))}
+                    value={mwidth}
+                    size="sm"
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput1"
+                >
+                  <Form.Label>H</Form.Label>
+                  <Form.Control
+                    onChange={(e) => (setHeight(e.target.value), changeHW(mwidth, e.target.value))}
+                    value={mheight}
+                    size="sm"
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            { user !== null &&
+              user !== undefined &&
+              user &&
+              Object.keys(user).length > 0 ? (
                 user?.email === props?.email ? (
                   <>
                     <Button
@@ -224,8 +216,9 @@ function MyVerticallyCenteredModal(params) {
                       size="sm"
                     >
                       save
-                    </Button>{" "}
-                    {props.active === false ? (
+                    </Button>
+                    
+                    { props.active === false ? (
                       <Button
                         onClick={async () => {
                           console.log("object");
@@ -238,7 +231,7 @@ function MyVerticallyCenteredModal(params) {
                       >
                         Restore
                       </Button>
-                    ) : (
+                      ) : (
                       <Button
                         onClick={async () => {
                           await deleteMyStuffAPI(props?._id);
@@ -253,16 +246,9 @@ function MyVerticallyCenteredModal(params) {
                       </Button>
                     )}
                   </>
-                ) : (
-                  ""
-                )
-              ) : (
-                ""
-
-              )
-            ) : (
-              ""
-            )}
+                ) : ( "" )
+              ) : ( "" )              
+            }
             <div className="mt-4 mb-1">
               <label className="small fw-bold">Download</label>
             </div>
@@ -273,28 +259,22 @@ function MyVerticallyCenteredModal(params) {
                 DownloadToPng(props.url, mwidth, mheight);
               }}
               className=""
-            >
+              >
               PNG
-            </Button>{" "}
+            </Button>
             <Button
               variant="outline-secondary"
               size="sm"
               onClick={() => {
                 const canvas = DownloadToSvg(props.url, props.title);
               }}
-            // onClick={() => saveAs(props.title)}
-            >
+              // onClick={() => saveAs(props.title)}
+              >
               SVG
-            </Button>{" "}
-            {/* </Col> */}
-              
-          </Offcanvas.Body>
-        </Offcanvas>
-
-
-        </Draggable>
-      </Row>
-
+            </Button>
+          </div>          
+        </div>
+      </Draggable>
     </Container>
     //     </Modal.Body>
     //     <Modal.Footer>

@@ -1,0 +1,14 @@
+.rightbar{
+    min-width: 300px !important;
+    max-width: 300px !important;
+    border-left: 1px solid #ccc;
+}
+.property-box{
+    background: #fff;
+    width: 300px;
+    .dropdown-toggle{
+        &::after{
+            display: none;
+        }
+    }
+}
