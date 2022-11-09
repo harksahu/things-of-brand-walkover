@@ -26,6 +26,7 @@ const getProfileDetails = async (req,res)=>{
     var searchfrom = req.query.searchfrom 
     var domain = req.query.domain === ""?{}:{domain: { '$regex': req.query.domain ,"$options":"i"} };
     var name = req.query.name === ""?{}:{name: { '$regex': req.query.name ,"$options":"i"}};
+
     console.log(searchfrom);
    if (searchfrom == "true") {
     try {
@@ -82,6 +83,7 @@ const updateProfile = async (req,res)=>{
       let email=req.body.email;
       let verify=req.body.verify
       let link = req.body.links;
+      let sharedEmail=req.body.sharedEmail;
     // console.log(req.body)
     // console.log(link)
     // const f_data = {
@@ -108,7 +110,8 @@ const updateProfile = async (req,res)=>{
                     backgroundColors,
                     email,
                     verify,
-                    link
+                    link,
+                    sharedEmail
                 }
             }
         )

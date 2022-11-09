@@ -18,7 +18,11 @@ import Figure from "react-bootstrap/Figure";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import ListGroup from "react-bootstrap/ListGroup";
+
+import {getCompanyDetails} from  '../api/index.js'
+
 import { BsFillPlusCircleFill ,BsPencilSquare,BsFillExclamationDiamondFill,BsShieldCheck } from "react-icons/bs";
+
 
 function Not_found() {
   return (
@@ -46,6 +50,7 @@ function Brand() {
   const [secondaryColors, setSecondaryColors] = useState();
   const [backgroundColors, setBackgroundColors] = useState();
   const [email, setEmail] = useState();
+  const[sharedEmail,setSharedEmail] = useState([]);
   const { user } = UserAuth();
   const [links, setLinks] = React.useState([]);
   const [results, setResults] = useState();
@@ -58,6 +63,9 @@ function Brand() {
   const [fontLink,setFontLink]= useState([]);
   const [company,setCompany]= useState([]);
   const navigate = useNavigate();
+  const [showw, setShoww] = useState(false);
+  const handleClosee = () => setShoww(false);
+  const handleShoww = () => setShoww(true);
 
   const verifyDomain = async () => {
     const TXT = await getTXT(domain);
@@ -155,6 +163,9 @@ function Brand() {
     setlogo(fresult.data.data[0].logo);
     setEmail(fresult.data.data[0].email);
     setVerify(fresult.data.data[0].verify);
+    setSharedEmail(fresult.data.data[0].sharedEmail);
+    console.log(fresult.data.data[0].sharedEmail,"shared email");
+    
 
     document.getElementById("aboutus").innerHTML = fresult.data.data[0].aboutus;
 
@@ -162,7 +173,9 @@ function Brand() {
     getbrandslogo();
   };
 
+
   const updateLogo = async (logo_url) => {
+    
     const data = {
       name: name,
       aboutus: aboutus,
@@ -170,6 +183,7 @@ function Brand() {
       links: links,
       domain: domain,
       guidlines: guidlines,
+      sharedEmail: sharedEmail,
       // fontSize: fontSize,
       // PrimaryColors: PrimaryColors,
       // secondaryColors: secondaryColors,
@@ -190,6 +204,8 @@ function Brand() {
     }
   }, [domain]);
 
+  
+
   return (
     <>
     
@@ -205,6 +221,34 @@ function Brand() {
               <Link to={"/addfile"}>
                 <BsFillPlusCircleFill style={{ float: "right", fontSize: 40 }} />
               </Link>
+              <Button variant="primary" style={{ float: "right"}} onClick={handleShoww}>
+        Share
+      </Button>
+
+      <Modal show={showw} onHide={handleClosee}>
+        <Modal.Header closeButton>
+          <Modal.Title>Share Your Company</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><input  type="email"
+          placeholder="Enter the email" id="addEmail"/></Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClosee}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={()=>{
+             let temp = sharedEmail;
+            let email = document.getElementById("addEmail").value;
+             console.log("e.target.value",setSharedEmail);
+             console.log("new shared emials",temp);
+             temp.push(email);
+             setSharedEmail([...temp]);   
+              handleClosee();
+              updateLogo();
+          }}>
+            Share
+          </Button>
+        </Modal.Footer>
+      </Modal>
               <Link to="/profile" state={{ data: company }}>
                 <BsPencilSquare style={{ float: "right", fontSize: 40 , color: "black" }} />
               </Link>

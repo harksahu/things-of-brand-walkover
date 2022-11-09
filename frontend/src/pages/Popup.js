@@ -13,7 +13,8 @@ import "./popup.css";
 import SvgInline from "../utils/SvgInline.js";
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useNavigate, useParams } from "react-router-dom";
-import Draggable, { DraggableCore } from 'react-draggable';
+import Draggable, {DraggableCore} from 'react-draggable';
+
 import {
   searchBrandApi,
   deleteMyStuffAPI,
@@ -135,6 +136,7 @@ function MyVerticallyCenteredModal(params) {
         </Col>
 
         <Draggable >
+
           <Offcanvas show={show} onHide={handleClose} style={{ height: 350 }}>
             {/* <Offcanvas.Header closeButton> */}
             <Offcanvas.Title className="m-auto">Editing bar</Offcanvas.Title>
@@ -256,34 +258,40 @@ function MyVerticallyCenteredModal(params) {
                 )
               ) : (
                 ""
-              )}
-              <div className="mt-4 mb-1">
-                <label className="small fw-bold">Download</label>
-              </div>
-              <Button
-                variant="outline-secondary"
-                size="sm"
-                onClick={() => {
-                  DownloadToPng(props.url, mwidth, mheight);
-                }}
-                className=""
-              >
-                PNG
-              </Button>{" "}
-              <Button
-                variant="outline-secondary"
-                size="sm"
-                onClick={() => {
-                  const canvas = DownloadToSvg(props.url, props.title);
-                }}
-              // onClick={() => saveAs(props.title)}
-              >
-                SVG
-              </Button>{" "}
-              {/* </Col> */}
 
-            </Offcanvas.Body>
-          </Offcanvas>
+              )
+            ) : (
+              ""
+            )}
+            <div className="mt-4 mb-1">
+              <label className="small fw-bold">Download</label>
+            </div>
+            <Button
+              variant="outline-secondary"
+              size="sm"
+              onClick={() => {
+                DownloadToPng(props.url, mwidth, mheight);
+              }}
+              className=""
+            >
+              PNG
+            </Button>{" "}
+            <Button
+              variant="outline-secondary"
+              size="sm"
+              onClick={() => {
+                const canvas = DownloadToSvg(props.url, props.title);
+              }}
+            // onClick={() => saveAs(props.title)}
+            >
+              SVG
+            </Button>{" "}
+            {/* </Col> */}
+              
+          </Offcanvas.Body>
+        </Offcanvas>
+
+
         </Draggable>
       </Row>
 

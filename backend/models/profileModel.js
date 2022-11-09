@@ -5,6 +5,9 @@ const profileSchema = new mongoose.Schema({
     name: {
         type: String,
     },
+    sharedEmail:{
+        type:[String]
+    },
     aboutus:  {
         type: String,
     },
@@ -21,19 +24,9 @@ const profileSchema = new mongoose.Schema({
     guidlines: {
         type: String,
     },
-    // PrimaryColors:{
-    //     type: String
-    // },
-    // secondaryColors:{
-    //     type: String
-    // },
-
     fontLink:{
         type: [String]
     },
-    // backgroundColors:{
-    //     type: String
-    // },
     color:[{
         colorName: String,
         colorValue: String
