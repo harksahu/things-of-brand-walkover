@@ -26,32 +26,32 @@ const getProfileDetails = async (req,res)=>{
     var searchfrom = req.query.searchfrom 
     var domain = req.query.domain === ""?{}:{domain: { '$regex': req.query.domain ,"$options":"i"} };
     var name = req.query.name === ""?{}:{name: { '$regex': req.query.name ,"$options":"i"}};
-    // console.log(searchfrom);
-//    if (searchfrom == "true") {
-//     try {
-//         const data = await profileModel.find({
-//               ...domain ,
-//             ...email,
-//             // ...domain
+    console.log(searchfrom);
+   if (searchfrom == "true") {
+    try {
+        const data = await profileModel.find({
+              ...domain ,
+            ...email,
+            // ...domain
 
-//         });
-//         res.json({
-//             "message":"Related Data is Successfully Find",
-//             "data":data
-//         }).status(200);
-//     } catch (error) {
-//         res.send({
-//             message:"Some Error on Server",
-//             error
-//         }).status(400);
-//     }
-//    } else {
+        });
+        res.json({
+            "message":"Related Data is Successfully Find",
+            "data":data
+        }).status(200);
+    } catch (error) {
+        res.send({
+            message:"Some Error on Server",
+            error
+        }).status(400);
+    }
+   } else {
     // console.log("afas");
     try {
         const data = await profileModel.find({
-            // $or: [  { ...domain  },{  ...name } ] ,
-            ...domain,
-            // ...email,
+            $or: [  { ...domain  },{  ...name } ] ,
+            // ...domain,
+            ...email,
 
         });
         res.json({
@@ -65,7 +65,7 @@ const getProfileDetails = async (req,res)=>{
         }).status(400);
     }
    }
-// }
+}
 
 const updateProfile = async (req,res)=>{
     console.log("logo url in backend",req.body.logo_url);
