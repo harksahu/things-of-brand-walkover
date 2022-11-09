@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Card, Container, Row, Col, Form, Button, Stack } from "react-bootstrap";
+import { createProfile } from "../api/index.js";
 import { UserAuth } from "../context/AuthContext";
-import { getProfileDetails,updateProfileFields ,getCompanyDetails,createProfile} from "../api/index.js";
+import { getProfileDetails } from "../api/index.js";
+import { getCompanyDetails } from "../api/index.js";
+import { updateProfileFields } from "../api/index.js";
 import CloseIcon from "@mui/icons-material/Close";
 import RichtextEditor from "./jodit.js";
-import { BsFillTrashFill } from "react-icons/bs";
-import { useLocation,useNavigate } from "react-router-dom";
+import { async } from "@firebase/util";
+import { FcFullTrash } from "react-icons/fc";
+import { useLocation, useNavigate } from "react-router-dom";
 import SideBar from '../components/SideBar';
 
 function Profile(props) {
@@ -160,7 +164,9 @@ function Profile(props) {
     return domainName;
   }
 
-
+  const config = {
+    buttons: ["bold","italic"]
+  };
 
 
 
@@ -234,52 +240,58 @@ function Profile(props) {
     
   }
 
-const checkDomain = (datta) => {
-  for (let i = 0; i < profiledata?.data?.data?.length; i++) {
-    if (datta == profiledata?.data?.data[i].domain) {
-      const domainId = document.getElementById("domain");
-      domainId.innerHTML = "**this domain already resister**";
-      setCheck(false);
-    } else {
-      const domainId = document.getElementById("domain");
-      setCheck(true);
+
+
+  const checkDomain = (datta) => {
+
+
+    for (let i = 0; i < profiledata?.data?.data?.length; i++) {
+      if (datta == profiledata?.data?.data[i].domain) {
+        const domainId = document.getElementById("domain");
+        domainId.innerHTML = "**this domain already resister**";
+        setCheck(false);
+      } else {
+        const domainId = document.getElementById("domain");
+        setCheck(true);
+      }
     }
-  }
-};
-let addFormFields = () => {
-  setcount([...color, { colorName: "", colorValue: "#000000" }]);
-  setCountTracker(countTemp + 1);
-  // console.log(countTracker);
-};
-let addFontFields = () => {
-  setFontLink([...fontLink, ""]);
-  setLinkCount(countTemp2 + 1);
 
-};
-let removeFontFields = (i) => {
-  setLinkCount(countTemp2 - 1);
-  document.getElementById("add_input").classList.remove("hide");
-  let newFormValues = [...fontLink];
-  newFormValues.splice(i, 1);
-  setFontLink(newFormValues);
-  let newFormVaild = [...valid2];
-  newFormVaild.splice(i, 1);
-  setvalid2(newFormVaild);
 
-};
-let removeFormFields = (i) => {
-  setCountTracker(countTemp - 1);
-  document.getElementById("add_input").classList.remove("hide");
-  // console.log(countTracker);
-  let newFormValues = [...color];
-  newFormValues.splice(i, 1);
-  setcount(newFormValues);
-  let newFormVaild = [...valid];
-  newFormVaild.splice(i, 1);
-  setvalid(newFormVaild);
 
-};
+  };
+  let addFormFields = () => {
+    setcount([...color, { colorName: "", colorValue: "#000000" }]);
+    setCountTracker(countTemp + 1);
+    // console.log(countTracker);
+  };
+  let addFontFields = () => {
+    setFontLink([...fontLink, ""]);
+    setLinkCount(countTemp2 + 1);
 
+  };
+  let removeFontFields = (i) => {
+    setLinkCount(countTemp2 - 1);
+    document.getElementById("add_input").classList.remove("hide");
+    let newFormValues = [...fontLink];
+    newFormValues.splice(i, 1);
+    setFontLink(newFormValues);
+    let newFormVaild = [...valid2];
+    newFormVaild.splice(i, 1);
+    setvalid2(newFormVaild);
+
+  };
+  let removeFormFields = (i) => {
+    setCountTracker(countTemp - 1);
+    document.getElementById("add_input").classList.remove("hide");
+    // console.log(countTracker);
+    let newFormValues = [...color];
+    newFormValues.splice(i, 1);
+    setcount(newFormValues);
+    let newFormVaild = [...valid];
+    newFormVaild.splice(i, 1);
+    setvalid(newFormVaild);
+
+  };
   return (
     <>
       <Container fluid className="wrpr">
@@ -313,7 +325,7 @@ let removeFormFields = (i) => {
 
                     <Form.Group className="mb-3 visually-hidden" id="about" >
                       <Form.Label>About us</Form.Label>
-                      <RichtextEditor guidlines={aboutus} setGuidlines={setAboutus} />
+                      <RichtextEditor guidlines={aboutus} setGuidlines={setAboutus} config={config} tabIndex={1}/>
                     </Form.Group>
 
 
@@ -367,38 +379,59 @@ let removeFormFields = (i) => {
 
                     <Form.Group className="mb-3 visually-hidden" id="Guidlines" >
                       <Form.Label>Guidlines</Form.Label>
-                      <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines} />
+                      <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines} tabIndex={1}/>
                     </Form.Group>
 
                     <div className="hide formbold-chatbox-form visually-hidden" id="list">
                       {color.map((element, index) => (
 
                         <div id="fetch" key={index}>
+                          <Form.Group className="mb-3 d-flex">
 
-                          <Form.Control
-                            type="url"
-                            name="user_table_input"
-                            id={index}
-                            placeholder="Enter font url "
-                            value={fontLink[index]}
-                            onChange={(e) => {
-                              let tempCount = fontLink;
-                              tempCount[index] = e.target.value;
-                              setFontLink([...tempCount]);
-                            }}
-                            className="contact-form-area"
-                          />
-                          {index ? (
-                            <button
-                              type="button"
-                              className="name noselect"
-                              onClick={() => removeFontFields(index)}
-                              style={{ border: "1px solid #C43434" }}
-                            >
-                              <BsFillTrashFill />
-                              delete
-                            </button>
-                          ) : null}
+                            <Form.Control
+                              type="text"
+                              name="user_table_input"
+                              id={index}
+                              placeholder="Enter color name"
+                              value={color[index].colorName}
+                              onChange={(e) => {
+                                let tempCount = color;
+                                tempCount[index].colorName = e.target.value;
+                                setcount([...tempCount]);
+                              }}
+                              className="contact-form-area"
+                            />
+                            <Form.Control
+                              type="color"
+                              name="user_input"
+                              style={{ width: "20%" }}
+                              id={`colorinput${index}`}
+                              value={color[index].colorValue}
+                              className="user_input hide formbold-form-input"
+                              onChange={(e) => {
+                                document.getElementById("colorinputbytext" + index).value = e.target.value;
+                                console.log("e.target.value" + e.target.value);
+                                let tempCount = color;
+                                tempCount[index].colorValue = e.target.value;
+                                setcount([...tempCount]);
+                              }}
+                            />
+                            <Form.Control type="text" id={`colorinputbytext${index}`} maxLength="7" placeholder="Enter hex value of color"
+                              onChange={(e) => {
+                                document.getElementById("colorinput" + index).value = e.target.value;
+                              }} />
+                            {index ? (
+                              <button
+                                type="button"
+                                className="name noselect"
+                                onClick={() => removeFormFields(index)}
+                                style={{ border: "1px solid #C43434" }}
+                              >
+                                <FcFullTrash />
+                              </button>
+                            ) : null}
+                          </Form.Group>
+
                         </div>
                       ))}
                       <div className="button-section">
@@ -437,7 +470,7 @@ let removeFormFields = (i) => {
                                 onClick={() => removeFontFields(index)}
                                 style={{ border: "1px solid #C43434" }}
                               >
-                                <BsFillTrashFill />
+                                <FcFullTrash />
                                 delete
                               </button>
                             ) : null}
