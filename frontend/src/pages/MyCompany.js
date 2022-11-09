@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import { getProfileDetails } from "../api/index.js";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import SvgInline from "../utils/SvgInline.js";
 import "../utils/svginline.css";
 import { AiFillPlusCircle } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
 import SideBar from '../components/SideBar';
 
 function MyCompany() {
