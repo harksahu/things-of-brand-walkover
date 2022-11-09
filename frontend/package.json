@@ -20,6 +20,7 @@
     "react-bootstrap": "^2.5.0",
     "react-bootstrap-typeahead": "^6.0.0",
     "react-dom": "^18.1.0",
+    "react-draggable": "^4.4.5",
     "react-google-button": "^0.7.2",
     "react-icons": "^4.6.0",
     "react-paginate": "^8.1.4",

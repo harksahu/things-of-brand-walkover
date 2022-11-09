@@ -1,9 +1,8 @@
+import react from "react";
 import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import Button from "react-bootstrap/Button";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import saveAs from "file-saver";
 import { Canvg, presets } from "canvg";
 import Container from "react-bootstrap/Container";
@@ -12,10 +11,10 @@ import Row from "react-bootstrap/Row";
 import "../utils/svginline.css";
 import "./popup.css";
 import SvgInline from "../utils/SvgInline.js";
-import Accordion from 'react-bootstrap/Accordion';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useNavigate, useParams } from "react-router-dom";
 import Draggable, {DraggableCore} from 'react-draggable';
+
 import {
   searchBrandApi,
   deleteMyStuffAPI,
@@ -50,7 +49,7 @@ function MyVerticallyCenteredModal(params) {
     setHeight(document.getElementById(img).clientHeight);
   }
 
-  const savedata = async (id,n) => {
+  const savedata = async (id, n) => {
     setName(n)
     const new_data = {
       _id: id,
@@ -137,121 +136,129 @@ function MyVerticallyCenteredModal(params) {
         </Col>
 
         <Draggable >
-        <Offcanvas show={show} onHide={handleClose}  style={{height:300}}>
-          {/* <Offcanvas.Header closeButton> */}
-            <Offcanvas.Title>Editing bar</Offcanvas.Title>
-          {/* </Offcanvas.Header> */}
-          <Offcanvas.Body >
-            <div>
-              <button className="tob-btn-trans" onClick={() => navigate(-1)}>
-                <span className="material-symbols-rounded d-block">close</span>
-              </button>
-            </div>
-            <div>
+
+          <Offcanvas show={show} onHide={handleClose} style={{ height: 350 }}>
+            {/* <Offcanvas.Header closeButton> */}
+            <Offcanvas.Title className="m-auto">Editing bar</Offcanvas.Title>
+            {/* </Offcanvas.Header> */}
+            <Offcanvas.Body >
+              <div>
+                <button className="tob-btn-trans" onClick={() => navigate(-1)}>
+                  {/* <span className="material-symbols-rounded d-block">close</span> */}
+                  <Button onClick={() => {
+                    navigate(-1)
+                  }} variant="dark">Back</Button>
+                </button>
+              </div>
+              <div>
+                {user !== null &&
+                  user !== undefined &&
+                  user &&
+                  Object.keys(user).length > 0 ? (
+                  user?.email === props?.email ? (
+                    <input
+                      type="text"
+                      placeholder={props.title}
+                      onClick={() => {
+                        console.log("object");
+                        Set_Name();
+                      }}
+                      onChange={(e) => {
+                        (savedata(props._id, e.target.value))
+                      }}
+                      value={name}
+                    ></input>
+                  ) : (
+                    ""
+                  )
+                ) : (
+                  ""
+                )}
+              </div>
+              <label className="small fw-bold mb-1">Size</label>
+              <Row>
+                <Col>
+                  <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlInput1"
+                  >
+                    <Form.Label>W</Form.Label>
+                    <Form.Control
+                      onChange={(e) => (setWidth(e.target.value), changeHW(e.target.value, mheight))}
+                      value={mwidth}
+                      size="sm"
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlInput1"
+                  >
+                    <Form.Label>H</Form.Label>
+                    <Form.Control
+                      onChange={(e) => (setHeight(e.target.value), changeHW(mwidth, e.target.value))}
+                      value={mheight}
+                      size="sm"
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
               {user !== null &&
                 user !== undefined &&
                 user &&
                 Object.keys(user).length > 0 ? (
                 user?.email === props?.email ? (
-                  <input
-                    type="text"
-                    placeholder={props.title}
-                    onClick={() => {
-                      console.log("object");
-                      Set_Name();
-                    }}
-                    onChange={(e) => {
-                      (savedata(props._id,e.target.value))
-                    }}
-                    value={name}
-                  ></input>
+                  <>
+                    <Button
+                      onClick={async () => {
+                        const new_data = {
+                          _id: props.user._id,
+                          title: name,
+                        };
+                        await saveMyStuffAPI(new_data);
+                        alert("saved");
+                        window.location.reload();
+                      }}
+                      variant="outline-secondary"
+                      size="sm"
+                    >
+                      save
+                    </Button>{" "}
+                    {props.active === false ? (
+                      <Button
+                        onClick={async () => {
+                          console.log("object");
+                          await restoreMyStuffAPI(props?._id);
+                          // alert("restore")
+                          navigate(-1);
+                        }}
+                        variant="outline-secondary"
+                        size="sm"
+                      >
+                        Restore
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={async () => {
+                          await deleteMyStuffAPI(props?._id);
+                          // alert("Deleted");
+                          // window.location.reload();
+                          navigate(-1);
+                        }}
+                        variant="outline-secondary"
+                        size="sm"
+                      >
+                        delete
+                      </Button>
+                    )}
+                  </>
                 ) : (
                   ""
                 )
               ) : (
                 ""
-              )}
-            </div>
-            <label className="small fw-bold mb-1">Size</label>
-            <Row>
-              <Col>
-                <Form.Group
-                  className="mb-3"
-                  controlId="exampleForm.ControlInput1"
-                >
-                  <Form.Label>W</Form.Label>
-                  <Form.Control
-                    onChange={(e) => (setWidth(e.target.value), changeHW(e.target.value, mheight))}
-                    value={mwidth}
-                    size="sm"
-                  />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group
-                  className="mb-3"
-                  controlId="exampleForm.ControlInput1"
-                >
-                  <Form.Label>H</Form.Label>
-                  <Form.Control
-                    onChange={(e) => (setHeight(e.target.value), changeHW(mwidth, e.target.value))}
-                    value={mheight}
-                    size="sm"
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            {user !== null &&
-              user !== undefined &&
-              user &&
-              Object.keys(user).length > 0 ? (
-              user?.email === props?.email ? (
-                <>
-                  <Button
-                    onClick={async () => {
-                      const new_data = {
-                        _id: props.user._id,
-                        title: name,
-                      };
-                      await saveMyStuffAPI(new_data);
-                      alert("saved");
-                      window.location.reload();
-                    }}
-                    variant="outline-secondary"
-                    size="sm"
-                  >
-                    save
-                  </Button>{" "}
-                  {props.active === false ? (
-                    <Button
-                      onClick={async () => {
-                        console.log("object");
-                        await restoreMyStuffAPI(props?._id);
-                        // alert("restore")
-                        navigate(-1);
-                      }}
-                      variant="outline-secondary"
-                      size="sm"
-                    >
-                      Restore
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={async () => {
-                        await deleteMyStuffAPI(props?._id);
-                        // alert("Deleted");
-                        // window.location.reload();
-                        navigate(-1);
-                      }}
-                      variant="outline-secondary"
-                      size="sm"
-                    >
-                      delete
-                    </Button>
-                  )}
-                </>
-              ) : (
-                ""
+
               )
             ) : (
               ""
@@ -283,6 +290,8 @@ function MyVerticallyCenteredModal(params) {
               
           </Offcanvas.Body>
         </Offcanvas>
+
+
         </Draggable>
       </Row>
 

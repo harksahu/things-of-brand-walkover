@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link,useNavigate, useParams } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import "../utils/svginline.css";
 import "./home.scss";
 import { UserAuth } from "../context/AuthContext";
@@ -12,14 +15,14 @@ import {
 import SvgInline from "../utils/SvgInline.js";
 import Card from "react-bootstrap/Card";
 import Figure from "react-bootstrap/Figure";
-import { FcApproval, FcHighPriority } from "react-icons/fc";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import ListGroup from "react-bootstrap/ListGroup";
-import { async } from "@firebase/util";
-import { AiFillPlusCircle } from "react-icons/ai";
-import { FiEdit2 } from "react-icons/fi";
+
 import {getCompanyDetails} from  '../api/index.js'
+
+import { BsFillPlusCircleFill ,BsPencilSquare,BsFillExclamationDiamondFill,BsShieldCheck } from "react-icons/bs";
+
 
 function Not_found() {
   return (
@@ -84,6 +87,7 @@ function Brand() {
   };
 
   async function makeid(length) {
+    console.log("in make id ");
     var result = "";
     var characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -91,10 +95,10 @@ function Brand() {
     for (var i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    if (verify == undefined && verify == null) {
+    if (verify == undefined || verify == null ||verify ==="false") {
       console.log(verify);
-
       setVerify(result);
+      console.log("verification code in condtion = "+result + verify);
 
       await updateVerify(result);
     }
@@ -120,7 +124,7 @@ function Brand() {
     };
     console.log(verify);
     // console.log();
-    if (verify === undefined && verify === null) {
+    if (verify === undefined || verify === null||verify==="false") {
       await updateProfileFields(data);
     }
   };
@@ -142,7 +146,6 @@ function Brand() {
       searchfrom: true,
     });
     console.log(fresult);
-
     console.warn(fresult.data.data[0]);
     setCompany(fresult.data.data[0])
     setId(fresult.data.data[0]._id);
@@ -163,6 +166,9 @@ function Brand() {
     setSharedEmail(fresult.data.data[0].sharedEmail);
     console.log(fresult.data.data[0].sharedEmail,"shared email");
     
+
+    document.getElementById("aboutus").innerHTML = fresult.data.data[0].aboutus;
+
 
     getbrandslogo();
   };
@@ -213,7 +219,7 @@ function Brand() {
             email === user.email ? (
               <>
               <Link to={"/addfile"}>
-                <AiFillPlusCircle style={{ float: "right", fontSize: 40 }} />
+                <BsFillPlusCircleFill style={{ float: "right", fontSize: 40 }} />
               </Link>
               <Button variant="primary" style={{ float: "right"}} onClick={handleShoww}>
         Share
@@ -244,7 +250,7 @@ function Brand() {
         </Modal.Footer>
       </Modal>
               <Link to="/profile" state={{ data: company }}>
-                <FiEdit2 style={{ float: "right", fontSize: 40 , color: "black" }} />
+                <BsPencilSquare style={{ float: "right", fontSize: 40 , color: "black" }} />
               </Link>
               </>
             ) : (
@@ -256,7 +262,7 @@ function Brand() {
           <div>
             <h1>{name}</h1>
           </div>
-          <div>{aboutus}</div>
+          <div id="aboutus"></div>
           <div>{links}</div>
           <br />
           <div>
@@ -270,11 +276,11 @@ function Brand() {
             {user ? (
               email === user.email ? (
                 verify === "true" ? (
-                  <FcApproval />
+                  <BsShieldCheck />
                 ) : (
                   <>
                     {" "}
-                    <FcHighPriority />
+                    <BsFillExclamationDiamondFill />
                     <button
                       className="m-auto btn btn-primary"
                       onClick={() => {
@@ -449,7 +455,7 @@ function Brand() {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>PLease verify domain {domain}</Modal.Title>
+          <Modal.Title>Please verify domain {domain}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div style={{ color: "red" }} id="error"></div>
