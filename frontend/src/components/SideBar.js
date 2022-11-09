@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate ,useLocation} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
+import { useLocation } from "react-router-dom";
 
 function SideBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {  
   const navigate = useNavigate();
@@ -46,6 +47,11 @@ function SideBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
           navigate("/search");
         }}
         >Explore</Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link
+  href="https://thingsofbrand.canny.io/feature-requests"
+        >Feature Requests</Nav.Link>
       </Nav.Item>
 
     </Nav>      

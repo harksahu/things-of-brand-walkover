@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { UserAuth } from "../context/AuthContext";
 import {Container, Row, Col, Card, Button, ListGroup, FormLabel } from "react-bootstrap";
+
 import { setAuthKey,storeAuthKey,deleteAuthKey } from "../api";
 import { BsFillTrashFill } from "react-icons/bs";
+
 import SideBar from '../components/SideBar';
 import "../scss/account.scss";
 
@@ -41,11 +43,15 @@ const Account = () => {
 
   const deleteKey = async () => {
     // console.log(key);
-    // console.log("delete authKey");
+    console.log("delete authKey");
+    setKey()
+    // document.getElementById("key").innerHTML = ""
+   
     const data = await deleteAuthKey({
       authKey: key,
       email: user?.email,
     });
+    setKey()
   };
   const [value, setValue] = useState("");
 
@@ -55,6 +61,7 @@ const Account = () => {
       setAuth();
     }
   }, [setAuth, user]);
+
 
   return (
     <Container fluid className="wrpr" >
@@ -85,6 +92,7 @@ const Account = () => {
                         {key}
                       </div>
                       <div>
+
                           <BsFillTrashFill
                             onClick={() => {
                               deleteKey();
