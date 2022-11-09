@@ -5,7 +5,7 @@ import Protected from './components/Protected';
 import { AuthContextProvider, UserAuth } from './context/AuthContext';
 import Account from './pages/Account';
 import Home from './pages/Home';
-import Profile from './pages/profile';
+
 import Addfile from './pages/Addfile';
 import MyStuff from './pages/MyStuff';
 import Search from "./pages/Search";
@@ -19,7 +19,7 @@ import MyStuffPopup from './pages/MyStuffpopup';
 import Brand from './pages/Brand.js';
 import HomeLogo from './pages/Searchlogo.js';
 import Home2 from './pages/Home2';
-import Profile2 from './pages/profile2';
+import Profile from './pages/profile';
 
 
 
@@ -53,8 +53,7 @@ function App() {
             <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />
             <Route path='/:title' element={<Brand />} />
             <Route path='/popup-mystuff' element={<MyStuffPopup />} />
-            <Route path='/test' element={<Profile />} />
-            <Route path='/profile' element={<Profile2 />} />
+            <Route path='/profile' element={<Profile />} />
             <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
             <Route path="/MyStuff" element={<Protected> <MyStuff /> </Protected>} />
             <Route path='/account' element={<Protected> <Account /> </Protected>} />

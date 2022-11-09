@@ -13,6 +13,7 @@ import Row from "react-bootstrap/Row";
 import "../utils/svginline.css";
 import "./popup.css";
 import SvgInline from "../utils/SvgInline.js";
+import Accordion from 'react-bootstrap/Accordion';
 import { useNavigate, useParams } from "react-router-dom";
 import {
   searchBrandApi,
@@ -122,6 +123,14 @@ function MyVerticallyCenteredModal(params) {
             </button>
           </div>
           <div>
+          {/* <Accordion defaultActiveKey="0">
+          <Accordion.Item eventKey="0">
+        <Accordion.Header>Accordion Item #1</Accordion.Header>
+        <Accordion.Body>
+         
+        </Accordion.Body>
+      </Accordion.Item>
+      </Accordion> */}
             {user !== null &&
             user !== undefined &&
             user &&

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link,useNavigate, useParams } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -60,6 +60,7 @@ function Brand() {
   const [allColor , setAllColor] = useState();
   const [fontLink,setFontLink]= useState([]);
   const [company,setCompany]= useState([]);
+  const navigate = useNavigate();
 
   const verifyDomain = async () => {
     const TXT = await getTXT(domain);
@@ -191,9 +192,13 @@ function Brand() {
 
   return (
     <>
+    
     {console.log("all color = ",allColor)}
       {domain ? (
         <div className="m-5">
+          <Button onClick={()=>{
+      navigate(-1)
+    }} variant="dark">Back</Button>
           {user ? (
             email === user.email ? (
               <>
