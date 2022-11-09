@@ -492,7 +492,7 @@ return (
 
                   <div id="button" className=" visually-hidden">
                     {/* {location.state?.data ? ( */}
-                    <Button variant="primary" onClick={() => updateProfileValue()}>
+                    <Button variant="primary" onClick={() => (updateProfileValue(),navigate(-1))}>
                       Update
                     </Button>
                     {/* // ) : (
