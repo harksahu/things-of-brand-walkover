@@ -44,6 +44,8 @@ const Account = () => {
   const deleteKey = async () => {
     // console.log(key);
     // console.log("delete authKey");
+    document.getElementById("key").innerHTML = ""
+    setKey("")
     const data = await deleteAuthKey({
       authKey: key,
       email: user?.email,
@@ -90,7 +92,6 @@ const Account = () => {
                         <DeleteIcon
                           onClick={() => {
                             deleteKey();
-                            setKey(null);
                           }}
                           style={{ color: "red" }}
                         />

@@ -191,6 +191,12 @@ getcompany()
                   >
                     Explore
                   </NavDropdown.Item>
+                  <NavDropdown.Item
+                   href="https://thingsofbrand.canny.io/feature-requests"
+                   target="_blank"
+                  >
+                   Feature Requests
+                  </NavDropdown.Item>
 
                   <NavDropdown.Divider />
 

@@ -48,6 +48,11 @@ function SideBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
         }}
         >Explore</Nav.Link>
       </Nav.Item>
+      <Nav.Item>
+        <Nav.Link
+  href="https://thingsofbrand.canny.io/feature-requests"
+        >Feature Requests</Nav.Link>
+      </Nav.Item>
 
     </Nav>      
     </>
