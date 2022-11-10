@@ -33,6 +33,7 @@ function MyVerticallyCenteredModal(params) {
   const { user } = UserAuth();
   const [show, setShow] = useState(false);
   const [props, setProps] = useState();
+  const [rightPosition, setRightPosition] = useState({x:90 ,y:0});
   console.log(props);
   function size(img) {
     setWidth(document.getElementById(img).clientWidth);
@@ -101,7 +102,12 @@ function MyVerticallyCenteredModal(params) {
     const data = await searchBrandApi(id.id);
     setProps(data?.data?.data[0]);
     setName(data?.data?.data[0].title)
-    // console.log(props);
+    var wx = window.innerWidth - 20;
+    var hy = window.innerHeight-20;
+    setRightPosition({
+      x : wx ,
+      y : hy
+    })
   };
 
   function Set_Name() {
@@ -119,11 +125,15 @@ function MyVerticallyCenteredModal(params) {
     <Container fluid>
       <Row className="h-90">
         <Col className="popup_img">
+
+          <Button style={{ position: "absolute" ,margin: 10 }} onClick={() => {
+            navigate(-1)
+          }} variant="dark">Back</Button>
           <SvgInline {...props} />
         </Col >
-
+        {/* { x: 90, y: 0 } */}
         <p style={{ position: "absolute" }}>
-          <Draggable defaultPosition={{ x: 10, y: 10 }}>
+          <Draggable defaultPosition={{x:window.innerWidth - 350, y : 10}}>
             <div className="card property-box">
               <div class="card-header d-flex align-items-center">
                 {user !== null && user !== undefined && user && Object.keys(user).length > 0 ?
@@ -133,14 +143,14 @@ function MyVerticallyCenteredModal(params) {
                         type="text"
                         style={{
                           border: "none",
-                          backgroundColor:"transparent"
+                          backgroundColor: "transparent"
                         }}
                         onChange={(e) => {
                           (savedata(props?._id, e.target.value))
                         }}
                         value={name}
                       ></input>
-                    ) :<div>{props?.title}</div>
+                    ) : <div>{props?.title}</div>
                   ) : <div>{props?.title}</div>
                 }
                 {user !== null &&
