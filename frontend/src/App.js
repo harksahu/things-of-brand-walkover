@@ -25,6 +25,7 @@ import Profile from './pages/profile';
 function App() {
 
   const [isUserLoaded, setIsUserLoaded] = useState(false);
+  const  location = useLocation()
   useEffect(() => {
     fetchUser()
   }, [])
@@ -41,7 +42,8 @@ function App() {
           minBreakpoint="xxs"
         >
           <AuthContextProvider>
-            { (window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <NavigationBar />)}
+          { window.location.pathname?(window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <NavigationBar />):<NavigationBar />}
+
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
