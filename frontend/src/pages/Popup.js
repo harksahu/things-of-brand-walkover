@@ -126,7 +126,7 @@ function MyVerticallyCenteredModal(params) {
       <Row className="h-90">
         <Col className="popup_img">
 
-          <Button style={{ position: "absolute" ,margin: 10 }} onClick={() => {
+          <Button style={{ position: "absolute" ,margin: 10 , zIndex: 1}} onClick={() => {
             navigate(-1)
           }} variant="dark">Back</Button>
           <SvgInline {...props} />
