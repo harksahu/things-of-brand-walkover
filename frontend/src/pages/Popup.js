@@ -132,25 +132,22 @@ function MyVerticallyCenteredModal(params) {
           <SvgInline {...props} />
         </Col >
         {/* { x: 90, y: 0 } */}
-        <p style={{ position: "absolute" }}>
+        <div style={{ position: "absolute" }}>
           <Draggable defaultPosition={{x:window.innerWidth - 350, y : 10}}>
             <div className="card property-box">
-              <div class="card-header d-flex align-items-center">
+              <div className="card-header d-flex align-items-center">
                 {user !== null && user !== undefined && user && Object.keys(user).length > 0 ?
                   (
                     user?.email === props?.email ? (
-                      <div>
+                      <div>                        
                         <input
                         id = "userInputBox"
-                        type="hidden"
-                        // style={{
-                        //   border: "none",
-                        //   backgroundColor:"transparent"
-                        // }}
+                        type="hidden"                        
                         onChange={(e) => {
                           (savedata(props?._id, e.target.value))
                         }}
                         value={name}
+                        className="form-control form-control-sm"
                       ></input>
                       <div id ="showname" onClick={()=>{
                         document.getElementById("userInputBox").type="text";
@@ -225,6 +222,7 @@ function MyVerticallyCenteredModal(params) {
                         onChange={(e) => (setWidth(e.target.value), changeHW(e.target.value, mheight))}
                         value={mwidth}
                         size="sm"
+                        autocomplete="off"
                       />
                     </Form.Group>
                   </Col>
@@ -238,6 +236,7 @@ function MyVerticallyCenteredModal(params) {
                         onChange={(e) => (setHeight(e.target.value), changeHW(mwidth, e.target.value))}
                         value={mheight}
                         size="sm"
+                        autocomplete="off"
                       />
                     </Form.Group>
                   </Col>
@@ -247,7 +246,7 @@ function MyVerticallyCenteredModal(params) {
                 </div>
                 <Button
                   variant="outline-secondary"
-                  size="sm"
+                  size="sm me-4"
                   onClick={() => {
                     DownloadToPng(props.url, mwidth, mheight);
                   }}
@@ -268,7 +267,7 @@ function MyVerticallyCenteredModal(params) {
               </div>
             </div>
           </Draggable>
-        </p>
+        </div>
 
       </Row>
 

@@ -221,14 +221,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                 title={user?.displayName}
                 id="collasible-nav-dropdown"
                 align="end"
-              >
-                <NavDropdown.Item
-                  onClick={() => {
-                    navigate("/addfile");
-                  }}
-                >
-                  Upload File
-                </NavDropdown.Item>
+              >                
                 <NavDropdown.Item
                   onClick={() => {
                     navigate("/MyStuff");
@@ -242,7 +235,15 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                     navigate("/company");
                   }}
                 >
-                  Brands
+                  My Brands
+                </NavDropdown.Item>
+
+                <NavDropdown.Item
+                  onClick={() => {
+                    navigate("/search");
+                  }}
+                >
+                  Explore other brands
                 </NavDropdown.Item>
 
                 <NavDropdown.Item
@@ -254,14 +255,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                 </NavDropdown.Item>
 
                 <NavDropdown.Divider />
-
-                <NavDropdown.Item
-                  onClick={() => {
-                    navigate("/search");
-                  }}
-                >
-                  Explore
-                </NavDropdown.Item>
+                
                 <NavDropdown.Item
                   href="https://thingsofbrand.canny.io/feature-requests"
                   target="_blank"
