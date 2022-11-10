@@ -140,7 +140,7 @@ function MyVerticallyCenteredModal(params) {
                         }}
                         value={name}
                       ></input>
-                    ) : ("")
+                    ) :<div>{props?.title}</div>
                   ) : <div>{props?.title}</div>
                 }
                 {user !== null &&
