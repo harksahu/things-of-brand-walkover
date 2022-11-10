@@ -44,7 +44,7 @@ function App() {
           minBreakpoint="xxs"
         >          
           <AuthContextProvider>
-          <NavigationBar />
+          {window.location.pathname.slice(0,7)=='/stuff/' ?"":<NavigationBar /> } 
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
