@@ -5,10 +5,13 @@ import { Container, Row, Form, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { searchBrand, clearSearchBrand } from "../store/actions/search-brands";
 import { connect } from "react-redux";
+import Card from "react-bootstrap/Card";
+import {getProfileDetails} from "../api/index.js"
 
 function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();
+  const { CompanyData, setCompanyData } = useState();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -80,6 +83,22 @@ getcompany()
     }
   };
 
+
+const searchbar = async (searchData)=>{
+  const C_data = await getProfileDetails({name:searchData}) 
+  console.log(C_data?.data?.data);
+  setCompanyData(C_data?.data?.data)
+}
+
+
+
+
+
+
+
+
+
+
   var numbers = [1, 2, 3, 4, 5];
   const handleGoogleSignIn = async () => {
     try {
@@ -129,17 +148,28 @@ getcompany()
                   aria-label="Search"
                   show={true}
                   onChange={(e) => {
-                    sendData(e.target.value);
+                   { sendData(e.target.value)
+                   searchbar(e.target.value)
+                   
+                   }
                   }}
+                  // onClick={()=>{
+                  //   document.getElementById("myBrowser").style.display = ""
+                  // }}
                   value={searchItem || ""}
                   list="browsers"
                   name="myBrowser"
                 />
-                <datalist id="browsers">
-                  {searchBrandData.data.map((brandData) => {
-                    return(<option value={brandData.name}/>);
-                  })}
-                </datalist>
+
+                  {searchBrandData.data && searchBrandData?.data.map((brandData) => (
+                    <div id="myBrowser">
+                      <Card >
+                      {brandData.name}
+                      </Card>
+
+
+                    </div>
+                  ))}
               </Form>
               :""
               }
