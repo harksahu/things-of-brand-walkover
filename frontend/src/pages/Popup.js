@@ -139,17 +139,25 @@ function MyVerticallyCenteredModal(params) {
                 {user !== null && user !== undefined && user && Object.keys(user).length > 0 ?
                   (
                     user?.email === props?.email ? (
-                      <input
-                        type="text"
-                        style={{
-                          border: "none",
-                          backgroundColor: "transparent"
-                        }}
+                      <div>
+                        <input
+                        id = "userInputBox"
+                        type="hidden"
+                        // style={{
+                        //   border: "none",
+                        //   backgroundColor:"transparent"
+                        // }}
                         onChange={(e) => {
                           (savedata(props?._id, e.target.value))
                         }}
                         value={name}
                       ></input>
+                      <div id ="showname" onClick={()=>{
+                        document.getElementById("userInputBox").type="text";
+                        document.getElementById("showname").style.display ="none";
+                        document.getElementById("userInputBox").focus();
+                      }}>{name}</div>
+                       </div>
                     ) : <div>{props?.title}</div>
                   ) : <div>{props?.title}</div>
                 }
@@ -165,8 +173,10 @@ function MyVerticallyCenteredModal(params) {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
-                          <Dropdown.Item onClick={() => {
-                            (savedata(props?._id, name))
+                        <Dropdown.Item onClick={() => {
+                            document.getElementById("userInputBox").type="text";
+                            document.getElementById("showname").style.display ="none";
+                            document.getElementById("userInputBox").focus();
                           }}>Rename</Dropdown.Item>
                           {props.active === false ? (
                             <Dropdown.Item
