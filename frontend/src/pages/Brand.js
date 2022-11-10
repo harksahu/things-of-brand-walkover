@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link,useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -19,9 +19,9 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import ListGroup from "react-bootstrap/ListGroup";
 
-import {getCompanyDetails} from  '../api/index.js'
+import { getCompanyDetails } from '../api/index.js'
 
-import { BsFillPlusCircleFill ,BsPencilSquare,BsFillExclamationDiamondFill,BsShieldCheck } from "react-icons/bs";
+import { BsFillPlusCircleFill, BsPencilSquare, BsFillExclamationDiamondFill, BsShieldCheck } from "react-icons/bs";
 
 
 function Not_found() {
@@ -50,7 +50,7 @@ function Brand() {
   const [secondaryColors, setSecondaryColors] = useState();
   const [backgroundColors, setBackgroundColors] = useState();
   const [email, setEmail] = useState();
-  const[sharedEmail,setSharedEmail] = useState([]);
+  const [sharedEmail, setSharedEmail] = useState([]);
   const { user } = UserAuth();
   const [links, setLinks] = React.useState([]);
   const [results, setResults] = useState();
@@ -59,9 +59,9 @@ function Brand() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [allColor , setAllColor] = useState();
-  const [fontLink,setFontLink]= useState([]);
-  const [company,setCompany]= useState([]);
+  const [allColor, setAllColor] = useState();
+  const [fontLink, setFontLink] = useState([]);
+  const [company, setCompany] = useState([]);
   const navigate = useNavigate();
   const [showw, setShoww] = useState(false);
   const handleClosee = () => setShoww(false);
@@ -95,10 +95,10 @@ function Brand() {
     for (var i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    if (verify == undefined || verify == null ||verify ==="false") {
+    if (verify == undefined || verify == null || verify === "false") {
       console.log(verify);
       setVerify(result);
-      console.log("verification code in condtion = "+result + verify);
+      console.log("verification code in condtion = " + result + verify);
 
       await updateVerify(result);
     }
@@ -118,13 +118,13 @@ function Brand() {
       // secondaryColors: secondaryColors,
       // backgroundColors: backgroundColors,
       // fontLink:fontLink,
-      color:allColor,
+      color: allColor,
       email: email,
       verify: result,
     };
     console.log(verify);
     // console.log();
-    if (verify === undefined || verify === null||verify==="false") {
+    if (verify === undefined || verify === null || verify === "false") {
       await updateProfileFields(data);
     }
   };
@@ -164,8 +164,8 @@ function Brand() {
     setEmail(fresult.data.data[0].email);
     setVerify(fresult.data.data[0].verify);
     setSharedEmail(fresult.data.data[0].sharedEmail);
-    console.log(fresult.data.data[0].sharedEmail,"shared email");
-    
+    console.log(fresult.data.data[0].sharedEmail, "shared email");
+
 
     document.getElementById("aboutus").innerHTML = fresult.data.data[0].aboutus;
 
@@ -175,7 +175,7 @@ function Brand() {
 
 
   const updateLogo = async (logo_url) => {
-    
+
     const data = {
       name: name,
       aboutus: aboutus,
@@ -188,7 +188,7 @@ function Brand() {
       // PrimaryColors: PrimaryColors,
       // secondaryColors: secondaryColors,
       // backgroundColors: backgroundColors,
-      color:allColor,
+      color: allColor,
       email: email,
       verify: verify,
     };
@@ -204,54 +204,54 @@ function Brand() {
     }
   }, [domain]);
 
-  
+
 
   return (
     <>
-    
-    {console.log("all color = ",allColor)}
+
+      {console.log("all color = ", allColor)}
       {domain ? (
         <div className="m-5">
-          <Button onClick={()=>{
-      navigate(-1)
-    }} variant="dark">Back</Button>
+          <Button onClick={() => {
+            navigate(-1)
+          }} variant="dark">Back</Button>
           {user ? (
             email === user.email ? (
               <>
-              <Link to={"/addfile"}>
-                <BsFillPlusCircleFill style={{ float: "right", fontSize: 40 }} />
-              </Link>
-              <Button variant="primary" style={{ float: "right"}} onClick={handleShoww}>
-        Share
-      </Button>
+                <Link to={"/addfile"}>
+                  <BsFillPlusCircleFill style={{ float: "right", fontSize: 40 }} />
+                </Link>
+                <Button variant="primary" style={{ float: "right" }} onClick={handleShoww}>
+                  Share
+                </Button>
 
-      <Modal show={showw} onHide={handleClosee}>
-        <Modal.Header closeButton>
-          <Modal.Title>Share Your Company</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><input  type="email"
-          placeholder="Enter the email" id="addEmail"/></Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClosee}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={()=>{
-             let temp = sharedEmail;
-            let email = document.getElementById("addEmail").value;
-             console.log("e.target.value",setSharedEmail);
-             console.log("new shared emials",temp);
-             temp.push(email);
-             setSharedEmail([...temp]);   
-              handleClosee();
-              updateLogo();
-          }}>
-            Share
-          </Button>
-        </Modal.Footer>
-      </Modal>
-              <Link to="/profile" state={{ data: company }}>
-                <BsPencilSquare style={{ float: "right", fontSize: 40 , color: "black" }} />
-              </Link>
+                <Modal show={showw} onHide={handleClosee}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Share Your Company</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body><input type="email"
+                    placeholder="Enter the email" id="addEmail" /></Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClosee}>
+                      Close
+                    </Button>
+                    <Button variant="primary" onClick={() => {
+                      let temp = sharedEmail;
+                      let email = document.getElementById("addEmail").value;
+                      console.log("e.target.value", setSharedEmail);
+                      console.log("new shared emials", temp);
+                      temp.push(email);
+                      setSharedEmail([...temp]);
+                      handleClosee();
+                      updateLogo();
+                    }}>
+                      Share
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+                <Link to="/profile" state={{ data: company }}>
+                  <BsPencilSquare style={{ float: "right", fontSize: 40, color: "black" }} />
+                </Link>
               </>
             ) : (
               ""
@@ -402,39 +402,39 @@ function Brand() {
           <div>
             <h5>Fonts link</h5>
             {/* <div style={{ fontSize: fontSize + "px" }}>{fontSize + "px"}</div> */}
-            {fontLink?.map(link=>{
+            {fontLink?.map(link => {
               return (
                 <div>
                   {/* <h4>{color.colorName}</h4> */}
-                 <a href = {link} target ="_blank">{link}</a>
+                  <a href={link} target="_blank">{link}</a>
                 </div>
               )
-            // <h1>{color.colorName}</h1>
-            // <h1>{color.colorValue}</h1>
-          })}
+              // <h1>{color.colorName}</h1>
+              // <h1>{color.colorValue}</h1>
+            })}
           </div>
           <br />
           <div>
-          <h5>Colors</h5>
+            <h5>Colors</h5>
 
-          {allColor?.map(color=>{
+            {allColor?.map(color => {
               return (
                 <div>
                   <h4>{color.colorName}</h4>
                   <div
-                id="background"
-                style={{
-                  width: 50,
-                  height: 50,
-                  backgroundColor: color.colorValue,
-                  margin: 5,
-                }}
-              ></div>
+                    id="background"
+                    style={{
+                      width: 50,
+                      height: 50,
+                      backgroundColor: color.colorValue,
+                      margin: 5,
+                    }}
+                  ></div>
                 </div>
               )
-            // <h1>{color.colorName}</h1>
-            // <h1>{color.colorValue}</h1>
-          })}
+              // <h1>{color.colorName}</h1>
+              // <h1>{color.colorValue}</h1>
+            })}
             {/* <h5>background Colors</h5> */}
             {/* <div className="d-flex">
               <div
