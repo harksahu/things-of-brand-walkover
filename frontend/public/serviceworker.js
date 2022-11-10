@@ -19,7 +19,7 @@ this.addEventListener('fetch',(event)=>{
 
 this.addEventListener('activate',(event)=>{
     const cacheWhiteList = []
-    cacheWhiteList.push.push(CHACHE_NAME)
+    cacheWhiteList.push.push(CACHE_NAME)
     event.waitUntil(caches.keys().then((cacheNames)=>Promise.all(
         cacheNames.map((cacheName)=>{
             if(!cacheWhiteList.includes(cacheName)){
