@@ -50,9 +50,6 @@ function Brand() {
   const [logo, setlogo] = useState();
   const [guidlines, setGuidlines] = useState();
   const [fontSize, setFontSize] = useState();
-  const [PrimaryColors, setPrimaryColors] = useState();
-  const [secondaryColors, setSecondaryColors] = useState();
-  const [backgroundColors, setBackgroundColors] = useState();
   const [email, setEmail] = useState();
   const [sharedEmail, setSharedEmail] = useState([]);
   const { user } = UserAuth();
@@ -73,28 +70,28 @@ function Brand() {
   const [mwidth, setWidth] = useState(250);
   const [mheight, setHeight] = useState(250);
 
-  const verifyDomain = async () => {
-    const TXT = await getTXT(domain);
-    // console.log(TXT?.data?.data[0][0]);
-    // console.log(TXT?.data?.data);
-    var ifVerify = false;
-    for (let i = 0; i < TXT?.data?.data.length; i++) {
-      // text += cars[i] + "<br>";
-      // console.log(TXT?.data?.data[i][0]);
-      if (TXT?.data?.data[i][0] == verify) {
-        updateVerify("true");
-        ifVerify = true;
-        break;
-      } else {
-        console.log("not verify");
-      }
-    }
-    if (!ifVerify) {
-      document.getElementById("error").innerHTML = "not verify";
-    }
-    // console.log(TXT?.data?.data[i] == "abcdefghijklmnop");
-    // console.log(verify)
-  };
+  // const verifyDomain = async () => {
+  //   const TXT = await getTXT(domain);
+  //   // console.log(TXT?.data?.data[0][0]);
+  //   // console.log(TXT?.data?.data);
+  //   var ifVerify = false;
+  //   for (let i = 0; i < TXT?.data?.data.length; i++) {
+  //     // text += cars[i] + "<br>";
+  //     // console.log(TXT?.data?.data[i][0]);
+  //     if (TXT?.data?.data[i][0] == verify) {
+  //       updateVerify("true");
+  //       ifVerify = true;
+  //       break;
+  //     } else {
+  //       console.log("not verify");
+  //     }
+  //   }
+  //   if (!ifVerify) {
+  //     document.getElementById("error").innerHTML = "not verify";
+  //   }
+  //   // console.log(TXT?.data?.data[i] == "abcdefghijklmnop");
+  //   // console.log(verify)
+  // };
 
   async function makeid(length) {
     console.log("in make id ");
@@ -168,16 +165,12 @@ function Brand() {
       domain: domain,
       guidlines: guidlines,
       // fontSize: fontSize,
-      // PrimaryColors: PrimaryColors,
-      // secondaryColors: secondaryColors,
-      // backgroundColors: backgroundColors,
       // fontLink:fontLink,
       color: allColor,
       email: email,
       verify: result,
     };
     console.log(verify);
-    // console.log();
     if (verify === undefined || verify === null || verify === "false") {
       await updateProfileFields(data);
     }
@@ -335,15 +328,17 @@ function Brand() {
                   <>
                     {" "}
                     <BsFillExclamationDiamondFill />
+                    <Link to="/domainVerify" state={{ data: company }}>
+                    
                     <button
                       className="m-auto btn btn-primary"
                       onClick={() => {
                         handleShow();
-                        makeid(15);
                       }}
                     >
                       verify
                     </button>
+                    </Link>
                   </>
                 )
               ) : (
@@ -559,21 +554,8 @@ function Brand() {
                   ></div>
                 </div>
               )
-              // <h1>{color.colorName}</h1>
-              // <h1>{color.colorValue}</h1>
             })}
-            {/* <h5>background Colors</h5> */}
-            {/* <div className="d-flex">
-              <div
-                id="background"
-                style={{
-                  width: 50,
-                  height: 50,
-                  backgroundColor: backgroundColors,
-                  margin: 5,
-                }}
-              ></div>
-            </div> */}
+
           </div>
         </div>
       ) : (
@@ -581,55 +563,6 @@ function Brand() {
       )
       }
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Please verify domain {domain}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div style={{ color: "red" }} id="error"></div>
-          <ListGroup variant="flush">
-            <ListGroup.Item>Step 1: Get your verification code</ListGroup.Item>
-            <ListGroup.Item>Step 2: Sign in to your domain host</ListGroup.Item>
-            <ListGroup.Item>
-              Step 3: Add the verification record to your domain's DNS records
-            </ListGroup.Item>
-            <ListGroup.Item>
-              Step 4: Tell Thingsofbrand Workspace to check your verification
-              code
-            </ListGroup.Item>
-          </ListGroup>
-          <ListGroup.Item
-            as="li"
-            className="d-flex justify-content-center align-items-start"
-          >
-            <div className="ms-2 me-auto">
-              <div className="fw-bold">verification code</div>
-              <div
-                style={{
-                  border: "2px solid #d4d4d4",
-                  backgroundColor: "#ececec",
-                }}
-              >
-                {verify}
-              </div>
-            </div>
-          </ListGroup.Item>
-          <ListGroup.Item className="m-auto"></ListGroup.Item>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => {
-              verifyDomain();
-            }}
-          >
-            verify
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 }

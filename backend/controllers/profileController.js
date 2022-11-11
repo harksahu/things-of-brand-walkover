@@ -78,14 +78,14 @@ const updateProfile = async (req,res)=>{
       let links=req.body.links;
       let domain=req.body.domain;
      let  guidlines=req.body.guidlines;
-      let fontSize=req.body.fontSize;
-      let PrimaryColors=req.body.PrimaryColors;
-      let secondaryColors=req.body.secondaryColors;
-      let backgroundColors=req.body.backgroundColors;
+      let color=req.body.color;
+    //   let PrimaryColors=req.body.PrimaryColors;
+    //   let secondaryColors=req.body.secondaryColors;
+    //   let backgroundColors=req.body.backgroundColors;
       let email=req.body.email;
       let verify=req.body.verify
       let link = req.body.links;
-      let sharedEmail=req.body.sharedEmail;
+      let sharedEmail=req.body.sharedEmail? req.body.sharedEmail : "";
     // console.log(req.body)
     // console.log(link)
     // const f_data = {
@@ -106,14 +106,10 @@ const updateProfile = async (req,res)=>{
                     logo,
                     links,
                     guidlines,
-                    fontSize,
-                    PrimaryColors,
-                    secondaryColors,
-                    backgroundColors,
+                    color,
                     email,
                     verify,
                     link,
-                    sharedEmail
                 }
             }
         )

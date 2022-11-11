@@ -135,7 +135,6 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                         {
                           sendData(e.target.value)
                           searchbar(e.target.value)
-
                         }
                       }}
                       value={searchItem || ""}
@@ -143,49 +142,35 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                       name="myBrowser"
                     />
                     {document.getElementById("searchbar")?.value === "" ? "" : <div >
-
-
                       <Card style={{fontWeight : "bold"}} >
                         Company:-
-                        {/* {console.log(brandData.name)} */}
-
                       </Card>
-                      {/* {console.log(CompanyData)} */}
                       {CompanyData && CompanyData?.map((brandData) => (
                         <div id="myBrowser" key={brandData._id}>
                           {document.getElementById("searchbar")?.value === "" ? "" :
                             (
                               <Link to={"/" + brandData.domain}>
-
                                 <div style={{color: "black" , textDecoration:"none" , backgroundColor:"white"}}>
                                   {brandData.name}
                                   <BsArrowReturnRight style={{float:"right"}}/>
-                                  {/* {console.log(brandData.name)} */}
-
                                 </div>
                               </Link>
                             )
                           }
-
-
                         </div>
                       ))}
                       <Card style={{fontWeight : "bold"}} >
                         Logos:-
-                        {/* {console.log(brandData.name)} */}
-
                       </Card>
-                      {/* {console.log(LogoData)} */}
+
                       {LogoData && LogoData?.map((brandData) => (
                         <div id="myBrowser" key={brandData._id}>
                           {document.getElementById("searchbar")?.value === "" ? "" :
                             (
                               <Link to={"/stuff/" + brandData._id}>
-
                                 <div style={{color: "black" , textDecoration:"none" , backgroundColor:"white"}}>
                                   {brandData.title}
                                   <BsArrowReturnRight style={{float:"right"}}/>
-                                  {/* {console.log(brandData.name)} */}
 
                                 </div>
                               </Link>
@@ -244,7 +229,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                 <NavDropdown.Divider />
                 
                 <NavDropdown.Item
-                  href="https://thingsofbrand.canny.io/feature-requests"
+                  href="https://feature.thingsofbrand.com/feature-requests"
                   target="_blank"
                 >
                   Feature Requests

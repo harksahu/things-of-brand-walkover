@@ -51,6 +51,10 @@ const updateProfileFields = async(dataToSend) => {
 
 }
 
+const getFontList = async () => {
+  const data = await axios.get("https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyBZ2tyYXkXRSFJ4AlFgyrASHN7yXJr7a9c");
+  return data
+};
 const sendBrandAPI = async () => {
   return await axios.get(URL + "/api/brands/");
 };
@@ -123,6 +127,7 @@ export {
   getS3SignUrl,
   searchBrandApi,
   getTXT,
+  getFontList,
   createBrandAPI,
   sendBrandAPI,
   sendMyStuffAPI,

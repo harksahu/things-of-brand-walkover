@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Card, Container, Row, Col, Form, Button, Stack } from "react-bootstrap";
 import { UserAuth } from "../context/AuthContext";
-import { getProfileDetails,updateProfileFields ,createProfile} from "../api/index.js";
+import { getProfileDetails, updateProfileFields, getFontList, createProfile } from "../api/index.js";
 import CloseIcon from "@mui/icons-material/Close";
 import RichtextEditor from "./jodit.js";
 import { BsFillTrashFill } from "react-icons/bs";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation,Link, useNavigate } from "react-router-dom";
 import SideBar from '../components/SideBar';
 // import getFonts from "font-list"
 
@@ -22,17 +22,19 @@ function Profile(props) {
   const { user } = UserAuth();
   const [links, setLinks] = React.useState([]);
   const [results, setResults] = useState("");
+  const [company, setCompany] = useState("");
   const [profiledata, setProfile] = useState("");
   const [check, setCheck] = useState(true);
   const [id, setId] = useState("");
   const [logo, setLogo] = useState("null");
   const [verify, setVerify] = useState("false");
-  const [color, setcount] = useState([{ colorName: "", colorValue: "" }]);
+  const [color, setcount] = useState([{ colorName: "", colorValue: "#ffffff" }]);
   const [fontLink, setFontLink] = useState([""]);
   const [linkCount, setLinkCount] = useState(1);
   const [countTracker, setCountTracker] = useState(1);
   const [valid, setvalid] = useState([false]);
   const [valid2, setvalid2] = useState([false]);
+  const [fontFamily, setFontFamily] = useState([false]);
   const location = useLocation();
   let countTemp = countTracker;
   let countTemp2 = linkCount
@@ -51,15 +53,11 @@ function Profile(props) {
     setLinks([...links.filter((link) => links.indexOf(link) !== index)]);
   };
 
-const fontlist = async() =>{
-  // getFonts()
-  // .then(fonts => {
-  //   console.log(fonts)
-  // })
-  // .catch(err => {
-  //   console.log(err)
-  // })
-}
+  const fontlist = async () => {
+    const data = await getFontList()
+    console.log(data?.data?.items);
+    setFontFamily(data)
+  }
 
   useEffect(() => {
     // console.log(location?.state?.data)
@@ -68,11 +66,15 @@ const fontlist = async() =>{
       if (user?.email) {
         next();
         profileDetails();
-        fontlist()
 
       }
     }
   }, [user]);
+
+  useEffect(() => {
+    fontlist()
+  }, []);
+
 
   const storeProfileValue = async (req, res) => {
     if (check) {
@@ -92,7 +94,7 @@ const fontlist = async() =>{
               verify,
               email: user?.email,
             });
-            console.log(data);
+            // console.log(data);
             alert("successfully saved domain " + domain);
           } catch (err) {
             console.log(err);
@@ -105,44 +107,39 @@ const fontlist = async() =>{
   const updateProfileValue = async (req, res) => {
 
 
-if (name) {
-  if (aboutus) {
-    const data = {
-      name: name,
-      aboutus: aboutus,
-      links: links,
-      domain: domain,
-      guidlines: guidlines,
-      fontLink: fontLink,
-      PrimaryColors: PrimaryColors,
-      secondaryColors: secondaryColors,
-      backgroundColors: backgroundColors,
-      email: user?.email,
-      color: color
-    };
-    await updateProfileFields(data);
-    navigate(-1)
-  } else {
-    alert("about us field is compulsory")
-  }
+    if (name) {
+      if (aboutus) {
+        const data = {
+          name: name,
+          aboutus: aboutus,
+          links: links,
+          domain: domain,
+          guidlines: guidlines,
+          fontLink: fontLink,
+          PrimaryColors: PrimaryColors,
+          secondaryColors: secondaryColors,
+          backgroundColors: backgroundColors,
+          email: user?.email,
+          color: color
+        };
+        await updateProfileFields(data);
+        navigate(-1)
+      } else {
+        alert("about us field is compulsory")
+      }
 
-} else {
-  alert("name field is compulsory")
+    } else {
+      alert("name field is compulsory")
 
-  
-}
+
+    }
   };
 
   const profileDetails = async (req, res) => {
     fresult = await getProfileDetails({});
-    console.log(fresult.data.data);
-    // console.log("profiledata = ",profiledata);
-    // console.log("profiledata = ",profiledata);
     setResults(fresult.data.data);
 
     if (location.state?.data != null) {
-      // console.log("gnfbvc")
-      // setProfile(location.state.data)
       setName(location.state.data.name);
       setAboutus(location.state.data.aboutus);
       setLinks(location.state.data.links);
@@ -157,13 +154,6 @@ if (name) {
 
     }
 
-    // console.log(profiledata)
-    // console.log("gnihvcihvjcnihvcjnfbvc")
-    // window.location.reload();
-    // if (profiledata == null && profiledata == undefined) {
-    //   const d = await getProfileDetails({});
-    //   setProfile(d);
-    // }
   };
 
 
@@ -188,51 +178,51 @@ if (name) {
   }
 
   const config = {
-    buttons: ["bold","italic"]
+    buttons: ["bold", "italic"]
   };
 
   const next = () => {
-    // console.log(results);
-    
-      if (location.state?.data) {
-        document.getElementById("name").classList.remove("visually-hidden")
-        document.getElementById("about").classList.remove("visually-hidden")
-        document.getElementById("socialLinks").classList.remove("visually-hidden")
-        document.getElementById("Guidlines").classList.remove("visually-hidden")
-        document.getElementById("list").classList.remove("visually-hidden")
-        document.getElementById("fontLink").classList.remove("visually-hidden")
-        document.getElementById("button").classList.remove("visually-hidden")
-        document.getElementById("nxt").classList.add("visually-hidden")
 
+
+    if (location.state?.data) {
+      document.getElementById("name").classList.remove("visually-hidden")
+      document.getElementById("about").classList.remove("visually-hidden")
+      document.getElementById("socialLinks").classList.remove("visually-hidden")
+      document.getElementById("Guidlines").classList.remove("visually-hidden")
+      document.getElementById("list").classList.remove("visually-hidden")
+      document.getElementById("fontLink").classList.remove("visually-hidden")
+      document.getElementById("button").classList.remove("visually-hidden")
+      document.getElementById("nxt").classList.add("visually-hidden")
+
+    }
+    else {
+      var check = 2;
+      for (let i = 0; i < results.length; i++) {
+        // const e = results[i];
+        if (results[i].domain === domain) {
+          setCompany(results[i])
+          check = 1;
+
+          break;
+        }
+        else {
+          // console.log("false");
+          check = 0;
+
+        }
       }
-      else {
-        var check = 2;
-        for (let i = 0; i < results.length; i++) {
-          // const e = results[i];
-          if (results[i].domain === domain) {
-            // console.log("true");
-            check = 1;
 
-            break;
-          }
-          else {
-            // console.log("false");
-            check = 0;
-
-          }
-        }
+      if (check === 1) {
+        console.log("old");
+        document.getElementById("domainError").classList.remove("visually-hidden")
         
-        if (check === 1) {
-          console.log("old");
-          alert("Verify It's your domain")
-
-        }
-        else if (check === 0) {
-          var domainParts = domain.split(".");
-          console.log(domainParts);
-          console.log(domainParts.length);
-          if (domain ) {
-            if(domainParts.length >= 2 && domainParts[1].length >=1){
+      }
+      else if (check === 0) {
+        var domainParts = domain.split(".");
+        console.log(domainParts);
+        console.log(domainParts.length);
+        if (domain) {
+          if (domainParts.length >= 2 && domainParts[1].length >= 1) {
             console.log("new");
             document.getElementById("name").classList.remove("visually-hidden")
             document.getElementById("about").classList.remove("visually-hidden")
@@ -246,18 +236,18 @@ if (name) {
 
             document.getElementById("domain").disabled = true;
             storeProfileValue()
-            }
-            else{
-
-              alert("enter valid domain name");
-            }
           }
           else {
-            alert("enter domain name");
+
+            alert("enter valid domain name");
           }
         }
+        else {
+          alert("enter domain name");
+        }
       }
-    
+    }
+
   }
 
   const checkDomain = (datta) => {
@@ -343,7 +333,7 @@ if (name) {
 
                     <Form.Group className="mb-3 visually-hidden" id="about" >
                       <Form.Label>About us</Form.Label>
-                      <RichtextEditor guidlines={aboutus} setGuidlines={setAboutus} config={config} tabIndex={1}/>
+                      <RichtextEditor guidlines={aboutus} setGuidlines={setAboutus} config={config} tabIndex={1} />
                     </Form.Group>
 
 
@@ -384,6 +374,11 @@ if (name) {
                         }}
                         value={domain}
                       />
+                      <div className="visually-hidden" id="domainError">
+
+                      This company is already created  <Link to="/domainVerify" state={{ data: company }}>Clam your brand</Link>
+
+                      </div>
 
                       <datalist id="doaminBrowsers">
                         {results &&
@@ -397,96 +392,115 @@ if (name) {
 
                     <Form.Group className="mb-3 visually-hidden" id="Guidlines" >
                       <Form.Label>Guidlines</Form.Label>
-                      <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines} tabIndex={1}/>
+                      <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines} tabIndex={1} />
                     </Form.Group>
-                    
+
                     <div className="hide formbold-chatbox-form visually-hidden" id="list">
-                    <Form.Group className="mb-3" >
-                    <Form.Label>Color<small>(hex code in #123456 format)</small> </Form.Label>
+                      <Form.Group className="mb-3" >
+                        <Form.Label>Color<small>(hex code in #123456 format)</small> </Form.Label>
 
-                      {color.map((element, index) => (
+                        {color.map((element, index) => (
 
-                        <div id="fetch" key={index}>
-                          <Form.Group className="mb-3 d-flex">
+                          <div id="fetch" key={index}>
+                            <Form.Group className="mb-3 d-flex">
 
-                            <Form.Control
-                              type="text"
-                              name="user_table_input"
-                              id={index}
-                              placeholder="Enter color name"
-                              value={color[index].colorName}
-                              onChange={(e) => {
-                                let tempCount = color;
-                                tempCount[index].colorName = e.target.value;
-                                setcount([...tempCount]);
-                              }}
-                              className="contact-form-area"
-                            />
-                            
-                            <Form.Control type="text" id={`colorinputbytext${index}`} maxLength="7" placeholder="Enter hex value of color"
-                              onChange={(e) => {
-                                document.getElementById("colorinput" + index).value = e.target.value;
-                              }} />
                               <Form.Control
-                              type="color"
-                              name="user_input"
-                              style={{ width: "20%" }}
-                              id={`colorinput${index}`}
-                              value={color[index].colorValue}
-                              className="user_input hide formbold-form-input"
-                              onChange={(e) => {
-                                document.getElementById("colorinputbytext" + index).value = e.target.value;
-                                console.log("e.target.value" + e.target.value);
-                                let tempCount = color;
-                                tempCount[index].colorValue = e.target.value;
-                                setcount([...tempCount]);
-                              }}
-                            />
-                            {index ? (
-                              <button
-                                type="button"
-                                className="name noselect"
-                                onClick={() => removeFormFields(index)}
-                                style={{ border: "1px solid #C43434" }}
-                              >
-                                <BsFillTrashFill />
-                              </button>
-                            ) : null}
-                          </Form.Group>
+                                type="text"
+                                name="user_table_input"
+                                id={index}
+                                placeholder="Enter color name"
+                                value={color[index].colorName}
+                                onChange={(e) => {
+                                  let tempCount = color;
+                                  tempCount[index].colorName = e.target.value;
+                                  setcount([...tempCount]);
+                                }}
+                                className="contact-form-area"
+                              />
 
+                              <Form.Control type="text" id={`colorinputbytext${index}`} maxLength="7" placeholder="Enter hex value of color"
+                                onChange={(e) => {
+                                  document.getElementById("colorinput" + index).value = e.target.value;
+                                }} />
+                              <Form.Control
+                                type="color"
+                                name="user_input"
+                                style={{ width: "20%" }}
+                                id={`colorinput${index}`}
+                                value={color[index].colorValue}
+                                className="user_input hide formbold-form-input"
+                                onChange={(e) => {
+                                  document.getElementById("colorinputbytext" + index).value = e.target.value;
+                                  console.log("e.target.value" + e.target.value);
+                                  let tempCount = color;
+                                  tempCount[index].colorValue = e.target.value;
+                                  setcount([...tempCount]);
+                                }}
+                              />
+                              {index ? (
+                                <button
+                                  type="button"
+                                  className="name noselect"
+                                  onClick={() => removeFormFields(index)}
+                                  style={{ border: "1px solid #C43434" }}
+                                >
+                                  <BsFillTrashFill />
+                                </button>
+                              ) : null}
+                            </Form.Group>
+
+                          </div>
+                        ))}
+                        <div className="button-section">
+                          <button
+                            className="name noselect m-20 "
+                            type="button"
+                            id="add_input"
+                            onClick={() => addFormFields()}
+                          >
+                            Add
+                          </button>
                         </div>
-                      ))}
-                      <div className="button-section">
-                        <button
-                          className="name noselect m-20 "
-                          type="button"
-                          id="add_input"
-                          onClick={() => addFormFields()}
-                        >
-                          Add
-                        </button>
-                      </div>
-                    </Form.Group>
+                      </Form.Group>
 
                     </div>
                     <Form.Group className="mb-3 my-3 visually-hidden" id="fontLink" >
-                      <Form.Label>Font  links</Form.Label>
+                      <Form.Label>Font  links <small>(with respect there google font name)</small></Form.Label>
                       <div id="list" className="hide formbold-chatbox-form">
                         {fontLink.map((element, index) => (
                           <div id="fetch" key={index}>
                             <Form.Control
                               type="url"
-                              name="user_table_input"
-                              id={index}
+                              // name="user_table_input"
+                              id={"id"+index}
                               placeholder="Enter font url "
                               value={fontLink[index]}
                               onChange={(e) => {
                                 let tempCount = fontLink;
                                 tempCount[index] = e.target.value;
                                 setFontLink([...tempCount]);
+
                               }}
                               className="contact-form-area"
+                              name="myBrowser"
                             />
+                            {document.getElementById(`id`+index)?.value === "" ? "" : <div >
+                              {fontFamily?.data?.items && fontFamily?.data?.items?.filter(font => font?.family.includes(document.getElementById(`id`+index)?.value)).slice(0, 7).map((font) => (
+                                <div id="myBrowser" key={font._id}>
+                                  
+                                    
+                                        <div style={{ color: "black", textDecoration: "none", backgroundColor: "white" }}>
+                                          {font.family}
+                                        </div>
+                                    
+                                  
+                                </div>
+                              ))}
+                            </div>
+                            }
+
+
+
                             {index ? (
                               <button
                                 type="button"
@@ -501,14 +515,14 @@ if (name) {
                           </div>
                         ))}
                         <div className="button-section">
-                          <button
+                          <Button
                             className="name noselect m-20 "
                             type="button"
                             id="add_input"
                             onClick={() => addFontFields()}
                           >
                             Add
-                          </button>
+                          </Button>
                         </div>
                       </div>
 

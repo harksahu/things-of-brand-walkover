@@ -19,6 +19,7 @@ import Brand from './pages/Brand.js';
 import HomeLogo from './pages/Searchlogo.js';
 import Home2 from './pages/Home2';
 import Profile from './pages/profile';
+import DomainVerificationPage from './pages/DomainVerificationPage.js';
 
 
 
@@ -51,6 +52,7 @@ function App() {
               <Route path='/searchlogo' element={<HomeLogo />} />
               <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />
               <Route path='/:title' element={<Brand />} />
+              <Route path='/domainVerify' element={<DomainVerificationPage />} />
               <Route path='/profile' element={<Profile />} />
               <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
               <Route path="/MyStuff" element={<Protected> <MyStuff /> </Protected>} />
