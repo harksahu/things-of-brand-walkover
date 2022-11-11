@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Card, Container, Row, Col, Form, Button, Stack } from "react-bootstrap";
 import { UserAuth } from "../context/AuthContext";
-import { getProfileDetails,updateProfileFields ,getCompanyDetails,createProfile} from "../api/index.js";
+import { getProfileDetails,updateProfileFields ,createProfile} from "../api/index.js";
 import CloseIcon from "@mui/icons-material/Close";
 import RichtextEditor from "./jodit.js";
 import { BsFillTrashFill } from "react-icons/bs";
 import { useLocation,useNavigate } from "react-router-dom";
 import SideBar from '../components/SideBar';
+// import getFonts from "font-list"
+
 
 function Profile(props) {
   const [name, setName] = useState("");
@@ -49,6 +51,16 @@ function Profile(props) {
     setLinks([...links.filter((link) => links.indexOf(link) !== index)]);
   };
 
+const fontlist = async() =>{
+  // getFonts()
+  // .then(fonts => {
+  //   console.log(fonts)
+  // })
+  // .catch(err => {
+  //   console.log(err)
+  // })
+}
+
   useEffect(() => {
     // console.log(location?.state?.data)
     setId(location?.state?.data?._id);
@@ -56,6 +68,7 @@ function Profile(props) {
       if (user?.email) {
         next();
         profileDetails();
+        fontlist()
 
       }
     }
@@ -90,6 +103,10 @@ function Profile(props) {
     }
   };
   const updateProfileValue = async (req, res) => {
+
+
+if (name) {
+  if (aboutus) {
     const data = {
       name: name,
       aboutus: aboutus,
@@ -104,6 +121,16 @@ function Profile(props) {
       color: color
     };
     await updateProfileFields(data);
+    navigate(-1)
+  } else {
+    alert("about us field is compulsory")
+  }
+
+} else {
+  alert("name field is compulsory")
+
+  
+}
   };
 
   const profileDetails = async (req, res) => {
@@ -163,9 +190,6 @@ function Profile(props) {
   const config = {
     buttons: ["bold","italic"]
   };
-
-
-
 
   const next = () => {
     // console.log(results);
@@ -235,8 +259,6 @@ function Profile(props) {
       }
     
   }
-
-
 
   const checkDomain = (datta) => {
 
@@ -377,8 +399,11 @@ function Profile(props) {
                       <Form.Label>Guidlines</Form.Label>
                       <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines} tabIndex={1}/>
                     </Form.Group>
-
+                    
                     <div className="hide formbold-chatbox-form visually-hidden" id="list">
+                    <Form.Group className="mb-3" >
+                    <Form.Label>Color<small>(hex code in #123456 format)</small> </Form.Label>
+
                       {color.map((element, index) => (
 
                         <div id="fetch" key={index}>
@@ -441,6 +466,8 @@ function Profile(props) {
                           Add
                         </button>
                       </div>
+                    </Form.Group>
+
                     </div>
                     <Form.Group className="mb-3 my-3 visually-hidden" id="fontLink" >
                       <Form.Label>Font  links</Form.Label>
@@ -489,7 +516,7 @@ function Profile(props) {
 
                     <div id="button" className=" visually-hidden">
                       {/* {location.state?.data ? ( */}
-                      <Button variant="primary" onClick={() => (updateProfileValue(), navigate(-1))}>
+                      <Button variant="primary" onClick={() => (updateProfileValue())}>
                         Update
                       </Button>
                       {/* // ) : (

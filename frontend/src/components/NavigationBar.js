@@ -21,16 +21,13 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
 
   const searchbar = async (searchData) => {
 
-    // console.log(searchData);
     const C_data = await getProfileDetails({ email: "", domain: searchData, name: searchData, searchfrom: "false" })
-    // console.log(C_data?.data?.data);
-    // console.log(searchBrandData?.data);
+
     const array_data = C_data?.data?.data
     setCompanydata(array_data)
-    // console.log(searchData);
+
     const L_data = await sendSearchAPI({ title: searchData, email: "", active: 1, description: "", _id: "", domain: "" })
-    // console.log(L_data?.data?.data);
-    // console.log(searchBrandData?.data);
+
     const array_logo_data = L_data?.data?.data
     setLogoData(array_logo_data)
   }
@@ -84,18 +81,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   };
 
 
-
-
-
-
-
-
-
-
-
-
-
-  var numbers = [1, 2, 3, 4, 5];
+  // var numbers = [1, 2, 3, 4, 5];
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn()
@@ -123,6 +109,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
               navigate("/home");
             }}
             className="bo"
+            style={{cursor: "pointer"}}
           >
             Things of Brand
           </Navbar.Brand>
