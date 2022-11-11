@@ -19,7 +19,7 @@ import Brand from './pages/Brand.js';
 import HomeLogo from './pages/Searchlogo.js';
 import Home2 from './pages/Home2';
 import Profile from './pages/profile';
-import DomainVerificationPage from './pages/DomainVerificationPage.js';
+import DomainVerificationPage from './pages/DomainVerificationPage';
 
 
 

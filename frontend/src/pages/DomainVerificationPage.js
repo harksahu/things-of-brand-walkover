@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { UserAuth } from "../context/AuthContext";
 import { updateProfileFields, getTXT } from "../api/index.js";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import { Link, useLocation } from "react-router-dom";
-
+import {  useLocation } from "react-router-dom";
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 function DomainVerificationPage() {
