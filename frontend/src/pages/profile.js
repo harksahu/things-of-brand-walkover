@@ -5,10 +5,11 @@ import { getProfileDetails, updateProfileFields, getFontList, createProfile } fr
 import CloseIcon from "@mui/icons-material/Close";
 import RichtextEditor from "./jodit.js";
 import { BsFillTrashFill } from "react-icons/bs";
-import { useLocation,Link, useNavigate } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import SideBar from '../components/SideBar';
-// import getFonts from "font-list"
-
+import { Hint } from 'react-autocomplete-hint';
+// import { Tokenizer } from 'react-typeahead';
+// import {  Typeahead } from 'react-bootstrap-typeahead';
 
 function Profile(props) {
   const [name, setName] = useState("");
@@ -35,6 +36,7 @@ function Profile(props) {
   const [valid, setvalid] = useState([false]);
   const [valid2, setvalid2] = useState([false]);
   const [fontFamily, setFontFamily] = useState([false]);
+
   const location = useLocation();
   let countTemp = countTracker;
   let countTemp2 = linkCount
@@ -56,7 +58,13 @@ function Profile(props) {
   const fontlist = async () => {
     const data = await getFontList()
     console.log(data?.data?.items);
-    setFontFamily(data)
+    var result = [];
+
+    for (var i in data?.data?.items)
+      result.push(data?.data?.items[i]?.family);
+    setFontFamily(result)
+    console.log(result);
+
   }
 
   useEffect(() => {
@@ -74,6 +82,9 @@ function Profile(props) {
   useEffect(() => {
     fontlist()
   }, []);
+
+
+
 
 
   const storeProfileValue = async (req, res) => {
@@ -215,7 +226,7 @@ function Profile(props) {
       if (check === 1) {
         console.log("old");
         document.getElementById("domainError").classList.remove("visually-hidden")
-        
+
       }
       else if (check === 0) {
         var domainParts = domain.split(".");
@@ -376,7 +387,7 @@ function Profile(props) {
                       />
                       <div className="visually-hidden" id="domainError">
 
-                      This company is already created  <Link to="/domainVerify" state={{ data: company }}>Clam your brand</Link>
+                        This company is already created  <Link to="/domainVerify" state={{ data: company }}>Clam your brand</Link>
 
                       </div>
 
@@ -469,11 +480,29 @@ function Profile(props) {
                       <div id="list" className="hide formbold-chatbox-form">
                         {fontLink.map((element, index) => (
                           <div id="fetch" key={index}>
-                            <Form.Control
+                            <Hint options={fontFamily}>
+                              <input
+                                type="url"
+                                // name="user_table_input"
+                                id={"id" + index}
+                                placeholder="Enter font name "
+                                value={fontLink[index]}
+                                onChange={(e) => {
+                                  let tempCount = fontLink;
+                                  tempCount[index] = e.target.value;
+                                  setFontLink([...tempCount]);
+
+                                }}
+                                className="contact-form-area form-control"
+                                name="myBrowser"
+                              />
+                            </Hint>
+
+                            {/* <Typeahead
                               type="url"
                               // name="user_table_input"
-                              id={"id"+index}
-                              placeholder="Enter font url "
+                              id={"id" + index}
+                              placeholder="Enter font name "
                               value={fontLink[index]}
                               onChange={(e) => {
                                 let tempCount = fontLink;
@@ -481,10 +510,15 @@ function Profile(props) {
                                 setFontLink([...tempCount]);
 
                               }}
-                              className="contact-form-area"
+                              className="contact-form-area form-control"
                               name="myBrowser"
-                            />
-                            {document.getElementById(`id`+index)?.value === "" ? "" : <div >
+                              renderMenuItemChildren={(fontFamily) => (
+                                
+                                  <span>{fontFamily}</span>
+                              )}
+                              useCache={false}
+                            /> */}
+                            {/* {document.getElementById(`id`+index)?.value === "" ? "" : <div >
                               {fontFamily?.data?.items && fontFamily?.data?.items?.filter(font => font?.family.includes(document.getElementById(`id`+index)?.value)).slice(0, 7).map((font) => (
                                 <div id="myBrowser" key={font._id}>
                                   
@@ -497,7 +531,7 @@ function Profile(props) {
                                 </div>
                               ))}
                             </div>
-                            }
+                            } */}
 
 
 
