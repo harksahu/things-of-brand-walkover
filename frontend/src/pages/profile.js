@@ -397,7 +397,12 @@ function Profile(props) {
                               }}
                               className="contact-form-area"
                             />
-                            <Form.Control
+                            
+                            <Form.Control type="text" id={`colorinputbytext${index}`} maxLength="7" placeholder="Enter hex value of color"
+                              onChange={(e) => {
+                                document.getElementById("colorinput" + index).value = e.target.value;
+                              }} />
+                              <Form.Control
                               type="color"
                               name="user_input"
                               style={{ width: "20%" }}
@@ -412,10 +417,6 @@ function Profile(props) {
                                 setcount([...tempCount]);
                               }}
                             />
-                            <Form.Control type="text" id={`colorinputbytext${index}`} maxLength="7" placeholder="Enter hex value of color"
-                              onChange={(e) => {
-                                document.getElementById("colorinput" + index).value = e.target.value;
-                              }} />
                             {index ? (
                               <button
                                 type="button"
