@@ -23,6 +23,7 @@ const createProfile = async (req,res)=>{
 const getProfileDetails = async (req,res)=>{ 
     // console.log(req.query.email);
     var email = req.query.email === ""?{}:{email: req.query.email };
+    var _id = req.query._id === ""?{}:{_id: req.query._id };
     var searchfrom = req.query.searchfrom 
     var domain = req.query.domain === ""?{}:{domain: { '$regex': req.query.domain ,"$options":"i"} };
     var name = req.query.name === ""?{}:{name: { '$regex': req.query.name ,"$options":"i"}};
@@ -33,6 +34,7 @@ const getProfileDetails = async (req,res)=>{
         const data = await profileModel.find({
               ...domain ,
             ...email,
+            ..._id
             // ...domain
 
         });
