@@ -23,10 +23,8 @@ import Profile from './pages/profile';
 
 
 function App() {
-console.log("hi");
-const  location = useLocation()
-// console.log(location);
   const [isUserLoaded, setIsUserLoaded] = useState(false);
+  const  location = useLocation()
   useEffect(() => {
     fetchUser()
   }, [])
@@ -43,8 +41,8 @@ const  location = useLocation()
           minBreakpoint="xxs"
         >
           <AuthContextProvider>
-            { window.location.pathname?(window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <NavigationBar />):<NavigationBar />}
-            {/* {console.log("window location == ",window.location.pathname)} */}
+          { window.location.pathname?(window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <NavigationBar />):<NavigationBar />}
+
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
