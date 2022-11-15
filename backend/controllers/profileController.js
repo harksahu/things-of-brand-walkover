@@ -72,16 +72,13 @@ const getProfileDetails = async (req,res)=>{
 
 const updateProfile = async (req,res)=>{
     console.log("logo url in backend",req.body.logo_url);
-    let name=req.body.name;
-      let aboutus=req.body.aboutus;
+    let {name ,aboutus } = req.body
       let logo=req.body.logo;
       let links=req.body.links;
       let domain=req.body.domain;
      let  guidlines=req.body.guidlines;
       let color=req.body.color;
-    //   let PrimaryColors=req.body.PrimaryColors;
-    //   let secondaryColors=req.body.secondaryColors;
-    //   let backgroundColors=req.body.backgroundColors;
+
       let email=req.body.email;
       let verify=req.body.verify
       let link = req.body.links;

@@ -129,6 +129,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                       placeholder="Search"
                       className="me-2"
                       id="searchbar"
+                      autocomplete='off'
                       aria-label="Search"
                       show={true}
                       onChange={(e) => {
