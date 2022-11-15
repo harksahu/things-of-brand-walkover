@@ -118,7 +118,7 @@ function MyVerticallyCenteredModal(params) {
   }
   useEffect(() => {
     getData();
-  }, []);
+  }, [id]);
 
   return (
     <Container fluid>

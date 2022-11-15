@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 
 import { useLocation } from "react-router-dom";
@@ -15,6 +15,7 @@ function SearchBar() {
     const [CompanyData, setCompanydata] = useState([]);
     const [LogoData, setLogoData] = useState([]);
     const [open, setOpen] = React.useState(false);
+    const navigate = useNavigate();
 
     const getdata = async (searchData = "") => {
 
@@ -45,7 +46,10 @@ function SearchBar() {
     var datalogo = LogoData.map((option) => {
 
         return {
-            ...option,
+
+            _id: option._id,
+            domain: option?.title,
+            name: "",
             type: "logo"
         };
     });
@@ -63,7 +67,27 @@ function SearchBar() {
         }
     })
     const abc = (a) => {
-        // for(let char :CompanyData)
+        console.log(a);
+        for (let i = 0; i < CompanyData.length; i++) {
+            if (a === CompanyData[i]?._id) {
+                // navigate(-1)
+                navigate("/" + CompanyData[i]?.domain);
+                console.log("naviagted");
+                window.onload()
+
+            }
+        }
+        for (let i = 0; i < LogoData.length; i++) {
+            if (a == LogoData[i]?._id) {
+                console.log(LogoData[i]?._id);
+                console.log("logo");
+                // navigate(-1)
+
+                navigate("/stuff/" + a);
+                window.onload()
+
+            }
+        }
     };
 
 
@@ -73,20 +97,20 @@ function SearchBar() {
                 id="asynchronous-demo"
                 sx={{ width: 300 }}
                 isOptionEqualToValue={(option, value) => option.domain === value.domain}
-                getOptionLabel={(option) => option.domain}
+                getOptionLabel={(option) => option?._id}
                 options={options}
                 onInputChange={(event, newInputValue) => {
                     abc(newInputValue);
                 }}
                 renderOption={(props, option) => (
-                    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props} key={option._id}>
                         <div className="d-flex">
                             <div>
                                 {
-                                    option?.name ?
-                                        option?.domain + "-(" + option?.name + ")-(" + option?.type + ")"
-                                        :
-                                        option?.title + ")-(" + option?.type + ")"
+                                    // (option?.domain != undefined && option?.domain != null && option?.domain) ?
+                                    option?.domain + "-(" + option?.name + ")-(" + option?.type + ")"
+                                    // :
+                                    // option?.title + ")-(" + option?.type + ")"
 
                                 }
                             </div>

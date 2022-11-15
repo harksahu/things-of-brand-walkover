@@ -249,7 +249,7 @@ function Brand() {
       getbrandslogo();
       console.log(logo);
     }
-  }, [domain]);
+  }, [domain,title]);
 
 
 
