@@ -19,6 +19,8 @@ import Brand from './pages/Brand.js';
 import HomeLogo from './pages/Searchlogo.js';
 import Home2 from './pages/Home2';
 import Profile from './pages/profile';
+import Test from './components/test_navbar.js';
+import DomainVerificationPage from './pages/DomainVerificationPage';
 
 
 
@@ -42,7 +44,7 @@ function App() {
         >
           <AuthContextProvider>
           { window.location.pathname?(window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <NavigationBar />):<NavigationBar />}
-
+<Test/>
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
@@ -50,6 +52,7 @@ function App() {
               <Route path='/searchlogo' element={<HomeLogo />} />
               <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />
               <Route path='/:title' element={<Brand />} />
+              <Route path='/domainVerify' element={<DomainVerificationPage />} />
               <Route path='/profile' element={<Profile />} />
               <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
               <Route path="/MyStuff" element={<Protected> <MyStuff /> </Protected>} />

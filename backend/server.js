@@ -130,6 +130,26 @@ app.post("/getUpdatedData", async (req, res) => {
  });
 
 
+
+ app.post("/getDomainTXT", async (req, res) => {
+  const url = req.body.link
+  console.log(req.body);
+  const xpath = req.body.xpath;
+  dns.resolve(url, 'TXT', ( error,record)=>{
+    if (error) {
+      res.send({
+        error: error,
+      });
+    }
+  else{
+    res.send({
+      data: record,
+    });
+  }
+
+ })
+
+});
 // console.log("abc")
 // ERROR HANDLE
 

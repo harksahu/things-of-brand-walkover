@@ -30,8 +30,9 @@ const createProfile   = async (dataToSend) => {
   return await axios.post(URL + "/api/profile", data);
 };
 
-const getProfileDetails = async ({email="",domain="",name="",searchfrom="false"}) => {
-  return await axios.get(URL + "/api/profile?email="+email+"&domain="+domain+"&name="+name+"&searchfrom="+searchfrom);
+const getProfileDetails = async ({email="",domain="",name="",searchfrom="false",_id=""}) => {
+  console.log(_id);
+  return await axios.get(URL + "/api/profile?email="+email+"&domain="+domain+"&name="+name+"&searchfrom="+searchfrom+"&_id="+_id);
 }
 
 
@@ -42,17 +43,18 @@ const searchBrandApi = async (id) => {
 
 const updateProfileFields = async(dataToSend) => {
   console.log(dataToSend);
-  // let link = links.split(",");
   const data = {
     ...dataToSend
   }
-  console.log(data)
-  // console.log(data.links)
-  // console.log("name=" + name + "&aboutus=" + aboutus + "&links=" + link + "&domain=" + domain + "&guidlines=" + guidlines + "&fontSize=" + fontSize + "&PrimaryColors="+ PrimaryColors+ "&secondaryColors=" + secondaryColors + "&backgroundColors=" + backgroundColors + "&email=" + email)
+
   return await axios.put(URL + "/api/profile", data);
-  // return await axios.put(URL + "/api/profile?data="+data);
+
 }
 
+const getFontList = async () => {
+  const data = await axios.get("https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyBZ2tyYXkXRSFJ4AlFgyrASHN7yXJr7a9c");
+  return data
+};
 const sendBrandAPI = async () => {
   return await axios.get(URL + "/api/brands/");
 };
@@ -90,13 +92,11 @@ const data = {
 }
 
 const deleteAuthKey = async ({authKey="",email=""}) => {
-  // console.log(authdata);  
     return await axios.delete(URL + "/api/deleteKey?authKey=" + authKey + "&email=" + email);
 }
 
 const setAuthKey =  async (email)=>{
-  // console.log("email");
-  // console.log(email);
+
   return await axios.get(URL + "/api/storeKey/"+email);
 }
 const getTXT =  async (link)=>{
@@ -127,6 +127,7 @@ export {
   getS3SignUrl,
   searchBrandApi,
   getTXT,
+  getFontList,
   createBrandAPI,
   sendBrandAPI,
   sendMyStuffAPI,

@@ -8,7 +8,7 @@ function SideBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const location = useLocation();
   return (
     <>
-    <Nav variant="pills flex-column">
+    <Nav variant="pills flex-column">      
       <Nav.Item>
         <Nav.Link className={ location.pathname === '/addfile' ? 'active' : ''}
         onClick={() => {
@@ -30,8 +30,16 @@ function SideBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
         onClick={() => {
           navigate("/company");
         }}
-        >Brands</Nav.Link>
-      </Nav.Item>
+        >My Brands</Nav.Link>
+      </Nav.Item>      
+
+      <Nav.Item>
+        <Nav.Link
+        onClick={() => {
+          navigate("/search");
+        }}
+        >Explore other brands</Nav.Link>
+      </Nav.Item>      
 
       <Nav.Item>
         <Nav.Link className={ location.pathname === '/account' ? 'active' : ''}
@@ -40,14 +48,7 @@ function SideBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
         }}
         >User Profile</Nav.Link>
       </Nav.Item>
-      
-      <Nav.Item>
-        <Nav.Link
-        onClick={() => {
-          navigate("/search");
-        }}
-        >Explore</Nav.Link>
-      </Nav.Item>
+            
       <Nav.Item>
         <Nav.Link
   href="https://thingsofbrand.canny.io/feature-requests"

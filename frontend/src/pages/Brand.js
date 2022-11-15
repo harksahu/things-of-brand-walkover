@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link,useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import "../utils/svginline.css";
 import "./home.scss";
@@ -12,16 +13,19 @@ import {
   updateProfileFields,
   getTXT,
 } from "../api/index.js";
+import saveAs from "file-saver";
+import { Canvg, presets } from "canvg";
 import SvgInline from "../utils/SvgInline.js";
 import Card from "react-bootstrap/Card";
 import Figure from "react-bootstrap/Figure";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import ListGroup from "react-bootstrap/ListGroup";
+import Accordion from 'react-bootstrap/Accordion';
 
-import {getCompanyDetails} from  '../api/index.js'
+import { getCompanyDetails } from '../api/index.js';
 
-import { BsFillPlusCircleFill ,BsPencilSquare,BsFillExclamationDiamondFill,BsShieldCheck } from "react-icons/bs";
+import { BsFillPlusCircleFill, BsPencilSquare, BsFillExclamationDiamondFill, BsShieldCheck } from "react-icons/bs";
 
 
 function Not_found() {
@@ -46,11 +50,8 @@ function Brand() {
   const [logo, setlogo] = useState();
   const [guidlines, setGuidlines] = useState();
   const [fontSize, setFontSize] = useState();
-  const [PrimaryColors, setPrimaryColors] = useState();
-  const [secondaryColors, setSecondaryColors] = useState();
-  const [backgroundColors, setBackgroundColors] = useState();
   const [email, setEmail] = useState();
-  const[sharedEmail,setSharedEmail] = useState([]);
+  const [sharedEmail, setSharedEmail] = useState([]);
   const { user } = UserAuth();
   const [links, setLinks] = React.useState([]);
   const [results, setResults] = useState();
@@ -59,32 +60,38 @@ function Brand() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [allColor , setAllColor] = useState();
-  const [fontLink,setFontLink]= useState([]);
-  const [company,setCompany]= useState([]);
+  const [allColor, setAllColor] = useState();
+  const [fontLink, setFontLink] = useState([]);
+  const [company, setCompany] = useState([]);
   const navigate = useNavigate();
   const [showw, setShoww] = useState(false);
   const handleClosee = () => setShoww(false);
   const handleShoww = () => setShoww(true);
+  const [mwidth, setWidth] = useState(250);
+  const [mheight, setHeight] = useState(250);
 
-  const verifyDomain = async () => {
-    const TXT = await getTXT(domain);
-    // console.log(TXT?.data?.data[0][0]);
-    // console.log(TXT?.data?.data);
-    for (let i = 0; i < TXT?.data?.data.length; i++) {
-      // text += cars[i] + "<br>";
-      // console.log(TXT?.data?.data[i][0]);
-      if (TXT?.data?.data[i][0] == verify) {
-        updateVerify("true");
-        break;
-      } else {
-        console.log("not verify");
-      }
-      document.getElementById("error").innerHTML = "not verify";
-    }
-    // console.log(TXT?.data?.data[i] == "abcdefghijklmnop");
-    // console.log(verify)
-  };
+  // const verifyDomain = async () => {
+  //   const TXT = await getTXT(domain);
+  //   // console.log(TXT?.data?.data[0][0]);
+  //   // console.log(TXT?.data?.data);
+  //   var ifVerify = false;
+  //   for (let i = 0; i < TXT?.data?.data.length; i++) {
+  //     // text += cars[i] + "<br>";
+  //     // console.log(TXT?.data?.data[i][0]);
+  //     if (TXT?.data?.data[i][0] == verify) {
+  //       updateVerify("true");
+  //       ifVerify = true;
+  //       break;
+  //     } else {
+  //       console.log("not verify");
+  //     }
+  //   }
+  //   if (!ifVerify) {
+  //     document.getElementById("error").innerHTML = "not verify";
+  //   }
+  //   // console.log(TXT?.data?.data[i] == "abcdefghijklmnop");
+  //   // console.log(verify)
+  // };
 
   async function makeid(length) {
     console.log("in make id ");
@@ -95,15 +102,59 @@ function Brand() {
     for (var i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    if (verify == undefined || verify == null ||verify ==="false") {
+    if (verify == undefined || verify == null || verify === "false") {
       console.log(verify);
       setVerify(result);
-      console.log("verification code in condtion = "+result + verify);
+      console.log("verification code in condtion = " + result + verify);
 
       await updateVerify(result);
     }
     return result;
   }
+
+  const DownloadToSvg = async (svg, fileName) => {
+    // console.log(svg);
+    var svg = document.querySelector("svg");
+    var xml = new XMLSerializer().serializeToString(svg);
+    var svg64 = btoa(xml); //for utf8: btoa(unescape(encodeURIComponent(xml)))
+    var b64start = "data:image/svg+xml;base64,";
+    var image64 = b64start + svg64;
+    console.log(xml);
+    saveAs(image64, fileName);
+  };
+
+  const DownloadToPng = async (img, w, h) => {
+
+
+    const preset = presets.offscreen();
+
+    async function toPng(data) {
+      const { width, height } = data;
+      // console.log(width);
+      const canvas = new OffscreenCanvas(width, height);
+      const ctx = canvas.getContext("2d");
+      const v = await Canvg.from(ctx, img, preset);
+      v.resize(width, height, "xMidYMid meet");
+      await v.render();
+      const blob = await canvas.convertToBlob();
+      const pngUrl = URL.createObjectURL(blob);
+      return pngUrl;
+    }
+
+    toPng({
+      width: w,
+      height: h,
+    }).then((pngUrl) => {
+      saveAs(pngUrl);
+    });
+  };
+
+
+
+
+
+
+
 
   const updateVerify = async (result) => {
     const data = {
@@ -114,17 +165,13 @@ function Brand() {
       domain: domain,
       guidlines: guidlines,
       // fontSize: fontSize,
-      // PrimaryColors: PrimaryColors,
-      // secondaryColors: secondaryColors,
-      // backgroundColors: backgroundColors,
       // fontLink:fontLink,
-      color:allColor,
+      color: allColor,
       email: email,
       verify: result,
     };
     console.log(verify);
-    // console.log();
-    if (verify === undefined || verify === null||verify==="false") {
+    if (verify === undefined || verify === null || verify === "false") {
       await updateProfileFields(data);
     }
   };
@@ -164,18 +211,18 @@ function Brand() {
     setEmail(fresult.data.data[0].email);
     setVerify(fresult.data.data[0].verify);
     setSharedEmail(fresult.data.data[0].sharedEmail);
-    console.log(fresult.data.data[0].sharedEmail,"shared email");
-    
+    // console.log(fresult.data.data[0].sharedEmail, "shared email");
 
-    document.getElementById("aboutus").innerHTML = fresult.data.data[0].aboutus;
-
+    if (fresult.data.data[0].aboutus.length) {
+      document.getElementById("aboutus").innerHTML = fresult.data.data[0].aboutus;
+    }
 
     getbrandslogo();
   };
 
 
   const updateLogo = async (logo_url) => {
-    
+
     const data = {
       name: name,
       aboutus: aboutus,
@@ -188,7 +235,7 @@ function Brand() {
       // PrimaryColors: PrimaryColors,
       // secondaryColors: secondaryColors,
       // backgroundColors: backgroundColors,
-      color:allColor,
+      color: allColor,
       email: email,
       verify: verify,
     };
@@ -204,54 +251,54 @@ function Brand() {
     }
   }, [domain]);
 
-  
+
 
   return (
     <>
-    
-    {console.log("all color = ",allColor)}
+
+      {console.log("all color = ", allColor)}
       {domain ? (
         <div className="m-5">
-          <Button onClick={()=>{
-      navigate(-1)
-    }} variant="dark">Back</Button>
+          <Button onClick={() => {
+            navigate(-1)
+          }} variant="dark">Back</Button>
           {user ? (
             email === user.email ? (
               <>
-              <Link to={"/addfile"}>
-                <BsFillPlusCircleFill style={{ float: "right", fontSize: 40 }} />
-              </Link>
-              <Button variant="primary" style={{ float: "right"}} onClick={handleShoww}>
-        Share
-      </Button>
+                <Link to={"/addfile"}>
+                  <BsFillPlusCircleFill style={{ float: "right", fontSize: 40 }} />
+                </Link>
+                <Button variant="primary" style={{ float: "right" }} onClick={handleShoww}>
+                  Share
+                </Button>
 
-      <Modal show={showw} onHide={handleClosee}>
-        <Modal.Header closeButton>
-          <Modal.Title>Share Your Company</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><input  type="email"
-          placeholder="Enter the email" id="addEmail"/></Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClosee}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={()=>{
-             let temp = sharedEmail;
-            let email = document.getElementById("addEmail").value;
-             console.log("e.target.value",setSharedEmail);
-             console.log("new shared emials",temp);
-             temp.push(email);
-             setSharedEmail([...temp]);   
-              handleClosee();
-              updateLogo();
-          }}>
-            Share
-          </Button>
-        </Modal.Footer>
-      </Modal>
-              <Link to="/profile" state={{ data: company }}>
-                <BsPencilSquare style={{ float: "right", fontSize: 40 , color: "black" }} />
-              </Link>
+                <Modal show={showw} onHide={handleClosee}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Share Your Company</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body><input type="email"
+                    placeholder="Enter the email" id="addEmail" /></Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClosee}>
+                      Close
+                    </Button>
+                    <Button variant="primary" onClick={() => {
+                      let temp = sharedEmail;
+                      let email = document.getElementById("addEmail").value;
+                      console.log("e.target.value", setSharedEmail);
+                      console.log("new shared emials", temp);
+                      temp.push(email);
+                      setSharedEmail([...temp]);
+                      handleClosee();
+                      updateLogo();
+                    }}>
+                      Share
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+                <Link to="/profile" state={{ data: company }}>
+                  <BsPencilSquare style={{ float: "right", fontSize: 40, color: "black" }} />
+                </Link>
               </>
             ) : (
               ""
@@ -281,15 +328,17 @@ function Brand() {
                   <>
                     {" "}
                     <BsFillExclamationDiamondFill />
+                    <Link to="/domainVerify" state={{ data: company }}>
+                    
                     <button
                       className="m-auto btn btn-primary"
                       onClick={() => {
                         handleShow();
-                        makeid(15);
                       }}
                     >
                       verify
                     </button>
+                    </Link>
                   </>
                 )
               ) : (
@@ -323,8 +372,9 @@ function Brand() {
                 return (
                   <div key={index}>
                     <div key={brand._id} className=" flex-wrap item">
-                      <Link to={"/stuff/" + brand._id}>
-                        <Card>
+                      <Card>
+                        <Link to={"/stuff/" + brand._id}>
+
                           <div
                             style={{ overflow: "auto" }}
                             className="img_size"
@@ -339,10 +389,82 @@ function Brand() {
                             >
                               {brand.title}
                             </Card.Title>
-                            <Card.Text></Card.Text>
+
+
+
                           </Card.Body>
-                        </Card>
-                      </Link>
+                        </Link>
+                        <Card.Text>
+                          <Accordion>
+                            <Accordion.Item eventKey="0">
+                              <Accordion.Header>Edit</Accordion.Header>
+                              <Accordion.Body>
+                                <div className="card-body">
+                                  <label className="small fw-bold mb-1">Size</label>
+
+                                  <Col>
+                                    <Form.Group
+                                      className="mb-3"
+                                      controlId="exampleForm.ControlInput1"
+                                    >
+                                      <Form.Label>W</Form.Label>
+                                      <Form.Control
+                                        onChange={(e) => (setWidth(e.target.value))}
+                                        value={mwidth}
+                                        size="sm"
+                                        autocomplete="off"
+                                      />
+                                    </Form.Group>
+                                  </Col>
+                                  <Col>
+                                    <Form.Group
+                                      className="mb-3"
+                                      controlId="exampleForm.ControlInput1"
+                                    >
+                                      <Form.Label>H</Form.Label>
+                                      <Form.Control
+                                        onChange={(e) => (setHeight(e.target.value))}
+                                        value={mheight}
+                                        size="sm"
+                                        autocomplete="off"
+                                      />
+                                    </Form.Group>
+                                  </Col>
+
+                                  <div className="mt-4 mb-1">
+                                    <label className="small fw-bold">Download</label>
+                                  </div>
+                                  <Button
+                                    variant="outline-secondary"
+                                    size="sm me-4"
+                                    onClick={() => {
+                                      DownloadToPng(brand.url, mwidth, mheight);
+                                    }}
+                                    className=""
+                                  >
+                                    PNG
+                                  </Button>
+                                  <Button
+                                    variant="outline-secondary"
+                                    size="sm"
+                                    onClick={() => {
+                                      // const canvas = DownloadToSvg(brand.url, brand.title);
+                                      saveAs(brand.url, brand.title);
+
+                                      // const canvas = DownloadToSvg
+                                    }}
+                                  // onClick={() => saveAs(props.title)}
+                                  >
+                                    SVG Code
+                                  </Button>
+                                </div>
+                              </Accordion.Body>
+                            </Accordion.Item>
+                          </Accordion>
+
+
+                        </Card.Text>
+                      </Card>
                     </div>
                     {user ? (
                       email === user.email ? (
@@ -402,106 +524,45 @@ function Brand() {
           <div>
             <h5>Fonts link</h5>
             {/* <div style={{ fontSize: fontSize + "px" }}>{fontSize + "px"}</div> */}
-            {fontLink?.map(link=>{
+            {fontLink?.map(link => {
               return (
                 <div>
                   {/* <h4>{color.colorName}</h4> */}
-                 <a href = {link} target ="_blank">{link}</a>
+                  <a href={link} target="_blank">{link}</a>
                 </div>
               )
-            // <h1>{color.colorName}</h1>
-            // <h1>{color.colorValue}</h1>
-          })}
+              // <h1>{color.colorName}</h1>
+              // <h1>{color.colorValue}</h1>
+            })}
           </div>
           <br />
           <div>
-          <h5>Colors</h5>
+            <h5>Colors</h5>
 
-          {allColor?.map(color=>{
+            {allColor?.map(color => {
               return (
                 <div>
                   <h4>{color.colorName}</h4>
                   <div
-                id="background"
-                style={{
-                  width: 50,
-                  height: 50,
-                  backgroundColor: color.colorValue,
-                  margin: 5,
-                }}
-              ></div>
+                    id="background"
+                    style={{
+                      width: 50,
+                      height: 50,
+                      backgroundColor: color.colorValue,
+                      margin: 5,
+                    }}
+                  ></div>
                 </div>
               )
-            // <h1>{color.colorName}</h1>
-            // <h1>{color.colorValue}</h1>
-          })}
-            {/* <h5>background Colors</h5> */}
-            {/* <div className="d-flex">
-              <div
-                id="background"
-                style={{
-                  width: 50,
-                  height: 50,
-                  backgroundColor: backgroundColors,
-                  margin: 5,
-                }}
-              ></div>
-            </div> */}
+            })}
+
           </div>
         </div>
       ) : (
         <Not_found />
-      )}
+      )
+      }
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Please verify domain {domain}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div style={{ color: "red" }} id="error"></div>
-          <ListGroup variant="flush">
-            <ListGroup.Item>Step 1: Get your verification code</ListGroup.Item>
-            <ListGroup.Item>Step 2: Sign in to your domain host</ListGroup.Item>
-            <ListGroup.Item>
-              Step 3: Add the verification record to your domain's DNS records
-            </ListGroup.Item>
-            <ListGroup.Item>
-              Step 4: Tell Thingsofbrand Workspace to check your verification
-              code
-            </ListGroup.Item>
-          </ListGroup>
-          <ListGroup.Item
-            as="li"
-            className="d-flex justify-content-center align-items-start"
-          >
-            <div className="ms-2 me-auto">
-              <div className="fw-bold">verification code</div>
-              <div
-                style={{
-                  border: "2px solid #d4d4d4",
-                  backgroundColor: "#ececec",
-                }}
-              >
-                {verify}
-              </div>
-            </div>
-          </ListGroup.Item>
-          <ListGroup.Item className="m-auto"></ListGroup.Item>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => {
-              verifyDomain();
-            }}
-          >
-            verify
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 }

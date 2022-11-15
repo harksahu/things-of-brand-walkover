@@ -57,7 +57,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
 
   return (
     <div className="p-3 flex bg-light">
-      {console.log(searchBrandData)}
+      {/* {console.log(searchBrandData)} */}
       <div className="d-flex flex-wrap justify-content-center">
         {currentPosts?.data?.length === 0 ? (
           <Not_found />
@@ -90,7 +90,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
             );
           })
         )}
-        {console.log(posts.length)}
+        {/* {console.log(posts.length)} */}
       </div>
       <Pagination postsPerPage={postsPerPage} totalPosts={searchBrandData.data.length} paginate={paginate} />
     </div>

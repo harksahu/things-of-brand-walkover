@@ -87,7 +87,11 @@ function Home2() {
           <a href="https://walkover.in/" target="">
             WALKOVER
           </a>
-          , All rights reserved.
+          , All rights reserved. 
+          <a  href="https://feature.thingsofbrand.com/feature-requests"
+                  target="_blank">
+          FEATURE REQUESTS
+          </a>
         </footer>
       </Container>
     </>

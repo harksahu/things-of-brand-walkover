@@ -12,13 +12,14 @@ import "../utils/svginline.css";
 import "../scss/popup.scss";
 import SvgInline from "../utils/SvgInline.js";
 import { useNavigate, useParams } from "react-router-dom";
-import Draggable, { DraggableCore } from 'react-draggable';
+import Draggable from 'react-draggable';
 import { BsThreeDotsVertical } from "react-icons/bs";
-
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 import {
   searchBrandApi,
   deleteMyStuffAPI,
-  sendMydeleteStuffAPI,
+  getProfileDetails,
   restoreMyStuffAPI,
   saveMyStuffAPI,
 } from "../api/index.js";
@@ -101,16 +102,20 @@ function MyVerticallyCenteredModal(params) {
     const data = await searchBrandApi(id.id);
     setProps(data?.data?.data[0]);
     setName(data?.data?.data[0].title)
-    // console.log(props);
   };
 
-  function Set_Name() {
-    console.log(name);
-    if (name === "") {
-      setName(props.title);
-    }
-  }
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Go to company page
+    </Tooltip>
+  );
 
+  const companyPage = async()=>{
+    console.log(props?.domain);
+    const forwardTo = await getProfileDetails({email:"",domain:"",name:"",searchfrom:"true",_id:props?.domain})
+    console.log(forwardTo?.data?.data[0].domain);
+    navigate("/" + forwardTo?.data?.data[0]?.domain)
+  }
   useEffect(() => {
     getData();
   }, []);
@@ -119,37 +124,51 @@ function MyVerticallyCenteredModal(params) {
     <Container fluid>
       <Row className="h-90">
         <Col className="popup_img">
+          <div className="d-flex" style={{position: "absolute"}}>
+          <Button style={{ margin: 10, zIndex: 1 }} onClick={() => {
+            navigate(-1)
+          }} variant="dark">Back</Button>
+          <OverlayTrigger
+            placement="right"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip}
+          >
+            <Button style={{ margin: 10, zIndex: 1 }} onClick={() => {
+            companyPage()
+
+            }} variant="dark">Company page</Button>
+          </OverlayTrigger>
+          </div>
           <SvgInline {...props} />
         </Col >
-
-        <p style={{ position: "absolute" }}>
-          <Draggable defaultPosition={{ x: 10, y: 10 }}>
-            <div className="card property-box">
-              <div class="card-header d-flex align-items-center">
+        <div style={{ position: "absolute" }}>
+          <Draggable defaultPosition={{ x: window.innerWidth - 350, y: 10 }}>
+            <div className="card property-box"  style={{cursor: "grab"}}>
+              <div className="card-header d-flex align-items-center">
                 {user !== null && user !== undefined && user && Object.keys(user).length > 0 ?
                   (
                     user?.email === props?.email ? (
                       <div>
-                        <input
-                        id = "userInputBox"
-                        type="hidden"
-                        // style={{
-                        //   border: "none",
-                        //   backgroundColor:"transparent"
-                        // }}
-                        onChange={(e) => {
-                          (savedata(props?._id, e.target.value))
-                        }}
-                        value={name}
-                      ></input>
-                      <div id ="showname" onClick={()=>{
-                        document.getElementById("userInputBox").type="text";
-                        document.getElementById("showname").style.display ="none";
-                        document.getElementById("userInputBox").focus();
-                      }}>{name}</div>
-                       </div>
-                      
-                    ) :<div>{props?.title}</div>
+                        {
+                          show ?
+                            <input
+                              id="userInputBox"
+                              onChange={(e) => {
+                                (savedata(props?._id, e.target.value))
+                              }}
+                              value={name}
+                              className="form-control form-control-sm"
+                              autofocus
+                            /> :
+                            <div id="showname" onClick={() => {
+                              setShow(true)
+                            }}>{name}</div>
+
+
+                        }
+
+                      </div>
+                    ) : <div>{props?.title}</div>
                   ) : <div>{props?.title}</div>
                 }
                 {user !== null &&
@@ -165,11 +184,7 @@ function MyVerticallyCenteredModal(params) {
 
                         <Dropdown.Menu>
                           <Dropdown.Item onClick={() => {
-                            (savedata(props?._id, name));
-                            document.getElementById("userInputBox").type="text";
-                            document.getElementById("showname").style.display ="none";
-                            document.getElementById("userInputBox").focus();
-
+                            setShow(true)
                           }}>Rename</Dropdown.Item>
                           {props.active === false ? (
                             <Dropdown.Item
@@ -218,6 +233,7 @@ function MyVerticallyCenteredModal(params) {
                         onChange={(e) => (setWidth(e.target.value), changeHW(e.target.value, mheight))}
                         value={mwidth}
                         size="sm"
+                        autocomplete="off"
                       />
                     </Form.Group>
                   </Col>
@@ -231,6 +247,7 @@ function MyVerticallyCenteredModal(params) {
                         onChange={(e) => (setHeight(e.target.value), changeHW(mwidth, e.target.value))}
                         value={mheight}
                         size="sm"
+                        autocomplete="off"
                       />
                     </Form.Group>
                   </Col>
@@ -240,7 +257,7 @@ function MyVerticallyCenteredModal(params) {
                 </div>
                 <Button
                   variant="outline-secondary"
-                  size="sm"
+                  size="sm me-4"
                   onClick={() => {
                     DownloadToPng(props.url, mwidth, mheight);
                   }}
@@ -261,7 +278,7 @@ function MyVerticallyCenteredModal(params) {
               </div>
             </div>
           </Draggable>
-        </p>
+        </div>
 
       </Row>
 

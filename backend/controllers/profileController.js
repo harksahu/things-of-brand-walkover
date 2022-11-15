@@ -23,6 +23,7 @@ const createProfile = async (req,res)=>{
 const getProfileDetails = async (req,res)=>{ 
     // console.log(req.query.email);
     var email = req.query.email === ""?{}:{email: req.query.email };
+    var _id = req.query._id === ""?{}:{_id: req.query._id };
     var searchfrom = req.query.searchfrom 
     var domain = req.query.domain === ""?{}:{domain: { '$regex': req.query.domain ,"$options":"i"} };
     var name = req.query.name === ""?{}:{name: { '$regex': req.query.name ,"$options":"i"}};
@@ -33,6 +34,7 @@ const getProfileDetails = async (req,res)=>{
         const data = await profileModel.find({
               ...domain ,
             ...email,
+            ..._id
             // ...domain
 
         });
@@ -70,20 +72,17 @@ const getProfileDetails = async (req,res)=>{
 
 const updateProfile = async (req,res)=>{
     console.log("logo url in backend",req.body.logo_url);
-    let name=req.body.name;
-      let aboutus=req.body.aboutus;
+    let {name ,aboutus } = req.body
       let logo=req.body.logo;
       let links=req.body.links;
       let domain=req.body.domain;
      let  guidlines=req.body.guidlines;
-      let fontSize=req.body.fontSize;
-      let PrimaryColors=req.body.PrimaryColors;
-      let secondaryColors=req.body.secondaryColors;
-      let backgroundColors=req.body.backgroundColors;
+      let color=req.body.color;
+
       let email=req.body.email;
       let verify=req.body.verify
       let link = req.body.links;
-      let sharedEmail=req.body.sharedEmail;
+      let sharedEmail=req.body.sharedEmail? req.body.sharedEmail : "";
     // console.log(req.body)
     // console.log(link)
     // const f_data = {
@@ -104,14 +103,10 @@ const updateProfile = async (req,res)=>{
                     logo,
                     links,
                     guidlines,
-                    fontSize,
-                    PrimaryColors,
-                    secondaryColors,
-                    backgroundColors,
+                    color,
                     email,
                     verify,
                     link,
-                    sharedEmail
                 }
             }
         )
