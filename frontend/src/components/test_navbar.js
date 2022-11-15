@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 
 import { useLocation } from "react-router-dom";
-
+import Box from '@mui/material/Box';
 import { getProfileDetails, sendSearchAPI } from "../api/index.js"
 import { styled, lighten, darken } from '@mui/system';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
@@ -15,8 +15,6 @@ function SearchBar() {
     const [CompanyData, setCompanydata] = useState([]);
     const [LogoData, setLogoData] = useState([]);
     const [open, setOpen] = React.useState(false);
-    const [options, setOptions] = React.useState([]);
-    const loading = open && options.length === 0;
 
     const getdata = async (searchData = "") => {
 
@@ -37,101 +35,68 @@ function SearchBar() {
 
 
 
+    var data = CompanyData.map((option) => {
 
-    function sleep(delay = 0) {
-        return new Promise((resolve) => {
-            setTimeout(resolve, delay);
-        });
-    }
-
-
-    // useEffect(() => {
-    //     if (CompanyData === []) {
-
-    //     }
-    // })
-
-
-
-
-
-    React.useEffect(() => {
-        let active = true;
-
-        if (!loading) {
-            return undefined;
-        }
-
-        (async () => {
-            await sleep(1e3);
-            await getdata()// For demo purposes.
-            // await getProfileDetails({ email: "", domain: "", name: "", searchfrom: "false", _id: "" })
-
-            if (active) {
-                setOptions([...CompanyData]);
-            }
-        })();
-
-        return () => {
-            active = false;
+        return {
+            ...option,
+            type: "company"
         };
-    }, [loading]);
+    });
+    var datalogo = LogoData.map((option) => {
 
-    React.useEffect(() => {
-        if (!open) {
-            setOptions([]);
+        return {
+            ...option,
+            type: "logo"
+        };
+    });
+
+    data.push(...datalogo)
+    console.log(data);
+    const options = data
+
+
+
+
+    useEffect(() => {
+        if (CompanyData?.length === 0) {
+            getdata()
         }
-    }, [open]);
-
-
+    })
     const abc = (a) => {
-        console.log(a?.target.value);
-        console.log(document.getElementById("asynchronous-demo")?.value);
-
+        // for(let char :CompanyData)
     };
 
 
-
-
-
-
-
-
     return (
-        <Autocomplete
-            onChangeCapture={(e) => {
-                abc(e)
-            }}
-            id="asynchronous-demo"
-            sx={{ width: 300 }}
-            open={open}
-            onOpen={() => {
-                setOpen(true);
-            }}
-            onClose={() => {
-                setOpen(false);
-            }}
-            item
-            isOptionEqualToValue={(option, value) => option.domain === value.domain}
-            getOptionLabel={(option) => option.domain}
-            options={options}
-            loading={loading}
-            renderInput={(params) => (
-                <TextField
-                    {...params}
-                    label="Asynchronous"
-                    InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                            <React.Fragment>
-                                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                {params.InputProps.endAdornment}
-                            </React.Fragment>
-                        ),
-                    }}
-                />
-            )}
-        />
+        <>
+            <Autocomplete
+                id="asynchronous-demo"
+                sx={{ width: 300 }}
+                isOptionEqualToValue={(option, value) => option.domain === value.domain}
+                getOptionLabel={(option) => option.domain}
+                options={options}
+                onInputChange={(event, newInputValue) => {
+                    abc(newInputValue);
+                }}
+                renderOption={(props, option) => (
+                    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                        <div className="d-flex">
+                            <div>
+                                {
+                                    option?.name ?
+                                        option?.domain + "-(" + option?.name + ")-(" + option?.type + ")"
+                                        :
+                                        option?.title + ")-(" + option?.type + ")"
+
+                                }
+                            </div>
+                        </div>
+                    </Box>
+                )}
+                renderInput={(params) => <TextField {...params} label="With categories" />}
+            />
+
+        </>
     );
 }
 
