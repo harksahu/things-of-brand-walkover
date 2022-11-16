@@ -31,16 +31,25 @@ const getProfileDetails = async (req,res)=>{
     console.log(searchfrom);
    if (searchfrom == "true") {
     try {
-        const data = await profileModel.find({
-              ...domain ,
+        var data = await profileModel.find({
+            ...domain,
             ...email,
             ..._id
             // ...domain
 
         });
+        const domain = data._id;
+        const logos = await BrandModel.find({
+            ...domain,
+
+        });
+        // data = data.push(logos)
         res.json({
-            "message":"Related Data is Successfully Find",
-            "data":data
+            "message": "Related Data is Successfully Find",
+            "data": {
+                ...data,
+                ...logos
+            }
         }).status(200);
     } catch (error) {
         res.send({
