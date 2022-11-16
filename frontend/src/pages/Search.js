@@ -40,12 +40,6 @@ function Home({ searchBrandData = [], getSearchBrand }) {
   // const getProfile = async () =>{
   //   setSearchBrandData(await getProfileDetails({}));
   // }
-  useEffect(() => {
-    if (user) {
-      console.log(user);
-      navigate("/company");
-    }
-  }, [user]);
 
   useEffect(() => {
     const fetchPosts = async () =>{

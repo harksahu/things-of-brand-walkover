@@ -36,7 +36,7 @@ function SideBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
       <Nav.Item>
         <Nav.Link
         onClick={() => {
-          navigate("/searchs");
+          navigate("/search");
         }}
         >Explore other brands</Nav.Link>
       </Nav.Item>      
