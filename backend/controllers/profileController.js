@@ -31,13 +31,19 @@ const getProfileDetails = async (req,res)=>{
     console.log(searchfrom);
    if (searchfrom == "true") {
     try {
-        const data = await profileModel.find({
+        var data = await profileModel.find({
               ...domain ,
             ...email,
             ..._id
             // ...domain
 
         });
+        const domain = data?._id;
+        const logos = await BrandModel.find({
+            ...domain,
+
+        });
+        data.push(logos)
         res.json({
             "message":"Related Data is Successfully Find",
             "data":data
