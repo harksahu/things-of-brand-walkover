@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import "../utils/svginline.css";
 import { connect } from "react-redux";
@@ -10,6 +10,7 @@ import { getProfileDetails } from "../api/index.js";
 import { async } from "@firebase/util";
 import Pagination from "./Pagination";
 import ReactPaginate from 'react-paginate';
+import { UserAuth } from "../context/AuthContext";
 
 function Not_found() {
   return (
@@ -30,10 +31,12 @@ function Home({ searchBrandData = [], getSearchBrand }) {
   const [loading,setLoading] = useState(false);
   const [currentPage,setCurrentPage] = useState(1);
   const [postsPerPage] = useState(8);
+  const { logOut } = UserAuth();
+  const { googleSignIn, user } = UserAuth();
+  const navigate = useNavigate();
+  
   // function Home() {
-
   // const [searchBrandData,setSearchBrandData] = useState()
-
   // const getProfile = async () =>{
   //   setSearchBrandData(await getProfileDetails({}));
   // }
