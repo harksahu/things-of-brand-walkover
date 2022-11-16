@@ -80,11 +80,14 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
     }
   };
 
-
+  const loginAndForward = () => {
+    handleGoogleSignIn()
+  }
   // var numbers = [1, 2, 3, 4, 5];
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn()
+      navigate("/company");
       // console.log(object);
     } catch (error) {
       console.log(error);
@@ -109,7 +112,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
               navigate("/home");
             }}
             className="bo"
-            style={{cursor: "pointer"}}
+            style={{ cursor: "pointer" }}
           >
             Things of Brand
           </Navbar.Brand>
@@ -129,6 +132,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                       placeholder="Search"
                       className="me-2"
                       id="searchbar"
+                      autocomplete='off'
                       aria-label="Search"
                       show={true}
                       onChange={(e) => {
@@ -141,7 +145,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                       list="browsers"
                       name="myBrowser"
                     />
-                    {document.getElementById("searchbar")?.value === "" ? "" : <div >
+                    {/* {document.getElementById("searchbar")?.value === "" ? "" : <div >
                       <Card style={{fontWeight : "bold"}} >
                         Company:-
                       </Card>
@@ -182,7 +186,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                         </div>
                       ))}
                     </div>
-                    }
+                    } */}
                   </Form>
                   : ""
               }
@@ -193,7 +197,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                 title={user?.displayName}
                 id="collasible-nav-dropdown"
                 align="end"
-              >                
+              >
                 <NavDropdown.Item
                   onClick={() => {
                     navigate("/MyStuff");
@@ -227,7 +231,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                 </NavDropdown.Item>
 
                 <NavDropdown.Divider />
-                
+
                 <NavDropdown.Item
                   href="https://feature.thingsofbrand.com/feature-requests"
                   target="_blank"
@@ -242,7 +246,9 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <button type="button" className="btn btn-outline-primary" onClick={handleGoogleSignIn}>Get started</button>
+              <button type="button" className="btn btn-outline-primary" onClick={() => {
+                loginAndForward()
+              }}>Get started</button>
             )}
           </Navbar.Collapse>
         </Container>
