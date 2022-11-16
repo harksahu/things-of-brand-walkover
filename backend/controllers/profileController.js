@@ -1,5 +1,4 @@
 import profileModel from '../models/profileModel.js'
-import BrandModel from '../models/brandModel.js'
 
 const createProfile = async (req,res)=>{
     try {
@@ -32,25 +31,16 @@ const getProfileDetails = async (req,res)=>{
     console.log(searchfrom);
    if (searchfrom == "true") {
     try {
-        var data = await profileModel.find({
-            ...domain,
+        const data = await profileModel.find({
+              ...domain ,
             ...email,
             ..._id
             // ...domain
 
         });
-        const domain = data._id;
-        const logos = await BrandModel.find({
-            ...domain,
-
-        });
-        // data = data.push(logos)
         res.json({
-            "message": "Related Data is Successfully Find",
-            "data": {
-                ...data,
-                ...logos
-            }
+            "message":"Related Data is Successfully Find",
+            "data":data
         }).status(200);
     } catch (error) {
         res.send({
