@@ -85,6 +85,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn()
+      
       // console.log(object);
     } catch (error) {
       console.log(error);
@@ -213,7 +214,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
 
                 <NavDropdown.Item
                   onClick={() => {
-                    navigate("/search");
+                    navigate("/searchs");
                   }}
                 >
                   Explore other brands

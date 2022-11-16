@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Addfile from './pages/Addfile';
 import MyStuff from './pages/MyStuff';
 import Search from "./pages/Search";
+import Search2 from "./pages/Search2";
 import MyCompany from "./pages/MyCompany";
 import ThemeProvider from 'react-bootstrap/ThemeProvider';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -49,6 +50,7 @@ function App() {
               <Route path='/' element={<Home />} />
               <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
               <Route path='/search' element={<Search />} />
+              <Route path='/searchs' element={<Protected> <Search2 /></Protected>} />
               <Route path='/searchlogo' element={<HomeLogo />} />
               <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />
               <Route path='/:title' element={<Brand />} />
