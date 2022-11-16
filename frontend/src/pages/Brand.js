@@ -113,13 +113,11 @@ function Brand() {
   }
 
   const DownloadToSvg = async (svg, fileName) => {
-    // console.log(svg);
     var svg = document.querySelector("svg");
     var xml = new XMLSerializer().serializeToString(svg);
     var svg64 = btoa(xml); //for utf8: btoa(unescape(encodeURIComponent(xml)))
     var b64start = "data:image/svg+xml;base64,";
     var image64 = b64start + svg64;
-    console.log(xml);
     saveAs(image64, fileName);
   };
 
@@ -130,7 +128,6 @@ function Brand() {
 
     async function toPng(data) {
       const { width, height } = data;
-      // console.log(width);
       const canvas = new OffscreenCanvas(width, height);
       const ctx = canvas.getContext("2d");
       const v = await Canvg.from(ctx, img, preset);
@@ -148,12 +145,6 @@ function Brand() {
       saveAs(pngUrl);
     });
   };
-
-
-
-
-
-
 
 
   const updateVerify = async (result) => {
@@ -177,7 +168,6 @@ function Brand() {
   };
 
   const title = useParams();
-
   const getbrandslogo = async () => {
     console.log(domain);
     if (domain) {
@@ -231,10 +221,6 @@ function Brand() {
       domain: domain,
       guidlines: guidlines,
       sharedEmail: sharedEmail,
-      // fontSize: fontSize,
-      // PrimaryColors: PrimaryColors,
-      // secondaryColors: secondaryColors,
-      // backgroundColors: backgroundColors,
       color: allColor,
       email: email,
       verify: verify,
@@ -394,8 +380,17 @@ function Brand() {
 
                           </Card.Body>
                         </Link>
+                        <Button
+                                    variant="outline-secondary"
+                                    size="sm"
+                                    onClick={() => {
+                                      const canvas = DownloadToSvg(brand.url, brand.title);
+                                    }}
+                                  >
+                                    Download Svg
+                        </Button>
                         <Card.Text>
-                          <Accordion>
+                          {/* <Accordion>
                             <Accordion.Item eventKey="0">
                               <Accordion.Header>Edit</Accordion.Header>
                               <Accordion.Body>
@@ -460,7 +455,7 @@ function Brand() {
                                 </div>
                               </Accordion.Body>
                             </Accordion.Item>
-                          </Accordion>
+                          </Accordion> */}
 
 
                         </Card.Text>
