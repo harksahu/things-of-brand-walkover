@@ -39,12 +39,12 @@ const getProfileDetails = async (req,res)=>{
             // ...domain
 
         });
-        const domain = data?._id;
+        const domain = data._id;
         const logos = await BrandModel.find({
             ...domain,
 
         });
-        data.push(logos)
+        data = data.push(logos)
         res.json({
             "message":"Related Data is Successfully Find",
             "data":data
