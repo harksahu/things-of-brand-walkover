@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Card, Container, Row, Col, Form, Button, Stack } from "react-bootstrap";
 import { UserAuth } from "../context/AuthContext";
-import { getProfileDetails, updateProfileFields, getFontList, createProfile } from "../api/index.js";
+import { getProfileDetails, updateProfileFields, getFontList, createProfile,sendSearchAPI } from "../api/index.js";
 import CloseIcon from "@mui/icons-material/Close";
 import RichtextEditor from "./jodit.js";
 import { BsFillTrashFill } from "react-icons/bs";
-import { useLocation,Link, useNavigate } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import SideBar from '../components/SideBar';
-// import getFonts from "font-list"
-
+import { Hint } from 'react-autocomplete-hint';
+import SvgInline from "../utils/SvgInline.js";
+// import { Tokenizer } from 'react-typeahead';
+// import {  Typeahead } from 'react-bootstrap-typeahead';
 
 function Profile(props) {
+  const [DomainPost, setDomainPost] = useState();
   const [name, setName] = useState("");
   const [aboutus, setAboutus] = useState("");
   const [domain, setDomain] = useState("");
@@ -26,7 +29,7 @@ function Profile(props) {
   const [profiledata, setProfile] = useState("");
   const [check, setCheck] = useState(true);
   const [id, setId] = useState("");
-  const [logo, setLogo] = useState("null");
+  const [logo, setLogo] = useState();
   const [verify, setVerify] = useState("false");
   const [color, setcount] = useState([{ colorName: "", colorValue: "#ffffff" }]);
   const [fontLink, setFontLink] = useState([""]);
@@ -35,11 +38,23 @@ function Profile(props) {
   const [valid, setvalid] = useState([false]);
   const [valid2, setvalid2] = useState([false]);
   const [fontFamily, setFontFamily] = useState([false]);
+
+
   const location = useLocation();
   let countTemp = countTracker;
   let countTemp2 = linkCount
   var fresult
   const navigate = useNavigate();
+
+
+  const getbrandslogo = async () => {
+    console.log("domain =",domain);
+    if (domain) {
+      const data = await sendSearchAPI({ domain: id, active: 1 });
+      console.log(data);
+      setDomainPost(data?.data?.data);
+    }
+  };
 
   const addLinks = (event) => {
     if (event.key === "Enter" && event.target.value !== "") {
@@ -55,8 +70,14 @@ function Profile(props) {
 
   const fontlist = async () => {
     const data = await getFontList()
-    console.log(data?.data?.items);
-    setFontFamily(data)
+    // console.log(data?.data?.items);
+    var result = [];
+
+    for (var i in data?.data?.items)
+      result.push(data?.data?.items[i]?.family);
+    setFontFamily(result)
+    // console.log(result);
+
   }
 
   useEffect(() => {
@@ -66,14 +87,21 @@ function Profile(props) {
       if (user?.email) {
         next();
         profileDetails();
-
+        
       }
     }
   }, [user]);
 
   useEffect(() => {
     fontlist()
-  }, []);
+    if (domain) {
+      getbrandslogo();
+      console.log(logo);
+    }
+  }, [domain]);
+
+
+
 
 
   const storeProfileValue = async (req, res) => {
@@ -151,7 +179,10 @@ function Profile(props) {
       setBackgroundColors(location.state.data.backgroundColors);
       setFontLink(location.state.data.fontLink);
       setcount(location.state.data.color);
-
+    }
+    if (location.state.data.domain)
+    {
+      getbrandslogo();
     }
 
   };
@@ -215,7 +246,7 @@ function Profile(props) {
       if (check === 1) {
         console.log("old");
         document.getElementById("domainError").classList.remove("visually-hidden")
-        
+
       }
       else if (check === 0) {
         var domainParts = domain.split(".");
@@ -376,7 +407,7 @@ function Profile(props) {
                       />
                       <div className="visually-hidden" id="domainError">
 
-                      This company is already created  <Link to="/domainVerify" state={{ data: company }}>Clam your brand</Link>
+                        This company is already created  <Link to="/domainVerify" state={{ data: company }}>Clam your brand</Link>
 
                       </div>
 
@@ -469,11 +500,29 @@ function Profile(props) {
                       <div id="list" className="hide formbold-chatbox-form">
                         {fontLink.map((element, index) => (
                           <div id="fetch" key={index}>
-                            <Form.Control
+                            <Hint options={fontFamily}>
+                              <input
+                                type="url"
+                                // name="user_table_input"
+                                id={"id" + index}
+                                placeholder="Enter font name "
+                                value={fontLink[index]}
+                                onChange={(e) => {
+                                  let tempCount = fontLink;
+                                  tempCount[index] = e.target.value;
+                                  setFontLink([...tempCount]);
+
+                                }}
+                                className="contact-form-area form-control"
+                                name="myBrowser"
+                              />
+                            </Hint>
+
+                            {/* <Typeahead
                               type="url"
                               // name="user_table_input"
-                              id={"id"+index}
-                              placeholder="Enter font url "
+                              id={"id" + index}
+                              placeholder="Enter font name "
                               value={fontLink[index]}
                               onChange={(e) => {
                                 let tempCount = fontLink;
@@ -481,10 +530,15 @@ function Profile(props) {
                                 setFontLink([...tempCount]);
 
                               }}
-                              className="contact-form-area"
+                              className="contact-form-area form-control"
                               name="myBrowser"
-                            />
-                            {document.getElementById(`id`+index)?.value === "" ? "" : <div >
+                              renderMenuItemChildren={(fontFamily) => (
+                                
+                                  <span>{fontFamily}</span>
+                              )}
+                              useCache={false}
+                            /> */}
+                            {/* {document.getElementById(`id`+index)?.value === "" ? "" : <div >
                               {fontFamily?.data?.items && fontFamily?.data?.items?.filter(font => font?.family.includes(document.getElementById(`id`+index)?.value)).slice(0, 7).map((font) => (
                                 <div id="myBrowser" key={font._id}>
                                   
@@ -497,7 +551,7 @@ function Profile(props) {
                                 </div>
                               ))}
                             </div>
-                            }
+                            } */}
 
 
 
@@ -525,7 +579,7 @@ function Profile(props) {
                           </Button>
                         </div>
                       </div>
-
+                            {console.log("DomainPost = ",DomainPost)}
                     </Form.Group>
 
                     <div id="button" className=" visually-hidden">
@@ -539,6 +593,41 @@ function Profile(props) {
                     </Button>
                   // )} */}
                     </div>
+                    <h5>Logos</h5>
+            <div className="d-flex flex-wrap justify-content-center">
+              {DomainPost?.map((brand, index) => {
+                // console.log(brand);
+                return (
+                  <div key={index}>
+                    <div key={brand._id} className=" flex-wrap item">
+                      <Card>
+                        <Link to={"/stuff/" + brand._id}>
+
+                          <div
+                            style={{ overflow: "auto" }}
+                            className="img_size"
+                          >
+                            <SvgInline {...brand} />
+                          </div>
+
+                          <Card.Body>
+                            <Card.Title
+                              style={{ textDecoration: "none" }}
+                              className="text-center"
+                            >
+                              {brand.title}
+                            </Card.Title>
+
+
+
+                          </Card.Body>
+                        </Link>
+                      </Card>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
                     <div id="nxt">
                       <Button variant="primary"
                         onClick={() => next()}
