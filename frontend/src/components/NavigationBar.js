@@ -142,7 +142,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                       list="browsers"
                       name="myBrowser"
                     />
-                    {document.getElementById("searchbar")?.value === "" ? "" : <div >
+                    {/* {document.getElementById("searchbar")?.value === "" ? "" : <div >
                       <Card style={{fontWeight : "bold"}} >
                         Company:-
                       </Card>
@@ -183,7 +183,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                         </div>
                       ))}
                     </div>
-                    }
+                    } */}
                   </Form>
                   : ""
               }

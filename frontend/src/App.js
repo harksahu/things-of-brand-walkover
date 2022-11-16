@@ -44,7 +44,7 @@ function App() {
         >
           <AuthContextProvider>
           { window.location.pathname?(window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <NavigationBar />):<NavigationBar />}
-<Test/>
+{/* <Test/> */}
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path="/home" element={<Protected> <Home2 /> </Protected>} />

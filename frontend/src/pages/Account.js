@@ -19,15 +19,12 @@ const Account = () => {
     try {
       const keyValue = rand() + rand();
       document.getElementById("authKeybtn").style.display = "none";
-      // console.log("in token");
       const data = await storeAuthKey({
         authKey: keyValue,
         email: user?.email,
       });
-      // console.log( data);
       setKey(keyValue);
     } catch (error) {
-      // console.log(error);
     }
   };
 
@@ -35,18 +32,13 @@ const Account = () => {
     try {
       const x = await setAuthKey(user.email);
       const authinfo = x?.data?.data[0];
-      // console.log(authinfo);
-
       setKey(authinfo.authKey);
     } catch (e) {}
   };
 
   const deleteKey = async () => {
-    // console.log(key);
     console.log("delete authKey");
-    setKey()
-    // document.getElementById("key").innerHTML = ""
-   
+    setKey()   
     const data = await deleteAuthKey({
       authKey: key,
       email: user?.email,
@@ -56,7 +48,6 @@ const Account = () => {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    // console.log(user);
     if (user && user.email) {
       setAuth();
     }
