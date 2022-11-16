@@ -1,4 +1,5 @@
 import profileModel from '../models/profileModel.js'
+import BrandModel from '../models/brandModel.js'
 
 const createProfile = async (req,res)=>{
     try {
