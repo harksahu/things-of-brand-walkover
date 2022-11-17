@@ -34,6 +34,7 @@ const Addfile = () => {
   const [domain, setDomain] = useState();
   const [id, setId] = useState();
   const [ffresult, setResult] = useState();
+  const [showSideBar, setShowSideBar] = useState(false);
   // const [logo, setLogo] = useState();
 
   const addTags = (event) => {
@@ -156,6 +157,10 @@ const Addfile = () => {
   useEffect(() => {
     if (user) {
       profileDetails();
+      if(window.location.pathname ==="/addfile")
+      {
+        setShowSideBar(true);
+      }
     }
   }, [user]);
   return (
@@ -163,7 +168,7 @@ const Addfile = () => {
       <Container fluid className="wrpr">
         <Row>
           <Col md={3} lg={2}>
-            <SideBar />
+          {showSideBar?<SideBar />:""}
           </Col>
           <Col md={9} lg={10}>
             <Card style={{ width: "30rem" }}>

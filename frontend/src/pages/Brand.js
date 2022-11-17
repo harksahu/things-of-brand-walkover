@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
+import Addfile from './Addfile'
 import "../utils/svginline.css";
 import "./home.scss";
 import { UserAuth } from "../context/AuthContext";
@@ -21,12 +22,16 @@ import Figure from "react-bootstrap/Figure";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import ListGroup from "react-bootstrap/ListGroup";
-import Accordion from 'react-bootstrap/Accordion';
+import Accordion from "react-bootstrap/Accordion";
 
-import { getCompanyDetails } from '../api/index.js';
+import { getCompanyDetails } from "../api/index.js";
 
-import { BsFillPlusCircleFill, BsPencilSquare, BsFillExclamationDiamondFill, BsShieldCheck } from "react-icons/bs";
-
+import {
+  BsFillPlusCircleFill,
+  BsPencilSquare,
+  BsFillExclamationDiamondFill,
+  BsShieldCheck,
+} from "react-icons/bs";
 
 function Not_found() {
   return (
@@ -67,8 +72,12 @@ function Brand() {
   const [showw, setShoww] = useState(false);
   const handleClosee = () => setShoww(false);
   const handleShoww = () => setShoww(true);
+  const [showUploadFile, setShowUploadFile] = useState(false);
+  const handleShowUploadFile = () => setShowUploadFile(true);
+  const handleCloseUploadFile = () => setShowUploadFile(false);
   const [mwidth, setWidth] = useState(250);
   const [mheight, setHeight] = useState(250);
+  const [fullscreen, setFullscreen] = useState(true);
 
   // const verifyDomain = async () => {
   //   const TXT = await getTXT(domain);
@@ -121,31 +130,6 @@ function Brand() {
     saveAs(image64, fileName);
   };
 
-  const DownloadToPng = async (img, w, h) => {
-
-
-    const preset = presets.offscreen();
-
-    async function toPng(data) {
-      const { width, height } = data;
-      const canvas = new OffscreenCanvas(width, height);
-      const ctx = canvas.getContext("2d");
-      const v = await Canvg.from(ctx, img, preset);
-      v.resize(width, height, "xMidYMid meet");
-      await v.render();
-      const blob = await canvas.convertToBlob();
-      const pngUrl = URL.createObjectURL(blob);
-      return pngUrl;
-    }
-
-    toPng({
-      width: w,
-      height: h,
-    }).then((pngUrl) => {
-      saveAs(pngUrl);
-    });
-  };
-
 
   const updateVerify = async (result) => {
     const data = {
@@ -184,7 +168,7 @@ function Brand() {
     });
     console.log(fresult);
     console.warn(fresult.data.data[0]);
-    setCompany(fresult.data.data[0])
+    setCompany(fresult.data.data[0]);
     setId(fresult.data.data[0]._id);
     setName(fresult.data.data[0].name);
     setAboutus(fresult.data.data[0].aboutus);
@@ -192,11 +176,11 @@ function Brand() {
     setDomain(fresult.data.data[0].domain);
     setGuidlines(fresult.data.data[0].guidlines);
     setFontSize(fresult.data.data[0].fontSize);
-    setFontLink(fresult.data.data[0].fontLink)
+    setFontLink(fresult.data.data[0].fontLink);
     // setPrimaryColors(fresult.data.data[0].PrimaryColors);
     // setSecondaryColors(fresult.data.data[0].secondaryColors);
     // setBackgroundColors(fresult.data.data[0].backgroundColors);
-    setAllColor(fresult.data.data[0].color)
+    setAllColor(fresult.data.data[0].color);
     setlogo(fresult.data.data[0].logo);
     setEmail(fresult.data.data[0].email);
     setVerify(fresult.data.data[0].verify);
@@ -204,15 +188,14 @@ function Brand() {
     // console.log(fresult.data.data[0].sharedEmail, "shared email");
 
     if (fresult.data.data[0].aboutus.length) {
-      document.getElementById("aboutus").innerHTML = fresult.data.data[0].aboutus;
+      document.getElementById("aboutus").innerHTML =
+        fresult.data.data[0].aboutus;
     }
 
     getbrandslogo();
   };
 
-
   const updateLogo = async (logo_url) => {
-
     const data = {
       name: name,
       aboutus: aboutus,
@@ -235,26 +218,46 @@ function Brand() {
       getbrandslogo();
       console.log(logo);
     }
-  }, [domain,title]);
-
-
+  }, [domain, title]);
 
   return (
     <>
-
       {console.log("all color = ", allColor)}
       {domain ? (
         <div className="m-5">
-          <Button onClick={() => {
-            navigate(-1)
-          }} variant="dark">Back</Button>
+          <Button
+            onClick={() => {
+              navigate(-1);
+            }}
+            variant="dark"
+          >
+            Back
+          </Button>
           {user ? (
             email === user.email ? (
               <>
-                <Link to={"/addfile"}>
-                  <BsFillPlusCircleFill style={{ float: "right", fontSize: 40 }} />
-                </Link>
-                <Button variant="primary" style={{ float: "right" }} onClick={handleShoww}>
+                {/* <Link to={"/addfile"}> */}
+                <BsFillPlusCircleFill
+                  onClick={handleShowUploadFile}
+                  style={{ float: "right", fontSize: 40 }}
+                />
+                  <Modal  fullscreen ={fullscreen} show={showUploadFile} onHide={handleCloseUploadFile }>
+                  <Modal.Header closeButton>
+                    Upload Your File
+                  </Modal.Header>
+                    <Addfile/> 
+                  {/* <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseUploadFile}>
+                      Close
+                    </Button>
+                  </Modal.Footer> */}
+                </Modal>
+                {/* </Link> */}
+                <Button
+                  variant="primary"
+                  style={{ float: "right" }}
+                  onClick={handleShoww}
+                >
                   Share
                 </Button>
 
@@ -262,28 +265,38 @@ function Brand() {
                   <Modal.Header closeButton>
                     <Modal.Title>Share Your Company</Modal.Title>
                   </Modal.Header>
-                  <Modal.Body><input type="email"
-                    placeholder="Enter the email" id="addEmail" /></Modal.Body>
+                  <Modal.Body>
+                    <input
+                      type="email"
+                      placeholder="Enter the email"
+                      id="addEmail"
+                    />
+                  </Modal.Body>
                   <Modal.Footer>
                     <Button variant="secondary" onClick={handleClosee}>
                       Close
                     </Button>
-                    <Button variant="primary" onClick={() => {
-                      let temp = sharedEmail;
-                      let email = document.getElementById("addEmail").value;
-                      console.log("e.target.value", setSharedEmail);
-                      console.log("new shared emials", temp);
-                      temp.push(email);
-                      setSharedEmail([...temp]);
-                      handleClosee();
-                      updateLogo();
-                    }}>
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        let temp = sharedEmail;
+                        let email = document.getElementById("addEmail").value;
+                        console.log("e.target.value", setSharedEmail);
+                        console.log("new shared emials", temp);
+                        temp.push(email);
+                        setSharedEmail([...temp]);
+                        handleClosee();
+                        updateLogo();
+                      }}
+                    >
                       Share
                     </Button>
                   </Modal.Footer>
                 </Modal>
                 <Link to="/profile" state={{ data: company }}>
-                  <BsPencilSquare style={{ float: "right", fontSize: 40, color: "black" }} />
+                  <BsPencilSquare
+                    style={{ float: "right", fontSize: 40, color: "black" }}
+                  />
                 </Link>
               </>
             ) : (
@@ -315,15 +328,14 @@ function Brand() {
                     {" "}
                     <BsFillExclamationDiamondFill />
                     <Link to="/domainVerify" state={{ data: company }}>
-                    
-                    <button
-                      className="m-auto btn btn-primary"
-                      onClick={() => {
-                        handleShow();
-                      }}
-                    >
-                      verify
-                    </button>
+                      <button
+                        className="m-auto btn btn-primary"
+                        onClick={() => {
+                          handleShow();
+                        }}
+                      >
+                        verify
+                      </button>
                     </Link>
                   </>
                 )
@@ -360,7 +372,6 @@ function Brand() {
                     <div key={brand._id} className=" flex-wrap item">
                       <Card>
                         <Link to={"/stuff/" + brand._id}>
-
                           <div
                             style={{ overflow: "auto" }}
                             className="img_size"
@@ -375,19 +386,19 @@ function Brand() {
                             >
                               {brand.title}
                             </Card.Title>
-
-
-
                           </Card.Body>
                         </Link>
                         <Button
-                                    variant="outline-secondary"
-                                    size="sm"
-                                    onClick={() => {
-                                      const canvas = DownloadToSvg(brand.url, brand.title);
-                                    }}
-                                  >
-                                    Download Svg
+                          variant="outline-secondary"
+                          size="sm"
+                          onClick={() => {
+                            const canvas = DownloadToSvg(
+                              brand.url,
+                              brand.title
+                            );
+                          }}
+                        >
+                          Download Svg
                         </Button>
                         <Card.Text>
                           {/* <Accordion>
@@ -456,8 +467,6 @@ function Brand() {
                               </Accordion.Body>
                             </Accordion.Item>
                           </Accordion> */}
-
-
                         </Card.Text>
                       </Card>
                     </div>
@@ -519,13 +528,15 @@ function Brand() {
           <div>
             <h5>Fonts link</h5>
             {/* <div style={{ fontSize: fontSize + "px" }}>{fontSize + "px"}</div> */}
-            {fontLink?.map(link => {
+            {fontLink?.map((link) => {
               return (
                 <div>
                   {/* <h4>{color.colorName}</h4> */}
-                  <a href={link} target="_blank">{link}</a>
+                  <a href={link} target="_blank">
+                    {link}
+                  </a>
                 </div>
-              )
+              );
               // <h1>{color.colorName}</h1>
               // <h1>{color.colorValue}</h1>
             })}
@@ -534,7 +545,7 @@ function Brand() {
           <div>
             <h5>Colors</h5>
 
-            {allColor?.map(color => {
+            {allColor?.map((color) => {
               return (
                 <div>
                   <h4>{color.colorName}</h4>
@@ -548,20 +559,15 @@ function Brand() {
                     }}
                   ></div>
                 </div>
-              )
+              );
             })}
-
           </div>
         </div>
       ) : (
         <Not_found />
-      )
-      }
-
+      )}
     </>
   );
 }
 
 export default Brand;
-
-
