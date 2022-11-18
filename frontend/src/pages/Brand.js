@@ -241,10 +241,10 @@ function Brand() {
 
   return (
     <>
-
+      <Container>
       {console.log("all color = ", allColor)}
       {domain ? (
-        <div className="m-5">
+        <div className="mt-4">
           <Button onClick={() => {
             navigate(-1)
           }} variant="dark">Back</Button>
@@ -557,7 +557,7 @@ function Brand() {
         <Not_found />
       )
       }
-
+    </Container>
     </>
   );
 }

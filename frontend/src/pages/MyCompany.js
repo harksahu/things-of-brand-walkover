@@ -34,16 +34,13 @@ function MyCompany() {
 
   return (
     <>
-    <Container fluid className="wrpr" >
-      <Row>        
-        <Col md={3} lg={2}>
-          <SideBar/>
-        </Col>
-        <Col md={9} lg={10}>
+    <Container className="wrpr" >
+      <Row>                
+        
           <Link to="/profile">
             <BsFillPlusCircleFill style={{ float: "right", fontSize: 40 }} />
           </Link>
-          <Row md={4} className="g-4 flex p-3 bg-light">
+          <Row md={4} className="g-4 flex p-3">
             {company?.map((Company) => {
               return (
                 <div
@@ -70,8 +67,7 @@ function MyCompany() {
                 </div>
               );
             })}
-          </Row>
-        </Col>      
+          </Row>        
       </Row>
     </Container>
     </>
