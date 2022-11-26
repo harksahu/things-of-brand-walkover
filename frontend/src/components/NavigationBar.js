@@ -105,7 +105,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
 
   return (
     <>
-      <Navbar expand="lg bg-white" sticky="top">
+      <Navbar expand="lg" sticky="top" className='bg-gray'>
         <Container >
           <Navbar.Brand
             onClick={() => {
