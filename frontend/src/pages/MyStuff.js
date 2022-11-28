@@ -54,18 +54,14 @@ function Home() {
 
   return (
     <>
-      <Container fluid className="wrpr">
-        <Row>
-          <Col md={3} lg={2}>
-            <SideBar />
-          </Col>
-          <Col md={9} lg={10}>
+      <Container className="wrpr">
+        
             <Link to={"/addfile"}>
               <Button variant="dark">
                 Add Stuff
               </Button>              
             </Link>
-            <Row md={4} className="g-4 flex p-3 bg-light">
+            <Row md={4} className="g-4 flex p-3">
               {searchBrandData?.data?.length === 0 ? (
                 <Not_found />
               ) : (
@@ -105,7 +101,7 @@ function Home() {
               )}
             </Row>
               <h5 className="text-center">Deleted Items</h5>
-              <Row md={4} className="g-4 flex p-3 bg-light">
+              <Row md={4} className="g-4 flex p-3">
                 {searchBrandData?.data?.length === 0 ? (
                   <Not_found />
                 ) : (
@@ -144,8 +140,6 @@ function Home() {
                   })
                 )}
               </Row>
-          </Col>
-        </Row>
       </Container>
     </>
   );

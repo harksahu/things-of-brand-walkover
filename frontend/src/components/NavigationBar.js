@@ -105,8 +105,8 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
 
   return (
     <>
-      <Navbar expand="lg bg-white" sticky="top">
-        <Container fluid >
+      <Navbar expand="lg" sticky="top" className='bg-gray'>
+        <Container >
           <Navbar.Brand
             onClick={() => {
               navigate("/home");
@@ -200,14 +200,6 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
               >
                 <NavDropdown.Item
                   onClick={() => {
-                    navigate("/MyStuff");
-                  }}
-                >
-                  My Stuff
-                </NavDropdown.Item>
-
-                <NavDropdown.Item
-                  onClick={() => {
                     navigate("/company");
                   }}
                 >
@@ -233,7 +225,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                 <NavDropdown.Divider />
 
                 <NavDropdown.Item
-                  href="https://feature.thingsofbrand.com/feature-requests"
+                  href="https://thingsofbrand.canny.io/feature-requests"
                   target="_blank"
                 >
                   Feature Requests

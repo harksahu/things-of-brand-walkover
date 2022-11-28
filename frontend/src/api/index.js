@@ -91,7 +91,7 @@ const sendMyStuffAPI = async (email) => {
 const deleteMyStuffAPI = async (id) => {
   return await axios.delete(URL + "/api/Mystuff/" + id);
 };
-const sendSearchAPI = async ({title = "" , email = "" , active = "",description="",_id="",domain=""}) => {
+const sendSearchAPI = async ({title = "" , email = "" , active = "",description="",_id="",domain=""}) => {  
   return await axios.get(URL + "/api/search?title=" + title+"&email="+email+"&active="+active+"&description="+description+"&_id=" + _id+ "&domain=" + domain);
 };
 

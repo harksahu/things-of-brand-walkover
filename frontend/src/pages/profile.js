@@ -4,7 +4,8 @@ import { UserAuth } from "../context/AuthContext";
 import { getProfileDetails, updateProfileFields, getFontList, createProfile,sendSearchAPI } from "../api/index.js";
 import CloseIcon from "@mui/icons-material/Close";
 import RichtextEditor from "./jodit.js";
-import { BsFillTrashFill } from "react-icons/bs";
+import { BsFillTrashFill, BsChevronLeft } from "react-icons/bs";
+import { MdArrowBackIos } from "react-icons/md";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import SideBar from '../components/SideBar';
 import { Hint } from 'react-autocomplete-hint';
@@ -163,7 +164,7 @@ function Profile(props) {
     }
   };
 
-  const profileDetails = async (req, res) => {
+  const profileDetails = async (req, res) => {    
     fresult = await getProfileDetails({});
     setResults(fresult.data.data);
 
@@ -213,8 +214,6 @@ function Profile(props) {
   };
 
   const next = () => {
-
-
     if (location.state?.data) {
       document.getElementById("name").classList.remove("visually-hidden")
       document.getElementById("about").classList.remove("visually-hidden")
@@ -224,7 +223,6 @@ function Profile(props) {
       document.getElementById("fontLink").classList.remove("visually-hidden")
       document.getElementById("button").classList.remove("visually-hidden")
       document.getElementById("nxt").classList.add("visually-hidden")
-
     }
     else {
       var check = 2;
@@ -268,14 +266,13 @@ function Profile(props) {
             document.getElementById("domain").disabled = true;
             storeProfileValue()
           }
-          else {
-
+          /* else {
             alert("enter valid domain name");
           }
-        }
-        else {
+ */        }
+        /* else {
           alert("enter domain name");
-        }
+        } */
       }
     }
 
@@ -331,22 +328,24 @@ function Profile(props) {
     setvalid(newFormVaild);
 
   };
-  return (
-    <>
-      <Container fluid className="wrpr">
-        <Row>
-
-          <Col md={3} lg={2}>
-            <SideBar />
-          </Col>
-          <Col md={9} lg={10}>
-            <Button onClick={() => {
-              navigate(-1)
-            }} variant="dark">Back</Button>
-            <Card style={{ width: "35rem" }}>
+  return (    
+    <div className="bg-gray h-100">
+      <Container className="wrpr">
+        <Row>          
+          <nav className="navbar bg-light">
+            <div className="container-fluid">
+              <a className="navbar-brand" onClick={() => { navigate(-1)}}>
+                <button type="button" className="btn btn-light me-3">
+                  <MdArrowBackIos />
+                </button>
+                Add new brand
+              </a>
+            </div>
+          </nav>
+          <Col md={12} lg={12}>            
+            <Card style={{ width: "35rem" }} className="bdr-none box-shadow">
               <Card.Body>
                 <Stack gap={3}>
-
                   <Form>
                     <Form.Group className="mb-3 visually-hidden" id="name">
                       <Form.Label>name</Form.Label>
@@ -395,15 +394,17 @@ function Profile(props) {
                         type="domain"
                         placeholder="Enter domain name"
                         list="doaminBrowsers"
+                        autocomplete='off'
                         name="myBrowser"
                         id="domain"
                         onChange={(e) => {
 
                           // setDomain(extractDomain(e.target.value));
-                          setDomain(e.target.value);
-                          checkDomain(e.target.value);
+                           setDomain(e.target.value);
+                          // checkDomain(e.target.value);
                         }}
                         value={domain}
+                        
                       />
                       <div className="visually-hidden" id="domainError">
 
@@ -593,8 +594,8 @@ function Profile(props) {
                     </Button>
                   // )} */}
                     </div>
-                    <h5>Logos</h5>
-            <div className="d-flex flex-wrap justify-content-center">
+                    
+            {/* <div className="d-flex flex-wrap justify-content-center">
               {DomainPost?.map((brand, index) => {
                 // console.log(brand);
                 return (
@@ -627,7 +628,7 @@ function Profile(props) {
                   </div>
                 );
               })}
-            </div>
+            </div> */}
                     <div id="nxt">
                       <Button variant="primary"
                         onClick={() => next()}
@@ -642,7 +643,7 @@ function Profile(props) {
           </Col>
         </Row>
       </Container>
-    </>
+    </div>    
   );
 }
 

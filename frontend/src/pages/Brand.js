@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Addfile from './Addfile'
+import {Container, Row, Form, Col, Navbar, Nav, Card, Figure, Button, Modal} from "react-bootstrap";
 import "../utils/svginline.css";
-import "./home.scss";
+import "../scss/brand.scss";
 import { UserAuth } from "../context/AuthContext";
 import {
   getProfileDetails,
@@ -12,19 +12,9 @@ import {
 } from "../api/index.js";
 import saveAs from "file-saver";
 import SvgInline from "../utils/SvgInline.js";
-import Card from "react-bootstrap/Card";
-import Figure from "react-bootstrap/Figure";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-
-import { getCompanyDetails } from "../api/index.js";
-
-import {
-  BsFillPlusCircleFill,
-  BsPencilSquare,
-  BsFillExclamationDiamondFill,
-  BsShieldCheck,
-} from "react-icons/bs";
+import { BsFillPlusCircleFill, BsPencilSquare, BsFillExclamationDiamondFill, BsShieldCheck } from "react-icons/bs";
+import { MdArrowBackIos, MdVerified, MdShare, MdOutlineModeEdit } from "react-icons/md";
+import { abs } from '../../../node_modules/stylis/src/Utility';
 
 function Not_found() {
   return (
@@ -74,29 +64,22 @@ function Brand() {
 
   // const verifyDomain = async () => {
   //   const TXT = await getTXT(domain);
-  //   // console.log(TXT?.data?.data[0][0]);
-  //   // console.log(TXT?.data?.data);
   //   var ifVerify = false;
   //   for (let i = 0; i < TXT?.data?.data.length; i++) {
   //     // text += cars[i] + "<br>";
-  //     // console.log(TXT?.data?.data[i][0]);
   //     if (TXT?.data?.data[i][0] == verify) {
   //       updateVerify("true");
   //       ifVerify = true;
   //       break;
   //     } else {
-  //       console.log("not verify");
   //     }
   //   }
   //   if (!ifVerify) {
   //     document.getElementById("error").innerHTML = "not verify";
   //   }
-  //   // console.log(TXT?.data?.data[i] == "abcdefghijklmnop");
-  //   // console.log(verify)
   // };
 
-  async function makeid(length) {
-    console.log("in make id ");
+  async function makeid(length) {    
     var result = "";
     var characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -104,11 +87,8 @@ function Brand() {
     for (var i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    if (verify == undefined || verify == null || verify === "false") {
-      console.log(verify);
-      setVerify(result);
-      console.log("verification code in condtion = " + result + verify);
-
+    if (verify == undefined || verify == null || verify === "false") {      
+      setVerify(result);      
       await updateVerify(result);
     }
     return result;
@@ -137,8 +117,7 @@ function Brand() {
       color: allColor,
       email: email,
       verify: result,
-    };
-    console.log(verify);
+    };    
     if (verify === undefined || verify === null || verify === "false") {
       await updateProfileFields(data);
     }
@@ -146,10 +125,9 @@ function Brand() {
 
   const title = useParams();
   const getbrandslogo = async () => {
-    console.log(domain);
+    console.log('{ domain: id, active: 1 }', { domain: id, active: 1 });    
     if (domain) {
-      const data = await sendSearchAPI({ domain: id, active: 1 });
-      console.log(data);
+      const data = await sendSearchAPI({ domain: id, active: 1 });      
       setDomainPost(data?.data?.data);
     }
   };
@@ -158,10 +136,8 @@ function Brand() {
     const fresult = await getProfileDetails({
       domain: title.title,
       searchfrom: true,
-    });
-    console.log(fresult);
-    console.warn(fresult.data.data[0]);
-    setCompany(fresult.data.data[0]);
+    });    
+    setCompany(fresult.data.data[0])
     setId(fresult.data.data[0]._id);
     setName(fresult.data.data[0].name);
     setAboutus(fresult.data.data[0].aboutus);
@@ -178,12 +154,10 @@ function Brand() {
     setEmail(fresult.data.data[0].email);
     setVerify(fresult.data.data[0].verify);
     setSharedEmail(fresult.data.data[0].sharedEmail);
-    // console.log(fresult.data.data[0].sharedEmail, "shared email");
 
-    if (fresult.data.data[0].aboutus.length) {
-      document.getElementById("aboutus").innerHTML =
-        fresult.data.data[0].aboutus;
-    }
+    /* if (fresult.data.data[0].aboutus.length) {
+      document.getElementById("aboutus").innerHTML = fresult.data.data[0].aboutus;
+    } */
 
     getbrandslogo();
   };
@@ -200,161 +174,142 @@ function Brand() {
       color: allColor,
       email: email,
       verify: verify,
-    };
-    console.log("data in updatelogo", data);
+    };    
     await updateProfileFields(data);
   };
 
   useEffect(() => {
     getbrand();
     if (domain) {
-      getbrandslogo();
-      console.log(logo);
+      getbrandslogo();      
     }
   }, [domain, title]);
 
   return (
     <>
+      <Container>
       {domain ? (
-        <div className="m-5">
-          <Button
-            onClick={() => {
-              navigate(-1);
-            }}
-            variant="dark"
-          >
-            Back
-          </Button>
-          {user ? (
-            email === user.email ? (
-              <>
-                <BsFillPlusCircleFill
-                  onClick={handleShowUploadFile}
-                  style={{ float: "right", fontSize: 40 }}
-                />
-                  <Modal  fullscreen ={fullscreen} show={showUploadFile} onHide={handleCloseUploadFile }>
-                  <Modal.Header closeButton>
-                    Upload Your File
-                  </Modal.Header>
-                    <Addfile/> 
-                </Modal>
-                <Button
-                  variant="primary"
-                  style={{ float: "right" }}
-                  onClick={handleShoww}
-                >
-                  Share
-                </Button>
+        <div className="row mt-4">
+          <Navbar>
+            <Container>          
+              <Nav className="me-auto">
+                <Navbar.Brand className="me-auto">
+                  <Button variant="outline-dark" onClick={() => { navigate(-1)}}>
+                    <MdArrowBackIos />
+                  </Button>
+                </Navbar.Brand>                            
+              </Nav>
 
-                <Modal show={showw} onHide={handleClosee}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Share Your Company</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <input
-                      type="email"
-                      placeholder="Enter the email"
-                      id="addEmail"
-                    />
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClosee}>
-                      Close
-                    </Button>
-                    <Button
-                      variant="primary"
-                      onClick={() => {
-                        let temp = sharedEmail;
-                        let email = document.getElementById("addEmail").value;
-                        console.log("e.target.value", setSharedEmail);
-                        console.log("new shared emials", temp);
-                        temp.push(email);
-                        setSharedEmail([...temp]);
-                        handleClosee();
-                        updateLogo();
-                      }}
-                    >
-                      Share
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
-                <Link to="/profile" state={{ data: company }}>
-                  <BsPencilSquare
-                    style={{ float: "right", fontSize: 40, color: "black" }}
-                  />
-                </Link>
-              </>
-            ) : (
-              ""
-            )
-          ) : (
-            ""
-          )}
-          <div>
-            <h1>{name}</h1>
-          </div>
-          <div id="aboutus"></div>
-          <div>{links}</div>
-          <br />
-          <div>
-            <a
-              href={"https://" + domain}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {domain}
-            </a>
-            {user ? (
-              email === user.email ? (
-                verify === "true" ? (
-                  <BsShieldCheck />
+                {user ? (
+                  email === user.email ? (
+                    <>
+                      <Nav className="nav-action">
+                        <Nav.Link onClick={handleShoww}>
+                          <MdShare />
+                        </Nav.Link>
+
+                        <Nav.Link as={Link} to="/profile" state={{ data: company }}>
+                          <MdOutlineModeEdit />
+                        </Nav.Link>
+                      </Nav>
+
+                      <Modal show={showw} onHide={handleClosee}>
+                        <Modal.Header closeButton>
+                          <Modal.Title>Share Your Company</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body><input type="email"
+                          placeholder="Enter the email" id="addEmail" /></Modal.Body>
+                        <Modal.Footer>
+                          <Button variant="secondary" onClick={handleClosee}>
+                            Close
+                          </Button>
+                          <Button variant="primary" onClick={() => {
+                            let temp = sharedEmail;
+                            let email = document.getElementById("addEmail").value;
+                            temp.push(email);
+                            setSharedEmail([...temp]);
+                            handleClosee();
+                            updateLogo();
+                          }}>
+                            Share
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
+                    </>
+                  ) : (
+                    ""
+                  )
                 ) : (
-                  <>
-                    {" "}
-                    <BsFillExclamationDiamondFill color="red" />
-                    <Link to="/domainVerify" state={{ data: company }}>
-                      <button
-                        className="m-auto btn btn-primary"
+                  ""
+                )}              
+            </Container>
+          </Navbar>
+            
+          <div className="col-lg-12 col-md-12">
+            <div>
+              <h1>{name}</h1>
+            </div>
+            <div className="align-items-center d-flex">
+              <a
+                href={"https://" + domain}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="me-2"
+              >
+                {domain}
+              </a>
+              {user ? (
+                email === user.email ? (
+                  verify === "true" ? (
+                    <MdVerified />
+                  ) : (
+                    <>
+                      (Not verified)
+                      <div className="flex-fill"></div>
+                      <Link to="/domainVerify"
+                        target="_blank"
+                        className="text-sm"
+                        state={{ data: company }}
                         onClick={() => {
                           handleShow();
                         }}
-                      > 
-                      verify
-                      </button>
-                    </Link>
-                  </>
+                      >How to verify domain?</Link>
+                    </>
+                  )
+                ) : (
+                  ""
                 )
               ) : (
                 ""
-              )
-            ) : (
-              ""
-            )}
-          </div>
-          <br />
-          <div>
-            Guidelines
-            <p>
-              <a target="_blank" rel="noopener noreferrer">
-                {" "}
-                How to create ads
-              </a>
-            </p>
-            <p>
-              <a target="_blank" rel="noopener noreferrer">
-                {" "}
-                How to use fonts
-              </a>
-            </p>
-          </div>
-          <div>
+              )}
+            </div>
+
+            <div id="aboutus" dangerouslySetInnerHTML={{__html: aboutus}}>            
+            </div>
+          
+            <div>            
+              {links?.map((link) => {           
+                return(<div><a target="_blank" href={link}>{link}</a></div>)
+              })}
+            </div>          
+          
+          <div className="mt-5">
             <h5>Logos</h5>
+            
+            {user ? (
+              email === user.email ? (
+                <Link to={"/addfile"}>
+                  <BsFillPlusCircleFill style={{ float: "right", fontSize: 40 }} />
+                </Link>     
+              ) : ("")
+            ) :("")}
+
             <div className="d-flex flex-wrap justify-content-center">
+              {console.log('DomainPost', DomainPost)}
               {DomainPost?.map((brand, index) => {
-                // console.log(brand);
                 return (
-                  <div key={index}>
-                    <div key={brand._id} className=" flex-wrap item">
+                  <div key={brand._id}>
+                    <div className=" flex-wrap item">
                       <Card>
                         <Link to={"/stuff/" + brand._id}>
                           <div
@@ -469,8 +424,7 @@ function Brand() {
                             className="d-flex m-auto btn btn-primary"
                             onClick={() => {
                               setlogo(brand.url);
-                              updateLogo(brand.url);
-                              console.log("brand.url", brand.url);
+                              updateLogo(brand.url);                              
                             }}
                           >
                             Make default
@@ -487,6 +441,27 @@ function Brand() {
               })}
             </div>
           </div>
+
+          <div className="mt-5">
+            <h5>Colors</h5>
+            {allColor?.map(color => {
+              return (
+                <div>
+                  <h4>{color.colorName}</h4>
+                  <div
+                    id="background"
+                    style={{
+                      width: 50,
+                      height: 50,
+                      backgroundColor: color.colorValue,
+                      margin: 5,
+                    }}
+                  ></div>
+                </div>
+              )
+            })}
+          </div>
+
           <div>
             {/* map function to use here */}
             <div className="d-flex">
@@ -510,7 +485,8 @@ function Brand() {
               ></div> */}
             </div>
           </div>
-          <div>
+          
+          <div className="mt-5">
             <h5>Fonts link</h5>
             {/* <div style={{ fontSize: fontSize + "px" }}>{fontSize + "px"}</div> */}
             {fontLink?.map((link) => {
@@ -525,32 +501,19 @@ function Brand() {
               // <h1>{color.colorName}</h1>
               // <h1>{color.colorValue}</h1>
             })}
+          </div>   
+          
+          <div className="mt-5">
+            <h5>Guidelines</h5>            
           </div>
-          <br />
-          <div>
-            <h5>Colors</h5>
 
-            {allColor?.map((color) => {
-              return (
-                <div>
-                  <h4>{color.colorName}</h4>
-                  <div
-                    id="background"
-                    style={{
-                      width: 50,
-                      height: 50,
-                      backgroundColor: color.colorValue,
-                      margin: 5,
-                    }}
-                  ></div>
-                </div>
-              );
-            })}
-          </div>
+          </div>          
         </div>
       ) : (
         <Not_found />
-      )}
+      )
+      }
+    </Container>
     </>
   );
 }
