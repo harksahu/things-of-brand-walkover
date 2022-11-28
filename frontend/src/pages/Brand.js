@@ -15,7 +15,6 @@ import { Canvg, presets } from "canvg";
 import SvgInline from "../utils/SvgInline.js";
 import { BsFillPlusCircleFill, BsPencilSquare, BsFillExclamationDiamondFill, BsShieldCheck } from "react-icons/bs";
 import { MdArrowBackIos, MdVerified, MdShare, MdOutlineModeEdit } from "react-icons/md";
-import { abs } from '../../../node_modules/stylis/src/Utility';
 
 function Not_found() {
   return (
@@ -146,8 +145,7 @@ function Brand() {
   };
 
   const title = useParams();
-  const getbrandslogo = async () => {
-    console.log('{ domain: id, active: 1 }', { domain: id, active: 1 });    
+  const getbrandslogo = async () => {    
     if (domain) {
       const data = await sendSearchAPI({ domain: id, active: 1 });      
       setDomainPost(data?.data?.data);
@@ -315,7 +313,7 @@ function Brand() {
           
             <div>            
               {links?.map((link) => {           
-                return(<div><a target="_blank" href={link}>{link}</a></div>)
+                return(<div key={link}><a target="_blank" href={link}>{link}</a></div>)
               })}
             </div>          
           
@@ -330,8 +328,7 @@ function Brand() {
               ) : ("")
             ) :("")}
 
-            <div className="d-flex flex-wrap justify-content-center">
-              {console.log('DomainPost', DomainPost)}
+            <div className="d-flex flex-wrap justify-content-center">              
               {DomainPost?.map((brand, index) => {
                 return (
                   <div key={brand._id}>
@@ -473,22 +470,26 @@ function Brand() {
 
           <div className="mt-5">
             <h5>Colors</h5>
-            {allColor?.map(color => {
-              return (
-                <div>
-                  <h4>{color.colorName}</h4>
-                  <div
-                    id="background"
-                    style={{
-                      width: 50,
-                      height: 50,
-                      backgroundColor: color.colorValue,
-                      margin: 5,
-                    }}
-                  ></div>
-                </div>
-              )
-            })}
+            <div className="d-flex colors-wrp">
+              {allColor?.map(color => {
+                return (
+                  <div className="color-item box-shadow">
+                    <div
+                      id="background"
+                      style={{
+                        width: 150,
+                        height: 150,
+                        backgroundColor: color.colorValue,                      
+                      }}
+                    ></div>
+                    <div className="color-footer">
+                      <div>{color.colorName}</div>
+                      <div>{color.colorValue}</div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
 
           <div>
