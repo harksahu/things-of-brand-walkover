@@ -264,6 +264,7 @@ function Brand() {
           </div>
           <div id="aboutus"></div>
           <div>{links}</div>
+          {/* <a href = {links} target ="_blank">{links}</a> */}
           <br />
           <div>
             <a

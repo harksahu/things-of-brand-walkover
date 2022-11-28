@@ -1,6 +1,5 @@
 const CACHE_NAME = "version-1"
 const urlsToCache = ["index.html","offline.html"]
-
 this.addEventListener('install',(event)=>{
         event.waitUntil(
             caches.open(CACHE_NAME).then((cache)=>{
@@ -8,7 +7,6 @@ this.addEventListener('install',(event)=>{
             })
         )
 })
-
 this.addEventListener('fetch',(event)=>{
     event.responWith(
         caches.match(event.request).then((res)=>{
@@ -16,7 +14,6 @@ this.addEventListener('fetch',(event)=>{
         })
     )
 })
-
 this.addEventListener('activate',(event)=>{
     const cacheWhiteList = []
     cacheWhiteList.push.push(CACHE_NAME)

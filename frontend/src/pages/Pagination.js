@@ -20,6 +20,7 @@ function Pagination({ postsPerPage, totalPosts, paginate }) {
       setIndex(index - 1);
       if (index - 1 === 0) {
         document.getElementById("previous").style.display = "none";
+        
       }
     }
   };
@@ -37,7 +38,6 @@ function Pagination({ postsPerPage, totalPosts, paginate }) {
         document.getElementById("next").style.display = "none";
     }
   };
-
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pageNumbers.push(i);
   }

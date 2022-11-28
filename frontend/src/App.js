@@ -15,7 +15,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { auth } from './firebase.js';
 import MyVerticallyCenteredModal from './pages/Popup';
-import MyStuffPopup from './pages/MyStuffpopup';
 import Brand from './pages/Brand.js';
 import HomeLogo from './pages/Searchlogo.js';
 import Home2 from './pages/Home2';
@@ -24,9 +23,9 @@ import Profile from './pages/profile';
 
 
 function App() {
-  var isPopup = useLocation().pathname === '/popup' ? true : false;
-  // console.log('isPopup', isPopup);
+
   const [isUserLoaded, setIsUserLoaded] = useState(false);
+  const  location = useLocation()
   useEffect(() => {
     fetchUser()
   }, [])
@@ -36,31 +35,30 @@ function App() {
   }
   return (
     <>
-
       {
         isUserLoaded &&
         <ThemeProvider
           breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
           minBreakpoint="xxs"
-        >          
+        >
           <AuthContextProvider>
-          <NavigationBar />
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
-            <Route path='/search' element={<Search />} />
-            <Route path='/searchlogo' element={<HomeLogo />} />
-            <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />
-            <Route path='/:title' element={<Brand />} />
-            <Route path='/popup-mystuff' element={<MyStuffPopup />} />
-            <Route path='/profile' element={<Profile />} />
-            <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
-            <Route path="/MyStuff" element={<Protected> <MyStuff /> </Protected>} />
-            <Route path='/account' element={<Protected> <Account /> </Protected>} />
-            <Route path='/company' element={<Protected> <MyCompany/> </Protected>} />
-          </Routes>
-        </AuthContextProvider>
-        </ThemeProvider>   
+          { window.location.pathname?(window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <NavigationBar />):<NavigationBar />}
+
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
+              <Route path='/search' element={<Search />} />
+              <Route path='/searchlogo' element={<HomeLogo />} />
+              <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />
+              <Route path='/:title' element={<Brand />} />
+              <Route path='/profile' element={<Profile />} />
+              <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
+              <Route path="/MyStuff" element={<Protected> <MyStuff /> </Protected>} />
+              <Route path='/account' element={<Protected> <Account /> </Protected>} />
+              <Route path='/company' element={<Protected> <MyCompany /> </Protected>} />
+            </Routes>
+          </AuthContextProvider>
+        </ThemeProvider>
       }
     </>
   );

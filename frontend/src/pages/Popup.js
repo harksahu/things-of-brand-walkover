@@ -11,7 +11,6 @@ import Row from "react-bootstrap/Row";
 import "../utils/svginline.css";
 import "../scss/popup.scss";
 import SvgInline from "../utils/SvgInline.js";
-import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useNavigate, useParams } from "react-router-dom";
 import Draggable, { DraggableCore } from 'react-draggable';
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -23,26 +22,19 @@ import {
   restoreMyStuffAPI,
   saveMyStuffAPI,
 } from "../api/index.js";
-import { async } from "@firebase/util";
+
 
 function MyVerticallyCenteredModal(params) {
-  const id = useParams();  
+  const id = useParams();
   const navigate = useNavigate();
   const [mwidth, setWidth] = useState(250);
   const [name, setName] = useState("");
-  const [mheight, setHeight] = useState(250);  
+  const [mheight, setHeight] = useState(250);
   const { user } = UserAuth();
   const [show, setShow] = useState(false);
-
-  const handleHide = () => setShow(false);
-  const handleShow = () => setShow(true);
-  // const debounceOnChange = React.useCallback(debounce(savedata, 400), []);
-
-  const [fullscreen, setFullscreen] = useState(true);
   const [props, setProps] = useState();
+  const [rightPosition, setRightPosition] = useState({x:90 ,y:0});
   console.log(props);
-  // console.log(props?.email)
-  // console.log(user?.email)
   function size(img) {
     setWidth(document.getElementById(img).clientWidth);
     setHeight(document.getElementById(img).clientHeight);
@@ -109,10 +101,16 @@ function MyVerticallyCenteredModal(params) {
   const getData = async () => {
     const data = await searchBrandApi(id.id);
     setProps(data?.data?.data[0]);
-    // console.log(props);
+    setName(data?.data?.data[0].title)
+    var wx = window.innerWidth - 20;
+    var hy = window.innerHeight-20;
+    setRightPosition({
+      x : wx ,
+      y : hy
+    })
   };
 
-  function Set_Name() {    
+  function Set_Name() {
     console.log(name);
     if (name === "") {
       setName(props.title);
@@ -124,157 +122,146 @@ function MyVerticallyCenteredModal(params) {
   }, []);
 
   return (
-    <Container fluid>      
+    <Container fluid>
       <Row className="h-90">
         <Col className="popup_img">
-          <SvgInline {...props} />
-        </Col>        
-      </Row>  
-      <Draggable defaultPosition={{x: 60, y: 60}}>
-        <div className="card property-box">          
-          <div class="card-header d-flex align-items-center">
-            Properties
-            <Dropdown className="ms-auto">
-              <Dropdown.Toggle variant="light" size="sm">
-                <BsThreeDotsVertical />            
-              </Dropdown.Toggle>
 
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Rename</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Delete</Dropdown.Item>                
-              </Dropdown.Menu>
-            </Dropdown>            
-          </div>
-          <div className="card-body">
-            <div>
-              { user !== null && user !== undefined && user && Object.keys(user).length > 0 ?
-                (
+          <Button style={{ position: "absolute" ,margin: 10 , zIndex: 1}} onClick={() => {
+            navigate(-1)
+          }} variant="dark">Back</Button>
+          <SvgInline {...props} />
+        </Col >
+        {/* { x: 90, y: 0 } */}
+        <p style={{ position: "absolute" }}>
+          <Draggable defaultPosition={{x:window.innerWidth - 350, y : 10}}>
+            <div className="card property-box">
+              <div class="card-header d-flex align-items-center">
+                {user !== null && user !== undefined && user && Object.keys(user).length > 0 ?
+                  (
+                    user?.email === props?.email ? (
+                      <input
+                        type="text"
+                        style={{
+                          border: "none",
+                          backgroundColor: "transparent"
+                        }}
+                        onChange={(e) => {
+                          (savedata(props?._id, e.target.value))
+                        }}
+                        value={name}
+                      ></input>
+                    ) : <div>{props?.title}</div>
+                  ) : <div>{props?.title}</div>
+                }
+                {user !== null &&
+                  user !== undefined &&
+                  user &&
+                  Object.keys(user).length > 0 ? (
                   user?.email === props?.email ? (
-                    <input 
-                      type="text"
-                      placeholder={props.title}
-                      onClick={() => {
-                        console.log("object");
-                        Set_Name();
-                      }}
-                      onChange={(e) => {
-                        (savedata(props._id, e.target.value))
-                      }}
-                      value={name}
-                    ></input>
-                  ) : ( "" )
-                ) : ( "")
-              }
-            </div>
-                
-            <label className="small fw-bold mb-1">Size</label>
-            <Row>
-              <Col>
-                <Form.Group
-                  className="mb-3"
-                  controlId="exampleForm.ControlInput1"
-                >
-                  <Form.Label>W</Form.Label>
-                  <Form.Control
-                    onChange={(e) => (setWidth(e.target.value), changeHW(e.target.value, mheight))}
-                    value={mwidth}
-                    size="sm"
-                  />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group
-                  className="mb-3"
-                  controlId="exampleForm.ControlInput1"
-                >
-                  <Form.Label>H</Form.Label>
-                  <Form.Control
-                    onChange={(e) => (setHeight(e.target.value), changeHW(mwidth, e.target.value))}
-                    value={mheight}
-                    size="sm"
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            { user !== null &&
-              user !== undefined &&
-              user &&
-              Object.keys(user).length > 0 ? (
-                user?.email === props?.email ? (
-                  <>
-                    <Button
-                      onClick={async () => {
-                        const new_data = {
-                          _id: props.user._id,
-                          title: name,
-                        };
-                        await saveMyStuffAPI(new_data);
-                        alert("saved");
-                        window.location.reload();
-                      }}
-                      variant="outline-secondary"
-                      size="sm"
+                    <>
+                      <Dropdown className="ms-auto">
+                        <Dropdown.Toggle variant="light" size="sm">
+                          <BsThreeDotsVertical />
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                          <Dropdown.Item onClick={() => {
+                            (savedata(props?._id, name))
+                          }}>Rename</Dropdown.Item>
+                          {props.active === false ? (
+                            <Dropdown.Item
+                              onClick={async () => {
+                                console.log("object");
+                                await restoreMyStuffAPI(props?._id);
+                                // alert("restore")
+                                navigate(-1);
+                              }}
+                              variant="outline-secondary"
+                              size="sm"
+                            >
+                              Restore
+                            </Dropdown.Item>
+                          ) : (
+                            <Dropdown.Item
+                              onClick={async () => {
+                                await deleteMyStuffAPI(props?._id);
+                                // alert("Deleted");
+                                // window.location.reload();
+                                navigate(-1);
+                              }}
+                              variant="outline-secondary"
+                              size="sm"
+                            >
+                              Delete
+                            </Dropdown.Item>
+                          )}
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </>
+                  ) : ("")
+                ) : ("")
+                }
+              </div>
+              <div className="card-body">
+                <label className="small fw-bold mb-1">Size</label>
+                <Row>
+                  <Col>
+                    <Form.Group
+                      className="mb-3"
+                      controlId="exampleForm.ControlInput1"
                     >
-                      save
-                    </Button>
-                    
-                    { props.active === false ? (
-                      <Button
-                        onClick={async () => {
-                          console.log("object");
-                          await restoreMyStuffAPI(props?._id);
-                          // alert("restore")
-                          navigate(-1);
-                        }}
-                        variant="outline-secondary"
+                      <Form.Label>W</Form.Label>
+                      <Form.Control
+                        onChange={(e) => (setWidth(e.target.value), changeHW(e.target.value, mheight))}
+                        value={mwidth}
                         size="sm"
-                      >
-                        Restore
-                      </Button>
-                      ) : (
-                      <Button
-                        onClick={async () => {
-                          await deleteMyStuffAPI(props?._id);
-                          // alert("Deleted");
-                          // window.location.reload();
-                          navigate(-1);
-                        }}
-                        variant="outline-secondary"
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group
+                      className="mb-3"
+                      controlId="exampleForm.ControlInput1"
+                    >
+                      <Form.Label>H</Form.Label>
+                      <Form.Control
+                        onChange={(e) => (setHeight(e.target.value), changeHW(mwidth, e.target.value))}
+                        value={mheight}
                         size="sm"
-                      >
-                        delete
-                      </Button>
-                    )}
-                  </>
-                ) : ( "" )
-              ) : ( "" )              
-            }
-            <div className="mt-4 mb-1">
-              <label className="small fw-bold">Download</label>
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <div className="mt-4 mb-1">
+                  <label className="small fw-bold">Download</label>
+                </div>
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  onClick={() => {
+                    DownloadToPng(props.url, mwidth, mheight);
+                  }}
+                  className=""
+                >
+                  PNG
+                </Button>
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  onClick={() => {
+                    const canvas = DownloadToSvg(props.url, props.title);
+                  }}
+                // onClick={() => saveAs(props.title)}
+                >
+                  SVG
+                </Button>
+              </div>
             </div>
-            <Button
-              variant="outline-secondary"
-              size="sm"
-              onClick={() => {
-                DownloadToPng(props.url, mwidth, mheight);
-              }}
-              className=""
-              >
-              PNG
-            </Button>
-            <Button
-              variant="outline-secondary"
-              size="sm"
-              onClick={() => {
-                const canvas = DownloadToSvg(props.url, props.title);
-              }}
-              // onClick={() => saveAs(props.title)}
-              >
-              SVG
-            </Button>
-          </div>          
-        </div>
-      </Draggable>
+          </Draggable>
+        </p>
+
+      </Row>
+
     </Container>
     //     </Modal.Body>
     //     <Modal.Footer>
