@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
 import Addfile from './Addfile'
 import "../utils/svginline.css";
 import "./home.scss";
@@ -15,14 +11,11 @@ import {
   getTXT,
 } from "../api/index.js";
 import saveAs from "file-saver";
-import { Canvg, presets } from "canvg";
 import SvgInline from "../utils/SvgInline.js";
 import Card from "react-bootstrap/Card";
 import Figure from "react-bootstrap/Figure";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import ListGroup from "react-bootstrap/ListGroup";
-import Accordion from "react-bootstrap/Accordion";
 
 import { getCompanyDetails } from "../api/index.js";
 
@@ -222,7 +215,6 @@ function Brand() {
 
   return (
     <>
-      {console.log("all color = ", allColor)}
       {domain ? (
         <div className="m-5">
           <Button
@@ -236,7 +228,6 @@ function Brand() {
           {user ? (
             email === user.email ? (
               <>
-                {/* <Link to={"/addfile"}> */}
                 <BsFillPlusCircleFill
                   onClick={handleShowUploadFile}
                   style={{ float: "right", fontSize: 40 }}
@@ -246,13 +237,7 @@ function Brand() {
                     Upload Your File
                   </Modal.Header>
                     <Addfile/> 
-                  {/* <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseUploadFile}>
-                      Close
-                    </Button>
-                  </Modal.Footer> */}
                 </Modal>
-                {/* </Link> */}
                 <Button
                   variant="primary"
                   style={{ float: "right" }}
@@ -326,15 +311,15 @@ function Brand() {
                 ) : (
                   <>
                     {" "}
-                    <BsFillExclamationDiamondFill />
+                    <BsFillExclamationDiamondFill color="red" />
                     <Link to="/domainVerify" state={{ data: company }}>
                       <button
                         className="m-auto btn btn-primary"
                         onClick={() => {
                           handleShow();
                         }}
-                      >
-                        verify
+                      > 
+                      verify
                       </button>
                     </Link>
                   </>
