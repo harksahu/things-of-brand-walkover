@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, Container, Row, Col, Form, Button, Stack } from "react-bootstrap";
 import { UserAuth } from "../context/AuthContext";
-import { getProfileDetails, updateProfileFields, getFontList, createProfile,sendSearchAPI } from "../api/index.js";
+import { getProfileDetails, updateProfileFields, getFontList, createProfile, sendSearchAPI } from "../api/index.js";
 import CloseIcon from "@mui/icons-material/Close";
 import RichtextEditor from "./jodit.js";
 import { BsFillTrashFill, BsChevronLeft } from "react-icons/bs";
@@ -49,7 +49,7 @@ function Profile(props) {
 
 
   const getbrandslogo = async () => {
-    console.log("domain =",domain);
+    console.log("domain =", domain);
     if (domain) {
       const data = await sendSearchAPI({ domain: id, active: 1 });
       console.log(data);
@@ -88,7 +88,7 @@ function Profile(props) {
       if (user?.email) {
         next();
         profileDetails();
-        
+
       }
     }
   }, [user]);
@@ -166,7 +166,7 @@ function Profile(props) {
     }
   };
 
-  const profileDetails = async (req, res) => {    
+  const profileDetails = async (req, res) => {
     fresult = await getProfileDetails({});
     setResults(fresult.data.data);
 
@@ -183,8 +183,7 @@ function Profile(props) {
       setFontLink(location.state.data.fontLink);
       setcount(location.state.data.color);
     }
-    if (location.state.data.domain)
-    {
+    if (location.state.data.domain) {
       getbrandslogo();
     }
 
@@ -330,13 +329,13 @@ function Profile(props) {
     setvalid(newFormVaild);
 
   };
-  return (    
+  return (
     <div className="bg-gray h-100">
       <Container className="wrpr">
-        <Row>          
+        <Row>
           <nav className="navbar bg-light">
             <div className="container-fluid">
-              <a className="navbar-brand" onClick={() => { navigate(-1)}}>
+              <a className="navbar-brand" onClick={() => { navigate(-1) }}>
                 <button type="button" className="btn btn-light me-3">
                   <MdArrowBackIos />
                 </button>
@@ -344,7 +343,7 @@ function Profile(props) {
               </a>
             </div>
           </nav>
-          <Col md={12} lg={12}>            
+          <Col md={12} lg={12}>
             <Card style={{ width: "35rem" }} className="bdr-none box-shadow">
               <Card.Body>
                 <Stack gap={3}>
@@ -396,17 +395,17 @@ function Profile(props) {
                         type="domain"
                         placeholder="Enter domain name"
                         list="doaminBrowsers"
-                        autocomplete='off'
+                        autocomplete="off"
                         name="myBrowser"
                         id="domain"
                         onChange={(e) => {
 
                           // setDomain(extractDomain(e.target.value));
-                           setDomain(e.target.value);
+                          setDomain(e.target.value);
                           // checkDomain(e.target.value);
                         }}
                         value={domain}
-                        
+
                       />
                       <div className="visually-hidden" id="domainError">
 
@@ -414,14 +413,16 @@ function Profile(props) {
 
                       </div>
 
-                      <datalist id="doaminBrowsers">
+
+                      {/* autocompate domain */}
+                      {/* <datalist id="doaminBrowsers">
                         {results &&
                           results.map((brandData) => {
                             // console.log(brandData.domain);
                             return <option key={brandData._id} value={brandData.domain} />;
                           })}
-                      </datalist>
-                      {/* <div id="domain" style={{ color: "red" }}></div> */}
+                      </datalist> */}
+
                     </Form.Group>
 
                     <Form.Group className="mb-3 visually-hidden" id="Guidlines" >
@@ -508,6 +509,8 @@ function Profile(props) {
                                 type="url"
                                 // name="user_table_input"
                                 id={"id" + index}
+                                autocomplete="off"
+
                                 placeholder="Enter font name "
                                 value={fontLink[index]}
                                 onChange={(e) => {
@@ -582,7 +585,7 @@ function Profile(props) {
                           </Button>
                         </div>
                       </div>
-                            {console.log("DomainPost = ",DomainPost)}
+                      {console.log("DomainPost = ", DomainPost)}
                     </Form.Group>
 
                     <div id="button" className=" visually-hidden">
@@ -596,8 +599,8 @@ function Profile(props) {
                     </Button>
                   // )} */}
                     </div>
-                    
-            {/* <div className="d-flex flex-wrap justify-content-center">
+
+                    {/* <div className="d-flex flex-wrap justify-content-center">
               {DomainPost?.map((brand, index) => {
                 // console.log(brand);
                 return (
@@ -645,7 +648,7 @@ function Profile(props) {
           </Col>
         </Row>
       </Container>
-    </div>    
+    </div>
   );
 }
 
