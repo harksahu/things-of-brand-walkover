@@ -332,8 +332,7 @@ function Brand() {
               {DomainPost?.map((brand, index) => {
                 return (
                   <div key={brand._id}>
-                    <div className=" flex-wrap item">
-                      <Card>
+                      <Card className="box-shadow">
                         <Link to={"/stuff/" + brand._id}>
 
                           <div
@@ -435,7 +434,6 @@ function Brand() {
 
                         </Card.Text>
                       </Card>
-                    </div>
                     {user ? (
                       email === user.email ? (
                         logo === brand.url ? (
