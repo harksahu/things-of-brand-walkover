@@ -136,7 +136,7 @@ function Profile(props) {
     }
   };
   const updateProfileValue = async (req, res) => {
-
+    console.log('update', name, aboutus);
 
     if (name) {
       if (aboutus) {
@@ -153,6 +153,7 @@ function Profile(props) {
           email: user?.email,
           color: color
         };
+        console.log('updateProfileFields', data);
         await updateProfileFields(data);
         navigate(-1)
       } else {
