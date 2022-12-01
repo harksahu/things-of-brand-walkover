@@ -109,13 +109,15 @@ function Profile(props) {
     if (check) {
       if (user) {
         if (user?.email) {
+          console.log("exextevalue");
           try {
-            // 
+            const d = extractDomain(domain)
+            setDomain(d)
             const data = await createProfile({
               name,
               aboutus,
               links,
-              domain,
+              domain: d,
               guidlines,
               fontLink,
               color,
@@ -124,7 +126,7 @@ function Profile(props) {
               email: user?.email,
             });
             // console.log(data);
-            alert("successfully saved domain " + domain);
+            alert("successfully saved domain " + d);
           } catch (err) {
             console.log(err);
             alert("Profile is not created");
