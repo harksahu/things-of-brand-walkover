@@ -22,20 +22,15 @@ const createProfile = async (req, res) => {
 
 
 const getProfileDetails = async (req, res) => {
-    // console.log(req.query.email);
 
     var email = req.query.email === "" ? {} : { email: req.query.email };
     var _id = req.query._id === "" ? {} : { _id: req.query._id };
     var searchfrom = req.query.searchfrom
-    console.log("req?.params")
-    console.log(req?.params?.domain)
     var domainCheck = req.params.domain || req.query.domain
-    console.log(domainCheck)
 
     var domain = domainCheck?.length ? { domain: { '$regex': domainCheck, "$options": "i" } } : '';
     var name = req?.query?.name
     // === "" ? {} : { name: { '$regex': req?.query?.name, "$options": "i" } };
-    console.log(searchfrom);
     if (searchfrom == "true") {
         try {
             var data = await profileModel.find({
@@ -46,12 +41,10 @@ const getProfileDetails = async (req, res) => {
 
             });
             const domain1 = data[0]._id;
-            console.log(data[0]._id);
             const logos = await BrandModel.find({
                 domain: domain1,
 
             });
-            console.log(logos);
             // data = data.push(logos)
             res.json({
                 "message": "Related Data is Successfully Find",

@@ -42,3 +42,12 @@
     background-color: #fff;
     border: none !important;
 }
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(266px, 2fr));
+    justify-content: space-between;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    justify-items: stretch;
+}

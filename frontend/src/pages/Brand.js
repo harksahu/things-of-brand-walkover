@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import {Container, Row, Form, Col, Navbar, Nav, Card, Figure, Button, Modal} from "react-bootstrap";
+import {Container, Row, Form, Col, Navbar, Nav, Card, Figure, Button, Modal, ListGroup} from "react-bootstrap";
 import "../utils/svginline.css";
 import "../scss/brand.scss";
 import { UserAuth } from "../context/AuthContext";
@@ -156,7 +156,7 @@ function Brand() {
     const fresult = await getProfileDetails({
       domain: title.title,
       searchfrom: true,
-    });    
+    });
     setCompany(fresult.data.data[0])
     setId(fresult.data.data[0]._id);
     setName(fresult.data.data[0].name);
@@ -173,15 +173,13 @@ function Brand() {
     setlogo(fresult.data.data[0].logo);
     setEmail(fresult.data.data[0].email);
     setVerify(fresult.data.data[0].verify);
-    setSharedEmail(fresult.data.data[0].sharedEmail);
-
+    setSharedEmail(fresult.data.data[0].sharedEmail);    
     /* if (fresult.data.data[0].aboutus.length) {
       document.getElementById("aboutus").innerHTML = fresult.data.data[0].aboutus;
     } */
 
-    getbrandslogo();
+    //getbrandslogo();    
   };
-
 
   const updateLogo = async (logo_url) => {
 
@@ -241,8 +239,15 @@ function Brand() {
                         <Modal.Header closeButton>
                           <Modal.Title>Share Your Company</Modal.Title>
                         </Modal.Header>
-                        <Modal.Body><input type="email"
-                          placeholder="Enter the email" id="addEmail" /></Modal.Body>
+                        <Modal.Body>
+                          <input type="email"
+                          placeholder="Enter the email" id="addEmail" />
+                          <ListGroup variant="flush">
+                            {sharedEmail?.map((email) => {                                         
+                              <ListGroup.Item>{email}</ListGroup.Item>
+                            })}                            
+                          </ListGroup>
+                        </Modal.Body>
                         <Modal.Footer>
                           <Button variant="secondary" onClick={handleClosee}>
                             Close
@@ -318,17 +323,8 @@ function Brand() {
             </div>          
           
           <div className="mt-5">
-            <h5>Logos</h5>
-            
-            {user ? (
-              email === user.email ? (
-                <Link to={"/addfile"}>
-                  <BsFillPlusCircleFill style={{ float: "right", fontSize: 40 }} />
-                </Link>     
-              ) : ("")
-            ) :("")}
-
-            <div className="d-flex flex-wrap justify-content-center">              
+            <h5>Logos</h5>                        
+            <div className="grid">              
               {DomainPost?.map((brand, index) => {
                 return (
                   <div key={brand._id}>
@@ -463,6 +459,26 @@ function Brand() {
                   </div>
                 );
               })}
+              
+              {user ? (
+              email === user.email ? (
+                <Link to="/addfile" className="add-new">
+                  <Card className="h-100 item-company">                
+                    <Card.Body className="align-items-center card-body d-flex justify-content-center">
+                      <Card.Title                    
+                        className="text-center"
+                      >
+                        <BsFillPlusCircleFill style={{ fontSize: 40 }} />
+                      </Card.Title>
+                      <Card.Text></Card.Text>
+                    </Card.Body>
+                    <div className="card-footer">
+                      Add new Logo
+                    </div>
+                  </Card>
+                </Link>                
+              ) : ("")
+            ) :("")}
             </div>
           </div>
 
@@ -530,7 +546,8 @@ function Brand() {
           </div>   
           
           <div className="mt-5">
-            <h5>Guidelines</h5>            
+            <h5>Guidelines</h5>
+            <div dangerouslySetInnerHTML={{__html: guidlines}}></div>
           </div>
 
           </div>          

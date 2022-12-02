@@ -35,7 +35,7 @@ function MyCompany() {
   };
 
   return (
-    <div className="bg-gray h-100">
+    <div className="h-100">
     <Container>
       <Row>
           <Row md={4} className="g-4 flex p-3">
