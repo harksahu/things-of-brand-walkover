@@ -13,6 +13,11 @@
 }
 .img_size{
     padding: 16px;    
+    text-align: center;
+}
+.img_size img{
+    width: 60%;
+    opacity: .1;
 }
 .img_size .svgInline{    
     border-radius: var(--bs-card-border-radius);

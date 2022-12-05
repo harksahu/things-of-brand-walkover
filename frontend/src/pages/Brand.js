@@ -18,15 +18,9 @@ import { MdArrowBackIos, MdVerified, MdShare, MdOutlineModeEdit } from "react-ic
 
 function Not_found() {
   return (
-    <Figure className="text-center flex justify-cont">
-      <Figure.Image
-        width={500}
-        height={500}
-        alt="171x180"
-        src="https://i.pinimg.com/564x/f4/e0/d9/f4e0d998d00d96269eeb30c8c625031b.jpg"
-      />
-      <Figure.Caption>Data not found</Figure.Caption>
-    </Figure>
+    <div className="not-found">
+      Not found
+    </div>
   );
 }
 
@@ -327,17 +321,15 @@ function Brand() {
             <div className="grid">              
               {DomainPost?.map((brand, index) => {
                 return (
-                  <div key={brand._id}>
+                  <div key={brand._id} className="item">
                       <Card className="box-shadow">
                         <Link to={"/stuff/" + brand._id}>
-
                           <div
                             style={{ overflow: "auto" }}
                             className="img_size"
                           >
                             <SvgInline {...brand} />
                           </div>
-
                           <Card.Body>
                             <Card.Title
                               style={{ textDecoration: "none" }}
@@ -345,124 +337,55 @@ function Brand() {
                             >
                               {brand.title}
                             </Card.Title>
-
-
-
                           </Card.Body>
-                        </Link>
-                        <Button
-                                    variant="outline-secondary"
+                          </Link>
+                          <Card.Footer className="text-muted justify-content-between d-flex">
+                            <Button
+                              variant="outline-secondary"
+                              size="sm"
+                              onClick={() => {
+                                const canvas = DownloadToSvg(brand.url, brand.title);
+                              }}
+                            >
+                              Download
+                            </Button>
+                            {user ? (
+                              email === user.email ? (
+                                logo === brand.url ? (
+                                  <Button
+                                    variant="light"
+                                    size="sm"
+                                    disabled
+                                  >
+                                    Default logo
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    variant="light"
                                     size="sm"
                                     onClick={() => {
-                                      const canvas = DownloadToSvg(brand.url, brand.title);
+                                      setlogo(brand.url);
+                                      updateLogo(brand.url);                              
                                     }}
                                   >
-                                    Download Svg
-                        </Button>
-                        <Card.Text>
-                          {/* <Accordion>
-                            <Accordion.Item eventKey="0">
-                              <Accordion.Header>Edit</Accordion.Header>
-                              <Accordion.Body>
-                                <div className="card-body">
-                                  <label className="small fw-bold mb-1">Size</label>
-
-                                  <Col>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>W</Form.Label>
-                                      <Form.Control
-                                        onChange={(e) => (setWidth(e.target.value))}
-                                        value={mwidth}
-                                        size="sm"
-                                        autocomplete="off"
-                                      />
-                                    </Form.Group>
-                                  </Col>
-                                  <Col>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>H</Form.Label>
-                                      <Form.Control
-                                        onChange={(e) => (setHeight(e.target.value))}
-                                        value={mheight}
-                                        size="sm"
-                                        autocomplete="off"
-                                      />
-                                    </Form.Group>
-                                  </Col>
-
-                                  <div className="mt-4 mb-1">
-                                    <label className="small fw-bold">Download</label>
-                                  </div>
-                                  <Button
-                                    variant="outline-secondary"
-                                    size="sm me-4"
-                                    onClick={() => {
-                                      DownloadToPng(brand.url, mwidth, mheight);
-                                    }}
-                                    className=""
-                                  >
-                                    PNG
+                                    Make default
                                   </Button>
-                                  <Button
-                                    variant="outline-secondary"
-                                    size="sm"
-                                    onClick={() => {
-                                      // const canvas = DownloadToSvg(brand.url, brand.title);
-                                      saveAs(brand.url, brand.title);
-
-                                      // const canvas = DownloadToSvg
-                                    }}
-                                  // onClick={() => saveAs(props.title)}
-                                  >
-                                    SVG Code
-                                  </Button>
-                                </div>
-                              </Accordion.Body>
-                            </Accordion.Item>
-                          </Accordion> */}
-
-
-                        </Card.Text>
-                      </Card>
-                    {user ? (
-                      email === user.email ? (
-                        logo === brand.url ? (
-                          <button
-                            className="d-flex m-auto btn btn-success"
-                            disabled
-                          >
-                            default logo
-                          </button>
-                        ) : (
-                          <button
-                            className="d-flex m-auto btn btn-primary"
-                            onClick={() => {
-                              setlogo(brand.url);
-                              updateLogo(brand.url);                              
-                            }}
-                          >
-                            Make default
-                          </button>
-                        )
-                      ) : (
-                        ""
-                      )
-                    ) : (
-                      ""
-                    )}
+                                )
+                              ) : (
+                                ""
+                              )
+                            ) : (
+                              ""
+                            )}
+                          </Card.Footer>                                                
+                      </Card>                    
                   </div>
                 );
               })}
               
               {user ? (
               email === user.email ? (
-                <Link to="/addfile" className="add-new">
+                <Link to="/addfile" className="add-new item">
                   <Card className="h-100 item-company">                
                     <Card.Body className="align-items-center card-body d-flex justify-content-center">
                       <Card.Title                    
@@ -473,7 +396,8 @@ function Brand() {
                       <Card.Text></Card.Text>
                     </Card.Body>
                     <div className="card-footer">
-                      Add new Logo
+                      <Button variant="link"
+                      size="sm">Add new Logo</Button>
                     </div>
                   </Card>
                 </Link>                
