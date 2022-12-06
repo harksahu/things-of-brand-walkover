@@ -206,7 +206,7 @@ function Brand() {
 
   return (
     <>
-      <Container>
+    <Container>
       {domain ? (
         <div className="row mt-4">
           <Navbar>

@@ -11,7 +11,7 @@ import SideBar from '../components/SideBar';
 
 function MyCompany() {
   const [company, setCompany] = useState();
-  const[sharedEmail,setSharedEmail] = useState();
+  const[allData,setAllData] = useState();
   const { user } = UserAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -21,13 +21,23 @@ function MyCompany() {
         profileDetails();
       }
     }
+    findSharedEmail();
   }, [user]);
   let fresult;
+
+  const findSharedEmail = async(req,res)=>{
+    var shareddEmail = await getProfileDetails({});
+    console.log(shareddEmail.data.data);
+    setAllData(shareddEmail.data.data);
+
+      
+  }
   const profileDetails = async (req, res) => {
     fresult = await getProfileDetails({ email: user.email });
     setCompany(fresult.data.data);
 
-    console.log(fresult.data.data);
+    // setSharedEmail(fresult.data.data.sharedEmail);
+    console.log(fresult.data.data[1].sharedEmail);
     if (Array.isArray(fresult.data.data) && fresult.data.data.length) {
       // console.log("efsad");
     } else {
@@ -84,6 +94,66 @@ function MyCompany() {
               </div>
             </Card>
           </Link>
+        </div>      
+    </Container>
+
+          <br></br>
+          <h1>Shared Companies</h1>
+
+    <Container>
+        <div className="grid">
+
+          
+
+          {allData?.map((Company) => {
+         
+            return (
+                <div
+                key={Company._id}
+                className="d-flex justify-content-center item"
+              >
+               
+              {Company?.sharedEmail?.map((sharedEmail) => {
+                 return (
+                  <div>
+                    {console.log("hello"+ sharedEmail + "user = "+ user.email)}
+                  { sharedEmail == user.email ?
+                      <Link to={'/' + Company.domain}>
+                      <Card className="item-company">
+                        <div style={{ overflow: "auto" }} className="img_size">
+                        {Company?.logo ? (
+                          <SvgInline url={Company.logo} />
+                        ):(
+                          <img src="/assets/picture.svg" />
+                        )}                      
+                        </div>
+                        <Card.Body>
+                          <Card.Title
+                            style={{ textDecoration: "none" }}
+                            className="text-center"
+                          >
+                            {Company.name ? Company.name : Company.domain}
+                          </Card.Title>
+                          <Card.Text></Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Link>:""
+                   }
+                   </div>
+                  ) ;
+                })}
+         
+              </div>
+        
+            ) 
+          })}
+
+
+
+          
+
+
+         
         </div>      
     </Container>
     </div>
