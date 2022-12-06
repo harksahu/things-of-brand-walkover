@@ -237,8 +237,9 @@ function Brand() {
                           <Modal.Title>Share Your Company</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                          <input type="email"
+                          <input type="email" name="email"
                           placeholder="Enter the email" id="addEmail" />
+                          
                           <ListGroup variant="flush">
                             {sharedEmail?.map((email) => {                                         
                               <ListGroup.Item>{email}</ListGroup.Item>

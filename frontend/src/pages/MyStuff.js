@@ -67,7 +67,9 @@ function Home() {
               ) : (
                 searchBrandData?.data?.map((brand) => {
                   return (
-                    <>
+
+                    
+                    <div key ={brand._id}>
                       {brand.active === true ? (
                         <div
                           key={brand._id}
@@ -95,7 +97,8 @@ function Home() {
                           </Link>
                         </div>
                       ) : null}
-                    </>
+                    </div>
+                    
                   );
                 })
               )}
@@ -107,7 +110,7 @@ function Home() {
                 ) : (
                   searchBrandData?.data?.map((brand) => {
                     return (
-                      <>
+                      <div key={brand._id}>
                         {brand.active === false ? (
                           <div
                             key={brand._id}
@@ -135,7 +138,7 @@ function Home() {
                             </Link>
                           </div>
                         ) : null}
-                      </>
+                      </div>
                     );
                   })
                 )}

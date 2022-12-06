@@ -9,7 +9,6 @@ const searchBrandName = async (req, res) => {
         var active = req.query.active === "" ? {} : { active: req.query.active };
         var _id = req.query._id === "" ? {} : { _id: req.query._id };
         var domain = req.query.domain === "" ? {} : { domain: req.query.domain };
-        console.log(title)
         const data = await BrandModel.find({
 
 
@@ -26,9 +25,8 @@ const searchBrandName = async (req, res) => {
             "data": data || []
         }).status(200);
 
-        // console.log(data)
     } catch (error) {
-        // console.log(error);
+        
         res.status(400).send({
             message: "Some Error on Server",
             error
@@ -36,12 +34,7 @@ const searchBrandName = async (req, res) => {
     }
 }
 
-// const searchBrandName = async (req, res) => {
-//     //   console.log(req.query.description);
-//     let payload = req.query.description.trim();
-//     let search = await BrandModel.find({ name:{$regex: new RegExp('^'+description+'.*',i)}}).exec();
-//     search = search.slice(0, 10);
-// }
+
 
 export {
 
