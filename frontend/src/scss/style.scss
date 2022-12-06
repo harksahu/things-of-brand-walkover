@@ -1,4 +1,9 @@
 @import 'theme';
+.not-found{
+    font-size: 100px;
+    font-weight: bold;
+    text-align: center;
+}
 .bg-gray{
     background-color: var(--bs-gray-100);
 }
@@ -41,4 +46,18 @@
     box-shadow: var(--box-shadow);
     background-color: #fff;
     border: none !important;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(266px, 2fr));
+    justify-content: space-between;
+    grid-column-gap: 30px;
+    grid-row-gap: 30px;
+    justify-items: stretch;
+    .item{        
+        .card{
+            border: none;            
+        }
+    }
 }

@@ -17,6 +17,8 @@ import {setConfigTable,getUrlFromTable} from "./details_feacher/getUrlFromTable.
 import dotenv from 'dotenv'
 import { log } from "console";
 import dns from "dns";
+import {getCompanyJson} from "./controllers/profileController.js";
+
 dotenv.config({path:'../.env'})
 
 
@@ -43,6 +45,25 @@ app.use('/api/deteteItems',MyStuffdeleteitemRouters);
 app.use('/api/storeKey',authKeyRouters);
 app.use('/api/deleteKey',authKeyRouters);
 app.use('/api/profile',profileRouters);
+
+
+app.get('/:domain/json',async(req,res)=>{
+
+  // console.log("req");
+  // console.log(req?.params?.domain);
+  const data = await getCompanyJson(req?.params?.domain)
+  console.log("data");
+  console.log(data);
+  res.send({data});
+  // return data
+})
+
+
+
+
+
+
+
 
 app.get('/s3url',async(req,res)=>{
     // console.log("file:-");

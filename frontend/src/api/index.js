@@ -1,7 +1,7 @@
 import axios from "../interceptor/interceptor";
-const URL = "https://thingsofbrand.com";
+// const URL = "https://thingsofbrand.com";
 
-// const URL = "http://localhost:8080";
+const URL = "http://localhost:8080";
 
 
 // const uploadSingleFileAPI = async (fileObject) => {
@@ -19,7 +19,6 @@ const createBrandAPI = async (dataToSend) => {
     ...dataToSend,
     // url: URL + "/" + dataToSend.url,
   };
-  console.log(dataToSend)
   return await axios.post(URL + "/api/brands", data);
 };
 
@@ -30,19 +29,14 @@ const createProfile   = async (dataToSend) => {
   return await axios.post(URL + "/api/profile", data);
 };
 
-const getProfileDetails = async ({email="",domain="",name="",searchfrom="false",_id=""}) => {
-  console.log(_id);
+const getProfileDetails = async ({email="",domain="",name="",searchfrom="false",_id=""}) => {  
   const title="";
   const active="1";
   const description="";
   const id="";
-  var data = await axios.get(URL + "/api/profile?email="+email+"&domain="+domain+"&name="+name+"&searchfrom="+searchfrom+"&_id="+_id);
-  
+  var data = await axios.get(URL + "/api/profile?email="+email+"&domain="+domain+"&name="+name+"&searchfrom="+searchfrom+"&_id="+_id);  
   const logos = await axios.get(URL + "/api/search?title=" + title+"&email="+email+"&active="+active+"&description="+description+"&_id=" + id+ "&domain=" +data?.data?.data[0]._id);
-  
-  // const dataAndLogo = { ...data?.data?.data[0], allogosdata: [logos?.data?.data]};
-
-  // console.log(dataAndLogo);
+  // data?.data?.data[0].push(logos?.data?.data)  
   return data
 }
 const getProfileandLogoDetails = async ({email="",domain="",name="",searchfrom="false",_id=""}) => {
@@ -69,7 +63,6 @@ const searchBrandApi = async (id) => {
 
 
 const updateProfileFields = async(dataToSend) => {
-  console.log(dataToSend);
   const data = {
     ...dataToSend
   }
@@ -92,11 +85,10 @@ const deleteMyStuffAPI = async (id) => {
   return await axios.delete(URL + "/api/Mystuff/" + id);
 };
 const sendSearchAPI = async ({title = "" , email = "" , active = "",description="",_id="",domain=""}) => {  
-  return await axios.get(URL + "/api/search?title=" + title+"&email="+email+"&active="+active+"&description="+description+"&_id=" + _id+ "&domain=" + domain);
+  return await axios.get(URL + "/api/search?title="+title+"&email="+email+"&active="+active+"&description="+description+"&_id="+_id+"&domain="+domain);
 };
 
 const getCompanyDetails = async (id) => {
-  console.log(id)
   return await axios.get(URL + "/api/profile/" +  id );
 }
 

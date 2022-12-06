@@ -22,14 +22,15 @@ const createProfile = async (req, res) => {
 
 
 const getProfileDetails = async (req, res) => {
-    // console.log(req.query.email);
+
     var email = req.query.email === "" ? {} : { email: req.query.email };
     var _id = req.query._id === "" ? {} : { _id: req.query._id };
     var searchfrom = req.query.searchfrom
-    var domain = req.query.domain === "" ? {} : { domain: { '$regex': req.query.domain, "$options": "i" } };
-    var name = req.query.name === "" ? {} : { name: { '$regex': req.query.name, "$options": "i" } };
+    var domainCheck = req.params.domain || req.query.domain
 
-    console.log(searchfrom);
+    var domain = domainCheck?.length ? { domain: { '$regex': domainCheck, "$options": "i" } } : '';
+    var name = req?.query?.name
+    // === "" ? {} : { name: { '$regex': req?.query?.name, "$options": "i" } };
     if (searchfrom == "true") {
         try {
             var data = await profileModel.find({
@@ -39,20 +40,23 @@ const getProfileDetails = async (req, res) => {
                 // ...domain
 
             });
-            const domain = data._id;
+            const domain1 = data[0]._id;
             const logos = await BrandModel.find({
-                ...domain,
+                domain: domain1,
 
             });
             // data = data.push(logos)
             res.json({
                 "message": "Related Data is Successfully Find",
                 "data": {
-                    ...data,
-                    ...logos
+                    logos,
+                    ...data
                 }
+
             }).status(200);
         } catch (error) {
+            console.log(error);
+
             res.send({
                 message: "Some Error on Server",
                 error
@@ -62,8 +66,8 @@ const getProfileDetails = async (req, res) => {
         // console.log("afas");
         try {
             const data = await profileModel.find({
-                $or: [{ ...domain }, { ...name }],
-                // ...domain,
+                // $or: [{ ...domain }, { ...name }],
+                ...domain,
                 ...email,
 
             });
@@ -72,9 +76,10 @@ const getProfileDetails = async (req, res) => {
                 "data": data
             }).status(200);
         } catch (error) {
+            console.log(error);
             res.send({
                 message: "Some Error on Server",
-                error
+                error: error
             }).status(400);
         }
     }
@@ -82,7 +87,7 @@ const getProfileDetails = async (req, res) => {
 
 const updateProfile = async (req, res) => {
     console.log("logo url in backend", req.body.logo_url);
-    let { name, aboutus } = req.body
+    let { name, aboutus ,fontLink} = req.body
     let logo = req.body.logo;
     let links = req.body.links;
     let domain = req.body.domain;
@@ -117,6 +122,7 @@ const updateProfile = async (req, res) => {
                     email,
                     verify,
                     link,
+                    fontLink
                 }
             }
         )
@@ -153,11 +159,38 @@ const getCompanyDetailss = async (req, res) => {
         }).status(400);
     }
 }
+const getCompanyJson = async (domain) => {
+    try {
+        var data = await profileModel.find({
+        domain : domain
+
+        });
+        const domain1 = data[0]._id;
+        console.log(data[0]._id);
+        const logos = await BrandModel.find({
+            domain: domain1,
+
+        });
+        console.log(logos);
+        // data = data.push(logos)
+        return [{ logos, ...data }]
+    } catch (error) {
+        console.log(error);
+
+        return error
+    }
+}
+
+
+
+
+
 
 
 export {
     createProfile,
     getProfileDetails,
     updateProfile,
-    getCompanyDetailss
+    getCompanyDetailss,
+    getCompanyJson
 }

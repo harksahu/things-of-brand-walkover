@@ -22,7 +22,7 @@ const SvgInline = (props) => {
 
   return (
     <div
-      className={`d-grid svgInline svgInline--${isLoaded ? "loaded" : "loading"} ${
+      className={`svgInline svgInline--${isLoaded ? "loaded" : "loading"} ${
         isErrored ? "svgInline--errored" : "" 
       }`}
       // id={props.url}

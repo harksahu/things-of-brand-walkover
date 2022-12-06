@@ -35,53 +35,55 @@ function MyCompany() {
   };
 
   return (
-    <div className="bg-gray h-100">
+    <div className="h-100">
     <Container>
-      <Row>
-          <Row md={4} className="g-4 flex p-3">
-            {company?.map((Company) => {
-              return (
-                <div
-                  key={Company._id}
-                  className="d-flex justify-content-center item"
+        <div className="grid">
+          {company?.map((Company) => {
+            return (
+              <div
+                key={Company._id}
+                className="d-flex justify-content-center item"
+              >
+                {/* <Link to={"/profile" }state={{ data: Company }}> */}
+                <Link to={'/' + Company.domain}>
+                  <Card className="item-company">
+                    <div style={{ overflow: "auto" }} className="img_size">
+                    {Company?.logo ? (
+                      <SvgInline url={Company.logo} />
+                    ):(
+                      <img src="/assets/picture.svg" />
+                    )}                      
+                    </div>
+                    <Card.Body>
+                      <Card.Title
+                        style={{ textDecoration: "none" }}
+                        className="text-center"
+                      >
+                        {Company.name ? Company.name : Company.domain}
+                      </Card.Title>
+                      <Card.Text></Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Link>
+              </div>
+            );
+          })}
+          <Link to="/profile" className="add-new">
+            <Card className="h-100 item-company">
+              <Card.Body className="align-items-center card-body d-flex justify-content-center">
+                <Card.Title
+                  className="text-center"
                 >
-                  {/* <Link to={"/profile" }state={{ data: Company }}> */}
-                  <Link to={'/'+Company.domain}>
-                    <Card className="item-company">
-                      <div style={{ overflow: "auto" }} className="img_size">
-                        <SvgInline url={Company.logo} />
-                      </div>
-                      <Card.Body>
-                        <Card.Title
-                          style={{ textDecoration: "none" }}
-                          className="text-center"
-                        >
-                          {Company.name?Company.name:Company.domain}
-                        </Card.Title>
-                        <Card.Text></Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </Link>
-                </div>
-              );
-            })}
-            <Link to="/profile" className="add-new">
-              <Card className="h-100 item-company">                
-                <Card.Body className="align-items-center card-body d-flex justify-content-center">
-                  <Card.Title                    
-                    className="text-center"
-                  >
-                    <BsFillPlusCircleFill style={{ fontSize: 40 }} />
-                  </Card.Title>
-                  <Card.Text></Card.Text>
-                </Card.Body>
-                <div className="card-footer">
-                  Add new brand
-                </div>
-              </Card>
-            </Link>
-          </Row>        
-      </Row>
+                  <BsFillPlusCircleFill style={{ fontSize: 40 }} />
+                </Card.Title>
+                <Card.Text></Card.Text>
+              </Card.Body>
+              <div className="card-footer">
+                Add new brand
+              </div>
+            </Card>
+          </Link>
+        </div>      
     </Container>
     </div>
   );
