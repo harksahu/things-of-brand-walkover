@@ -172,6 +172,21 @@ function Brand() {
     await updateProfileFields(data);
   };
 
+  // function myFunction() {
+  
+  //   var copyText = document.getElementById("background");
+  
+    
+  //   copyText.select();
+  //   copyText.setSelectionRange(0, 99999); 
+  
+    
+  //   navigator.clipboard.writeText(copyText.value);
+    
+    
+  //   alert("Copied the text: " + copyText.value);
+  // }
+
   useEffect(() => {
     getbrand();
     if (domain) {
@@ -398,7 +413,7 @@ function Brand() {
           <div className="mt-5">
             <h5>Colors</h5>
             <div className="d-flex colors-wrp">
-              {allColor?.map(color => {
+              {allColor?.map((color ,index)=> {
                 return (
                   <div 
                   key={color._id}
@@ -411,13 +426,29 @@ function Brand() {
                         backgroundColor: color.colorValue,                      
                       }}
                     ></div>
-                    <div className="color-footer">
-                      <div>{color.colorName}</div>
-                      <div>{color.colorValue}</div>
+                    <div className="color-footer" id="inputText">
+                      <div  >{color.colorName}</div>
+                      <div  >{color.colorValue}</div>
                     </div>
+                    <button  onClick={() => {  
+                      let colorTemp = color.colorValue;
+                      console.log(colorTemp);
+                       navigator.clipboard.writeText(colorTemp);
+                    }}>Copy text</button>
+                   
+                    {/* <button onClick={() => {
+                    var copyText = document.getElementById("inputttText");
+                  copyText.select();
+                  copyText.setSelectionRange(0, 99999); 
+                  navigator.clipboard.writeText(copyText.value);
+             alert("Copied");
+          }}>Copy text</button> */}
                   </div>
+                  
                 )
+                
               })}
+               
             </div>
           </div>
 

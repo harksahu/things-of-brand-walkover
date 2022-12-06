@@ -84,7 +84,7 @@ function Home2() {
         <div className="flex-fill"></div>
         <footer className="footer mt-auto small text-center">
           © 2022 <strong>Things of brand</strong> by{" "}
-          <a href="https://walkover.in/" target="">
+          <a href="https://walkover.in/" target="_blank">
             WALKOVER
           </a>
           , All rights reserved. 
