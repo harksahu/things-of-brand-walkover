@@ -151,7 +151,6 @@ function Brand() {
       domain: title.title,
       searchfrom: true,
     });
-    console.log(fresult)
     setCompany(fresult.data.data[0])
     setId(fresult.data.data[0]._id);
     setName(fresult.data.data[0].name);
@@ -255,15 +254,17 @@ function Brand() {
                           <input type="email" name="email"
                           placeholder="Enter the email" id="addEmail" />
                           
-                          <ListGroup variant="flush">
+                          {/* <ListGroup variant="flush">
                             {sharedEmail?.map((email) => {                                         
                               <ListGroup.Item>{email}</ListGroup.Item>
                             })}                            
-                          </ListGroup>
+                          </ListGroup> */}
 
                           {sharedEmail.map((email) => {
                             return(
+                              <div key ={email}>
                               <h5>{email}</h5>
+                              </div>
                             );
                           
                           })}
@@ -297,7 +298,9 @@ function Brand() {
             
           <div className="col-lg-12 col-md-12">
             <div>
-              <h1>{name}</h1>
+              {name?
+              <h1>{name}</h1>:""
+              }
             </div>
             <div className="align-items-center d-flex">
               <a
@@ -333,14 +336,19 @@ function Brand() {
                 ""
               )}
             </div>
-
+              
+            
             <div id="aboutus" dangerouslySetInnerHTML={{__html: aboutus}}>            
             </div>
           
-            <div>            
+            <div> 
+                    
               {links?.map((link) => {           
                 return(<div key={link}><a target="_blank" href={link}>{link}</a></div>)
-              })}
+              }
+              )
+              }
+     
             </div>          
           
           <div className="mt-5">
@@ -434,11 +442,17 @@ function Brand() {
           </div>
 
           <div className="mt-5">
-            <h5>Colors</h5>
+            {allColor[0].colorValue!=''?<h5>Colors</h5>:""}
+
+            {allColor!=''?
             <div className="d-flex colors-wrp">
               {allColor?.map((color ,index)=> {
                 return (
-                  <div className="color-item box-shadow">
+                  
+                  <div className="color-item box-shadow"
+                  key={index}>
+                  { color.colorValue!=''?
+                   <div>
                     <div
                       id="background"
                       style={{
@@ -447,6 +461,7 @@ function Brand() {
                         backgroundColor: color.colorValue,                      
                       }}
                     ></div>
+                   
                     <div className="color-footer" id="inputText">
                       <div  >{color.colorName}</div>
                       <div  >{color.colorValue}</div>
@@ -456,21 +471,17 @@ function Brand() {
                       console.log(colorTemp);
                        navigator.clipboard.writeText(colorTemp);
                     }}>Copy text</button>
-                   
-                    {/* <button onClick={() => {
-                    var copyText = document.getElementById("inputttText");
-                  copyText.select();
-                  copyText.setSelectionRange(0, 99999); 
-                  navigator.clipboard.writeText(copyText.value);
-             alert("Copied");
-          }}>Copy text</button> */}
+                  
+                
+                  </div>:""}
                   </div>
                   
                 )
                 
               })}
-               
-            </div>
+            
+            </div>:""
+}
           </div>
 
           <div>
@@ -498,11 +509,16 @@ function Brand() {
           </div>
           
           <div className="mt-5">
-            <h5>Fonts link</h5>
+            {fontLink!=''?<h5>Fonts link</h5>:""}
+            {/* {console.log(fontLink)} */}
             {/* <div style={{ fontSize: fontSize + "px" }}>{fontSize + "px"}</div> */}
-            {fontLink?.map(link => {
+            {fontLink?.map((link,index) => {
               return (
-                <div>
+
+                <div key ={index}
+                
+                >
+
                   {/* <h4>{color.colorName}</h4> */}
                   <a href={link} target="_blank">{link}</a>
                 </div>
@@ -513,7 +529,7 @@ function Brand() {
           </div>   
           
           <div className="mt-5">
-            <h5>Guidelines</h5>
+            {guidlines?<h5>Guidelines</h5>:""}
             <div dangerouslySetInnerHTML={{__html: guidlines}}></div>
           </div>
 
