@@ -98,7 +98,7 @@ const updateProfile = async (req, res) => {
     let verify = req.body.verify
     let link = req.body.links;
     let sharedEmail = req.body.sharedEmail ? req.body.sharedEmail : "";
-    // console.log(req.body)
+    console.log(req.body)
     // console.log(link)
     // const f_data = {
     //     ...req.body,
@@ -122,7 +122,8 @@ const updateProfile = async (req, res) => {
                     email,
                     verify,
                     link,
-                    fontLink
+                    fontLink,
+                    sharedEmail
                 }
             }
         )
@@ -146,7 +147,6 @@ const getCompanyDetailss = async (req, res) => {
         // console.log(req.params)
         const data = await profileModel.find({
             _id: req.params.id
-
         });
         res.json({
             "message": "Related Data is Successfully Find",

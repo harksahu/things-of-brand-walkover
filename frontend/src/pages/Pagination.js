@@ -4,9 +4,11 @@ import {
   BsFillArrowLeftCircleFill,
   BsFillArrowRightCircleFill,
 } from "react-icons/bs";
+
 function Pagination({ postsPerPage, totalPosts, paginate }) {
   const [index, setIndex] = useState(0);
   const [temp, setTemp] = useState(1);
+
   const pageNumbers = [];
   useEffect(() => {}, [index]);
   const handlePrevious = () => {
@@ -18,6 +20,7 @@ function Pagination({ postsPerPage, totalPosts, paginate }) {
       setIndex(index - 1);
       if (index - 1 === 0) {
         document.getElementById("previous").style.display = "none";
+        
       }
     }
   };
@@ -61,4 +64,5 @@ function Pagination({ postsPerPage, totalPosts, paginate }) {
     </nav>
   );
 }
+
 export default Pagination;

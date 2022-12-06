@@ -74,7 +74,6 @@ const searchBrandName = async (req,res)=>{
     try {
         const data = await BrandModel.find({
             _id: id
-
         });
         res.json({
             "message":"Related Data is Successfully Find",

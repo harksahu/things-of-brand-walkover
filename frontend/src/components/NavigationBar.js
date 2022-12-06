@@ -18,6 +18,12 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const getcompany = async () => {
+    // // console.log(searchBrandData);
+    // var set = new Set(searchBrandData?.data?.domain[0]);
+    // // down.innerHTML = JSON.stringify([...set])
+    // console.log(set);
+  };
 
   const searchbar = async (searchData) => {
 
@@ -43,7 +49,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
       setItems(null);
       console.log(location.pathname === "/MyStuff");
       if (location.pathname === "/MyStuff") {
-        console.log("first")
+        console.log("first");
         await getSearchBrand({
           title: "",
           email: user.email,

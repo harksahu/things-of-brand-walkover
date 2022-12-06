@@ -68,7 +68,6 @@ const updateProfileFields = async(dataToSend) => {
   }
 
   return await axios.put(URL + "/api/profile", data);
-
 }
 
 const getFontList = async () => {

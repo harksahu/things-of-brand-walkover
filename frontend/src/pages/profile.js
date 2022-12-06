@@ -39,6 +39,7 @@ function Profile(props) {
   const [valid, setvalid] = useState([false]);
   const [valid2, setvalid2] = useState([false]);
   const [fontFamily, setFontFamily] = useState([false]);
+  const [sharedEmail,setSharedEmail]=useState([]);
 
 
   const location = useLocation();
@@ -151,7 +152,8 @@ function Profile(props) {
           secondaryColors: secondaryColors,
           backgroundColors: backgroundColors,
           email: user?.email,
-          color: color
+          color: color,
+          sharedEmail: sharedEmail
         };
         console.log('updateProfileFields', data);
         await updateProfileFields(data);
@@ -183,6 +185,7 @@ function Profile(props) {
       setBackgroundColors(location.state.data.backgroundColors);
       setFontLink(location.state.data.fontLink);
       setcount(location.state.data.color);
+      setSharedEmail(location.state.data.sharedEmail);
     }
     if (location.state.data.domain) {
       getbrandslogo();
@@ -454,9 +457,14 @@ function Profile(props) {
                                 className="contact-form-area"
                               />
 
-                              <Form.Control type="text" id={`colorinputbytext${index}`} maxLength="7" placeholder="Enter hex value of color"
+                              <Form.Control 
+                               value={color[index].colorValue}
+                              type="text" id={`colorinputbytext${index}`} maxLength="7" placeholder="Enter hex value of color"
                                 onChange={(e) => {
                                   document.getElementById("colorinput" + index).value = e.target.value;
+                                  let tempCount = color;
+                                  tempCount[index].colorValue = e.target.value;
+                                  setcount([...tempCount]);
                                 }} />
                               <Form.Control
                                 type="color"

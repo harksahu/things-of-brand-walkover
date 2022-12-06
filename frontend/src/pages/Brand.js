@@ -129,6 +129,7 @@ function Brand() {
       domain: title.title,
       searchfrom: true,
     });
+    console.log(fresult)
     setCompany(fresult.data.data[0])
     setId(fresult.data.data[0]._id);
     setName(fresult.data.data[0].name);
@@ -165,7 +166,9 @@ function Brand() {
       color: allColor,
       email: email,
       verify: verify,
-    };    
+    };   
+    // console.log(sharedEmail);
+ 
     await updateProfileFields(data);
   };
 
@@ -178,7 +181,7 @@ function Brand() {
 
   return (
     <>
-      <Container>
+    <Container>
       {domain ? (
         <div className="row mt-4">
           <Navbar>
@@ -216,6 +219,13 @@ function Brand() {
                               <ListGroup.Item>{email}</ListGroup.Item>
                             })}                            
                           </ListGroup>
+
+                          {sharedEmail.map((email) => {
+                            return(
+                              <h5>{email}</h5>
+                            );
+                          
+                          })}
                         </Modal.Body>
                         <Modal.Footer>
                           <Button variant="secondary" onClick={handleClosee}>
@@ -233,6 +243,7 @@ function Brand() {
                           </Button>
                         </Modal.Footer>
                       </Modal>
+
                     </>
                   ) : (
                     ""
