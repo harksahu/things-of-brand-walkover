@@ -6,7 +6,7 @@ const profileSchema = new mongoose.Schema({
         type: String,
     },
     sharedEmail:{
-        type:[String]
+        type:[String],
     },
     aboutus:  {
         type: String,

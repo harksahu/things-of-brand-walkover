@@ -126,7 +126,6 @@ function Profile(props) {
               verify,
               email: user?.email,
             });
-            // console.log(data);
             alert("successfully saved domain " + d);
           } catch (err) {
             console.log(err);
@@ -370,7 +369,40 @@ function Profile(props) {
                       <Form.Label>About us</Form.Label>
                       <RichtextEditor guidlines={aboutus} setGuidlines={setAboutus} config={config} tabIndex={1} />
                     </Form.Group>
+                    <div className="d-flex flex-wrap justify-content-center">
+              {DomainPost?.map((brand, index) => {
+                // console.log(brand);
+                return (
+                  <div key={index}>
+                    <div key={brand._id} className=" flex-wrap item">
+                      <Card>
+                        <Link to={"/stuff/" + brand._id}>
 
+                          <div
+                            style={{ overflow: "auto" }}
+                            className="img_size"
+                          >
+                            <SvgInline {...brand} />
+                          </div>
+
+                          <Card.Body>
+                            <Card.Title
+                              style={{ textDecoration: "none" }}
+                              className="text-center"
+                            >
+                              {brand.title}
+                            </Card.Title>
+
+
+
+                          </Card.Body>
+                        </Link>
+                      </Card>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
 
                     <div className="tags-input mb-3 visually-hidden" id="socialLinks" style={{ margin: "auto" }}>
                       <h6>Social Links</h6>

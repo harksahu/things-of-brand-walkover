@@ -212,17 +212,20 @@ function Brand() {
                           <Modal.Title>Share Your Company</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                          <input type="email"
+                          <input type="email" name="email"
                           placeholder="Enter the email" id="addEmail" />
-                          <ListGroup variant="flush">
+                          
+                          {/* <ListGroup variant="flush">
                             {sharedEmail?.map((email) => {                                         
                               <ListGroup.Item>{email}</ListGroup.Item>
                             })}                            
-                          </ListGroup>
+                          </ListGroup> */}
 
                           {sharedEmail.map((email) => {
                             return(
+                              <div key={email._id}>
                               <h5>{email}</h5>
+                              </div>
                             );
                           
                           })}
@@ -397,7 +400,9 @@ function Brand() {
             <div className="d-flex colors-wrp">
               {allColor?.map(color => {
                 return (
-                  <div className="color-item box-shadow">
+                  <div 
+                  key={color._id}
+                  className="color-item box-shadow">
                     <div
                       id="background"
                       style={{
@@ -445,7 +450,7 @@ function Brand() {
             {/* <div style={{ fontSize: fontSize + "px" }}>{fontSize + "px"}</div> */}
             {fontLink?.map((link) => {
               return (
-                <div>
+                <div key={link._id}>
                   {/* <h4>{color.colorName}</h4> */}
                   <a href={link} target="_blank">
                     {link}

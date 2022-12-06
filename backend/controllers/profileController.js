@@ -3,7 +3,7 @@ import BrandModel from '../models/brandModel.js'
 
 const createProfile = async (req, res) => {
     try {
-        console.log(req.body);
+        
         const data = await profileModel.create({
             ...req.body
         });
@@ -12,7 +12,7 @@ const createProfile = async (req, res) => {
             "data": data
         }).status(200);
     } catch (error) {
-        console.log("err" + error)
+        
         res.send({
             message: "Some Error on Server",
             error
@@ -55,7 +55,7 @@ const getProfileDetails = async (req, res) => {
 
             }).status(200);
         } catch (error) {
-            console.log(error);
+           
 
             res.send({
                 message: "Some Error on Server",
@@ -63,7 +63,7 @@ const getProfileDetails = async (req, res) => {
             }).status(400);
         }
     } else {
-        // console.log("afas");
+       
         try {
             const data = await profileModel.find({
                 // $or: [{ ...domain }, { ...name }],
@@ -76,7 +76,7 @@ const getProfileDetails = async (req, res) => {
                 "data": data
             }).status(200);
         } catch (error) {
-            console.log(error);
+          
             res.send({
                 message: "Some Error on Server",
                 error: error
@@ -86,7 +86,7 @@ const getProfileDetails = async (req, res) => {
 }
 
 const updateProfile = async (req, res) => {
-    console.log("logo url in backend", req.body.logo_url);
+    console.log(req.body);
     let { name, aboutus ,fontLink} = req.body
     let logo = req.body.logo;
     let links = req.body.links;
@@ -97,14 +97,7 @@ const updateProfile = async (req, res) => {
     let verify = req.body.verify
     let link = req.body.links;
     let sharedEmail = req.body.sharedEmail ? req.body.sharedEmail : "";
-    console.log(req.body)
-    // console.log(link)
-    // const f_data = {
-    //     ...req.body,
-    //     links: link
-    // }
-    // console.log("data :-" , req.query)
-    console.log("logo url in backend 2 ", logo);
+    
     try {
         const data = await profileModel.updateMany(
             {
@@ -127,13 +120,13 @@ const updateProfile = async (req, res) => {
                 }
             }
         )
-        console.log("data:" ,data);
+       
         res.json({
             "message": "Related Data is Successfully updated",
             "data": data
         }).status(200);
     } catch (error) {
-        console.log("error", error);
+        
         res.send({
             message: "Some Error on Server",
             error
@@ -144,7 +137,6 @@ const updateProfile = async (req, res) => {
 
 const getCompanyDetailss = async (req, res) => {
     try {
-        // console.log(req.params)
         const data = await profileModel.find({
             _id: req.params.id
         });
@@ -166,16 +158,16 @@ const getCompanyJson = async (domain) => {
 
         });
         const domain1 = data[0]._id;
-        console.log(data[0]._id);
+       
         const logos = await BrandModel.find({
             domain: domain1,
 
         });
-        console.log(logos);
+       
         // data = data.push(logos)
         return [{ logos, ...data }]
     } catch (error) {
-        console.log(error);
+        
 
         return error
     }

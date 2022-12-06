@@ -1,7 +1,7 @@
 import BrandModel from '../models/brandModel.js'
 const createBrand = async (req,res)=>{
     try {
-        console.log(req.body);
+       
         const data = await BrandModel.create({
             ...req.body,
             Url:req.body.url
@@ -70,7 +70,7 @@ const UpdateBrand = async (req,res)=>{
 
 const searchBrandName = async (req,res)=>{
     const id = req.params.id
-    // console.log(titles);
+   
     try {
         const data = await BrandModel.find({
             _id: id
