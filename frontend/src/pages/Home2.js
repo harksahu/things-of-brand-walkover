@@ -16,7 +16,7 @@ function Home2() {
   const handleGoogleSignIn = async () => {
     try {
       if (user) {
-        navigate("/MyStuff");
+        navigate("/company");
       } else {
         await googleSignIn();
       }

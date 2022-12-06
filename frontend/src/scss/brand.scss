@@ -1,3 +1,13 @@
 .nav-action{
     font-size: 20px;
 }
+.colors-wrp{
+    .color-item{
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        margin: 0 20px 20px 0;
+        .color-footer{
+            padding: 10px;
+        }
+    }
+}

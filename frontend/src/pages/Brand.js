@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import {Container, Row, Form, Col, Navbar, Nav, Card, Figure, Button, Modal} from "react-bootstrap";
+import {Container, Row, Form, Col, Navbar, Nav, Card, Figure, Button, Modal, ListGroup} from "react-bootstrap";
 import "../utils/svginline.css";
 import "../scss/brand.scss";
 import { UserAuth } from "../context/AuthContext";
@@ -15,19 +15,12 @@ import { Canvg, presets } from "canvg";
 import SvgInline from "../utils/SvgInline.js";
 import { BsFillPlusCircleFill, BsPencilSquare, BsFillExclamationDiamondFill, BsShieldCheck } from "react-icons/bs";
 import { MdArrowBackIos, MdVerified, MdShare, MdOutlineModeEdit } from "react-icons/md";
-import { abs } from '../../../node_modules/stylis/src/Utility';
 
 function Not_found() {
   return (
-    <Figure className="text-center flex justify-cont">
-      <Figure.Image
-        width={500}
-        height={500}
-        alt="171x180"
-        src="https://i.pinimg.com/564x/f4/e0/d9/f4e0d998d00d96269eeb30c8c625031b.jpg"
-      />
-      <Figure.Caption>Data not found</Figure.Caption>
-    </Figure>
+    <div className="not-found">
+      Not found
+    </div>
   );
 }
 
@@ -146,8 +139,7 @@ function Brand() {
   };
 
   const title = useParams();
-  const getbrandslogo = async () => {
-    console.log('{ domain: id, active: 1 }', { domain: id, active: 1 });    
+  const getbrandslogo = async () => {    
     if (domain) {
       const data = await sendSearchAPI({ domain: id, active: 1 });      
       setDomainPost(data?.data?.data);
@@ -158,8 +150,8 @@ function Brand() {
     const fresult = await getProfileDetails({
       domain: title.title,
       searchfrom: true,
-    });    
-    console.log(fresult);
+    });
+    console.log(fresult)
     setCompany(fresult.data.data[0])
     setId(fresult.data.data[0]._id);
     setName(fresult.data.data[0].name);
@@ -176,15 +168,13 @@ function Brand() {
     setlogo(fresult.data.data[0].logo);
     setEmail(fresult.data.data[0].email);
     setVerify(fresult.data.data[0].verify);
-    setSharedEmail(fresult.data.data[0].sharedEmail);
+    setSharedEmail(fresult.data.data[0].sharedEmail);    
     /* if (fresult.data.data[0].aboutus.length) {
       document.getElementById("aboutus").innerHTML = fresult.data.data[0].aboutus;
     } */
-    
-    // console.log(setSharedEmail);
-    getbrandslogo();
-  };
 
+    //getbrandslogo();    
+  };
 
   const updateLogo = async (logo_url) => {
 
@@ -246,8 +236,22 @@ function Brand() {
                         <Modal.Header closeButton>
                           <Modal.Title>Share Your Company</Modal.Title>
                         </Modal.Header>
-                        <Modal.Body><input type="email"
-                          placeholder="Enter the email" id="addEmail" /></Modal.Body>
+                        <Modal.Body>
+                          <input type="email"
+                          placeholder="Enter the email" id="addEmail" />
+                          <ListGroup variant="flush">
+                            {sharedEmail?.map((email) => {                                         
+                              <ListGroup.Item>{email}</ListGroup.Item>
+                            })}                            
+                          </ListGroup>
+
+                          {sharedEmail.map((email) => {
+                            return(
+                              <h5>{email}</h5>
+                            );
+                          
+                          })}
+                        </Modal.Body>
                         <Modal.Footer>
                           <Button variant="secondary" onClick={handleClosee}>
                             Close
@@ -319,37 +323,24 @@ function Brand() {
           
             <div>            
               {links?.map((link) => {           
-                return(<div><a target="_blank" href={link}>{link}</a></div>)
+                return(<div key={link}><a target="_blank" href={link}>{link}</a></div>)
               })}
             </div>          
           
           <div className="mt-5">
-            <h5>Logos</h5>
-            
-            {user ? (
-              email === user.email ? (
-                <Link to={"/addfile"}>
-                  <BsFillPlusCircleFill style={{ float: "right", fontSize: 40 }} />
-                </Link>     
-              ) : ("")
-            ) :("")}
-
-            <div className="d-flex flex-wrap justify-content-center">
-              {/* {console.log('DomainPost', DomainPost)} */}
+            <h5>Logos</h5>                        
+            <div className="grid">              
               {DomainPost?.map((brand, index) => {
                 return (
-                  <div key={brand._id}>
-                    <div className=" flex-wrap item">
-                      <Card>
+                  <div key={brand._id} className="item">
+                      <Card className="box-shadow">
                         <Link to={"/stuff/" + brand._id}>
-
                           <div
                             style={{ overflow: "auto" }}
                             className="img_size"
                           >
                             <SvgInline {...brand} />
                           </div>
-
                           <Card.Body>
                             <Card.Title
                               style={{ textDecoration: "none" }}
@@ -357,142 +348,97 @@ function Brand() {
                             >
                               {brand.title}
                             </Card.Title>
-
-
-
                           </Card.Body>
-                        </Link>
-                        <Button
-                                    variant="outline-secondary"
+                          </Link>
+                          <Card.Footer className="text-muted justify-content-between d-flex">
+                            <Button
+                              variant="outline-secondary"
+                              size="sm"
+                              onClick={() => {
+                                const canvas = DownloadToSvg(brand.url, brand.title);
+                              }}
+                            >
+                              Download
+                            </Button>
+                            {user ? (
+                              email === user.email ? (
+                                logo === brand.url ? (
+                                  <Button
+                                    variant="light"
+                                    size="sm"
+                                    disabled
+                                  >
+                                    Default logo
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    variant="light"
                                     size="sm"
                                     onClick={() => {
-                                      const canvas = DownloadToSvg(brand.url, brand.title);
+                                      setlogo(brand.url);
+                                      updateLogo(brand.url);                              
                                     }}
                                   >
-                                    Download Svg
-                        </Button>
-                        <Card.Text>
-                          {/* <Accordion>
-                            <Accordion.Item eventKey="0">
-                              <Accordion.Header>Edit</Accordion.Header>
-                              <Accordion.Body>
-                                <div className="card-body">
-                                  <label className="small fw-bold mb-1">Size</label>
-
-                                  <Col>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>W</Form.Label>
-                                      <Form.Control
-                                        onChange={(e) => (setWidth(e.target.value))}
-                                        value={mwidth}
-                                        size="sm"
-                                        autocomplete="off"
-                                      />
-                                    </Form.Group>
-                                  </Col>
-                                  <Col>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>H</Form.Label>
-                                      <Form.Control
-                                        onChange={(e) => (setHeight(e.target.value))}
-                                        value={mheight}
-                                        size="sm"
-                                        autocomplete="off"
-                                      />
-                                    </Form.Group>
-                                  </Col>
-
-                                  <div className="mt-4 mb-1">
-                                    <label className="small fw-bold">Download</label>
-                                  </div>
-                                  <Button
-                                    variant="outline-secondary"
-                                    size="sm me-4"
-                                    onClick={() => {
-                                      DownloadToPng(brand.url, mwidth, mheight);
-                                    }}
-                                    className=""
-                                  >
-                                    PNG
+                                    Make default
                                   </Button>
-                                  <Button
-                                    variant="outline-secondary"
-                                    size="sm"
-                                    onClick={() => {
-                                      // const canvas = DownloadToSvg(brand.url, brand.title);
-                                      saveAs(brand.url, brand.title);
-
-                                      // const canvas = DownloadToSvg
-                                    }}
-                                  // onClick={() => saveAs(props.title)}
-                                  >
-                                    SVG Code
-                                  </Button>
-                                </div>
-                              </Accordion.Body>
-                            </Accordion.Item>
-                          </Accordion> */}
-
-
-                        </Card.Text>
-                      </Card>
-                    </div>
-                    {user ? (
-                      email === user.email ? (
-                        logo === brand.url ? (
-                          <button
-                            className="d-flex m-auto btn btn-success"
-                            disabled
-                          >
-                            default logo
-                          </button>
-                        ) : (
-                          <button
-                            className="d-flex m-auto btn btn-primary"
-                            onClick={() => {
-                              setlogo(brand.url);
-                              updateLogo(brand.url);                              
-                            }}
-                          >
-                            Make default
-                          </button>
-                        )
-                      ) : (
-                        ""
-                      )
-                    ) : (
-                      ""
-                    )}
+                                )
+                              ) : (
+                                ""
+                              )
+                            ) : (
+                              ""
+                            )}
+                          </Card.Footer>                                                
+                      </Card>                    
                   </div>
                 );
               })}
+              
+              {user ? (
+              email === user.email ? (
+                <Link to="/addfile" className="add-new item">
+                  <Card className="h-100 item-company">                
+                    <Card.Body className="align-items-center card-body d-flex justify-content-center">
+                      <Card.Title                    
+                        className="text-center"
+                      >
+                        <BsFillPlusCircleFill style={{ fontSize: 40 }} />
+                      </Card.Title>
+                      <Card.Text></Card.Text>
+                    </Card.Body>
+                    <div className="card-footer">
+                      <Button variant="link"
+                      size="sm">Add new Logo</Button>
+                    </div>
+                  </Card>
+                </Link>                
+              ) : ("")
+            ) :("")}
             </div>
           </div>
 
           <div className="mt-5">
             <h5>Colors</h5>
-            {allColor?.map(color => {
-              return (
-                <div>
-                  <h4>{color.colorName}</h4>
-                  <div
-                    id="background"
-                    style={{
-                      width: 50,
-                      height: 50,
-                      backgroundColor: color.colorValue,
-                      margin: 5,
-                    }}
-                  ></div>
-                </div>
-              )
-            })}
+            <div className="d-flex colors-wrp">
+              {allColor?.map(color => {
+                return (
+                  <div className="color-item box-shadow">
+                    <div
+                      id="background"
+                      style={{
+                        width: 150,
+                        height: 150,
+                        backgroundColor: color.colorValue,                      
+                      }}
+                    ></div>
+                    <div className="color-footer">
+                      <div>{color.colorName}</div>
+                      <div>{color.colorValue}</div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
 
           <div>
@@ -535,7 +481,8 @@ function Brand() {
           </div>   
           
           <div className="mt-5">
-            <h5>Guidelines</h5>            
+            <h5>Guidelines</h5>
+            <div dangerouslySetInnerHTML={{__html: guidlines}}></div>
           </div>
 
           </div>          
