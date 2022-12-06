@@ -77,13 +77,13 @@
   <title>Things of brand</title>
 </head>
 
-<body>
+<body class="bg-gray">
   <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PV86WB2"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root" class="d-flex flex-column h-100"></div>
+  <div id="root"></div>
   <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -94,16 +94,19 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
     <script>
       if('serviceWorker' in navigator){
         window.addEventListener('load',()=>{
           navigator.serviceWorker.register('./serviceWorker.js').then((reg)=>{
-            console.log("Worker registration")
+            // console.log("Worker registration")
           }).catch((err)=>{
               console.log("Error in service wroker", err)
           })
         })
       }
     </script>
-  </body>
+
+</body>
+
 </html>

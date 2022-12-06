@@ -5,7 +5,6 @@ import Protected from './components/Protected';
 import { AuthContextProvider, UserAuth } from './context/AuthContext';
 import Account from './pages/Account';
 import Home from './pages/Home';
-
 import Addfile from './pages/Addfile';
 import MyStuff from './pages/MyStuff';
 import Search from "./pages/Search";
@@ -19,11 +18,11 @@ import Brand from './pages/Brand.js';
 import HomeLogo from './pages/Searchlogo.js';
 import Home2 from './pages/Home2';
 import Profile from './pages/profile';
+import DomainVerificationPage from './pages/DomainVerificationPage';
 
 
 
 function App() {
-
   const [isUserLoaded, setIsUserLoaded] = useState(false);
   const  location = useLocation()
   useEffect(() => {
@@ -43,7 +42,6 @@ function App() {
         >
           <AuthContextProvider>
           { window.location.pathname?(window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <NavigationBar />):<NavigationBar />}
-
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
@@ -51,6 +49,7 @@ function App() {
               <Route path='/searchlogo' element={<HomeLogo />} />
               <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />
               <Route path='/:title' element={<Brand />} />
+              <Route path='/domainVerify' element={<DomainVerificationPage />} />
               <Route path='/profile' element={<Profile />} />
               <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
               <Route path="/MyStuff" element={<Protected> <MyStuff /> </Protected>} />

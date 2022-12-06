@@ -1,4 +1,13 @@
 @import 'theme';
+.bg-gray{
+    background-color: var(--bs-gray-100);
+}
+.bdr-none{
+    border: none !important;
+}
+.box-shadow{
+    box-shadow: var(--box-shadow);
+}
 .tags{
     padding:0;
     list-style: none;
@@ -24,7 +33,12 @@
 }
 
 .wrpr{
-    background-color: var(--bs-light);
     padding-top: 1.5rem;
     height: 100%;
+}
+
+.item-company{
+    box-shadow: var(--box-shadow);
+    background-color: #fff;
+    border: none !important;
 }

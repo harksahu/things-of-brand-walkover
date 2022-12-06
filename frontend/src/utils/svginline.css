@@ -1,5 +1,5 @@
 .item{
-    margin: 10px;    
+    margin: 0;    
 }
 .item a{
     text-decoration: none;
@@ -14,14 +14,12 @@
 .img_size{
     padding: 16px;    
 }
-.img_size .svgInline{
-    background-color: #ccc;
+.img_size .svgInline{    
     border-radius: var(--bs-card-border-radius);
 }
 .img_size .svgInline svg{
     width: 250px;
-    height: 250px;
-    background-image: url("../constants/grid.png");
+    height: 250px;    
 }
 .popup_img{
     padding: 0 !important;

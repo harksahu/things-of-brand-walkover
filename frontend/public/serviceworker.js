@@ -8,7 +8,7 @@ this.addEventListener('install',(event)=>{
         )
 })
 this.addEventListener('fetch',(event)=>{
-    event.responWith(
+    event.respondWith(
         caches.match(event.request).then((res)=>{
             return fetch(event.request).catch(()=>catches.match('offline.html'))
         })

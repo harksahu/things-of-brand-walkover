@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import { getProfileDetails } from "../api/index.js";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import SvgInline from "../utils/SvgInline.js";
 import "../utils/svginline.css";
+import "../scss/company.scss";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import SideBar from '../components/SideBar';
 
@@ -12,6 +13,7 @@ function MyCompany() {
   const [company, setCompany] = useState();
   const { user } = UserAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   useEffect(() => {
     if (user) {
       if (user?.email) {
@@ -33,17 +35,10 @@ function MyCompany() {
   };
 
   return (
-    <>
-    <Container fluid className="wrpr" >
-      <Row>        
-        <Col md={3} lg={2}>
-          <SideBar/>
-        </Col>
-        <Col md={9} lg={10}>
-          <Link to="/profile">
-            <BsFillPlusCircleFill style={{ float: "right", fontSize: 40 }} />
-          </Link>
-          <Row md={4} className="g-4 flex p-3 bg-light">
+    <div className="bg-gray h-100">
+    <Container>
+      <Row>
+          <Row md={4} className="g-4 flex p-3">
             {company?.map((Company) => {
               return (
                 <div
@@ -52,7 +47,7 @@ function MyCompany() {
                 >
                   {/* <Link to={"/profile" }state={{ data: Company }}> */}
                   <Link to={'/'+Company.domain}>
-                    <Card>
+                    <Card className="item-company">
                       <div style={{ overflow: "auto" }} className="img_size">
                         <SvgInline url={Company.logo} />
                       </div>
@@ -70,11 +65,25 @@ function MyCompany() {
                 </div>
               );
             })}
-          </Row>
-        </Col>      
+            <Link to="/profile" className="add-new">
+              <Card className="h-100 item-company">                
+                <Card.Body className="align-items-center card-body d-flex justify-content-center">
+                  <Card.Title                    
+                    className="text-center"
+                  >
+                    <BsFillPlusCircleFill style={{ fontSize: 40 }} />
+                  </Card.Title>
+                  <Card.Text></Card.Text>
+                </Card.Body>
+                <div className="card-footer">
+                  Add new brand
+                </div>
+              </Card>
+            </Link>
+          </Row>        
       </Row>
     </Container>
-    </>
+    </div>
   );
 }
 

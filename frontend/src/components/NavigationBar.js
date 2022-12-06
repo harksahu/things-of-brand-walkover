@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
-import {
-  Container,
-  Row,
-  Form,
-  Nav,
-  Navbar,
-  NavDropdown,
-} from "react-bootstrap";
+import { Container, Row, Form, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { searchBrand, clearSearchBrand } from "../store/actions/search-brands";
 import { connect } from "react-redux";
+import Card from "react-bootstrap/Card";
+import { getProfileDetails, sendSearchAPI } from "../api/index.js"
+import { BsArrowReturnRight } from "react-icons/bs";
+
 
 function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();
+  const [CompanyData, setCompanydata] = useState([]);
+  const [LogoData, setLogoData] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,14 +25,24 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
     // console.log(set);
   };
 
-  useEffect(() => {
-    getcompany();
-  }, [searchBrandData]);
+  const searchbar = async (searchData) => {
+
+    const C_data = await getProfileDetails({ email: "", domain: searchData, name: searchData, searchfrom: "false" })
+
+    const array_data = C_data?.data?.data
+    setCompanydata(array_data)
+
+    const L_data = await sendSearchAPI({ title: searchData, email: "", active: 1, description: "", _id: "", domain: "" })
+
+    const array_logo_data = L_data?.data?.data
+    setLogoData(array_logo_data)
+  }
+
 
   const [searchItem, setItems] = useState();
 
   const sendData = async (text) => {
-    console.log(location.pathname);
+    // console.log(location.pathname);
     text = text.trimStart();
     setItems(text);
     if (text === "") {
@@ -77,10 +86,14 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
     }
   };
 
-  var numbers = [1, 2, 3, 4, 5];
+  const loginAndForward = () => {
+    handleGoogleSignIn()
+  }
+  // var numbers = [1, 2, 3, 4, 5];
   const handleGoogleSignIn = async () => {
     try {
-      await googleSignIn();
+      await googleSignIn()
+      navigate("/company");
       // console.log(object);
     } catch (error) {
       console.log(error);
@@ -98,13 +111,14 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
 
   return (
     <>
-      <Navbar expand="lg bg-white" sticky="top">
-        <Container fluid>
+      <Navbar expand="lg" sticky="top" className='bg-gray'>
+        <Container >
           <Navbar.Brand
             onClick={() => {
               navigate("/home");
             }}
             className="bo"
+            style={{ cursor: "pointer" }}
           >
             Things of Brand
           </Navbar.Brand>
@@ -116,49 +130,72 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              {location.pathname === "/search" ? (
-                <Form className="justify-content-center">
-                  <Form.Control
-                    type="search"
-                    placeholder="Search"
-                    className="me-2"
-                    aria-label="Search"
-                    show={true}
-                    onChange={(e) => {
-                      sendData(e.target.value);
-                    }}
-                    value={searchItem || ""}
-                    list="browsers"
-                    name="myBrowser"
-                  />
-                  {/* <Autocomplete
-                    renderItem={(item, isHighlighted) => (
-                      <div
-                        style={{
-                          background: isHighlighted ? "lightgray" : "white",
-                        }}
-                      >
-                        {searchBrandData.data.name}
-                      </div>
-                    )}
-                    value={value}
-                    onChange={(e) => (value = e.target.value)}
-                    onSelect={(val) => (value = val)}
-                  /> */}
-                  {/* <Autocomplete
-                  {searchBrandData.data.map((brandData) => {
-                    return(<option value={brandData.name}/>);
-                  })}
-                /> */}
-                  {/* <datalist id="browsers">
-                  {searchBrandData.data.map((brandData) => {
-                    return(<option value={brandData.name}/>);
-                  })}
-                </datalist> */}
-                </Form>
-              ) : (
-                ""
-              )}
+              {
+                location.pathname === "/search" ?
+                  <Form className="justify-content-center">
+                    <Form.Control
+                      type="search"
+                      placeholder="Search"
+                      className="me-2"
+                      id="searchbar"
+                      autocomplete='off'
+                      aria-label="Search"
+                      show={true}
+                      onChange={(e) => {
+                        {
+                          sendData(e.target.value)
+                          searchbar(e.target.value)
+                        }
+                      }}
+                      value={searchItem || ""}
+                      list="browsers"
+                      name="myBrowser"
+                    />
+                    {/* {document.getElementById("searchbar")?.value === "" ? "" : <div >
+                      <Card style={{fontWeight : "bold"}} >
+                        Company:-
+                      </Card>
+                      {CompanyData && CompanyData?.map((brandData) => (
+                        <div id="myBrowser" key={brandData._id}>
+                          {document.getElementById("searchbar")?.value === "" ? "" :
+                            (
+                              <Link to={"/" + brandData.domain}>
+                                <div style={{color: "black" , textDecoration:"none" , backgroundColor:"white"}}>
+                                  {brandData.name}
+                                  <BsArrowReturnRight style={{float:"right"}}/>
+                                </div>
+                              </Link>
+                            )
+                          }
+                        </div>
+                      ))}
+                      <Card style={{fontWeight : "bold"}} >
+                        Logos:-
+                      </Card>
+
+                      {LogoData && LogoData?.map((brandData) => (
+                        <div id="myBrowser" key={brandData._id}>
+                          {document.getElementById("searchbar")?.value === "" ? "" :
+                            (
+                              <Link to={"/stuff/" + brandData._id}>
+                                <div style={{color: "black" , textDecoration:"none" , backgroundColor:"white"}}>
+                                  {brandData.title}
+                                  <BsArrowReturnRight style={{float:"right"}}/>
+
+                                </div>
+                              </Link>
+
+                            )
+                          }
+
+
+                        </div>
+                      ))}
+                    </div>
+                    } */}
+                  </Form>
+                  : ""
+              }
             </Nav>
 
             {user?.displayName ? (
@@ -169,25 +206,18 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
               >
                 <NavDropdown.Item
                   onClick={() => {
-                    navigate("/addfile");
+                    navigate("/company");
                   }}
                 >
-                  Upload File
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  onClick={() => {
-                    navigate("/MyStuff");
-                  }}
-                >
-                  My Stuff
+                  My Brands
                 </NavDropdown.Item>
 
                 <NavDropdown.Item
                   onClick={() => {
-                    navigate("/company");
+                    navigate("/search");
                   }}
                 >
-                  Brands
+                  Explore other brands
                 </NavDropdown.Item>
 
                 <NavDropdown.Item
@@ -200,13 +230,6 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
 
                 <NavDropdown.Divider />
 
-                <NavDropdown.Item
-                  onClick={() => {
-                    navigate("/search");
-                  }}
-                >
-                  Explore
-                </NavDropdown.Item>
                 <NavDropdown.Item
                   href="https://thingsofbrand.canny.io/feature-requests"
                   target="_blank"
@@ -221,13 +244,9 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <button
-                type="button"
-                className="btn btn-outline-primary"
-                onClick={handleGoogleSignIn}
-              >
-                Get started
-              </button>
+              <button type="button" className="btn btn-outline-primary" onClick={() => {
+                loginAndForward()
+              }}>Get started</button>
             )}
           </Navbar.Collapse>
         </Container>

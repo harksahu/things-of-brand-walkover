@@ -1,6 +1,4 @@
-import { vectorsAngle } from "canvg";
 import React, { useEffect, useState } from "react";
-import { Canvg, presets } from "canvg";
 const SvgInline = (props) => {
   // console.log(props);
 
