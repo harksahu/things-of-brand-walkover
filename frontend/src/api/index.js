@@ -63,6 +63,8 @@ const searchBrandApi = async (id) => {
 
 
 const updateProfileFields = async(dataToSend) => {
+  console.log("datToSend in index js");
+  console.log(dataToSend);
   const data = {
     ...dataToSend
   }

@@ -137,7 +137,7 @@ function Profile(props) {
     }
   };
   const updateProfileValue = async (req, res) => {
-    console.log('update', name, aboutus);
+    console.log('update', "domain",domain,name, aboutus);
 
     if (name) {
       if (aboutus) {
@@ -406,6 +406,9 @@ function Profile(props) {
 
                           // setDomain(extractDomain(e.target.value));
                           setDomain(e.target.value);
+                          {
+                            console.log("domain  =  "+e.target.value)
+                          }
                           // checkDomain(e.target.value);
                         }}
                         value={domain}

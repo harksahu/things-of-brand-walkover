@@ -93,7 +93,6 @@ const updateProfile = async (req, res) => {
     let domain = req.body.domain;
     let guidlines = req.body.guidlines;
     let color = req.body.color;
-
     let email = req.body.email;
     let verify = req.body.verify
     let link = req.body.links;
@@ -116,6 +115,7 @@ const updateProfile = async (req, res) => {
                     name,
                     aboutus,
                     logo,
+                    domain,
                     links,
                     guidlines,
                     color,
@@ -123,11 +123,11 @@ const updateProfile = async (req, res) => {
                     verify,
                     link,
                     fontLink,
-                    sharedEmail
+                    sharedEmail,
                 }
             }
         )
-        console.log(data);
+        console.log("data:" ,data);
         res.json({
             "message": "Related Data is Successfully updated",
             "data": data
