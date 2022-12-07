@@ -96,6 +96,10 @@ function MyCompany() {
         </div>
       </Container>  
       
+      <div>
+        <br></br>
+        <h1>Shared Companies</h1>
+      </div>
 
       <Container>
         <div className="grid">
