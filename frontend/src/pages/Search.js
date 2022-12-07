@@ -9,7 +9,7 @@ import SvgInline from "../utils/SvgInline.js";
 import { getProfileDetails } from "../api/index.js";
 import { async } from "@firebase/util";
 import Pagination from "./Pagination";
-import ReactPaginate from 'react-paginate';
+import ReactPaginate from "react-paginate";
 import { UserAuth } from "../context/AuthContext";
 
 function Not_found() {
@@ -27,14 +27,14 @@ function Not_found() {
 }
 
 function Home({ searchBrandData = [], getSearchBrand }) {
-  const [posts,setPosts] = useState([]);
-  const [loading,setLoading] = useState(false);
-  const [currentPage,setCurrentPage] = useState(1);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(16);
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
-  
+
   // function Home() {
   // const [searchBrandData,setSearchBrandData] = useState()
   // const getProfile = async () =>{
@@ -42,31 +42,31 @@ function Home({ searchBrandData = [], getSearchBrand }) {
   // }
 
   useEffect(() => {
-    const fetchPosts = async () =>{
+    const fetchPosts = async () => {
       setLoading(true);
-      getSearchBrand({}); 
-      setPosts(searchBrandData.data)
+      getSearchBrand({});
+      setPosts(searchBrandData.data);
       setLoading(false);
-    }
-    
+    };
+
     fetchPosts();
   }, []);
 
-
-  const indexOfLastPost = currentPage* postsPerPage;
+  const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = searchBrandData.data.slice(indexOfFirstPost,indexOfLastPost);
-  const paginate = pageNumber => setCurrentPage(pageNumber)
+  const currentPosts = searchBrandData.data.slice(
+    indexOfFirstPost,
+    indexOfLastPost
+  );
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="p-3 flex bg-light">
-      {/* {console.log(searchBrandData)} */}
       <div className="d-flex flex-wrap grid container">
         {currentPosts?.data?.length === 0 ? (
           <Not_found />
         ) : (
           currentPosts?.map((Company) => {
-            // console.log(brand);
             return (
               <div
                 key={Company._id}
@@ -83,8 +83,8 @@ function Home({ searchBrandData = [], getSearchBrand }) {
                         style={{ textDecoration: "none" }}
                         className="text-center"
                       >
-                        {Company.name? Company.name :Company.domain}
-                      </Card.Title>                      
+                        {Company.name ? Company.name : Company.domain}
+                      </Card.Title>
                     </Card.Body>
                   </Card>
                 </Link>
@@ -92,14 +92,16 @@ function Home({ searchBrandData = [], getSearchBrand }) {
             );
           })
         )}
-        {/* {console.log(posts.length)} */}
       </div>
       <div className="mt-5"></div>
-      <Pagination postsPerPage={postsPerPage} totalPosts={searchBrandData.data.length} paginate={paginate} />
+      <Pagination
+        postsPerPage={postsPerPage}
+        totalPosts={searchBrandData.data.length}
+        paginate={paginate}
+      />
     </div>
   );
 }
-
 
 const mapStateToProp = (state, ownProps) => {
   return { ...ownProps, searchBrandData: state.searchBrandReducer };

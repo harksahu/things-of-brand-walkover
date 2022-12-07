@@ -12,10 +12,10 @@ import "../utils/svginline.css";
 import "../scss/popup.scss";
 import SvgInline from "../utils/SvgInline.js";
 import { useNavigate, useParams } from "react-router-dom";
-import Draggable from 'react-draggable';
+import Draggable from "react-draggable";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 import {
   searchBrandApi,
   deleteMyStuffAPI,
@@ -23,7 +23,6 @@ import {
   restoreMyStuffAPI,
   saveMyStuffAPI,
 } from "../api/index.js";
-
 
 function MyVerticallyCenteredModal(params) {
   const id = useParams();
@@ -34,20 +33,19 @@ function MyVerticallyCenteredModal(params) {
   const { user } = UserAuth();
   const [show, setShow] = useState(false);
   const [props, setProps] = useState();
-  console.log(props);
   function size(img) {
     setWidth(document.getElementById(img).clientWidth);
     setHeight(document.getElementById(img).clientHeight);
   }
 
   const savedata = async (id, n) => {
-    setName(n)
+    setName(n);
     const new_data = {
       _id: id,
       title: n,
     };
     await saveMyStuffAPI(new_data);
-  }
+  };
 
   function changeHW(w, h) {
     document.getElementById(props.url).style.width = w + "px";
@@ -79,7 +77,6 @@ function MyVerticallyCenteredModal(params) {
 
     async function toPng(data) {
       const { width, height } = data;
-      // console.log(width);
       const canvas = new OffscreenCanvas(width, height);
       const ctx = canvas.getContext("2d");
       const v = await Canvg.from(ctx, img, preset);
@@ -101,7 +98,7 @@ function MyVerticallyCenteredModal(params) {
   const getData = async () => {
     const data = await searchBrandApi(id.id);
     setProps(data?.data?.data[0]);
-    setName(data?.data?.data[0].title)
+    setName(data?.data?.data[0].title);
   };
 
   const renderTooltip = (props) => (
@@ -110,12 +107,17 @@ function MyVerticallyCenteredModal(params) {
     </Tooltip>
   );
 
-  const companyPage = async()=>{
-    console.log(props?.domain);
-    const forwardTo = await getProfileDetails({email:"",domain:"",name:"",searchfrom:"true",_id:props?.domain})
-    console.log(forwardTo?.data?.data[0].domain);
-    navigate("/" + forwardTo?.data?.data[0]?.domain)
-  }
+  const companyPage = async () => {
+    const forwardTo = await getProfileDetails({
+      email: "",
+      domain: "",
+      name: "",
+      searchfrom: "true",
+      _id: props?.domain,
+    });
+
+    navigate("/" + forwardTo?.data?.data[0]?.domain);
+  };
   useEffect(() => {
     getData();
   }, [id]);
@@ -124,57 +126,75 @@ function MyVerticallyCenteredModal(params) {
     <Container fluid>
       <Row className="h-90">
         <Col className="popup_img">
-          <div className="d-flex" style={{position: "absolute"}}>
-          <Button style={{ margin: 10, zIndex: 1 }} onClick={() => {
-            navigate(-1)
-          }} variant="dark">Back</Button>
-          <OverlayTrigger
-            placement="right"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip}
-          >
-            <Button style={{ margin: 10, zIndex: 1 }} onClick={() => {
-            companyPage()
-
-            }} variant="dark">Company page</Button>
-          </OverlayTrigger>
+          <div className="d-flex" style={{ position: "absolute" }}>
+            <Button
+              style={{ margin: 10, zIndex: 1 }}
+              onClick={() => {
+                navigate(-1);
+              }}
+              variant="dark"
+            >
+              Back
+            </Button>
+            <OverlayTrigger
+              placement="right"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip}
+            >
+              <Button
+                style={{ margin: 10, zIndex: 1 }}
+                onClick={() => {
+                  companyPage();
+                }}
+                variant="dark"
+              >
+                Company page
+              </Button>
+            </OverlayTrigger>
           </div>
           <SvgInline {...props} />
-        </Col >
+        </Col>
         <div style={{ position: "absolute" }}>
           <Draggable defaultPosition={{ x: window.innerWidth - 350, y: 10 }}>
-            <div className="card property-box"  style={{cursor: "grab"}}>
+            <div className="card property-box" style={{ cursor: "grab" }}>
               <div className="card-header d-flex align-items-center">
-                {user !== null && user !== undefined && user && Object.keys(user).length > 0 ?
-                  (
-                    user?.email === props?.email ? (
-                      <div>
-                        {
-                          show ?
-                            <input
-                              id="userInputBox"
-                              onChange={(e) => {
-                                (savedata(props?._id, e.target.value))
-                              }}
-                              value={name}
-                              className="form-control form-control-sm"
-                              autofocus
-                            /> :
-                            <div id="showname" onClick={() => {
-                              setShow(true)
-                            }}>{name}</div>
-
-
-                        }
-
-                      </div>
-                    ) : <div>{props?.title}</div>
-                  ) : <div>{props?.title}</div>
-                }
                 {user !== null &&
-                  user !== undefined &&
-                  user &&
-                  Object.keys(user).length > 0 ? (
+                user !== undefined &&
+                user &&
+                Object.keys(user).length > 0 ? (
+                  user?.email === props?.email ? (
+                    <div>
+                      {show ? (
+                        <input
+                          id="userInputBox"
+                          onChange={(e) => {
+                            savedata(props?._id, e.target.value);
+                          }}
+                          value={name}
+                          className="form-control form-control-sm"
+                          autoFocus
+                        />
+                      ) : (
+                        <div
+                          id="showname"
+                          onClick={() => {
+                            setShow(true);
+                          }}
+                        >
+                          {name}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div>{props?.title}</div>
+                  )
+                ) : (
+                  <div>{props?.title}</div>
+                )}
+                {user !== null &&
+                user !== undefined &&
+                user &&
+                Object.keys(user).length > 0 ? (
                   user?.email === props?.email ? (
                     <>
                       <Dropdown className="ms-auto">
@@ -183,13 +203,16 @@ function MyVerticallyCenteredModal(params) {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
-                          <Dropdown.Item onClick={() => {
-                            setShow(true)
-                          }}>Rename</Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() => {
+                              setShow(true);
+                            }}
+                          >
+                            Rename
+                          </Dropdown.Item>
                           {props.active === false ? (
                             <Dropdown.Item
                               onClick={async () => {
-                                console.log("object");
                                 await restoreMyStuffAPI(props?._id);
                                 // alert("restore")
                                 navigate(-1);
@@ -216,9 +239,12 @@ function MyVerticallyCenteredModal(params) {
                         </Dropdown.Menu>
                       </Dropdown>
                     </>
-                  ) : ("")
-                ) : ("")
-                }
+                  ) : (
+                    ""
+                  )
+                ) : (
+                  ""
+                )}
               </div>
               <div className="card-body">
                 <label className="small fw-bold mb-1">Size</label>
@@ -230,10 +256,13 @@ function MyVerticallyCenteredModal(params) {
                     >
                       <Form.Label>W</Form.Label>
                       <Form.Control
-                        onChange={(e) => (setWidth(e.target.value), changeHW(e.target.value, mheight))}
+                        onChange={(e) => (
+                          setWidth(e.target.value),
+                          changeHW(e.target.value, mheight)
+                        )}
                         value={mwidth}
                         size="sm"
-                        autocomplete="off"
+                        autoComplete="off"
                       />
                     </Form.Group>
                   </Col>
@@ -244,10 +273,13 @@ function MyVerticallyCenteredModal(params) {
                     >
                       <Form.Label>H</Form.Label>
                       <Form.Control
-                        onChange={(e) => (setHeight(e.target.value), changeHW(mwidth, e.target.value))}
+                        onChange={(e) => (
+                          setHeight(e.target.value),
+                          changeHW(mwidth, e.target.value)
+                        )}
                         value={mheight}
                         size="sm"
-                        autocomplete="off"
+                        autoComplete="off"
                       />
                     </Form.Group>
                   </Col>
@@ -271,7 +303,7 @@ function MyVerticallyCenteredModal(params) {
                   onClick={() => {
                     const canvas = DownloadToSvg(props.url, props.title);
                   }}
-                // onClick={() => saveAs(props.title)}
+                  // onClick={() => saveAs(props.title)}
                 >
                   SVG
                 </Button>
@@ -279,9 +311,7 @@ function MyVerticallyCenteredModal(params) {
             </div>
           </Draggable>
         </div>
-
       </Row>
-
     </Container>
     //     </Modal.Body>
     //     <Modal.Footer>

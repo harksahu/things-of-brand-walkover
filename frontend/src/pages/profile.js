@@ -1,14 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { Card, Container, Row, Col, Form, Button, Stack } from "react-bootstrap";
+import {
+  Card,
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  Stack,
+} from "react-bootstrap";
 import { UserAuth } from "../context/AuthContext";
-import { getProfileDetails, updateProfileFields, getFontList, createProfile, sendSearchAPI } from "../api/index.js";
+import {
+  getProfileDetails,
+  updateProfileFields,
+  getFontList,
+  createProfile,
+  sendSearchAPI,
+} from "../api/index.js";
 import CloseIcon from "@mui/icons-material/Close";
 import RichtextEditor from "./jodit.js";
 import { BsFillTrashFill, BsChevronLeft } from "react-icons/bs";
 import { MdArrowBackIos } from "react-icons/md";
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import SideBar from '../components/SideBar';
-import { Hint } from 'react-autocomplete-hint';
+import SideBar from "../components/SideBar";
+import { Hint } from "react-autocomplete-hint";
 import SvgInline from "../utils/SvgInline.js";
 // import { Tokenizer } from 'react-typeahead';
 // import {  Typeahead } from 'react-bootstrap-typeahead';
@@ -32,7 +46,9 @@ function Profile(props) {
   const [id, setId] = useState("");
   const [logo, setLogo] = useState();
   const [verify, setVerify] = useState("false");
-  const [color, setcount] = useState([{ colorName: "", colorValue: "#ffffff" }]);
+  const [color, setcount] = useState([
+    { colorName: "", colorValue: "#ffffff" },
+  ]);
   const [fontLink, setFontLink] = useState([""]);
   const [linkCount, setLinkCount] = useState(1);
   const [countTracker, setCountTracker] = useState(1);
@@ -40,19 +56,16 @@ function Profile(props) {
   const [valid2, setvalid2] = useState([false]);
   const [fontFamily, setFontFamily] = useState([false]);
 
-
   const location = useLocation();
   let countTemp = countTracker;
-  let countTemp2 = linkCount
-  var fresult
+  let countTemp2 = linkCount;
+  var fresult;
   const navigate = useNavigate();
 
-
   const getbrandslogo = async () => {
-    console.log("domain =", domain);
     if (domain) {
       const data = await sendSearchAPI({ domain: id, active: 1 });
-      console.log(data);
+
       setDomainPost(data?.data?.data);
     }
   };
@@ -70,49 +83,38 @@ function Profile(props) {
   };
 
   const fontlist = async () => {
-    const data = await getFontList()
-    // console.log(data?.data?.items);
+    const data = await getFontList();
+
     var result = [];
 
-    for (var i in data?.data?.items)
-      result.push(data?.data?.items[i]?.family);
-    setFontFamily(result)
-    // console.log(result);
-
-  }
+    for (var i in data?.data?.items) result.push(data?.data?.items[i]?.family);
+    setFontFamily(result);
+  };
 
   useEffect(() => {
-    // console.log(location?.state?.data)
     setId(location?.state?.data?._id);
     if (user) {
       if (user?.email) {
         next();
         profileDetails();
-
       }
     }
   }, [user]);
 
   useEffect(() => {
-    fontlist()
+    fontlist();
     if (domain) {
       getbrandslogo();
-      console.log(logo);
     }
   }, [domain]);
-
-
-
-
 
   const storeProfileValue = async (req, res) => {
     if (check) {
       if (user) {
         if (user?.email) {
-          console.log("exextevalue");
           try {
-            const d = extractDomain(domain)
-            setDomain(d)
+            const d = extractDomain(domain);
+            setDomain(d);
             const data = await createProfile({
               name,
               aboutus,
@@ -125,7 +127,7 @@ function Profile(props) {
               verify,
               email: user?.email,
             });
-            // console.log(data);
+
             alert("successfully saved domain " + d);
           } catch (err) {
             console.log(err);
@@ -136,11 +138,10 @@ function Profile(props) {
     }
   };
   const updateProfileValue = async (req, res) => {
-    console.log('update', name, aboutus);
-
     if (name) {
       if (aboutus) {
         const data = {
+          logo: logo,
           name: name,
           aboutus: aboutus,
           links: links,
@@ -151,19 +152,16 @@ function Profile(props) {
           secondaryColors: secondaryColors,
           backgroundColors: backgroundColors,
           email: user?.email,
-          color: color
+          color: color,
         };
-        console.log('updateProfileFields', data);
+
         await updateProfileFields(data);
-        navigate(-1)
+        navigate(-1);
       } else {
-        alert("about us field is compulsory")
+        alert("about us field is compulsory");
       }
-
     } else {
-      alert("name field is compulsory")
-
-
+      alert("name field is compulsory");
     }
   };
 
@@ -187,102 +185,94 @@ function Profile(props) {
     if (location.state.data.domain) {
       getbrandslogo();
     }
-
   };
-
 
   function extractDomain(url) {
     var domainName;
     if (url.indexOf("://") > -1) {
-      domainName = url.split('/')[2];
-    }
-    else {
-      domainName = url.split('/')[0];
+      domainName = url.split("/")[2];
+    } else {
+      domainName = url.split("/")[0];
     }
 
     //find & remove www
     if (domainName.indexOf("www.") > -1) {
-      domainName = domainName.split('www.')[1];
+      domainName = domainName.split("www.")[1];
     }
 
-    domainName = domainName.split(':')[0];
-    domainName = domainName.split('?')[0];
+    domainName = domainName.split(":")[0];
+    domainName = domainName.split("?")[0];
 
     return domainName;
   }
 
   const config = {
-    buttons: ["bold", "italic"]
+    buttons: ["bold", "italic"],
   };
 
   const next = () => {
     if (location.state?.data) {
-      document.getElementById("name").classList.remove("visually-hidden")
-      document.getElementById("about").classList.remove("visually-hidden")
-      document.getElementById("socialLinks").classList.remove("visually-hidden")
-      document.getElementById("Guidlines").classList.remove("visually-hidden")
-      document.getElementById("list").classList.remove("visually-hidden")
-      document.getElementById("fontLink").classList.remove("visually-hidden")
-      document.getElementById("button").classList.remove("visually-hidden")
-      document.getElementById("nxt").classList.add("visually-hidden")
-    }
-    else {
+      document.getElementById("name").classList.remove("visually-hidden");
+      document.getElementById("about").classList.remove("visually-hidden");
+      document
+        .getElementById("socialLinks")
+        .classList.remove("visually-hidden");
+      document.getElementById("Guidlines").classList.remove("visually-hidden");
+      document.getElementById("list").classList.remove("visually-hidden");
+      document.getElementById("fontLink").classList.remove("visually-hidden");
+      document.getElementById("button").classList.remove("visually-hidden");
+      document.getElementById("nxt").classList.add("visually-hidden");
+    } else {
       var check = 2;
       for (let i = 0; i < results.length; i++) {
         // const e = results[i];
         if (results[i].domain === domain) {
-          setCompany(results[i])
+          setCompany(results[i]);
           check = 1;
 
           break;
-        }
-        else {
-          // console.log("false");
+        } else {
           check = 0;
-
         }
       }
 
       if (check === 1) {
-        console.log("old");
-        document.getElementById("domainError").classList.remove("visually-hidden")
-
-      }
-      else if (check === 0) {
+        document
+          .getElementById("domainError")
+          .classList.remove("visually-hidden");
+      } else if (check === 0) {
         var domainParts = domain.split(".");
-        console.log(domainParts);
-        console.log(domainParts.length);
+
         if (domain) {
           if (domainParts.length >= 2 && domainParts[1].length >= 1) {
-            console.log("new");
-            document.getElementById("name").classList.remove("visually-hidden")
-            document.getElementById("about").classList.remove("visually-hidden")
-            document.getElementById("socialLinks").classList.remove("visually-hidden")
-            document.getElementById("Guidlines").classList.remove("visually-hidden")
-            document.getElementById("list").classList.remove("visually-hidden")
-            document.getElementById("fontLink").classList.remove("visually-hidden")
-            document.getElementById("button").classList.remove("visually-hidden")
-            document.getElementById("nxt").classList.add("visually-hidden")
-
+            document.getElementById("name").classList.remove("visually-hidden");
+            document
+              .getElementById("about")
+              .classList.remove("visually-hidden");
+            document
+              .getElementById("socialLinks")
+              .classList.remove("visually-hidden");
+            document
+              .getElementById("Guidlines")
+              .classList.remove("visually-hidden");
+            document.getElementById("list").classList.remove("visually-hidden");
+            document
+              .getElementById("fontLink")
+              .classList.remove("visually-hidden");
+            document
+              .getElementById("button")
+              .classList.remove("visually-hidden");
+            document.getElementById("nxt").classList.add("visually-hidden");
 
             document.getElementById("domain").disabled = true;
-            storeProfileValue()
+            storeProfileValue();
           }
-          /* else {
-            alert("enter valid domain name");
-          }
- */        }
-        /* else {
-          alert("enter domain name");
-        } */
+        }
       }
     }
-
-  }
+  };
 
   const checkDomain = (datta) => {
-
-
     for (let i = 0; i < profiledata?.data?.data?.length; i++) {
       if (datta == profiledata?.data?.data[i].domain) {
         const domainId = document.getElementById("domain");
@@ -293,19 +283,14 @@ function Profile(props) {
         setCheck(true);
       }
     }
-
-
-
   };
   let addFormFields = () => {
     setcount([...color, { colorName: "", colorValue: "#000000" }]);
     setCountTracker(countTemp + 1);
-    // console.log(countTracker);
   };
   let addFontFields = () => {
     setFontLink([...fontLink, ""]);
     setLinkCount(countTemp2 + 1);
-
   };
   let removeFontFields = (i) => {
     setLinkCount(countTemp2 - 1);
@@ -316,19 +301,17 @@ function Profile(props) {
     let newFormVaild = [...valid2];
     newFormVaild.splice(i, 1);
     setvalid2(newFormVaild);
-
   };
   let removeFormFields = (i) => {
     setCountTracker(countTemp - 1);
     document.getElementById("add_input").classList.remove("hide");
-    // console.log(countTracker);
+
     let newFormValues = [...color];
     newFormValues.splice(i, 1);
     setcount(newFormValues);
     let newFormVaild = [...valid];
     newFormVaild.splice(i, 1);
     setvalid(newFormVaild);
-
   };
   return (
     <div className="bg-gray h-100">
@@ -336,7 +319,12 @@ function Profile(props) {
         <Row>
           <nav className="navbar bg-light">
             <div className="container-fluid">
-              <a className="navbar-brand" onClick={() => { navigate(-1) }}>
+              <a
+                className="navbar-brand"
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
                 <button type="button" className="btn btn-light me-3">
                   <MdArrowBackIos />
                 </button>
@@ -357,19 +345,79 @@ function Profile(props) {
                         aria-describedby="btnGroupAddon"
                         onChange={(e) => {
                           setName(e.target.value);
-                          console.log(e.target.value);
                         }}
                         value={name}
                       />
                     </Form.Group>
 
-                    <Form.Group className="mb-3 visually-hidden" id="about" >
+                    <Form.Group className="mb-3 visually-hidden" id="about">
                       <Form.Label>About us</Form.Label>
-                      <RichtextEditor guidlines={aboutus} setGuidlines={setAboutus} config={config} tabIndex={1} />
+                      <RichtextEditor
+                        guidlines={aboutus}
+                        setGuidlines={setAboutus}
+                        config={config}
+                        tabIndex={1}
+                      />
                     </Form.Group>
 
+                    <h6>logos</h6>
+                    <div className="d-flex flex-wrap justify-content-center">
+                      {DomainPost?.map((brand, index) => {
+                        return (
+                          <div key={index}>
+                            <div key={brand._id} className=" flex-wrap item">
+                              <Card>
+                                <Link to={"/stuff/" + brand._id}>
+                                  <div
+                                    style={{ overflow: "auto" }}
+                                    className="img_size"
+                                  >
+                                    <SvgInline {...brand} />
+                                  </div>
+                                  <Card.Body>
+                                    <Card.Title
+                                      style={{ textDecoration: "none" }}
+                                      className="text-center"
+                                    >
+                                      {brand.title}
+                                    </Card.Title>
+                                  </Card.Body>
+                                </Link>
+                              </Card>
+                              {user ? (
+                                user.email === user.email ? (
+                                  logo === brand.url ? (
+                                    <Button variant="light" size="sm" disabled>
+                                      Default logo
+                                    </Button>
+                                  ) : (
+                                    <Button
+                                      variant="light"
+                                      size="sm"
+                                      onClick={() => {
+                                        setLogo(brand.url);
+                                      }}
+                                    >
+                                      Make default
+                                    </Button>
+                                  )
+                                ) : (
+                                  ""
+                                )
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
 
-                    <div className="tags-input mb-3 visually-hidden" id="socialLinks" style={{ margin: "auto" }}>
+                    <div
+                      className="tags-input mb-3 visually-hidden"
+                      id="socialLinks"
+                      style={{ margin: "auto" }}
+                    >
                       <h6>Social Links</h6>
                       <ul>
                         {links.map((link, index) => (
@@ -391,55 +439,61 @@ function Profile(props) {
                       />
                     </div>
                     <Form.Group className="mb-3">
-                      <Form.Label>Domain * <small>(example.com)</small></Form.Label>
+                      <Form.Label>
+                        Domain * <small>(example.com)</small>
+                      </Form.Label>
                       <Form.Control
                         type="domain"
                         placeholder="Enter domain name"
                         list="doaminBrowsers"
-                        autocomplete="off"
+                        autoComplete="off"
                         name="myBrowser"
                         id="domain"
                         onChange={(e) => {
-
                           // setDomain(extractDomain(e.target.value));
                           setDomain(e.target.value);
                           // checkDomain(e.target.value);
                         }}
                         value={domain}
-
                       />
                       <div className="visually-hidden" id="domainError">
-
-                        This company is already created  <Link to="/domainVerify" state={{ data: company }}>Clam your brand</Link>
-
+                        This company is already created{" "}
+                        <Link to="/domainVerify" state={{ data: company }}>
+                          Clam your brand
+                        </Link>
                       </div>
-
 
                       {/* autocompate domain */}
                       {/* <datalist id="doaminBrowsers">
                         {results &&
                           results.map((brandData) => {
-                            // console.log(brandData.domain);
+                           
                             return <option key={brandData._id} value={brandData.domain} />;
                           })}
                       </datalist> */}
-
                     </Form.Group>
 
-                    <Form.Group className="mb-3 visually-hidden" id="Guidlines" >
+                    <Form.Group className="mb-3 visually-hidden" id="Guidlines">
                       <Form.Label>Guidlines</Form.Label>
-                      <RichtextEditor guidlines={guidlines} setGuidlines={setGuidlines} tabIndex={1} />
+                      <RichtextEditor
+                        guidlines={guidlines}
+                        setGuidlines={setGuidlines}
+                        tabIndex={1}
+                      />
                     </Form.Group>
 
-                    <div className="hide formbold-chatbox-form visually-hidden" id="list">
-                      <Form.Group className="mb-3" >
-                        <Form.Label>Color<small>(hex code in #123456 format)</small> </Form.Label>
+                    <div
+                      className="hide formbold-chatbox-form visually-hidden"
+                      id="list"
+                    >
+                      <Form.Group className="mb-3">
+                        <Form.Label>
+                          Color<small>(hex code in #123456 format)</small>{" "}
+                        </Form.Label>
 
                         {color.map((element, index) => (
-
                           <div id="fetch" key={index}>
                             <Form.Group className="mb-3 d-flex">
-
                               <Form.Control
                                 type="text"
                                 name="user_table_input"
@@ -454,10 +508,17 @@ function Profile(props) {
                                 className="contact-form-area"
                               />
 
-                              <Form.Control type="text" id={`colorinputbytext${index}`} maxLength="7" placeholder="Enter hex value of color"
+                              <Form.Control
+                                type="text"
+                                id={`colorinputbytext${index}`}
+                                maxLength="7"
+                                placeholder="Enter hex value of color"
                                 onChange={(e) => {
-                                  document.getElementById("colorinput" + index).value = e.target.value;
-                                }} />
+                                  document.getElementById(
+                                    "colorinput" + index
+                                  ).value = e.target.value;
+                                }}
+                              />
                               <Form.Control
                                 type="color"
                                 name="user_input"
@@ -466,8 +527,10 @@ function Profile(props) {
                                 value={color[index].colorValue}
                                 className="user_input hide formbold-form-input"
                                 onChange={(e) => {
-                                  document.getElementById("colorinputbytext" + index).value = e.target.value;
-                                  console.log("e.target.value" + e.target.value);
+                                  document.getElementById(
+                                    "colorinputbytext" + index
+                                  ).value = e.target.value;
+
                                   let tempCount = color;
                                   tempCount[index].colorValue = e.target.value;
                                   setcount([...tempCount]);
@@ -484,7 +547,6 @@ function Profile(props) {
                                 </button>
                               ) : null}
                             </Form.Group>
-
                           </div>
                         ))}
                         <div className="button-section">
@@ -498,10 +560,15 @@ function Profile(props) {
                           </button>
                         </div>
                       </Form.Group>
-
                     </div>
-                    <Form.Group className="mb-3 my-3 visually-hidden" id="fontLink" >
-                      <Form.Label>Font  links <small>(with respect there google font name)</small></Form.Label>
+                    <Form.Group
+                      className="mb-3 my-3 visually-hidden"
+                      id="fontLink"
+                    >
+                      <Form.Label>
+                        Font links{" "}
+                        <small>(with respect there google font name)</small>
+                      </Form.Label>
                       <div id="list" className="hide formbold-chatbox-form">
                         {fontLink.map((element, index) => (
                           <div id="fetch" key={index}>
@@ -510,15 +577,13 @@ function Profile(props) {
                                 type="url"
                                 // name="user_table_input"
                                 id={"id" + index}
-                                autocomplete="off"
-
+                                autoComplete="off"
                                 placeholder="Enter font name "
                                 value={fontLink[index]}
                                 onChange={(e) => {
                                   let tempCount = fontLink;
                                   tempCount[index] = e.target.value;
                                   setFontLink([...tempCount]);
-
                                 }}
                                 className="contact-form-area form-control"
                                 name="myBrowser"
@@ -560,8 +625,6 @@ function Profile(props) {
                             </div>
                             } */}
 
-
-
                             {index ? (
                               <button
                                 type="button"
@@ -586,12 +649,14 @@ function Profile(props) {
                           </Button>
                         </div>
                       </div>
-                      {console.log("DomainPost = ", DomainPost)}
                     </Form.Group>
 
                     <div id="button" className=" visually-hidden">
                       {/* {location.state?.data ? ( */}
-                      <Button variant="primary" onClick={() => (updateProfileValue())}>
+                      <Button
+                        variant="primary"
+                        onClick={() => updateProfileValue()}
+                      >
                         Update
                       </Button>
                       {/* // ) : (
@@ -636,9 +701,7 @@ function Profile(props) {
               })}
             </div> */}
                     <div id="nxt">
-                      <Button variant="primary"
-                        onClick={() => next()}
-                      >
+                      <Button variant="primary" onClick={() => next()}>
                         Next
                       </Button>
                     </div>

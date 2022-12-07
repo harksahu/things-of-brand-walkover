@@ -12,7 +12,6 @@ function Home2() {
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
 
-  // console.log(searchBrandData)
   const handleGoogleSignIn = async () => {
     try {
       if (user) {
@@ -20,8 +19,6 @@ function Home2() {
       } else {
         await googleSignIn();
       }
-
-      // console.log(object);
     } catch (error) {
       console.log(error);
     }
@@ -44,10 +41,12 @@ function Home2() {
             <div className="d-flex justify-content-center">
               <button
                 type="button"
-                className={`btn btn-lg ${user ? 'btn-outline-primary' : 'btn-primary'}`}
+                className={`btn btn-lg ${
+                  user ? "btn-outline-primary" : "btn-primary"
+                }`}
                 onClick={handleGoogleSignIn}
               >
-                {user ? 'Manage' : 'Get started'}
+                {user ? "Manage" : "Get started"}
               </button>
             </div>
           </Col>
@@ -55,7 +54,9 @@ function Home2() {
         <div className="mt-5"></div>
         <Row className="mt-5">
           <Col xs={12} lg={10} className="mx-auto text-center">
-            <div className="fw-bold text-black-50">They manage their brand here</div>
+            <div className="fw-bold text-black-50">
+              They manage their brand here
+            </div>
             <div className="d-flex brands-wrp align-items-center justify-content-center flex-wrap">
               <div>
                 <img src="walkover.svg" />
@@ -76,9 +77,7 @@ function Home2() {
                 <img src="workspace.svg" />
               </div>
             </div>
-            <Link to="/search">
-              Explore more...
-            </Link>
+            <Link to="/search">Explore more...</Link>
           </Col>
         </Row>
         <div className="flex-fill"></div>
@@ -87,10 +86,12 @@ function Home2() {
           <a href="https://walkover.in/" target="_blank">
             WALKOVER
           </a>
-          , All rights reserved. 
-          <a  href="https://feature.thingsofbrand.com/feature-requests"
-                  target="_blank">
-          FEATURE REQUESTS
+          , All rights reserved.
+          <a
+            href="https://feature.thingsofbrand.com/feature-requests"
+            target="_blank"
+          >
+            FEATURE REQUESTS
           </a>
         </footer>
       </Container>

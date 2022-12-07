@@ -1,36 +1,33 @@
 import React, { useEffect, useState } from "react";
 const SvgInline = (props) => {
-  // console.log(props);
-
   const [svg, setSvg] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isErrored, setIsErrored] = useState(false);
   useEffect(() => {
-    console.log(props.url, props.name );
-    var url = (props.url !== undefined && props.url !== "null") ? props.url : '/assets/picture.svg';     
+    var url =
+      props.url !== undefined && props.url !== "null"
+        ? props.url
+        : "/assets/picture.svg";
     fetch(url)
-    .then((res) => res.text())
-    .then((res)=>{     
-      var svgToHe = res.toString();
-      svgToHe = svgToHe?.replace("<svg ", `<svg id="${props.url}" `)
-      setSvg(svgToHe);
-    })
-    .catch(setIsErrored)
+      .then((res) => res.text())
+      .then((res) => {
+        var svgToHe = res.toString();
+        svgToHe = svgToHe?.replace("<svg ", `<svg id="${props.url}" `);
+        setSvg(svgToHe);
+      })
+      .catch(setIsErrored);
   }, [props.url]);
 
-  useEffect(() => {
-  // console.log(svg);
-  }, [svg]);
+  useEffect(() => {}, [svg]);
 
-  return (    
-    <div    
-      className={`pattern-square svgInline svgInline--${isLoaded ? "loaded" : "loading"} ${
-        isErrored ? "svgInline--errored" : "" 
-      }`}    
+  return (
+    <div
+      className={`pattern-square svgInline svgInline--${
+        isLoaded ? "loaded" : "loading"
+      } ${isErrored ? "svgInline--errored" : ""}`}
       dangerouslySetInnerHTML={{ __html: svg }}
-      offset="30%"      
-    >      
-    </div>
+      offset="30%"
+    ></div>
   );
 };
 

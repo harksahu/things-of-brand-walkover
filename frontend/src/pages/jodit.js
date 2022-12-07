@@ -15,7 +15,6 @@ const RichTextEditor = ({ guidlines ,setGuidlines }) => {
       value={guidlines}
       config={config}
       tabIndex={1}
-        // onBlur={(newContent) => setGuidlines(newContent)}
       onChange={(newContent) => setGuidlines(newContent)}
     />
   );
