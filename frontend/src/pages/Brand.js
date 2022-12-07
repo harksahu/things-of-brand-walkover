@@ -27,6 +27,7 @@ import saveAs from "file-saver";
 import SvgInline from "../utils/SvgInline.js";
 import {
   BsFillPlusCircleFill,
+  BsFillTrashFill,
   BsPencilSquare,
   BsFillExclamationDiamondFill,
   BsShieldCheck,
@@ -91,6 +92,13 @@ function Brand() {
     return result;
   }
 
+  const removeSharedEmail = (index) => {
+    let temp = sharedEmail;
+    var spliced = temp.splice(index, 1); 
+    setSharedEmail([...temp]);
+    handleClosee();
+    updateLogo();
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
     let temp = sharedEmail;
@@ -265,7 +273,11 @@ function Brand() {
                             {sharedEmail.map((email, index) => {
                               return (
                                 <div key={index}>
-                                  <h5>{email}</h5>
+                                  <h5>{email}
+                                  <Button onClick={()=>{
+                                    removeSharedEmail(index);
+                                  }}><BsFillTrashFill/></Button>
+                                  </h5>
                                 </div>
                               );
                             })}
