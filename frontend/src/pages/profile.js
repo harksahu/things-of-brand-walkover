@@ -6,6 +6,7 @@ import {
   Col,
   Form,
   Button,
+  Dropdown,
   Stack,
 } from "react-bootstrap";
 import { UserAuth } from "../context/AuthContext";
@@ -14,9 +15,12 @@ import {
   updateProfileFields,
   getFontList,
   createProfile,
+  deleteMyStuffAPI,
+  saveMyStuffAPI,
   sendSearchAPI,
 } from "../api/index.js";
 import CloseIcon from "@mui/icons-material/Close";
+import { BsFillPlusCircleFill, BsThreeDotsVertical } from "react-icons/bs";
 import RichtextEditor from "./jodit.js";
 import { BsFillTrashFill, BsChevronLeft } from "react-icons/bs";
 import { MdArrowBackIos } from "react-icons/md";
@@ -29,6 +33,7 @@ import SvgInline from "../utils/SvgInline.js";
 function Profile(props) {
   const [DomainPost, setDomainPost] = useState();
   const [name, setName] = useState("");
+  const [logoname, setlogoName] = useState("");
   const [aboutus, setAboutus] = useState("");
   const [domain, setDomain] = useState("");
   const [guidlines, setGuidlines] = useState("");
@@ -45,6 +50,7 @@ function Profile(props) {
   const [id, setId] = useState("");
   const [logo, setLogo] = useState();
   const [verify, setVerify] = useState("false");
+  const [show, setShow] = useState(false);
   const [color, setcount] = useState([
     { colorName: "", colorValue: "#FFFFFF" },
   ]);
@@ -71,6 +77,14 @@ function Profile(props) {
       // props.selectedTags([...tags, event.target.value]);
       event.target.value = "";
     }
+  };
+  const savedata = async (id, n) => {
+    setlogoName(n);
+    const new_data = {
+      _id: id,
+      title: n,
+    };
+    await saveMyStuffAPI(new_data);
   };
   const removeLinks = (index) => {
     setLinks([...links.filter((link) => links.indexOf(link) !== index)]);
@@ -331,56 +345,142 @@ function Profile(props) {
                       />
                     </Form.Group>
                     <h6>logos</h6>
-                    <div className="d-flex flex-wrap justify-content-center">
-                      {DomainPost?.map((brand, index) => {
-                        return (
-                          <div key={index}>
-                            <div key={brand._id} className=" flex-wrap item">
-                              <Card>
-                                <Link to={"/stuff/" + brand._id}>
-                                  <div
-                                    style={{ overflow: "auto" }}
-                                    className="img_size"
-                                  >
-                                    <SvgInline {...brand} />
-                                  </div>
-                                  <Card.Body>
-                                    <Card.Title
-                                      style={{ textDecoration: "none" }}
-                                      className="text-center"
+                    <div className="grid">
+                      <div className="d-flex flex-wrap justify-content-center">
+                        {DomainPost?.map((brand, index) => {
+                          return (
+                            <div key={index}>
+                              <div key={brand._id} className=" flex-wrap item">
+                                <Card>
+                                  <Dropdown className="ms-auto">
+                                    <Dropdown.Toggle variant="light" size="sm">
+                                      <BsThreeDotsVertical />
+                                    </Dropdown.Toggle>
+
+                                    <Dropdown.Menu>
+                                      <Dropdown.Item
+                                        onClick={() => {
+                                          setShow(true);
+                                        }}
+                                      >
+                                        Rename
+                                      </Dropdown.Item>
+                                      <Dropdown.Item
+                                        onClick={async () => {
+                                          await deleteMyStuffAPI(brand?._id);
+                                          // alert("Deleted");
+                                          // window.location.reload();
+                                          navigate(-1);
+                                        }}
+                                        variant="outline-secondary"
+                                        size="sm"
+                                      >
+                                        Delete
+                                      </Dropdown.Item>
+                                    </Dropdown.Menu>
+                                  </Dropdown>
+                                  <Link to={"/stuff/" + brand._id}>
+                                    <div
+                                      style={{ overflow: "auto" }}
+                                      className="img_size"
                                     >
-                                      {brand.title}
-                                    </Card.Title>
-                                  </Card.Body>
-                                </Link>
-                              </Card>
-                              {user ? (
-                                user.email === user.email ? (
-                                  logo === brand.url ? (
-                                    <Button variant="light" size="sm" disabled>
-                                      Default logo
-                                    </Button>
+                                      <SvgInline {...brand} />
+                                    </div>
+                                    </Link>
+                                    <Card.Body>
+                                      <Card.Title
+                                        style={{ textDecoration: "none" }}
+                                        className="text-center"
+                                      >
+                                        {/* {brand.title} */}
+                                        <div>
+                                          { 
+                                          show ? (
+                                            <input
+                                              id="userInputBox"
+                                              onChange={(e) => {
+                                                savedata(
+                                                  brand?._id,
+                                                  e.target.value
+                                                );
+                                              }}
+                                              //  value={brand.title}
+                                              className="form-control form-control-sm"
+                                              autoFocus
+                                            />
+                                          ) : (
+                                            <div
+                                              id="showname"
+                                              onClick={() => {
+                                                setShow(true);
+                                              }}
+                                            >
+                                              {brand.title}
+                                            </div>
+                                          )}
+                                        </div>
+                                      </Card.Title>
+                                    </Card.Body>
+                                 
+                                </Card>
+                                {user ? (
+                                  user.email === user.email ? (
+                                    logo === brand.url ? (
+                                      <Button
+                                        variant="light"
+                                        size="sm"
+                                        disabled
+                                      >
+                                        Default logo
+                                      </Button>
+                                    ) : (
+                                      <Button
+                                        variant="light"
+                                        size="sm"
+                                        onClick={() => {
+                                          setLogo(brand.url);
+                                        }}
+                                      >
+                                        Make default
+                                      </Button>
+                                    )
                                   ) : (
-                                    <Button
-                                      variant="light"
-                                      size="sm"
-                                      onClick={() => {
-                                        setLogo(brand.url);
-                                      }}
-                                    >
-                                      Make default
-                                    </Button>
+                                    ""
                                   )
                                 ) : (
                                   ""
-                                )
-                              ) : (
-                                ""
-                              )}
+                                )}
+                              </div>
                             </div>
-                          </div>
-                        );
-                      })}
+                          );
+                        })}
+
+                        {user ? (
+                          <Link
+                            to="/addfile"
+                            className="add-new item"
+                            state={{ domain: domain }}
+                          >
+                            <Card className="h-100 item-company">
+                              <Card.Body className="align-items-center card-body d-flex justify-content-center">
+                                <Card.Title className="text-center">
+                                  <BsFillPlusCircleFill
+                                    style={{ fontSize: 40 }}
+                                  />
+                                </Card.Title>
+                                <Card.Text></Card.Text>
+                              </Card.Body>
+                              <div className="card-footer">
+                                <Button variant="link" size="sm">
+                                  Add new Logo
+                                </Button>
+                              </div>
+                            </Card>
+                          </Link>
+                        ) : (
+                          ""
+                        )}
+                      </div>
                     </div>
                     <div
                       className="tags-input mb-3 visually-hidden"
@@ -401,7 +501,8 @@ function Profile(props) {
                           </li>
                         ))}
                       </ul>
-                      <Form.Control type="text"
+                      <Form.Control
+                        type="text"
                         onKeyUp={(event) => addLinks(event)}
                         placeholder="Press enter to add tags"
                       />
