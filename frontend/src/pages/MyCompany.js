@@ -27,17 +27,14 @@ function MyCompany() {
 
   const findSharedEmail = async (req, res) => {
     var shareddEmail = await getProfileDetails({});
-    console.log(shareddEmail.data.data);
+
     setAllData(shareddEmail.data.data);
   };
   const profileDetails = async (req, res) => {
     fresult = await getProfileDetails({ email: user.email });
     setCompany(fresult.data.data);
 
-    // setSharedEmail(fresult.data.data.sharedEmail);
-    console.log(fresult.data.data[1].sharedEmail);
     if (Array.isArray(fresult.data.data) && fresult.data.data.length) {
-      // console.log("efsad");
     } else {
       navigate("/profile");
     }
@@ -56,8 +53,8 @@ function MyCompany() {
                 {/* <Link to={"/profile" }state={{ data: Company }}> */}
                 <Link to={"/" + Company.domain}>
                   <Card className="item-company">
-                    <div style={{ overflow: "auto" }} className="img_size">                      
-                        <SvgInline name={Company.name} url={Company.logo} />                      
+                    <div style={{ overflow: "auto" }} className="img_size">
+                      <SvgInline name={Company.name} url={Company.logo} />
                     </div>
                     <Card.Body>
                       <Card.Title
@@ -98,14 +95,9 @@ function MyCompany() {
                 key={Company._id}
                 className="d-flex justify-content-center item"
               >
-                {Company?.sharedEmail?.map((sharedEmail,index) => {
+                {Company?.sharedEmail?.map((sharedEmail, index) => {
                   return (
-                    <div
-                    key={index}
-                    >
-                      {console.log(
-                        "hello" + sharedEmail + "user = " + user.email
-                      )}
+                    <div key={index}>
                       {sharedEmail == user.email ? (
                         <Link to={"/" + Company.domain}>
                           <Card className="item-company">
@@ -113,7 +105,10 @@ function MyCompany() {
                               style={{ overflow: "auto" }}
                               className="img_size"
                             >
-                              <SvgInline name={Company.name} url={Company.logo} />                              
+                              <SvgInline
+                                name={Company.name}
+                                url={Company.logo}
+                              />
                             </div>
                             <Card.Body>
                               <Card.Title

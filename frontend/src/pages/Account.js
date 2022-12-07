@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { UserAuth } from "../context/AuthContext";
-import {Container, Row, Col, Card, Button, ListGroup, FormLabel } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  ListGroup,
+  FormLabel,
+} from "react-bootstrap";
 
-import { setAuthKey,storeAuthKey,deleteAuthKey } from "../api";
+import { setAuthKey, storeAuthKey, deleteAuthKey } from "../api";
 import { BsFillTrashFill } from "react-icons/bs";
 
-import SideBar from '../components/SideBar';
+import SideBar from "../components/SideBar";
 import "../scss/account.scss";
 
 const Account = () => {
@@ -24,8 +32,7 @@ const Account = () => {
         email: user?.email,
       });
       setKey(keyValue);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const setAuth = async () => {
@@ -37,13 +44,12 @@ const Account = () => {
   };
 
   const deleteKey = async () => {
-    console.log("delete authKey");
-    setKey()   
+    setKey();
     const data = await deleteAuthKey({
       authKey: key,
       email: user?.email,
     });
-    setKey()
+    setKey();
   };
   const [value, setValue] = useState("");
 
@@ -53,59 +59,59 @@ const Account = () => {
     }
   }, [setAuth, user]);
 
-
   return (
-    <Container fluid className="wrpr" >
+    <Container fluid className="wrpr">
       <Row>
         <Col md={3} lg={2}>
-          <SideBar/>
+          <SideBar />
         </Col>
-        <Col md={9} lg={10}>          
+        <Col md={9} lg={10}>
           <Card className="profile-card">
             <Card.Img variant="top" src={user?.photoURL} height="398px" />
             <Card.Body>
-              <Card.Title>{user?.displayName}</Card.Title>              
-              <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
+              <Card.Title>{user?.displayName}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">
+                {user?.email}
+              </Card.Subtitle>
             </Card.Body>
             <ListGroup className="list-group-flush">
               <ListGroup.Item>
                 <div className="small mb-1">Authkey</div>
-              {key ? (
-                    <div className="d-flex">
-                      <div
-                        className="flex-fill"
-                        id="key"
-                        onClick={() => {
-                          navigator.clipboard.writeText(key);
-                          document.getElementById("key").style.color = "grey";
-                        }}
-                      >
-                        {key}
-                      </div>
-                      <div>
-
-                          <BsFillTrashFill
-                            onClick={() => {
-                              deleteKey();
-                              setKey(null);
-                            }}
-                            style={{ color: "red" }}
-                          />
-                      </div>
+                {key ? (
+                  <div className="d-flex">
+                    <div
+                      className="flex-fill"
+                      id="key"
+                      onClick={() => {
+                        navigator.clipboard.writeText(key);
+                        document.getElementById("key").style.color = "grey";
+                      }}
+                    >
+                      {key}
                     </div>
-                  ) : (
-                    <>                      
-                      <Button
-                        id="authKeybtn"
-                        className="btn-sm"
+                    <div>
+                      <BsFillTrashFill
                         onClick={() => {
-                          token();
+                          deleteKey();
+                          setKey(null);
                         }}
-                      >
-                        generate
-                      </Button>
-                    </>
-                  )}
+                        style={{ color: "red" }}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <Button
+                      id="authKeybtn"
+                      className="btn-sm"
+                      onClick={() => {
+                        token();
+                      }}
+                    >
+                      generate
+                    </Button>
+                  </>
+                )}
               </ListGroup.Item>
               <ListGroup.Item>
                 <div className="small mb-1">User Id</div>
@@ -119,4 +125,4 @@ const Account = () => {
   );
 };
 
-  export default Account;
+export default Account;

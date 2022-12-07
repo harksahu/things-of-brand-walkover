@@ -6,7 +6,7 @@ import SvgInline from "../utils/SvgInline.js";
 import "../utils/svginline.css";
 import { sendSearchAPI } from "../api/index.js";
 import { AiFillPlusCircle } from "react-icons/ai";
-import SideBar from '../components/SideBar';
+import SideBar from "../components/SideBar";
 
 import Figure from "react-bootstrap/Figure";
 
@@ -55,94 +55,88 @@ function Home() {
   return (
     <>
       <Container className="wrpr">
-        
-            <Link to={"/addfile"}>
-              <Button variant="dark">
-                Add Stuff
-              </Button>              
-            </Link>
-            <Row md={4} className="g-4 flex p-3">
-              {searchBrandData?.data?.length === 0 ? (
-                <Not_found />
-              ) : (
-                searchBrandData?.data?.map((brand) => {
-                  return (
-
-                    
-                    <div key ={brand._id}>
-                      {brand.active === true ? (
-                        <div
-                          key={brand._id}
-                          className="d-flex justify-content-center item"
-                        >
-                          <Link to={"/stuff/" + brand._id}>
-                            <Card>
-                              <div
-                                style={{ overflow: "auto" }}
-                                className="img_size"
-                              >
-                                <SvgInline url={brand.url} />
-                              </div>
-
-                              <Card.Body>
-                                <Card.Title
-                                  style={{ textDecoration: "none" }}
-                                  className="text-center"
-                                >
-                                  {brand.title}
-                                </Card.Title>
-                                <Card.Text></Card.Text>
-                              </Card.Body>
-                            </Card>
-                          </Link>
-                        </div>
-                      ) : null}
-                    </div>
-                    
-                  );
-                })
-              )}
-            </Row>
-              <h5 className="text-center">Deleted Items</h5>
-              <Row md={4} className="g-4 flex p-3">
-                {searchBrandData?.data?.length === 0 ? (
-                  <Not_found />
-                ) : (
-                  searchBrandData?.data?.map((brand) => {
-                    return (
-                      <div key={brand._id}>
-                        {brand.active === false ? (
+        <Link to={"/addfile"}>
+          <Button variant="dark">Add Stuff</Button>
+        </Link>
+        <Row md={4} className="g-4 flex p-3">
+          {searchBrandData?.data?.length === 0 ? (
+            <Not_found />
+          ) : (
+            searchBrandData?.data?.map((brand) => {
+              return (
+                <div key={brand._id}>
+                  {brand.active === true ? (
+                    <div
+                      key={brand._id}
+                      className="d-flex justify-content-center item"
+                    >
+                      <Link to={"/stuff/" + brand._id}>
+                        <Card>
                           <div
-                            key={brand._id}
-                            className="d-flex justify-content-center item"
+                            style={{ overflow: "auto" }}
+                            className="img_size"
                           >
-                            <Link to={"/stuff/" + brand._id}>
-                              <Card>
-                                <div
-                                  style={{ overflow: "auto" }}
-                                  className="img_size"
-                                >
-                                  <SvgInline url={brand.url} />
-                                </div>
-
-                                <Card.Body>
-                                  <Card.Title
-                                    style={{ textDecoration: "none" }}
-                                    className="text-center"
-                                  >
-                                    {brand.title}
-                                  </Card.Title>
-                                  <Card.Text></Card.Text>
-                                </Card.Body>
-                              </Card>
-                            </Link>
+                            <SvgInline url={brand.url} />
                           </div>
-                        ) : null}
-                      </div>
-                    );
-                  })
-                )}
-              </Row>
+
+                          <Card.Body>
+                            <Card.Title
+                              style={{ textDecoration: "none" }}
+                              className="text-center"
+                            >
+                              {brand.title}
+                            </Card.Title>
+                            <Card.Text></Card.Text>
+                          </Card.Body>
+                        </Card>
+                      </Link>
+                    </div>
+                  ) : null}
+                </div>
+              );
+            })
+          )}
+        </Row>
+        <h5 className="text-center">Deleted Items</h5>
+        <Row md={4} className="g-4 flex p-3">
+          {searchBrandData?.data?.length === 0 ? (
+            <Not_found />
+          ) : (
+            searchBrandData?.data?.map((brand) => {
+              return (
+                <div key={brand._id}>
+                  {brand.active === false ? (
+                    <div
+                      key={brand._id}
+                      className="d-flex justify-content-center item"
+                    >
+                      <Link to={"/stuff/" + brand._id}>
+                        <Card>
+                          <div
+                            style={{ overflow: "auto" }}
+                            className="img_size"
+                          >
+                            <SvgInline url={brand.url} />
+                          </div>
+
+                          <Card.Body>
+                            <Card.Title
+                              style={{ textDecoration: "none" }}
+                              className="text-center"
+                            >
+                              {brand.title}
+                            </Card.Title>
+                            <Card.Text></Card.Text>
+                          </Card.Body>
+                        </Card>
+                      </Link>
+                    </div>
+                  ) : null}
+                </div>
+              );
+            })
+          )}
+        </Row>
       </Container>
     </>
   );

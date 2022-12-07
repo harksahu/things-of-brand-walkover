@@ -27,13 +27,11 @@ function HomeLogo({ searchBrandData = [], getSearchBrand }) {
   }, []);
   return (
     <div className="p-3 flex bg-light">
-      {console.log(searchBrandData)}
       <div className="d-flex flex-wrap justify-content-center">
         {searchBrandData?.data?.length === 0 ? (
           <Not_found />
         ) : (
           searchBrandData?.data?.map((brand) => {
-            // console.log(brand);
             return (
               <div
                 key={brand._id}

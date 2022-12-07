@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
-import { Container, Row, Form, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Form,
+  Nav,
+  Navbar,
+  NavDropdown,
+} from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { searchBrand, clearSearchBrand } from "../store/actions/search-brands";
 import { connect } from "react-redux";
 import Card from "react-bootstrap/Card";
-import { getProfileDetails, sendSearchAPI } from "../api/index.js"
+import { getProfileDetails, sendSearchAPI } from "../api/index.js";
 import { BsArrowReturnRight } from "react-icons/bs";
-
 
 function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const { logOut } = UserAuth();
@@ -18,38 +24,39 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const getcompany = async () => {
-    // // console.log(searchBrandData);
-    // var set = new Set(searchBrandData?.data?.domain[0]);
-    // // down.innerHTML = JSON.stringify([...set])
-    // console.log(set);
-  };
-
   const searchbar = async (searchData) => {
+    const C_data = await getProfileDetails({
+      email: "",
+      domain: searchData,
+      name: searchData,
+      searchfrom: "false",
+    });
 
-    const C_data = await getProfileDetails({ email: "", domain: searchData, name: searchData, searchfrom: "false" })
+    const array_data = C_data?.data?.data;
+    setCompanydata(array_data);
 
-    const array_data = C_data?.data?.data
-    setCompanydata(array_data)
+    const L_data = await sendSearchAPI({
+      title: searchData,
+      email: "",
+      active: 1,
+      description: "",
+      _id: "",
+      domain: "",
+    });
 
-    const L_data = await sendSearchAPI({ title: searchData, email: "", active: 1, description: "", _id: "", domain: "" })
-
-    const array_logo_data = L_data?.data?.data
-    setLogoData(array_logo_data)
-  }
-
+    const array_logo_data = L_data?.data?.data;
+    setLogoData(array_logo_data);
+  };
 
   const [searchItem, setItems] = useState();
 
   const sendData = async (text) => {
-    // console.log(location.pathname);
     text = text.trimStart();
     setItems(text);
     if (text === "") {
       setItems(null);
-      console.log(location.pathname === "/MyStuff");
+
       if (location.pathname === "/MyStuff") {
-        console.log("first");
         await getSearchBrand({
           title: "",
           email: user.email,
@@ -60,11 +67,8 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
         await getSearchBrand({ title: "", active: "1" });
       }
     } else {
-      // getSearchBrand({title:text});
       if (location.pathname === "/MyStuff") {
-        console.log("Sec");
         if (user.email) {
-          console.log(user.email);
           await getSearchBrand({
             title: text,
             email: user.email,
@@ -74,11 +78,6 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
         }
       } else {
         getSearchBrand({
-          // title: text,
-          // email: "",
-          // active: "1",
-          // description: text,
-          // _id: "",
           name: text,
           domain: text,
         });
@@ -87,14 +86,13 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   };
 
   const loginAndForward = () => {
-    handleGoogleSignIn()
-  }
-  // var numbers = [1, 2, 3, 4, 5];
+    handleGoogleSignIn();
+  };
+
   const handleGoogleSignIn = async () => {
     try {
-      await googleSignIn()
+      await googleSignIn();
       navigate("/company");
-      // console.log(object);
     } catch (error) {
       console.log(error);
     }
@@ -112,7 +110,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   return (
     <>
       <Navbar expand="lg" sticky="top" className="bg-white">
-        <Container >
+        <Container>
           <Navbar.Brand
             onClick={() => {
               navigate("/home");
@@ -130,28 +128,27 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              {
-                location.pathname === "/search" ?
-                  <Form className="justify-content-center">
-                    <Form.Control
-                      type="search"
-                      placeholder="Search"
-                      className="me-2"
-                      id="searchbar"
-                      autoComplete='off'
-                      aria-label="Search"
-                      // show={true}
-                      onChange={(e) => {
-                        {
-                          sendData(e.target.value)
-                          searchbar(e.target.value)
-                        }
-                      }}
-                      value={searchItem || ""}
-                      list="browsers"
-                      name="myBrowser"
-                    />
-                    {/* {document.getElementById("searchbar")?.value === "" ? "" : <div >
+              {location.pathname === "/search" ? (
+                <Form className="justify-content-center">
+                  <Form.Control
+                    type="search"
+                    placeholder="Search"
+                    className="me-2"
+                    id="searchbar"
+                    autoComplete="off"
+                    aria-label="Search"
+                    // show={true}
+                    onChange={(e) => {
+                      {
+                        sendData(e.target.value);
+                        searchbar(e.target.value);
+                      }
+                    }}
+                    value={searchItem || ""}
+                    list="browsers"
+                    name="myBrowser"
+                  />
+                  {/* {document.getElementById("searchbar")?.value === "" ? "" : <div >
                       <Card style={{fontWeight : "bold"}} >
                         Company:-
                       </Card>
@@ -193,9 +190,10 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                       ))}
                     </div>
                     } */}
-                  </Form>
-                  : ""
-              }
+                </Form>
+              ) : (
+                ""
+              )}
             </Nav>
 
             {user?.displayName ? (
@@ -244,9 +242,15 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <button type="button" className="btn btn-outline-primary" onClick={() => {
-                loginAndForward()
-              }}>Get started</button>
+              <button
+                type="button"
+                className="btn btn-outline-primary"
+                onClick={() => {
+                  loginAndForward();
+                }}
+              >
+                Get started
+              </button>
             )}
           </Navbar.Collapse>
         </Container>

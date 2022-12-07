@@ -86,7 +86,7 @@ const getProfileDetails = async (req, res) => {
 }
 
 const updateProfile = async (req, res) => {
-    console.log(req.body);
+
     let { name, aboutus ,fontLink} = req.body
     let logo = req.body.logo;
     let links = req.body.links;
