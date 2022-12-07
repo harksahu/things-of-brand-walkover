@@ -60,7 +60,7 @@ const Addfile = () => {
     // setLogo(fresult?.data?.data[0]?.logo);
     setId(fresult?.data?.data[0]?._id);
 
-    console.log(user);
+    // console.log("id in console", id);
     // console.log(fresult.data.data);
   };
 
@@ -78,18 +78,18 @@ const Addfile = () => {
             const imageUrl = data.split("?")[0];
             tags.push(domain);
             console.log(tags);
-            const result = await getProfileDetails({ email: user.email });
-            console.log(result);
-            const a = createBrandAPI({
+            const result = await getProfileDetails({ email: user.email, domain:domain});
+            console.log("id finding:",result);
+            const a = await createBrandAPI({
               url: imageUrl,
               title,
               description: tags,
               // description: "description",
               email: user?.email,
-              domain: domain,
+              domain: result.data.data[0]._id,
             });
             console.log(a);
-            console.log(domain);
+            console.log(result.data.data[0]._id);
             var logo ;
             var i ;
             for ( i = 0; i < ffresult.length; i++) {
@@ -174,12 +174,15 @@ const Addfile = () => {
                     <Form.Select aria-label="Default select example"
                       onChange={(e) => {
                         setDomain(e.target.value);
-
+                        {console.log("domain in e target:"+e.target.value)}
                       }}
+                     
                     >
+                       {console.log("domain:"+domain)}
+                     
                       {ffresult &&
                         ffresult.map((domainName, index) => (
-                          <option value={domainName._id} key={index}>
+                          <option value={domainName.domain} key={index}>
                             {domainName.domain}
                           </option>
                         ))}
