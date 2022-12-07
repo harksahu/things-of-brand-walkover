@@ -369,6 +369,7 @@ function Profile(props) {
                       <Form.Label>About us</Form.Label>
                       <RichtextEditor guidlines={aboutus} setGuidlines={setAboutus} config={config} tabIndex={1} />
                     </Form.Group>
+                    <h6>logos</h6>
                     <div className="d-flex flex-wrap justify-content-center">
               {DomainPost?.map((brand, index) => {
                 // console.log(brand);
@@ -393,15 +394,47 @@ function Profile(props) {
                               {brand.title}
                             </Card.Title>
 
-
+                          
 
                           </Card.Body>
                         </Link>
                       </Card>
+                      {user ? (
+                              user.email === user.email ? (
+                                logo === brand.url ? (
+                                  <Button
+                                    variant="light"
+                                    size="sm"
+                                    disabled
+                                  >
+                                    Default logo
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    variant="light"
+                                    size="sm"
+                                    onClick={() => {
+                                      // setlogo(brand.url);
+                                      // updateLogo(brand.url);                              
+                                    }}
+                                  >
+                                    Make default
+                                  </Button>
+                                )
+                              ) : (
+                                ""
+                              )
+                            ) : (
+                              ""
+                            )}
                     </div>
+                    
                   </div>
+                  
+                  
                 );
               })}
+              
             </div>
 
                     <div className="tags-input mb-3 visually-hidden" id="socialLinks" style={{ margin: "auto" }}>
