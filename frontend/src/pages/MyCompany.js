@@ -13,6 +13,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 function MyCompany() {
   const [company, setCompany] = useState();
   const [allData, setAllData] = useState();
+  const [showSharedCompanies, setShowSharedCompanies] = useState(false);
   const { user } = UserAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -94,13 +95,11 @@ function MyCompany() {
             </Card>
           </Link>
         </div>
-      </Container>  
-      
-      <div>
-        <br></br>
-        <h1>Shared Companies</h1>
-      </div>
+      </Container>
 
+      <br></br>
+      <h1>Shared Companies</h1>
+          {showSharedCompanies?"":"No shared Companies with you"}
       <Container>
         <div className="grid">
           {allData?.map((Company) => {
@@ -114,6 +113,7 @@ function MyCompany() {
                     <div key={index}>
                       {sharedEmail == user.email ? (
                         <Link to={"/" + Company.domain}>
+                          {showSharedCompanies?"":setShowSharedCompanies(true)}
                           <Card className="item-company">
                             <div
                               style={{ overflow: "auto" }}

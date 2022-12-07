@@ -6,6 +6,7 @@ import {
   Col,
   Form,
   Button,
+  Dropdown,
   Stack,
 } from "react-bootstrap";
 
@@ -15,9 +16,12 @@ import {
   updateProfileFields,
   getFontList,
   createProfile,
+  deleteMyStuffAPI,
+  saveMyStuffAPI,
   sendSearchAPI,
 } from "../api/index.js";
 import CloseIcon from "@mui/icons-material/Close";
+import { BsFillPlusCircleFill, BsThreeDotsVertical } from "react-icons/bs";
 import RichtextEditor from "./jodit.js";
 import { BsFillTrashFill, BsChevronLeft } from "react-icons/bs";
 import { MdArrowBackIos } from "react-icons/md";
@@ -35,6 +39,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 function Profile(props) {
   const [DomainPost, setDomainPost] = useState();
   const [name, setName] = useState("");
+  const [logoname, setlogoName] = useState("");
   const [aboutus, setAboutus] = useState("");
   const [domain, setDomain] = useState("");
   const [guidlines, setGuidlines] = useState("");
@@ -51,8 +56,9 @@ function Profile(props) {
   const [id, setId] = useState("");
   const [logo, setLogo] = useState();
   const [verify, setVerify] = useState("false");
+  const [show, setShow] = useState(false);
   const [color, setcount] = useState([
-    { colorName: "", colorValue: "#ffffff" },
+    { colorName: "", colorValue: "#FFFFFF" },
   ]);
   const [fontLink, setFontLink] = useState([""]);
   const [linkCount, setLinkCount] = useState(1);
@@ -72,11 +78,9 @@ function Profile(props) {
   const getbrandslogo = async () => {
     if (domain) {
       const data = await sendSearchAPI({ domain: id, active: 1 });
-
       setDomainPost(data?.data?.data);
     }
   };
-
   const addLinks = (event) => {
     if (event.key === "Enter" && event.target.value !== "") {
       setLinks([...links, event.target.value]);
@@ -84,44 +88,44 @@ function Profile(props) {
       event.target.value = "";
     }
   };
-
+  const savedata = async (id, n) => {
+    setlogoName(n);
+    const new_data = {
+      _id: id,
+      title: n,
+    };
+    await saveMyStuffAPI(new_data);
+  };
   const removeLinks = (index) => {
     setLinks([...links.filter((link) => links.indexOf(link) !== index)]);
   };
-
   const fontlist = async () => {
     const data = await getFontList();
-
     var result = [];
-
     for (var i in data?.data?.items) result.push(data?.data?.items[i]?.family);
     setFontFamily(result);
   };
-
   useEffect(() => {
-    setLoading(true);
-  //   setTimeout(() => {
-  //     setLoading(false);
-  // },1000)
+    // setLoading(true);
+    
      
     setId(location?.state?.data?._id);
     if (user) {
       if (user?.email) {
-        next();
+      
         profileDetails();
-        setLoading(false)
+        // setLoading(false)
+        next();
       }
     }
     
   }, [user]);
-
   useEffect(() => {
     fontlist();
     if (domain) {
       getbrandslogo();
     }
   }, [domain]);
-
   const storeProfileValue = async (req, res) => {
     if (check) {
       if (user) {
@@ -141,7 +145,6 @@ function Profile(props) {
               verify,
               email: user?.email,
             });
-
             alert("successfully saved domain " + d);
           } catch (err) {
             console.log(err);
@@ -168,7 +171,6 @@ function Profile(props) {
           email: user?.email,
           color: color,
         };
-
         await updateProfileFields(data);
         navigate(-1);
       } else {
@@ -178,11 +180,9 @@ function Profile(props) {
       alert("name field is compulsory");
     }
   };
-
   const profileDetails = async (req, res) => {
     fresult = await getProfileDetails({});
     setResults(fresult.data.data);
-
     if (location.state?.data != null) {
       setName(location.state.data.name);
       setAboutus(location.state.data.aboutus);
@@ -200,7 +200,6 @@ function Profile(props) {
       getbrandslogo();
     }
   };
-
   function extractDomain(url) {
     var domainName;
     if (url.indexOf("://") > -1) {
@@ -208,22 +207,17 @@ function Profile(props) {
     } else {
       domainName = url.split("/")[0];
     }
-
     //find & remove www
     if (domainName.indexOf("www.") > -1) {
       domainName = domainName.split("www.")[1];
     }
-
     domainName = domainName.split(":")[0];
     domainName = domainName.split("?")[0];
-
     return domainName;
   }
-
   const config = {
     buttons: ["bold", "italic"],
   };
-
   const next = () => {
     if (location.state?.data) {
       document.getElementById("name").classList.remove("visually-hidden");
@@ -243,20 +237,17 @@ function Profile(props) {
         if (results[i].domain === domain) {
           setCompany(results[i]);
           check = 1;
-
           break;
         } else {
           check = 0;
         }
       }
-
       if (check === 1) {
         document
           .getElementById("domainError")
           .classList.remove("visually-hidden");
       } else if (check === 0) {
         var domainParts = domain.split(".");
-
         if (domain) {
           if (domainParts.length >= 2 && domainParts[1].length >= 1) {
             document.getElementById("name").classList.remove("visually-hidden");
@@ -277,7 +268,6 @@ function Profile(props) {
               .getElementById("button")
               .classList.remove("visually-hidden");
             document.getElementById("nxt").classList.add("visually-hidden");
-
             document.getElementById("domain").disabled = true;
             storeProfileValue();
           }
@@ -285,7 +275,6 @@ function Profile(props) {
       }
     }
   };
-
   const checkDomain = (datta) => {
     for (let i = 0; i < profiledata?.data?.data?.length; i++) {
       if (datta == profiledata?.data?.data[i].domain) {
@@ -319,7 +308,6 @@ function Profile(props) {
   let removeFormFields = (i) => {
     setCountTracker(countTemp - 1);
     document.getElementById("add_input").classList.remove("hide");
-
     let newFormValues = [...color];
     newFormValues.splice(i, 1);
     setcount(newFormValues);
@@ -329,11 +317,11 @@ function Profile(props) {
   };
   return (
     <div className="bg-gray h-100">
-      {loading?<ClipLoader/>:
+     
       <Container className="wrpr">
         <Row>
           <nav className="navbar bg-light">
-            <div className="container-fluid">
+            <div className="container-fluid">name
               <a
                 className="navbar-brand"
                 onClick={() => {
@@ -364,7 +352,6 @@ function Profile(props) {
                         value={name}
                       />
                     </Form.Group>
-
                     <Form.Group className="mb-3 visually-hidden" id="about">
                       <Form.Label>About us</Form.Label>
                       <RichtextEditor
@@ -374,60 +361,144 @@ function Profile(props) {
                         tabIndex={1}
                       />
                     </Form.Group>
-
                     <h6>logos</h6>
-                    <div className="d-flex flex-wrap justify-content-center">
-                      {DomainPost?.map((brand, index) => {
-                        return (
-                          <div key={index}>
-                            <div key={brand._id} className=" flex-wrap item">
-                              <Card>
-                                <Link to={"/stuff/" + brand._id}>
-                                  <div
-                                    style={{ overflow: "auto" }}
-                                    className="img_size"
-                                  >
-                                    <SvgInline {...brand} />
-                                  </div>
-                                  <Card.Body>
-                                    <Card.Title
-                                      style={{ textDecoration: "none" }}
-                                      className="text-center"
+                    <div className="grid">
+                      <div className="d-flex flex-wrap justify-content-center">
+                        {DomainPost?.map((brand, index) => {
+                          return (
+                            <div key={index}>
+                              <div key={brand._id} className=" flex-wrap item">
+                                <Card>
+                                  <Dropdown className="ms-auto">
+                                    <Dropdown.Toggle variant="light" size="sm">
+                                      <BsThreeDotsVertical />
+                                    </Dropdown.Toggle>
+
+                                    <Dropdown.Menu>
+                                      <Dropdown.Item
+                                        onClick={() => {
+                                          setShow(true);
+                                        }}
+                                      >
+                                        Rename
+                                      </Dropdown.Item>
+                                      <Dropdown.Item
+                                        onClick={async () => {
+                                          await deleteMyStuffAPI(brand?._id);
+                                          // alert("Deleted");
+                                          // window.location.reload();
+                                          navigate(-1);
+                                        }}
+                                        variant="outline-secondary"
+                                        size="sm"
+                                      >
+                                        Delete
+                                      </Dropdown.Item>
+                                    </Dropdown.Menu>
+                                  </Dropdown>
+                                  <Link to={"/stuff/" + brand._id}>
+                                    <div
+                                      style={{ overflow: "auto" }}
+                                      className="img_size"
                                     >
-                                      {brand.title}
-                                    </Card.Title>
-                                  </Card.Body>
-                                </Link>
-                              </Card>
-                              {user ? (
-                                user.email === user.email ? (
-                                  logo === brand.url ? (
-                                    <Button variant="light" size="sm" disabled>
-                                      Default logo
-                                    </Button>
+                                      <SvgInline {...brand} />
+                                    </div>
+                                    </Link>
+                                    <Card.Body>
+                                      <Card.Title
+                                        style={{ textDecoration: "none" }}
+                                        className="text-center"
+                                      >
+                                        {/* {brand.title} */}
+                                        <div>
+                                          { 
+                                          show ? (
+                                            <input
+                                              id="userInputBox"
+                                              onChange={(e) => {
+                                                savedata(
+                                                  brand?._id,
+                                                  e.target.value
+                                                );
+                                              }}
+                                              //  value={brand.title}
+                                              className="form-control form-control-sm"
+                                              autoFocus
+                                            />
+                                          ) : (
+                                            <div
+                                              id="showname"
+                                              onClick={() => {
+                                                setShow(true);
+                                              }}
+                                            >
+                                              {brand.title}
+                                            </div>
+                                          )}
+                                        </div>
+                                      </Card.Title>
+                                    </Card.Body>
+                                 
+                                </Card>
+                                {user ? (
+                                  user.email === user.email ? (
+                                    logo === brand.url ? (
+                                      <Button
+                                        variant="light"
+                                        size="sm"
+                                        disabled
+                                      >
+                                        Default logo
+                                      </Button>
+                                    ) : (
+                                      <Button
+                                        variant="light"
+                                        size="sm"
+                                        onClick={() => {
+                                          setLogo(brand.url);
+                                        }}
+                                      >
+                                        Make default
+                                      </Button>
+                                    )
                                   ) : (
-                                    <Button
-                                      variant="light"
-                                      size="sm"
-                                      onClick={() => {
-                                        setLogo(brand.url);
-                                      }}
-                                    >
-                                      Make default
-                                    </Button>
+                                    ""
                                   )
                                 ) : (
                                   ""
-                                )
-                              ) : (
-                                ""
-                              )}
+                                )}
+                              </div>
                             </div>
-                          </div>
-                        );
-                      })}
-                    </div>
+                          );
+                        })}
 
+                        {user ? (
+                          <Link
+                            to="/addfile"
+                            className="add-new item"
+                            state={{ domain: domain }}
+                          >
+                            <Card className="h-100 item-company">
+                              <Card.Body className="align-items-center card-body d-flex justify-content-center">
+                                <Card.Title className="text-center">
+                                  <BsFillPlusCircleFill
+                                    style={{ fontSize: 40 }}
+                                  />
+                                </Card.Title>
+                                <Card.Text></Card.Text>
+                              </Card.Body>
+                              <div className="card-footer">
+                                <Button variant="link" size="sm">
+                                  Add new Logo
+                                </Button>
+                              </div>
+                            </Card>
+                          </Link>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </div>
                     <div
                       className="tags-input mb-3 visually-hidden"
                       id="socialLinks"
@@ -477,17 +548,14 @@ function Profile(props) {
                           Clam your brand
                         </Link>
                       </div>
-
                       {/* autocompate domain */}
                       {/* <datalist id="doaminBrowsers">
                         {results &&
                           results.map((brandData) => {
-                           
                             return <option key={brandData._id} value={brandData.domain} />;
                           })}
                       </datalist> */}
                     </Form.Group>
-
                     <Form.Group className="mb-3 visually-hidden" id="Guidlines">
                       <Form.Label>Guidlines</Form.Label>
                       <RichtextEditor
@@ -496,7 +564,6 @@ function Profile(props) {
                         tabIndex={1}
                       />
                     </Form.Group>
-
                     <div
                       className="hide formbold-chatbox-form visually-hidden"
                       id="list"
@@ -505,7 +572,6 @@ function Profile(props) {
                         <Form.Label>
                           Color<small>(hex code in #123456 format)</small>{" "}
                         </Form.Label>
-
                         {color.map((element, index) => (
                           <div id="fetch" key={index}>
                             <Form.Group className="mb-3 d-flex">
@@ -522,19 +588,6 @@ function Profile(props) {
                                 }}
                                 className="contact-form-area"
                               />
-                              {/* <Select 
-                              id={index}
-                              value={color[index].colorName}
-                                onChange={(e) => {
-                                  let tempCount = color;
-                                  tempCount[index].colorName = e.target.value;
-                                  setcount([...tempCount]);
-                                }}
-                                options={colorss} 
-                              
-                              /> */}
-                                
-                              
                               <Form.Control
                                 type="text"
                                 id={`colorinputbytext${index}`}
@@ -559,7 +612,6 @@ function Profile(props) {
                                   document.getElementById(
                                     "colorinputbytext" + index
                                   ).value = e.target.value;
-
                                   let tempCount = color;
                                   tempCount[index].colorValue = e.target.value;
                                   setcount([...tempCount]);
@@ -618,7 +670,6 @@ function Profile(props) {
                                 name="myBrowser"
                               />
                             </Hint>
-
                             {/* <Typeahead
                               type="url"
                               // name="user_table_input"
@@ -629,12 +680,10 @@ function Profile(props) {
                                 let tempCount = fontLink;
                                 tempCount[index] = e.target.value;
                                 setFontLink([...tempCount]);
-
                               }}
                               className="contact-form-area form-control"
                               name="myBrowser"
                               renderMenuItemChildren={(fontFamily) => (
-                                
                                   <span>{fontFamily}</span>
                               )}
                               useCache={false}
@@ -642,18 +691,13 @@ function Profile(props) {
                             {/* {document.getElementById(`id`+index)?.value === "" ? "" : <div >
                               {fontFamily?.data?.items && fontFamily?.data?.items?.filter(font => font?.family.includes(document.getElementById(`id`+index)?.value)).slice(0, 7).map((font) => (
                                 <div id="myBrowser" key={font._id}>
-                                  
-                                    
                                         <div style={{ color: "black", textDecoration: "none", backgroundColor: "white" }}>
                                           {font.family}
                                         </div>
-                                    
-                                  
                                 </div>
                               ))}
                             </div>
                             } */}
-
                             {index ? (
                               <button
                                 type="button"
@@ -679,7 +723,6 @@ function Profile(props) {
                         </div>
                       </div>
                     </Form.Group>
-
                     <div id="button" className=" visually-hidden">
                       {/* {location.state?.data ? ( */}
                       <Button
@@ -694,7 +737,6 @@ function Profile(props) {
                     </Button>
                   // )} */}
                     </div>
-
                     {/* <div className="d-flex flex-wrap justify-content-center">
               {DomainPost?.map((brand, index) => {
                 // console.log(brand);
@@ -703,14 +745,12 @@ function Profile(props) {
                     <div key={brand._id} className=" flex-wrap item">
                       <Card>
                         <Link to={"/stuff/" + brand._id}>
-
                           <div
                             style={{ overflow: "auto" }}
                             className="img_size"
                           >
                             <SvgInline {...brand} />
                           </div>
-
                           <Card.Body>
                             <Card.Title
                               style={{ textDecoration: "none" }}
@@ -718,16 +758,15 @@ function Profile(props) {
                             >
                               {brand.title}
                             </Card.Title>
-
-
-
                           </Card.Body>
                         </Link>
                       </Card>
                     </div>
                   </div>
                 );
-              })}
+New
+3:00
+})}
             </div> */}
                     <div id="nxt">
                       <Button variant="primary" onClick={() => next()}>
@@ -741,9 +780,8 @@ function Profile(props) {
           </Col>
         </Row>
       </Container>
-}
+
     </div>
   );
 }
-
 export default Profile;

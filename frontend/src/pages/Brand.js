@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Canvg, presets } from "canvg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Container,
@@ -24,10 +25,10 @@ import {
   getTXT,
 } from "../api/index.js";
 import saveAs from "file-saver";
-import { Canvg, presets } from "canvg";
 import SvgInline from "../utils/SvgInline.js";
 import {
   BsFillPlusCircleFill,
+  BsFillTrashFill,
   BsPencilSquare,
   BsFillExclamationDiamondFill,
   BsShieldCheck,
@@ -69,9 +70,13 @@ function Brand() {
   const [showw, setShoww] = useState(false);
   const handleClosee = () => setShoww(false);
   const handleShoww = () => setShoww(true);
+  const [showUploadFile, setShowUploadFile] = useState(false);
+  const handleShowUploadFile = () => setShowUploadFile(true);
+  const handleCloseUploadFile = () => setShowUploadFile(false);
   const [mwidth, setWidth] = useState(250);
   const [mheight, setHeight] = useState(250);
   const [loading, setLoading] = useState(false);
+  const [fullscreen, setFullscreen] = useState(true);
 
 
   async function makeid(length) {
@@ -89,6 +94,13 @@ function Brand() {
     return result;
   }
 
+  const removeSharedEmail = (index) => {
+    let temp = sharedEmail;
+    var spliced = temp.splice(index, 1); 
+    setSharedEmail([...temp]);
+    handleClosee();
+    updateLogo();
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
     let temp = sharedEmail;
@@ -107,7 +119,6 @@ function Brand() {
     var image64 = b64start + svg64;
     saveAs(image64, fileName);
   };
-
   const DownloadToPng = async (img, w, h) => {
     const preset = presets.offscreen();
 
@@ -248,7 +259,6 @@ function Brand() {
                         </Modal.Header>
 
                         <Form onSubmit={handleSubmit}>
-
                           <Modal.Body>
                            
                             <Form.Label>Email address</Form.Label>
@@ -268,7 +278,11 @@ function Brand() {
                             {sharedEmail.map((email, index) => {
                               return (
                                 <div key={index}>
-                                  <h5>{email}</h5>
+                                  <h5>{email}
+                                  <Button onClick={()=>{
+                                    removeSharedEmail(index);
+                                  }}><BsFillTrashFill/></Button>
+                                  </h5>
                                 </div>
                               );
                             })}

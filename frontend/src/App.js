@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Addfile from './pages/Addfile';
 import MyStuff from './pages/MyStuff';
 import Search from "./pages/Search";
+import ShowJson from "./pages/ShowJson";
 import MyCompany from "./pages/MyCompany";
 import ThemeProvider from 'react-bootstrap/ThemeProvider';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -55,6 +56,7 @@ function App() {
               <Route path="/MyStuff" element={<Protected> <MyStuff /> </Protected>} />
               <Route path='/account' element={<Protected> <Account /> </Protected>} />
               <Route path='/company' element={<Protected> <MyCompany /> </Protected>} />
+              <Route path='/:title/json' element={<Protected> <ShowJson/></Protected>} />
             </Routes>
           </AuthContextProvider>
         </ThemeProvider>
