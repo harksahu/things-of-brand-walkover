@@ -7,7 +7,6 @@ import SvgInline from "../utils/SvgInline.js";
 import "../utils/svginline.css";
 import "../scss/company.scss";
 import { BsFillPlusCircleFill } from "react-icons/bs";
-import SideBar from "../components/SideBar";
 import ClipLoader from "react-spinners/ClipLoader";
 
 function MyCompany() {
@@ -94,14 +93,12 @@ function MyCompany() {
             </Card>
           </Link>
         </div>
-      </Container>  
-      
-      <div>
-        <br></br>
-        <h1>Shared Companies</h1>
-      </div>
+      </Container>              
 
       <Container>
+        <div className="separator center my-4">
+          <span className="sep-txt">Shared Companies</span>
+        </div>
         <div className="grid">
           {allData?.map((Company) => {
             return (

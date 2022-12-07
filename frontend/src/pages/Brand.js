@@ -242,50 +242,45 @@ function Brand() {
                         </Nav.Link>
                       </Nav>
 
-                      <Modal show={showw} onHide={handleClosee}>
-                      <Modal.Header closeButton>
-                      <Modal.Title>Share Your Company</Modal.Title>
-                        </Modal.Header>
+                        <Modal show={showw} onHide={handleClosee}>
+                          <Modal.Header closeButton>
+                            <Modal.Title>Share {name ? name : domain}</Modal.Title>
+                          </Modal.Header>
 
-                        <Form onSubmit={handleSubmit}>
+                          <Form onSubmit={handleSubmit}>
 
-                          <Modal.Body>
-                           
-                            <Form.Label>Email address</Form.Label>
-                            <Form.Control
-                              type="email"
-                              id="addEmail"
-                              name="sharingEmail"
-                              placeholder="Enter email"
-                            />
+                            <Modal.Body>
 
-                            {/* <ListGroup variant="flush">
-                            {sharedEmail?.map((email) => {                                         
-                              <ListGroup.Item>{email}</ListGroup.Item>
-                            })}                            
-                          </ListGroup> */}
+                              <Form.Label>Email address</Form.Label>
+                              <Form.Control
+                                type="email"
+                                id="addEmail"
+                                name="sharingEmail"
+                                placeholder="Enter email"
+                              />
 
-                            {sharedEmail.map((email, index) => {
-                              return (
-                                <div key={index}>
-                                  <h5>{email}</h5>
-                                </div>
-                              );
-                            })}
-                          </Modal.Body>
-                          <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClosee}>
-                              Close
-                            </Button>
-                            <Button
-                              type="submit"
-                              variant="primary"
-                            >
-                              Share
-                            </Button>
-                          </Modal.Footer>
-                        </Form>
-                      </Modal>
+                              <ListGroup variant="flush">
+                                {sharedEmail?.map((email, index) => {
+                                  return(
+                                    <ListGroup.Item key={index}>{email}</ListGroup.Item>
+                                  )
+                                })}
+                              </ListGroup>                              
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button variant="outline-dark">Copy link</Button>
+                              <Button variant="secondary" onClick={handleClosee}>
+                                Close
+                              </Button>
+                              <Button
+                                type="submit"
+                                variant="primary"
+                              >
+                                Share
+                              </Button>
+                            </Modal.Footer>
+                          </Form>
+                        </Modal>
                     </>
                   ) : (
                     ""
