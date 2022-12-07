@@ -37,6 +37,7 @@ import {
   MdShare,
   MdOutlineModeEdit,
 } from "react-icons/md";
+import Addfile from "./Addfile";
 
 function Not_found() {
   return <div className="not-found">Not found</div>;
@@ -62,7 +63,7 @@ function Brand() {
   const handleShow = () => setShow(true);
   const [allColor, setAllColor] = useState();
   const [fontLink, setFontLink] = useState([]);
-  const [company, setCompany] = useState([]);
+  const [company, setCompany] = useState([]); 
   const navigate = useNavigate();
   const [showw, setShoww] = useState(false);
   const handleClosee = () => setShoww(false);
@@ -74,22 +75,6 @@ function Brand() {
   const [mheight, setHeight] = useState(250);
   const [fullscreen, setFullscreen] = useState(true);
 
-  // const verifyDomain = async () => {
-  //   const TXT = await getTXT(domain);
-  //   var ifVerify = false;
-  //   for (let i = 0; i < TXT?.data?.data.length; i++) {
-  //     // text += cars[i] + "<br>";
-  //     if (TXT?.data?.data[i][0] == verify) {
-  //       updateVerify("true");
-  //       ifVerify = true;
-  //       break;
-  //     } else {
-  //     }
-  //   }
-  //   if (!ifVerify) {
-  //     document.getElementById("error").innerHTML = "not verify";
-  //   }
-  // };
 
   async function makeid(length) {
     var result = "";
@@ -106,14 +91,6 @@ function Brand() {
     return result;
   }
 
-  const DownloadToSvg = async (svg, fileName) => {
-    var svg = document.querySelector("svg");
-    var xml = new XMLSerializer().serializeToString(svg);
-    var svg64 = btoa(xml); //for utf8: btoa(unescape(encodeURIComponent(xml)))
-    var b64start = "data:image/svg+xml;base64,";
-    var image64 = b64start + svg64;
-    saveAs(image64, fileName);
-  };
   const handleSubmit = (event) => {
     event.preventDefault();
     let temp = sharedEmail;
@@ -122,6 +99,15 @@ function Brand() {
     setSharedEmail([...temp]);
     handleClosee();
     updateLogo();
+  };
+
+  const DownloadToSvg = async (svg, fileName) => {
+    var svg = document.querySelector("svg");
+    var xml = new XMLSerializer().serializeToString(svg);
+    var svg64 = btoa(xml); //for utf8: btoa(unescape(encodeURIComponent(xml)))
+    var b64start = "data:image/svg+xml;base64,";
+    var image64 = b64start + svg64;
+    saveAs(image64, fileName);
   };
   const DownloadToPng = async (img, w, h) => {
     const preset = presets.offscreen();
@@ -255,14 +241,13 @@ function Brand() {
                       </Nav>
 
                       <Modal show={showw} onHide={handleClosee}>
-                        <Modal.Header closeButton>
-                          <Modal.Title>Share Your Company</Modal.Title>
+                      <Modal.Header closeButton>
+                      <Modal.Title>Share Your Company</Modal.Title>
                         </Modal.Header>
 
                         <Form onSubmit={handleSubmit}>
                           <Modal.Body>
-                            {/* <input type="email" name="email"
-                          placeholder="Enter the email" id="addEmail" /> */}
+                           
                             <Form.Label>Email address</Form.Label>
                             <Form.Control
                               type="email"
@@ -289,7 +274,10 @@ function Brand() {
                             <Button variant="secondary" onClick={handleClosee}>
                               Close
                             </Button>
-                            <Button type="submit" variant="primary">
+                            <Button
+                              type="submit"
+                              variant="primary"
+                            >
                               Share
                             </Button>
                           </Modal.Footer>
@@ -308,6 +296,7 @@ function Brand() {
             <div className="col-lg-12 col-md-12">
               <div>{name ? <h1>{name}</h1> : ""}</div>
               <div className="align-items-center d-flex">
+              
                 <a
                   href={"https://" + domain}
                   target="_blank"
@@ -315,6 +304,8 @@ function Brand() {
                   className="me-2"
                 >
                   {domain}
+                 
+                
                 </a>
                 {user ? (
                   email === user.email ? (
@@ -434,7 +425,7 @@ function Brand() {
 
                   {user ? (
                     email === user.email ? (
-                      <Link to="/addfile" className="add-new item">
+                      <Link to="/addfile" className="add-new item" state={{domain:domain}}>
                         <Card className="h-100 item-company">
                           <Card.Body className="align-items-center card-body d-flex justify-content-center">
                             <Card.Title className="text-center">
