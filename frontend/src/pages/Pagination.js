@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { Button } from "react-bootstrap";
 import {
-  BsFillArrowLeftCircleFill,
-  BsFillArrowRightCircleFill,
-} from "react-icons/bs";
+  MdArrowBackIos, MdArrowForwardIos
+} from "react-icons/md";
 
 function Pagination({ postsPerPage, totalPosts, paginate }) {
   const [index, setIndex] = useState(0);
@@ -50,14 +50,18 @@ function Pagination({ postsPerPage, totalPosts, paginate }) {
             style={{ display: "flex", marginRight: 7, display: "none" }}
             onClick={() => handlePrevious()}
           >
-            <BsFillArrowLeftCircleFill style={{ fontSize: 27 }} />{" "}
+            <Button variant="outline-dark">
+              <MdArrowBackIos />
+            </Button>            
           </div>
           <div
             id="next"
             style={{ display: "flex" }}
             onClick={() => handleNext()}
           >
-            <BsFillArrowRightCircleFill style={{ fontSize: 27 }} />
+            <Button variant="outline-dark">
+              <MdArrowForwardIos />
+            </Button>
           </div>
         </div>
       </ul>

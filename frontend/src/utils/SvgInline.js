@@ -6,9 +6,11 @@ const SvgInline = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isErrored, setIsErrored] = useState(false);
   useEffect(() => {
-    fetch(props.url)
+    console.log(props.url, props.name );
+    var url = (props.url !== undefined && props.url !== "null") ? props.url : '/assets/picture.svg';     
+    fetch(url)
     .then((res) => res.text())
-    .then((res)=>{
+    .then((res)=>{     
       var svgToHe = res.toString();
       svgToHe = svgToHe?.replace("<svg ", `<svg id="${props.url}" `)
       setSvg(svgToHe);
@@ -20,16 +22,15 @@ const SvgInline = (props) => {
   // console.log(svg);
   }, [svg]);
 
-  return (
-    <div
-      className={`svgInline svgInline--${isLoaded ? "loaded" : "loading"} ${
+  return (    
+    <div    
+      className={`pattern-square svgInline svgInline--${isLoaded ? "loaded" : "loading"} ${
         isErrored ? "svgInline--errored" : "" 
-      }`}
-      // id={props.url}
+      }`}    
       dangerouslySetInnerHTML={{ __html: svg }}
-      offset="30%"
-      style={{}}
-    />
+      offset="30%"      
+    >      
+    </div>
   );
 };
 

@@ -61,7 +61,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
   return (
     <div className="p-3 flex bg-light">
       {/* {console.log(searchBrandData)} */}
-      <div className="d-flex flex-wrap justify-content-center">
+      <div className="d-flex flex-wrap grid container">
         {currentPosts?.data?.length === 0 ? (
           <Not_found />
         ) : (
@@ -84,8 +84,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
                         className="text-center"
                       >
                         {Company.name? Company.name :Company.domain}
-                      </Card.Title>
-                      <Card.Text></Card.Text>
+                      </Card.Title>                      
                     </Card.Body>
                   </Card>
                 </Link>
@@ -95,6 +94,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
         )}
         {/* {console.log(posts.length)} */}
       </div>
+      <div className="mt-5"></div>
       <Pagination postsPerPage={postsPerPage} totalPosts={searchBrandData.data.length} paginate={paginate} />
     </div>
   );

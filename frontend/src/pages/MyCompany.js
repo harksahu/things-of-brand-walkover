@@ -56,12 +56,8 @@ function MyCompany() {
                 {/* <Link to={"/profile" }state={{ data: Company }}> */}
                 <Link to={"/" + Company.domain}>
                   <Card className="item-company">
-                    <div style={{ overflow: "auto" }} className="img_size">
-                      {Company?.logo ? (
-                        <SvgInline url={Company.logo} />
-                      ) : (
-                        <img src="/assets/picture.svg" />
-                      )}
+                    <div style={{ overflow: "auto" }} className="img_size">                      
+                        <SvgInline name={Company.name} url={Company.logo} />                      
                     </div>
                     <Card.Body>
                       <Card.Title
@@ -117,11 +113,7 @@ function MyCompany() {
                               style={{ overflow: "auto" }}
                               className="img_size"
                             >
-                              {Company?.logo ? (
-                                <SvgInline url={Company.logo} />
-                              ) : (
-                                <img src="/assets/picture.svg" />
-                              )}
+                              <SvgInline name={Company.name} url={Company.logo} />                              
                             </div>
                             <Card.Body>
                               <Card.Title

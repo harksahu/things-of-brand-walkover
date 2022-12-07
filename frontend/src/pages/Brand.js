@@ -121,6 +121,7 @@ function Brand() {
     if (domain) {
       const data = await sendSearchAPI({ domain: id, active: 1 });      
       setDomainPost(data?.data?.data);
+      // console.log(data?.data?.data[0].url);
     }
   };
 
@@ -225,10 +226,14 @@ function Brand() {
                         <Modal.Header closeButton>
                           <Modal.Title>Share Your Company</Modal.Title>
                         </Modal.Header>
-                        <Modal.Body>
-                          <input type="email" name="email"
-                          placeholder="Enter the email" id="addEmail" />
-                          
+                        
+                            <Form>
+                              <Modal.Body>
+                          {/* <input type="email" name="email"
+                          placeholder="Enter the email" id="addEmail" /> */}
+                             <Form.Label>Email address</Form.Label>
+                            <Form.Control type="email" id="addEmail" placeholder="Enter email" />
+                        
                           {/* <ListGroup variant="flush">
                             {sharedEmail?.map((email) => {                                         
                               <ListGroup.Item>{email}</ListGroup.Item>
@@ -248,7 +253,7 @@ function Brand() {
                           <Button variant="secondary" onClick={handleClosee}>
                             Close
                           </Button>
-                          <Button variant="primary" onClick={() => {
+                          <Button type="submit" variant="primary" onClick={() => {
                             let temp = sharedEmail;
                             let email = document.getElementById("addEmail").value;
                             temp.push(email);
@@ -258,7 +263,9 @@ function Brand() {
                           }}>
                             Share
                           </Button>
+                          
                         </Modal.Footer>
+                        </Form> 
                       </Modal>
 
                     </>
@@ -328,10 +335,11 @@ function Brand() {
           
           <div className="mt-5">
             <h5>Logos</h5>                        
-            <div className="grid">       
-            {console.log("DomainPost",DomainPost)}       
+            <div className="grid">     
+            {/* {console.log(DomainPost[0].url)}          */}
               {DomainPost?.map((brand, index) => {
                 return (
+
                   <div key={brand._id} className="item">
                       <Card className="box-shadow">
                         <Link to={"/stuff/" + brand._id}>
@@ -339,7 +347,9 @@ function Brand() {
                             style={{ overflow: "auto" }}
                             className="img_size"
                           >
+                            {/* {console.log(brand.url)} */}
                             <SvgInline {...brand} />
+                            {/* <SvgInline {...brand.url} /> */}
                           </div>
                           <Card.Body>
                             <Card.Title
