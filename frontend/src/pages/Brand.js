@@ -13,6 +13,7 @@ import {
   Modal,
   ListGroup,
 } from "react-bootstrap";
+import ClipLoader from "react-spinners/ClipLoader";
 import "../utils/svginline.css";
 import "../scss/brand.scss";
 import { UserAuth } from "../context/AuthContext";
@@ -70,6 +71,7 @@ function Brand() {
   const handleShoww = () => setShoww(true);
   const [mwidth, setWidth] = useState(250);
   const [mheight, setHeight] = useState(250);
+  const [loading, setLoading] = useState(false);
 
 
   async function makeid(length) {
@@ -194,14 +196,17 @@ function Brand() {
   };
 
   useEffect(() => {
+    setLoading(true);
     getbrand();
     if (domain) {
       getbrandslogo();
+      setLoading(false);
     }
   }, [domain, title]);
 
   return (
     <>
+    {loading?<ClipLoader/>:
       <Container>
         {domain ? (
           <div className="row mt-4">
@@ -538,6 +543,7 @@ function Brand() {
           <Not_found />
         )}
       </Container>
+}
     </>
   );
 }

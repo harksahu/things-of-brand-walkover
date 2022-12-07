@@ -155,16 +155,15 @@ const Addfile = () => {
                   <FormGroup>
                     <Form.Label>Choose a domain *</Form.Label>
                     <Form.Select
-                      
                       aria-label="Default select example"
                       onChange={(e) => {
                         setDomain(e.target.value);
                       }}
                       >
-                      {/* <option>{location.state.domain}</option> */}
-                      
+                      <option>{location.state.domain}</option>
                       {ffresult &&
                         ffresult.map((domainName, index) => (
+                          // <option value={location.state.domain} selected>
                           <option value={domainName.domain} key={index}>
                             {domainName.domain}
                           </option>

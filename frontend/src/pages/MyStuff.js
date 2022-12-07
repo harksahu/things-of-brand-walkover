@@ -7,6 +7,8 @@ import "../utils/svginline.css";
 import { sendSearchAPI } from "../api/index.js";
 import { AiFillPlusCircle } from "react-icons/ai";
 import SideBar from "../components/SideBar";
+import ClipLoader from "react-spinners/ClipLoader";
+
 
 import Figure from "react-bootstrap/Figure";
 
@@ -28,6 +30,7 @@ function Not_found() {
 function Home() {
   const { user } = UserAuth();
   const [searchBrandData, setSearchBrandData] = useState();
+  const [loading , setLoading] = useState(false);
 
   const getbrand = async () => {
     const data = await sendSearchAPI({
@@ -38,6 +41,8 @@ function Home() {
   };
 
   useEffect(() => {
+    setLoading(true);
+   
     if (
       user !== null &&
       user !== undefined &&
@@ -49,11 +54,15 @@ function Home() {
       //   active: "",
       // })
       getbrand();
+      setLoading(false);
     }
+
   }, [user]);
 
   return (
     <>
+    {loading?
+    <ClipLoader/>:
       <Container className="wrpr">
         <Link to={"/addfile"}>
           <Button variant="dark">Add Stuff</Button>
@@ -138,6 +147,7 @@ function Home() {
           )}
         </Row>
       </Container>
+}
     </>
   );
 }

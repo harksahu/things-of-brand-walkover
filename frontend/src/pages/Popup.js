@@ -23,6 +23,8 @@ import {
   restoreMyStuffAPI,
   saveMyStuffAPI,
 } from "../api/index.js";
+import ClipLoader from "react-spinners/ClipLoader";
+
 
 function MyVerticallyCenteredModal(params) {
   const id = useParams();
@@ -33,6 +35,7 @@ function MyVerticallyCenteredModal(params) {
   const { user } = UserAuth();
   const [show, setShow] = useState(false);
   const [props, setProps] = useState();
+  const [loading, setLoading] = useState(false);
   function size(img) {
     setWidth(document.getElementById(img).clientWidth);
     setHeight(document.getElementById(img).clientHeight);
@@ -119,10 +122,14 @@ function MyVerticallyCenteredModal(params) {
     navigate("/" + forwardTo?.data?.data[0]?.domain);
   };
   useEffect(() => {
+    setLoading(true);
     getData();
+    setLoading(false);
   }, [id]);
 
   return (
+    <>
+    {loading?<ClipLoader/>:
     <Container fluid>
       <Row className="h-90">
         <Col className="popup_img">
@@ -313,6 +320,9 @@ function MyVerticallyCenteredModal(params) {
         </div>
       </Row>
     </Container>
+}
+    </>
+
     //     </Modal.Body>
     //     <Modal.Footer>
     //       <Button onClick={props.onHide}>Close</Button>

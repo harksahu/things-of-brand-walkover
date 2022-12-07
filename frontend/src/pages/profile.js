@@ -8,6 +8,7 @@ import {
   Button,
   Stack,
 } from "react-bootstrap";
+
 import { UserAuth } from "../context/AuthContext";
 import {
   getProfileDetails,
@@ -24,8 +25,12 @@ import { useLocation, Link, useNavigate } from "react-router-dom";
 import SideBar from "../components/SideBar";
 import { Hint } from "react-autocomplete-hint";
 import SvgInline from "../utils/SvgInline.js";
+import Select from 'react-select'
 // import { Tokenizer } from 'react-typeahead';
 // import {  Typeahead } from 'react-bootstrap-typeahead';
+import ClipLoader from "react-spinners/ClipLoader";
+
+
 
 function Profile(props) {
   const [DomainPost, setDomainPost] = useState();
@@ -55,13 +60,15 @@ function Profile(props) {
   const [valid, setvalid] = useState([false]);
   const [valid2, setvalid2] = useState([false]);
   const [fontFamily, setFontFamily] = useState([false]);
-
+  const [loading, setLoading] = useState(false);
+  
   const location = useLocation();
   let countTemp = countTracker;
   let countTemp2 = linkCount;
   var fresult;
   const navigate = useNavigate();
-
+  
+  
   const getbrandslogo = async () => {
     if (domain) {
       const data = await sendSearchAPI({ domain: id, active: 1 });
@@ -92,13 +99,20 @@ function Profile(props) {
   };
 
   useEffect(() => {
+    setLoading(true);
+  //   setTimeout(() => {
+  //     setLoading(false);
+  // },1000)
+     
     setId(location?.state?.data?._id);
     if (user) {
       if (user?.email) {
         next();
         profileDetails();
+        setLoading(false)
       }
     }
+    
   }, [user]);
 
   useEffect(() => {
@@ -315,6 +329,7 @@ function Profile(props) {
   };
   return (
     <div className="bg-gray h-100">
+      {loading?<ClipLoader/>:
       <Container className="wrpr">
         <Row>
           <nav className="navbar bg-light">
@@ -507,7 +522,19 @@ function Profile(props) {
                                 }}
                                 className="contact-form-area"
                               />
-
+                              {/* <Select 
+                              id={index}
+                              value={color[index].colorName}
+                                onChange={(e) => {
+                                  let tempCount = color;
+                                  tempCount[index].colorName = e.target.value;
+                                  setcount([...tempCount]);
+                                }}
+                                options={colorss} 
+                              
+                              /> */}
+                                
+                              
                               <Form.Control
                                 type="text"
                                 id={`colorinputbytext${index}`}
@@ -519,7 +546,9 @@ function Profile(props) {
                                   ).value = e.target.value;
                                 }}
                               />
+                              
                               <Form.Control
+                              
                                 type="color"
                                 name="user_input"
                                 style={{ width: "20%" }}
@@ -712,6 +741,7 @@ function Profile(props) {
           </Col>
         </Row>
       </Container>
+}
     </div>
   );
 }

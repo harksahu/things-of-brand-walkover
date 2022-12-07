@@ -8,6 +8,7 @@ import "../utils/svginline.css";
 import "../scss/company.scss";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import SideBar from "../components/SideBar";
+import ClipLoader from "react-spinners/ClipLoader";
 
 function MyCompany() {
   const [company, setCompany] = useState();
@@ -15,10 +16,16 @@ function MyCompany() {
   const { user } = UserAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [loading,setLoading] = useState(false);
+
+
   useEffect(() => {
+    setLoading(true);
+
     if (user) {
       if (user?.email) {
         profileDetails();
+        setLoading(false);
       }
     }
     findSharedEmail();
@@ -41,7 +48,12 @@ function MyCompany() {
   };
 
   return (
+    
+
     <div className="h-100">
+      {loading?
+      <ClipLoader/>:
+        <div>
       <Container>
         <div className="grid">
           {company?.map((Company) => {
@@ -82,10 +94,8 @@ function MyCompany() {
             </Card>
           </Link>
         </div>
-      </Container>
-
-      <br></br>
-      <h1>Shared Companies</h1>
+      </Container>  
+      
 
       <Container>
         <div className="grid">
@@ -132,6 +142,10 @@ function MyCompany() {
           })}
         </div>
       </Container>
+
+      </div>
+} 
+
     </div>
   );
 }

@@ -11,6 +11,8 @@ import { async } from "@firebase/util";
 import Pagination from "./Pagination";
 import ReactPaginate from "react-paginate";
 import { UserAuth } from "../context/AuthContext";
+import ClipLoader from "react-spinners/ClipLoader";
+
 
 function Not_found() {
   return (
@@ -34,6 +36,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
+  // const [loading,setLoading] = useState(false);
 
   // function Home() {
   // const [searchBrandData,setSearchBrandData] = useState()
@@ -47,9 +50,11 @@ function Home({ searchBrandData = [], getSearchBrand }) {
       getSearchBrand({});
       setPosts(searchBrandData.data);
       setLoading(false);
+      
     };
 
     fetchPosts();
+    setLoading(false);
   }, []);
 
   const indexOfLastPost = currentPage * postsPerPage;
@@ -62,6 +67,8 @@ function Home({ searchBrandData = [], getSearchBrand }) {
 
   return (
     <div className="p-3 flex bg-light">
+      {loading?
+      <ClipLoader/>:
       <div className="d-flex flex-wrap grid container">
         {currentPosts?.data?.length === 0 ? (
           <Not_found />
@@ -93,6 +100,8 @@ function Home({ searchBrandData = [], getSearchBrand }) {
           })
         )}
       </div>
+}
+
       <div className="mt-5"></div>
       <Pagination
         postsPerPage={postsPerPage}
