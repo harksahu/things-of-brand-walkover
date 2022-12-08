@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { createBrandAPI } from "../api";
 import { useLocation } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
+import Home from "./Home"
 import {
   Card,
   Form,
@@ -155,6 +156,7 @@ const Addfile = () => {
   }, [user]);
   return (
     <>
+    {user?
       <Container fluid className="wrpr">
         <Row>
           <Col md={3} lg={2}>
@@ -176,10 +178,7 @@ const Addfile = () => {
                       
                       {ffresult &&
                         ffresult.map((domainName, index) => (
-                          // <option value={location.state.domain} selected> 
                           <>
-                          {/* {console.log("location.state.domain!=domainName.domain",location.state.domain,domainName.domain)} */}
-                          {/* {domainToSelect==domainName.domain?setDomain(domainName.domain):""} */}
                           {domainToSelect==domainName.domain?
                           <option key={index}  value={domainName.domain}  selected>
                             {/* {console.log("domainToSelect",index)} */}
@@ -261,11 +260,13 @@ const Addfile = () => {
             </Card>
           </Col>
         </Row>
-      </Container>
+      </Container>:<Home/>
+}
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}
       />
+                      
     </>
   );
 };

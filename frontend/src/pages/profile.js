@@ -367,7 +367,7 @@ function Profile(props) {
                     <h6>logos</h6>
                     <div className="grid">
                       <div className="d-flex flex-wrap justify-content-center">
-                        {/* {DomainPost?.map((brand, index) => {
+                        {DomainPost?.map((brand, index) => {
                           return (
                             <div key={index}>
                               <div key={brand._id} className=" flex-wrap item">
@@ -473,7 +473,7 @@ function Profile(props) {
                               </div>
                             </div>
                           );
-                        })} */}
+                        })}
 
                         {user ? (
                           <Link

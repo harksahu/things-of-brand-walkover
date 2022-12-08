@@ -59,7 +59,7 @@ function Brand() {
   const [sharedEmail, setSharedEmail] = useState([]);
   const { user } = UserAuth();
   const [links, setLinks] = React.useState([]);
-  const [results, setResults] = useState();
+  // const [results, setResults] = useState();
   const [DomainPost, setDomainPost] = useState();
   const [verify, setVerify] = useState();
   const [show, setShow] = useState(false);
@@ -70,7 +70,7 @@ function Brand() {
   const [company, setCompany] = useState([]); 
   const navigate = useNavigate();
   const [showw, setShoww] = useState(false);
-  
+  const [isShared,setSharedCompany] = useState(false);
   const handleShoww = () => setShoww(true);
   const [showUploadFile, setShowUploadFile] = useState(false);
   const handleShowUploadFile = () => setShowUploadFile(true);
@@ -189,7 +189,8 @@ function Brand() {
       domain: title.title,
       searchfrom: true,
     });
-  console.log("fresult",fresult)
+    console.log("fresult",fresult.data.data[0])
+    // setResults(fresult.data);
 
     console.log("enterd2");
     
@@ -207,8 +208,23 @@ function Brand() {
     setEmail(fresult.data.data[0].email);
     setVerify(fresult.data.data[0].verify);
     setSharedEmail(fresult.data.data[0].sharedEmail);
+    // console.log(company)
+    isCompanyShared();
   };
+  
+  const isCompanyShared = async(req,res)=>{
 
+    for(var i = 0 ; i<sharedEmail?.length ; i++)
+    { 
+        console.log("inter")
+        console.log("user?.email",user?.email+"sharedEmail[i]"+sharedEmail[i]);
+        if(user?.email ===sharedEmail[i])
+        {
+          console.log("truw");
+          setSharedCompany(true);
+        }
+      }
+    }
 
   const updateLogo = async (logo_url) => {
     const data = {
@@ -234,7 +250,7 @@ function Brand() {
       getbrandslogo();
       setLoading(false);
     }
-  }, [domain, title]);
+  }, [domain, title,user]);
 
   return (
     <>
@@ -246,6 +262,7 @@ function Brand() {
               <Container>
                 <Nav className="me-auto">
                   <Navbar.Brand className="me-auto">
+
                     <Button
                       variant="outline-dark"
                       onClick={() => {
@@ -256,9 +273,10 @@ function Brand() {
                     </Button>
                   </Navbar.Brand>
                 </Nav>
-
+                
+                
                 {user ? (
-                  email === user.email ? (
+                  email === user.email || isShared == true ? (
                     <>
                       <Nav className="nav-action">
                         <Nav.Link onClick={handleShoww}>
@@ -330,6 +348,7 @@ function Brand() {
                 ) : (
                   ""
                 )}
+                
               </Container>
             </Navbar>
 
