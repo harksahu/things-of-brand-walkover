@@ -160,7 +160,6 @@ const Addfile = () => {
                         setDomain(e.target.value);
                       }}
                       >
-                      <option>{location.state.domain}</option>
                       {ffresult &&
                         ffresult.map((domainName, index) => (
                           // <option value={location.state.domain} selected>

@@ -77,7 +77,8 @@ function Profile(props) {
   
   
   const getbrandslogo = async () => {
-    if (domain) {
+    
+    if (domain && location.state?.data) {
       const data = await sendSearchAPI({ domain: id, active: 1 });
       setDomainPost(data?.data?.data);
     }
@@ -107,8 +108,6 @@ function Profile(props) {
   };
   useEffect(() => {
     // setLoading(true);
-    
-     
     setId(location?.state?.data?._id);
     if (user) {
       if (user?.email) {
@@ -201,7 +200,7 @@ function Profile(props) {
       setcount(location.state.data.color);
       setLogo(location.state.data.logo);
     }
-    if (location.state.data.domain) {
+    if (location.state?.data) {
       getbrandslogo();
     }
   };
@@ -225,6 +224,7 @@ function Profile(props) {
   };
   const next = () => {
     if (location.state?.data) {
+      console.log("enteref in next ");
       document.getElementById("name").classList.remove("visually-hidden");
       document.getElementById("about").classList.remove("visually-hidden");
       document
@@ -366,8 +366,9 @@ function Profile(props) {
                         tabIndex={1}
                       />
                     </Form.Group>
-                    <h6>logos</h6>
+                    {DomainPost?
                     <div className="grid">
+                      <h6>logos</h6>
                       <div className="d-flex flex-wrap justify-content-center">
                         {DomainPost?.map((brand, index) => {
                           return (
@@ -416,31 +417,27 @@ function Profile(props) {
                                       >
                                         {/* {brand.title} */}
                                         <div>
-                                          { 
-                                          show ? (
-                                            <input
-                                              id="userInputBox"
-                                              onChange={(e) => {
-                                                savedata(
-                                                  brand?._id,
-                                                  e.target.value
-                                                );
-                                              }}
-                                              //  value={brand.title}
-                                              className="form-control form-control-sm"
-                                              autoFocus
-                                            />
-                                          ) : (
-                                            <div
-                                              id="showname"
-                                              onClick={() => {
-                                                setShow(true);
-                                              }}
-                                            >
-                                              {brand.title}
-                                            </div>
-                                          )}
-                                        </div>
+                      {show ? (
+                        <input
+                          id="userInputBox"
+                          onChange={(e) => {
+                            savedata(brand.title, e.target.value);
+                          }}
+                          value={brand.title}
+                          className="form-control form-control-sm"
+                          autoFocus
+                        />
+                      ) : (
+                        <div
+                          id="showname"
+                          onClick={() => {
+                            setShow(true);
+                          }}
+                        >
+                          {brand.title}
+                        </div>
+                      )}
+                    </div>
                                       </Card.Title>
                                     </Card.Body>
                                  
@@ -503,7 +500,7 @@ function Profile(props) {
                           ""
                         )}
                       </div>
-                    </div>
+                    </div>:""}
                     <div
                       className="tags-input mb-3 visually-hidden"
                       id="socialLinks"
