@@ -68,7 +68,7 @@ function Brand() {
   const [company, setCompany] = useState([]); 
   const navigate = useNavigate();
   const [showw, setShoww] = useState(false);
-  const handleClosee = () => setShoww(false);
+  
   const handleShoww = () => setShoww(true);
   const [showUploadFile, setShowUploadFile] = useState(false);
   const handleShowUploadFile = () => setShowUploadFile(true);
@@ -77,8 +77,12 @@ function Brand() {
   const [mheight, setHeight] = useState(250);
   const [loading, setLoading] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
-
-
+  const [isRepeatingEmail, setIsRepeatingEmail] = useState(false);
+  const handleClosee = () => 
+  {
+    setIsRepeatingEmail(false);
+    setShoww(false);
+  }
   async function makeid(length) {
     var result = "";
     var characters =
@@ -98,17 +102,27 @@ function Brand() {
     let temp = sharedEmail;
     var spliced = temp.splice(index, 1); 
     setSharedEmail([...temp]);
-    handleClosee();
     updateLogo();
   }
   const handleSubmit = (event) => {
     event.preventDefault();
-    let temp = sharedEmail;
-    let email = event.target.sharingEmail.value
-    temp.push(email);
-    setSharedEmail([...temp]);
-    handleClosee();
-    updateLogo();
+    setIsRepeatingEmail(false);
+    var repeatOrNot =false;
+    for (var i = 0; i < sharedEmail?.length; i++) {
+      if(event.target.sharingEmail.value ==sharedEmail[i])
+      {
+        repeatOrNot = true;
+        setIsRepeatingEmail(true);
+      }
+    }
+    if(event.target.sharingEmail.value && !repeatOrNot)
+    {
+      let temp = sharedEmail;
+      let email = event.target.sharingEmail.value
+      temp.push(email);
+      setSharedEmail([...temp]);
+      updateLogo();
+    }
   };
 
   const DownloadToSvg = async (svg, fileName) => {
@@ -150,7 +164,6 @@ function Brand() {
       links: links,
       domain: domain,
       guidlines: guidlines,
-
       color: allColor,
       email: email,
       verify: result,
@@ -260,13 +273,15 @@ function Brand() {
 
                         <Form onSubmit={handleSubmit}>
                           <Modal.Body>
-                           
+                         {isRepeatingEmail? <Form.Label>Repetation value not allowed </Form.Label>:""}
+                         {isRepeatingEmail?<br></br>:""}
                             <Form.Label>Email address</Form.Label>
                             <Form.Control
                               type="email"
                               id="addEmail"
                               name="sharingEmail"
                               placeholder="Enter email"
+                              required
                             />
 
                             {/* <ListGroup variant="flush">
@@ -557,7 +572,7 @@ function Brand() {
           <Not_found />
         )}
       </Container>
-}
+ } 
     </>
   );
 }
