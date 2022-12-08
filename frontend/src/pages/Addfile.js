@@ -47,9 +47,10 @@ const Addfile = () => {
   const [tags, setTags] = React.useState([]);
   const [domain, setDomain] = useState();
   const [id, setId] = useState();
+  const [domainToSelect, setDomainToSelect] = useState("");
   const [ffresult, setResult] = useState();
   const location = useLocation();
-  console.log(location.state.domain);  
+  // console.log(location.state.domain);  
   // const [logo, setLogo] = useState();
 
   const addTags = (event) => {
@@ -70,7 +71,16 @@ const Addfile = () => {
       fresult = await getProfileDetails({ email: user.email });
       setResult(fresult.data.data);
     }
-    setDomain(fresult?.data?.data[0]?.domain);
+    if(location?.state?.domain)
+    {
+      setDomain(location?.state?.domain);
+      
+    }
+    else
+    {
+
+      setDomain(fresult?.data?.data[0]?.domain);
+    }
 
     setId(fresult?.data?.data[0]?._id);
   };
@@ -90,7 +100,7 @@ const Addfile = () => {
               email: user.email,
               domain: domain,
             });
-
+            console.log("result",result);
             const a = await createBrandAPI({
               url: imageUrl,
               title,
@@ -98,7 +108,8 @@ const Addfile = () => {
               email: user?.email,
               domain: result.data.data[0]._id,
             });
-
+            console.log("a");
+            console.log(a);
             var logo;
             var i;
             for (i = 0; i < ffresult.length; i++) {
@@ -139,6 +150,7 @@ const Addfile = () => {
   useEffect(() => {
     if (user) {
       profileDetails();
+      setDomainToSelect(location?.state?.domain);
     }
   }, [user]);
   return (
@@ -158,16 +170,27 @@ const Addfile = () => {
                       aria-label="Default select example"
                       onChange={(e) => {
                         setDomain(e.target.value);
+                        {console.log("domain seted"+e.target.value)}
                       }}
                       >
-                      <option>{location.state.domain}</option>
+                      
                       {ffresult &&
                         ffresult.map((domainName, index) => (
-                          // <option value={location.state.domain} selected>
-                          <option value={domainName.domain} key={index}>
+                          // <option value={location.state.domain} selected> 
+                          <>
+                          {/* {console.log("location.state.domain!=domainName.domain",location.state.domain,domainName.domain)} */}
+                          {/* {domainToSelect==domainName.domain?setDomain(domainName.domain):""} */}
+                          {domainToSelect==domainName.domain?
+                          <option key={index}  value={domainName.domain}  selected>
+                            {/* {console.log("domainToSelect",index)} */}
+                          {domainName.domain}
+                        </option>: <option key={index} value={domainName.domain} >
+                        {/* {console.log("domainToSelecttt",index)} */}
                             {domainName.domain}
                           </option>
-                        
+                          }
+                         
+                          </>
                         ))}
                       
                         

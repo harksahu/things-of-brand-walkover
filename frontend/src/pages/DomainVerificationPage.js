@@ -3,6 +3,7 @@ import { updateProfileFields, getTXT } from "../api/index.js";
 import { useLocation } from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
+
 function DomainVerificationPage() {
   const [id, setId] = useState();
   const [name, setName] = useState();

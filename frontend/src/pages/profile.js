@@ -78,6 +78,7 @@ function Profile(props) {
   const getbrandslogo = async () => {
     if (domain) {
       const data = await sendSearchAPI({ domain: id, active: 1 });
+      console.log("data",data);
       setDomainPost(data?.data?.data);
     }
   };
@@ -107,8 +108,7 @@ function Profile(props) {
   };
   useEffect(() => {
     // setLoading(true);
-    
-     
+
     setId(location?.state?.data?._id);
     if (user) {
       if (user?.email) {
@@ -222,9 +222,7 @@ function Profile(props) {
     if (location.state?.data) {
       document.getElementById("name").classList.remove("visually-hidden");
       document.getElementById("about").classList.remove("visually-hidden");
-      document
-        .getElementById("socialLinks")
-        .classList.remove("visually-hidden");
+      document.getElementById("socialLinks").classList.remove("visually-hidden");
       document.getElementById("Guidlines").classList.remove("visually-hidden");
       document.getElementById("list").classList.remove("visually-hidden");
       document.getElementById("fontLink").classList.remove("visually-hidden");
@@ -321,7 +319,7 @@ function Profile(props) {
       <Container className="wrpr">
         <Row>
           <nav className="navbar bg-light">
-            <div className="container-fluid">name
+            <div className="container-fluid">
               <a
                 className="navbar-brand"
                 onClick={() => {
@@ -364,7 +362,7 @@ function Profile(props) {
                     <h6>logos</h6>
                     <div className="grid">
                       <div className="d-flex flex-wrap justify-content-center">
-                        {DomainPost?.map((brand, index) => {
+                        {/* {DomainPost?.map((brand, index) => {
                           return (
                             <div key={index}>
                               <div key={brand._id} className=" flex-wrap item">
@@ -409,7 +407,7 @@ function Profile(props) {
                                         style={{ textDecoration: "none" }}
                                         className="text-center"
                                       >
-                                        {/* {brand.title} */}
+                                       
                                         <div>
                                           { 
                                           show ? (
@@ -470,7 +468,7 @@ function Profile(props) {
                               </div>
                             </div>
                           );
-                        })}
+                        })} */}
 
                         {user ? (
                           <Link

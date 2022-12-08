@@ -42,6 +42,8 @@ import {
 import Addfile from "./Addfile";
 
 function Not_found() {
+  
+  console.log("PAge not found")
   return <div className="not-found">Not found</div>;
 }
 
@@ -169,10 +171,15 @@ function Brand() {
   };
 
   const getbrand = async () => {
+    console.log("enterd1",);
     const fresult = await getProfileDetails({
       domain: title.title,
       searchfrom: true,
     });
+  console.log("fresult",fresult)
+
+    console.log("enterd2");
+    
     setCompany(fresult.data.data[0]);
     setId(fresult.data.data[0]._id);
     setName(fresult.data.data[0].name);
@@ -188,6 +195,7 @@ function Brand() {
     setVerify(fresult.data.data[0].verify);
     setSharedEmail(fresult.data.data[0].sharedEmail);
   };
+
 
   const updateLogo = async (logo_url) => {
     const data = {
