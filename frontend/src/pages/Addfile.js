@@ -51,6 +51,7 @@ const Addfile = () => {
   const [domainToSelect, setDomainToSelect] = useState("");
   const [ffresult, setResult] = useState();
   const location = useLocation();
+  const [shareEmailDomainOption,setShareEmailDomainOption] =useState(""); 
   // console.log(location.state.domain);  
   // const [logo, setLogo] = useState();
 
@@ -61,7 +62,22 @@ const Addfile = () => {
       event.target.value = "";
     }
   };
-
+  const findSharedEmail = async (req, res) => {
+    var shareddEmail = await getProfileDetails({});
+    for(var i=0;i<shareddEmail?.data?.data?.length;i++)
+    {
+       for(var j =0;j<shareddEmail?.data?.data[i]?.sharedEmail.length;j++)
+       {
+        if(shareddEmail?.data?.data[i]?.sharedEmail[j] == user.email)
+        {
+          // console.log("entered in loop");
+          // console.log("user.email",user.email);
+          // console.log(shareddEmail?.data?.data[i]);
+          setShareEmailDomainOption(shareddEmail?.data?.data[i]?.domain);
+        }
+       }
+    }
+  };
   const removeTags = (index) => {
     setTags([...tags.filter((tag) => tags.indexOf(tag) !== index)]);
   };
@@ -150,6 +166,7 @@ const Addfile = () => {
 
   useEffect(() => {
     if (user) {
+      findSharedEmail();
       profileDetails();
       setDomainToSelect(location?.state?.domain);
     }
@@ -179,18 +196,20 @@ const Addfile = () => {
                       {ffresult &&
                         ffresult.map((domainName, index) => (
                           <>
+                          
                           {domainToSelect==domainName.domain?
                           <option key={index}  value={domainName.domain}  selected>
-                            {/* {console.log("domainToSelect",index)} */}
                           {domainName.domain}
                         </option>: <option key={index} value={domainName.domain} >
-                        {/* {console.log("domainToSelecttt",index)} */}
                             {domainName.domain}
                           </option>
                           }
                          
                           </>
                         ))}
+                        {shareEmailDomainOption?<option   value={shareEmailDomainOption}  selected>
+                          {shareEmailDomainOption}
+                        </option>:""}
                       
                         
                     </Form.Select>
