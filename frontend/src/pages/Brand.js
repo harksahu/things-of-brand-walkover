@@ -314,13 +314,9 @@ function Brand() {
                         (Not verified)
                         <div className="flex-fill"></div>
                         <Link
-                          to="/domainVerify"
-                          target="_blank"
+                          to="/domainVerify"                          
                           className="text-sm"
-                          state={{ data: company }}
-                          onClick={() => {
-                            handleShow();
-                          }}
+                          state={{ data: company }}                          
                         >
                           How to verify domain?
                         </Link>
