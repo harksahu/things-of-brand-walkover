@@ -39,7 +39,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 function Profile(props) {
   const [DomainPost, setDomainPost] = useState();
   const [name, setName] = useState("");
-  const [logoname, setlogoName] = useState("");
+  const [defaultLogo, setDefaultLogo] = useState("");
   const [aboutus, setAboutus] = useState("");
   const [domain, setDomain] = useState("");
   const [guidlines, setGuidlines] = useState("");
@@ -66,6 +66,7 @@ function Profile(props) {
   const [valid, setvalid] = useState([false]);
   const [valid2, setvalid2] = useState([false]);
   const [fontFamily, setFontFamily] = useState([false]);
+  const [sharedEmail,setSharedEmail]= useState();
   const [loading, setLoading] = useState(false);
   
   const location = useLocation();
@@ -90,7 +91,6 @@ function Profile(props) {
     }
   };
   const savedata = async (id, n) => {
-    setlogoName(n);
     const new_data = {
       _id: id,
       title: n,
@@ -144,6 +144,7 @@ function Profile(props) {
               logo,
               verify,
               email: user?.email,
+              sharedEmail
             });
             alert("successfully saved domain " + d);
           } catch (err) {
@@ -157,6 +158,7 @@ function Profile(props) {
   const updateProfileValue = async (req, res) => {
     if (name) {
       if (aboutus) {
+        // console.log("shared email : ",sharedEmail);
         const data = {
           logo: logo,
           name: name,
@@ -168,6 +170,7 @@ function Profile(props) {
           PrimaryColors: PrimaryColors,
           secondaryColors: secondaryColors,
           backgroundColors: backgroundColors,
+          sharedEmail:sharedEmail,
           email: user?.email,
           color: color,
         };
@@ -193,8 +196,10 @@ function Profile(props) {
       setPrimaryColors(location.state.data.PrimaryColors);
       setSecondaryColors(location.state.data.secondaryColors);
       setBackgroundColors(location.state.data.backgroundColors);
+      setSharedEmail(location.state.data.sharedEmail);
       setFontLink(location.state.data.fontLink);
       setcount(location.state.data.color);
+      setLogo(location.state.data.logo);
     }
     if (location.state.data.domain) {
       getbrandslogo();
