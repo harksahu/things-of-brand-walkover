@@ -83,20 +83,21 @@ function MyCompany() {
           })}
           <Link to="/profile" className="add-new">
             <Card className="h-100 item-company">
-              <Card.Body className="align-items-center card-body d-flex justify-content-center">
+              <Card.Body className="add-icon align-items-center d-flex justify-content-center">
                 <Card.Title className="text-center">
                   <BsFillPlusCircleFill style={{ fontSize: 40 }} />
-                </Card.Title>
-                <Card.Text></Card.Text>
+                </Card.Title>                
               </Card.Body>
-              <div className="card-footer">Add new brand</div>
+              <Card.Body>
+                <Card.Title>Add New Brand</Card.Title>
+              </Card.Body>              
             </Card>
           </Link>
         </div>
       </Container>              
 
       <Container>
-        <div className="separator center my-4">
+        <div className="separator center my-5">
           <span className="sep-txt">Shared Companies</span>
         </div>
         <div className="grid">

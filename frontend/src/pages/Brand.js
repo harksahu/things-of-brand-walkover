@@ -11,7 +11,7 @@ import {
   Figure,
   Button,
   Modal,
-  ListGroup,
+  ListGroup,  
 } from "react-bootstrap";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../utils/svginline.css";
@@ -37,6 +37,7 @@ import {
   MdVerified,
   MdShare,
   MdOutlineModeEdit,
+  MdContentCopy
 } from "react-icons/md";
 import Addfile from "./Addfile";
 
@@ -370,9 +371,20 @@ function Brand() {
                               </Card.Title>
                             </Card.Body>
                           </Link>
-                          <Card.Footer className="text-muted justify-content-between d-flex">
+                          <Card.Footer className="text-muted d-flex justify-content-center">
                             <Button
                               variant="outline-secondary"
+                              size="sm"
+                              className="me-4"
+                              onClick={() => {
+                                navigate("/stuff/" + brand._id);
+                              }}
+                            >
+                              PNG
+                            </Button>
+
+                            <Button
+                              variant="outline-secondary"                              
                               size="sm"
                               onClick={() => {
                                 const canvas = DownloadToSvg(
@@ -381,36 +393,8 @@ function Brand() {
                                 );
                               }}
                             >
-                              Download
+                              SVG
                             </Button>
-                            {/* {user ? (
-                              email === user.email ? (
-                                logo === brand.url ? (
-                                  <Button
-                                    variant="light"
-                                    size="sm"
-                                    disabled
-                                  >
-                                    Default logo
-                                  </Button>
-                                ) : (
-                                  <Button
-                                    variant="light"
-                                    size="sm"
-                                    onClick={() => {
-                                      setlogo(brand.url);
-                                      updateLogo(brand.url);                              
-                                    }}
-                                  >
-                                    Make default
-                                  </Button>
-                                )
-                              ) : (
-                                ""
-                              )
-                            ) : (
-                              ""
-                            )} */}
                           </Card.Footer>
                         </Card>
                       </div>
@@ -419,17 +403,20 @@ function Brand() {
 
                   {user ? (
                     email === user.email ? (
-                      <Link to="/addfile" className="add-new item" state={{domain:domain}}>
+                      <Link to="/addfile" className="add-new" state={{domain:domain}}>
                         <Card className="h-100 item-company">
-                          <Card.Body className="align-items-center card-body d-flex justify-content-center">
+                          <Card.Body className="add-icon align-items-center d-flex justify-content-center">
                             <Card.Title className="text-center">
                               <BsFillPlusCircleFill style={{ fontSize: 40 }} />
                             </Card.Title>
                             <Card.Text></Card.Text>
                           </Card.Body>
+                          <Card.Body>
+                            <Card.Title>Add New File</Card.Title>
+                          </Card.Body>
                           <div className="card-footer">
-                            <Button variant="link" size="sm">
-                              Add new Logo
+                            <Button variant="outline-light" size="sm">
+                              -
                             </Button>
                           </div>
                         </Card>
@@ -464,34 +451,33 @@ function Brand() {
 
                               <div className="color-footer" id="inputText">
                                 <div>{color.colorName}</div>
-                                <div>{color.colorValue}</div>
-                              </div>
+                                <div className="d-flex justify-content-between">
+                                  {color.colorValue}
+                                  <div className="icon-copy">
+                                    <MdContentCopy
+                                    onClick={() => {
+                                      let colorTemp = color.colorValue;
 
-                              <div className="tooltip1">
-                                <button
-                                  onClick={() => {
-                                    let colorTemp = color.colorValue;
-
-                                    navigator.clipboard.writeText(colorTemp);
-                                    var tooltip = document.getElementById(
-                                      "myTooltip" + index
-                                    );
-                                    tooltip.innerHTML = "Copied: " + colorTemp;
-                                  }}
-                                  onMouseOut={() => {
-                                    var tooltip =
-                                      document.getElementById("myTooltip");
-                                    tooltip.innerHTML = "Copy to clipboard";
-                                  }}
-                                >
-                                  <span
-                                    className="tooltiptext"
-                                    id={`myTooltip${index}`}
-                                  >
-                                    Copy to clipboard
-                                  </span>
-                                  Copy text
-                                </button>
+                                      navigator.clipboard.writeText(colorTemp);
+                                      var tooltip = document.getElementById(
+                                        "myTooltip" + index
+                                      );
+                                      tooltip.innerHTML = "Copied: " + colorTemp;
+                                    }}
+                                    onMouseOut={() => {
+                                      var tooltip =
+                                        document.getElementById("myTooltip");
+                                      tooltip.innerHTML = "Copy to clipboard";
+                                    }}
+                                    />
+                                    <span
+                                        className="tooltiptext"
+                                        id={`myTooltip${index}`}
+                                      >
+                                        Copy to clipboard
+                                    </span>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           ) : (
