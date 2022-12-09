@@ -66,7 +66,8 @@ function MyCompany() {
                 <Link to={"/" + Company.domain}>
                   <Card className="item-company">
                     <div style={{ overflow: "auto" }} className="img_size">
-                      <SvgInline name={Company.name} url={Company.logo} />
+                                <SvgInline {...Company}/>
+
                     </div>
                     <Card.Body>
                       <Card.Title

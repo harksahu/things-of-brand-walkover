@@ -133,13 +133,16 @@ const getS3SignUrl = async (file ) => {
   await fetch(url, {
     method: "PUT",
     headers: {
-      "Content-Type": "multipart/form-data"
+      "Content-Type": "image/svg+xml"
     },
     body: file
   })
 return url;
   
 };
+
+
+// image/svg+xml
 
 
 

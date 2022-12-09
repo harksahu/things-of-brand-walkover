@@ -12,7 +12,8 @@ import {
   Figure,
   Button, 
   Modal,
-  ListGroup,  
+  ListGroup,
+  ToastContainer,Toast  
 } from "react-bootstrap";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../utils/svginline.css";
@@ -60,7 +61,7 @@ function Brand() {
   const [sharedEmail, setSharedEmail] = useState([]);
   const { user } = UserAuth();
   const [links, setLinks] = React.useState([]);
-  // const [results, setResults] = useState();
+  const [showCopy, setShowCopy] = useState(false);
   const [DomainPost, setDomainPost] = useState();
   const [verify, setVerify] = useState();
   const [show, setShow] = useState(false);
@@ -515,7 +516,8 @@ function Brand() {
                                       var tooltip = document.getElementById(
                                         "myTooltip" + index
                                       );
-                                      tooltip.innerHTML = "Copied: " + colorTemp;
+                                      setShowCopy(true)
+                                      // tooltip.innerHTML = "Copied: " + colorTemp;
                                     }}
                                     onMouseOut={() => {
                                       var tooltip =
@@ -572,8 +574,18 @@ function Brand() {
         ) : (
           <Not_found />
         )}
+
+
+
+
+      
       </Container>
  } 
+ <ToastContainer className="p-3">
+        <Toast onClose={() => setShow(false)} show={showCopy} delay={3000} style={{backgroundColor : "#c5c6d0"}} autohide>
+          <Toast.Body>Copy in clipboard!</Toast.Body>
+        </Toast>
+        </ToastContainer>
     </>
   );
 }
