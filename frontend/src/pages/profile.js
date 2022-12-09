@@ -17,6 +17,7 @@ import {
   getFontList,
   createProfile,
   deleteMyStuffAPI,
+  restoreMyStuffAPI,
   saveMyStuffAPI,
   sendSearchAPI,
 } from "../api/index.js";
@@ -79,7 +80,7 @@ function Profile(props) {
   const getbrandslogo = async () => {
 
     if (domain && location.state?.data) {
-      const data = await sendSearchAPI({ domain: id, active: 1 });
+      const data = await sendSearchAPI({ domain: id });
 
       setDomainPost(data?.data?.data);
     }
@@ -376,7 +377,7 @@ function Profile(props) {
                               <div key={index}>
                                 <div key={brand._id} className=" flex-wrap item">
                                   <Card>
-                                    <Dropdown className="ms-auto">
+                                    {/* <Dropdown className="ms-auto">
                                       <Dropdown.Toggle variant="light" size="sm">
                                         <BsThreeDotsVertical />
                                       </Dropdown.Toggle>
@@ -402,7 +403,7 @@ function Profile(props) {
                                           Delete
                                         </Dropdown.Item>
                                       </Dropdown.Menu>
-                                    </Dropdown>
+                                    </Dropdown> */}
                                     <Link to={"/stuff/" + brand._id}>
                                       <div
                                         style={{ overflow: "auto" }}
@@ -418,7 +419,8 @@ function Profile(props) {
                                       >
 
                                         <div>
-                                          {show ? (
+                                          {/* {
+                                          show ? (
                                             <input
                                               id="userInputBox"
                                               onChange={(e) => {
@@ -428,16 +430,16 @@ function Profile(props) {
                                               className="form-control form-control-sm"
                                               autoFocus
                                             />
-                                          ) : (
-                                            <div
-                                              id="showname"
-                                              onClick={() => {
-                                                setShow(true);
-                                              }}
-                                            >
-                                              {brand.title}
-                                            </div>
-                                          )}
+                                          ) : ( */}
+                                          <div
+                                            id="showname"
+                                            onClick={() => {
+                                              setShow(true);
+                                            }}
+                                          >
+                                            {brand.title}
+                                          </div>
+                                          {/* )} */}
                                         </div>
                                       </Card.Title>
                                     </Card.Body>
@@ -464,12 +466,52 @@ function Profile(props) {
                                           Make default
                                         </Button>
                                       )
+                                      
                                     ) : (
                                       ""
                                     )
                                   ) : (
                                     ""
-                                  )}
+                                  )
+                                  
+                                  
+                                  
+                                  }
+                                </div>
+                                <div>
+                                  {
+                                    (
+
+                                      brand.active ? (
+                                        <Button
+                                        variant="light"
+                                        size="sm"
+                                        onClick={async () => {
+                                          await deleteMyStuffAPI(brand?._id);
+                                          // alert("Deleted");
+                                          // window.location.reload();
+                                          navigate(-1);
+                                        }}
+                                      >
+                                        Delete
+                                      </Button>
+                                      ) : (
+                                        <Button
+                                        variant="light"
+                                        size="sm"
+                                        onClick={async () => {
+                                          await restoreMyStuffAPI(brand?._id);
+                                          // alert("restore")
+                                          navigate(-1);
+                                        }}
+
+                                      >
+                                        Restore
+                                      </Button>
+                                      )
+
+                                    )
+                                  }
                                 </div>
                               </div>
                             );
