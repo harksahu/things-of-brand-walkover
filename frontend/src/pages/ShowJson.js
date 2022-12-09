@@ -13,15 +13,14 @@ function ShowJson()
           domain: title.title,
           searchfrom: true,
         });
-        console.log("fresult",fresult);
+        
         setResult(JSON.stringify(fresult));
     }
     useEffect(() => {
-        // console.log("title = ",title);
+       
          getAlldata();
    },[]);
-   console.log("in show json");
-   console.log("title = ",title);
+  
    return(
     <>
     <p>"hello"</p>

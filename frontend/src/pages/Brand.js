@@ -43,7 +43,7 @@ import Addfile from "./Addfile";
 
 function Not_found() {
   
-  console.log("PAge not found")
+ 
   return <div className="not-found">Not found</div>;
 }
 
@@ -184,15 +184,15 @@ function Brand() {
   };
 
   const getbrand = async () => {
-    console.log("enterd1",);
+ 
     const fresult = await getProfileDetails({
       domain: title.title,
       searchfrom: true,
     });
-    console.log("fresult",fresult.data.data[0])
+   
     // setResults(fresult.data);
 
-    console.log("enterd2");
+   
     
     setCompany(fresult.data.data[0]);
     setId(fresult.data.data[0]._id);
@@ -208,7 +208,7 @@ function Brand() {
     setEmail(fresult.data.data[0].email);
     setVerify(fresult.data.data[0].verify);
     setSharedEmail(fresult.data.data[0].sharedEmail);
-    // console.log(company)
+    
     isCompanyShared();
   };
   
@@ -216,11 +216,9 @@ function Brand() {
 
     for(var i = 0 ; i<sharedEmail?.length ; i++)
     { 
-        console.log("inter")
-        console.log("user?.email",user?.email+"sharedEmail[i]"+sharedEmail[i]);
+       
         if(user?.email ===sharedEmail[i])
         {
-          console.log("truw");
           setSharedCompany(true);
         }
       }

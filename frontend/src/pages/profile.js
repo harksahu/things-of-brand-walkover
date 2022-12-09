@@ -80,7 +80,7 @@ function Profile(props) {
     
     if (domain && location.state?.data) {
       const data = await sendSearchAPI({ domain: id, active: 1 });
-      console.log("data",data);
+
       setDomainPost(data?.data?.data);
     }
   };
@@ -158,7 +158,7 @@ function Profile(props) {
   const updateProfileValue = async (req, res) => {
     if (name) {
       if (aboutus) {
-        // console.log("shared email : ",sharedEmail);
+       
         const data = {
           logo: logo,
           name: name,
@@ -225,7 +225,7 @@ function Profile(props) {
   };
   const next = () => {
     if (location.state?.data) {
-      console.log("enteref in next ");
+     
       document.getElementById("name").classList.remove("visually-hidden");
       document.getElementById("about").classList.remove("visually-hidden");
       document.getElementById("socialLinks").classList.remove("visually-hidden");

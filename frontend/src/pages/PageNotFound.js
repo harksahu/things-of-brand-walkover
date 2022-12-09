@@ -4,7 +4,7 @@ const PageNotFound = ()=> {
   return (
     
     <div>
-        {console.log("in page not foud")}
+       
         404 NOT FOUND
         </div>
   )

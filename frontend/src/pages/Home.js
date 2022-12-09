@@ -15,7 +15,7 @@ function Home() {
 
   useEffect(() => {
     if (user) {
-      console.log(user);
+     
       navigate("/MyCompanies");
     }
   }, [user]);

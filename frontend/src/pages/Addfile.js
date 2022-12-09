@@ -52,7 +52,7 @@ const Addfile = () => {
   const [ffresult, setResult] = useState();
   const location = useLocation();
   const [shareEmailDomainOption,setShareEmailDomainOption] =useState(""); 
-  // console.log(location.state.domain);  
+   
   // const [logo, setLogo] = useState();
 
   const addTags = (event) => {
@@ -70,9 +70,7 @@ const Addfile = () => {
        {
         if(shareddEmail?.data?.data[i]?.sharedEmail[j] == user.email)
         {
-          // console.log("entered in loop");
-          // console.log("user.email",user.email);
-          // console.log(shareddEmail?.data?.data[i]);
+         
           setShareEmailDomainOption(shareddEmail?.data?.data[i]?.domain);
         }
        }
@@ -117,7 +115,7 @@ const Addfile = () => {
               email: user.email,
               domain: domain,
             });
-            console.log("result",result);
+           
             const a = await createBrandAPI({
               url: imageUrl,
               title,
@@ -125,8 +123,7 @@ const Addfile = () => {
               email: user?.email,
               domain: result.data.data[0]._id,
             });
-            console.log("a");
-            console.log(a);
+           
             var logo;
             var i;
             for (i = 0; i < ffresult.length; i++) {
@@ -189,7 +186,7 @@ const Addfile = () => {
                       aria-label="Default select example"
                       onChange={(e) => {
                         setDomain(e.target.value);
-                        {console.log("domain seted"+e.target.value)}
+                      
                       }}
                       >
                       

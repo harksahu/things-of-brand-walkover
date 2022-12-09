@@ -44,7 +44,7 @@ function MyCompany() {
 
     if (Array.isArray(fresult.data.data) && fresult.data.data.length) {
     } else {
-      navigate("/profile");
+      navigate("/editProfile");
     }
   };
 
@@ -83,7 +83,7 @@ function MyCompany() {
               </div>
             );
           })}
-          <Link to="/profile" className="add-new">
+          <Link to="/editProfile" className="add-new">
             <Card className="h-100 item-company">
               <Card.Body className="align-items-center card-body d-flex justify-content-center">
                 <Card.Title className="text-center">
