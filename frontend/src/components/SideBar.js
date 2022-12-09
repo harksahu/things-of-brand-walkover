@@ -26,9 +26,9 @@ function SideBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
       </Nav.Item>
       
       <Nav.Item>
-        <Nav.Link className={ location.pathname === '/company' || location.pathname === '/profile' ? 'active' : ''}
+        <Nav.Link className={ location.pathname === '/MyCompanies' || location.pathname === '/editProfile' ? 'active' : ''}
         onClick={() => {
-          navigate("/company");
+          navigate("/MyCompanies");
         }}
         >My Brands</Nav.Link>
       </Nav.Item>      
@@ -36,7 +36,7 @@ function SideBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
       <Nav.Item>
         <Nav.Link
         onClick={() => {
-          navigate("/search");
+          navigate("/AllCompanies");
         }}
         >Explore other brands</Nav.Link>
       </Nav.Item>      

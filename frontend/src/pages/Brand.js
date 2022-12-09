@@ -285,7 +285,7 @@ function Brand() {
 
                         <Nav.Link
                           as={Link}
-                          to="/profile"
+                          to="/editProfile"
                           state={{ data: company }}
                         >
                           <MdOutlineModeEdit />

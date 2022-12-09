@@ -48,16 +48,16 @@ function App() {
              
               <Route path='/' element={<Home />} />
               <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
-              <Route path='/search' element={<Search />} />
+              <Route path='/AllCompanies' element={<Search />} />
               <Route path='/searchlogo' element={<HomeLogo />} />
               <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />
               <Route path='/:title' element={<Brand />} />
               <Route path='/domainVerify' element={<DomainVerificationPage />} />
-              <Route path='/profile' element={<Profile />} />
+              <Route path='/editProfile' element={<Profile />} />
               <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
               <Route path="/MyStuff" element={<Protected> <MyStuff /> </Protected>} />
               <Route path='/account' element={<Protected> <Account /> </Protected>} />
-              <Route path='/company' element={<Protected> <MyCompany /> </Protected>} />
+              <Route path='/MyCompanies' element={<Protected> <MyCompany /> </Protected>} />
               <Route path='/:title/json' element={<Protected> <ShowJson/></Protected>} />
               <Route path='*' element={<PageNotFound/>}/>
             </Routes>
