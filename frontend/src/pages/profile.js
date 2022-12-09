@@ -79,9 +79,15 @@ function Profile(props) {
   const getbrandslogo = async () => {
     
     if (domain && location.state?.data) {
+      if(id)
+      {
       const data = await sendSearchAPI({ domain: id, active: 1 });
-
       setDomainPost(data?.data?.data);
+      }
+      console.log("domain ",domain );
+      console.log("id ",id );
+
+     
     }
   };
   const addLinks = (event) => {
@@ -114,8 +120,7 @@ function Profile(props) {
       if (user?.email) {
       
         profileDetails();
-        // setLoading(false)
-        next();
+        checkIfDomain();
       }
     }
     
@@ -126,35 +131,6 @@ function Profile(props) {
       getbrandslogo();
     }
   }, [domain]);
-  const storeProfileValue = async (req, res) => {
-    if (check) {
-      if (user) {
-        if (user?.email) {
-          try {
-            const d = extractDomain(domain);
-            setDomain(d);
-            const data = await createProfile({
-              name,
-              aboutus,
-              links,
-              domain: d,
-              guidlines,
-              fontLink,
-              color,
-              logo,
-              verify,
-              email: user?.email,
-              sharedEmail
-            });
-            alert("successfully saved domain " + d);
-          } catch (err) {
-            console.log(err);
-            alert("Profile is not created");
-          }
-        }
-      }
-    }
-  };
   const updateProfileValue = async (req, res) => {
     if (name) {
       if (aboutus) {
@@ -205,78 +181,31 @@ function Profile(props) {
       getbrandslogo();
     }
   };
-  function extractDomain(url) {
-    var domainName;
-    if (url.indexOf("://") > -1) {
-      domainName = url.split("/")[2];
-    } else {
-      domainName = url.split("/")[0];
-    }
-    //find & remove www
-    if (domainName.indexOf("www.") > -1) {
-      domainName = domainName.split("www.")[1];
-    }
-    domainName = domainName.split(":")[0];
-    domainName = domainName.split("?")[0];
-    return domainName;
-  }
+  // function extractDomain(url) {
+  //   var domainName;
+  //   if (url.indexOf("://") > -1) {
+  //     domainName = url.split("/")[2];
+  //   } else {
+  //     domainName = url.split("/")[0];
+  //   }
+  //   //find & remove www
+  //   if (domainName.indexOf("www.") > -1) {
+  //     domainName = domainName.split("www.")[1];
+  //   }
+  //   domainName = domainName.split(":")[0];
+  //   domainName = domainName.split("?")[0];
+  //   return domainName;
+  // }
   const config = {
     buttons: ["bold", "italic"],
   };
-    const next = () => {
-    if (location.state?.data) {
-     
-      document.getElementById("name").classList.remove("visually-hidden");
-      document.getElementById("about").classList.remove("visually-hidden");
-      document.getElementById("socialLinks").classList.remove("visually-hidden");
-      document.getElementById("Guidlines").classList.remove("visually-hidden");
-      document.getElementById("list").classList.remove("visually-hidden");
-      document.getElementById("fontLink").classList.remove("visually-hidden");
-      document.getElementById("button").classList.remove("visually-hidden");
-      document.getElementById("nxt").classList.add("visually-hidden");
-    } else {
-      var check = 2;
-      for (let i = 0; i < results.length; i++) {
-        // const e = results[i];
-        if (results[i].domain === domain) {
-          setCompany(results[i]);
-          check = 1;
-          break;
-        } else {
-          check = 0;
-        }
-      }
-      if (check === 1) {
-        document
-          .getElementById("domainError")
-          .classList.remove("visually-hidden");
-      } else if (check === 0) {
-        var domainParts = domain.split(".");
-        if (domain) {
-          if (domainParts.length >= 2 && domainParts[1].length >= 1) {
-            document.getElementById("name").classList.remove("visually-hidden");
-            document
-              .getElementById("about")
-              .classList.remove("visually-hidden");
-            document
-              .getElementById("socialLinks")
-              .classList.remove("visually-hidden");
-            document
-              .getElementById("Guidlines")
-              .classList.remove("visually-hidden");
-            document.getElementById("list").classList.remove("visually-hidden");
-            document
-              .getElementById("fontLink")
-              .classList.remove("visually-hidden");
-            document
-              .getElementById("button")
-              .classList.remove("visually-hidden");
-            document.getElementById("nxt").classList.add("visually-hidden");
-            document.getElementById("domain").disabled = true;
-            storeProfileValue();
-          }
-        }
-      }
+    const checkIfDomain = () => {
+
+    if (location.state?.data  ) {
+     setDomain(location.state?.data);
+    } 
+    else{
+      // navigate("companies/new")
     }
   };
   const checkDomain = (datta) => {
@@ -344,7 +273,7 @@ function Profile(props) {
               <Card.Body>
                 <Stack gap={3}>
                   <Form>
-                    <Form.Group className="mb-3 visually-hidden" id="name">
+                    <Form.Group className="mb-3 " id="name">
                       <Form.Label>name</Form.Label>
                       <Form.Control
                         type="text"
@@ -356,7 +285,7 @@ function Profile(props) {
                         value={name}
                       />
                     </Form.Group>
-                    <Form.Group className="mb-3 visually-hidden" id="about">
+                    <Form.Group className="mb-3 " id="about">
                       <Form.Label>About us</Form.Label>
                       <RichtextEditor
                         guidlines={aboutus}
@@ -501,13 +430,13 @@ function Profile(props) {
                       </div>
                     </div>:""}
                     <div
-                      className="tags-input mb-3 visually-hidden"
+                      className="tags-input mb-3 "
                       id="socialLinks"
                       style={{ margin: "auto" }}
                     >
                       <h6>Social Links</h6>
                       <ul>
-                        {links.map((link, index) => (
+                        {links?.map((link, index) => (
                           <li key={index}>
                             <span>{link}</span>
                             <i
@@ -557,7 +486,7 @@ function Profile(props) {
                           })}
                       </datalist> */}
                     </Form.Group>
-                    <Form.Group className="mb-3 visually-hidden" id="Guidlines">
+                    <Form.Group className="mb-3" id="Guidlines">
                       <Form.Label>Guidlines</Form.Label>
                       <RichtextEditor
                         guidlines={guidlines}
@@ -566,14 +495,14 @@ function Profile(props) {
                       />
                     </Form.Group>
                     <div
-                      className="hide formbold-chatbox-form visually-hidden"
+                        className="hide formbold-chatbox-form"
                       id="list"
                     >
                       <Form.Group className="mb-3">
                         <Form.Label>
                           Color<small>(hex code in #123456 format)</small>{" "}
                         </Form.Label>
-                        {color.map((element, index) => (
+                        {color?.map((element, index) => (
                           <div id="fetch" key={index}>
                             <Form.Group className="mb-3 d-flex">
                               <Form.Control
@@ -644,7 +573,7 @@ function Profile(props) {
                       </Form.Group>
                     </div>
                     <Form.Group
-                      className="mb-3 my-3 visually-hidden"
+                      className="mb-3 my-3"
                       id="fontLink"
                     >
                       <Form.Label>
@@ -652,7 +581,7 @@ function Profile(props) {
                         <small>(with respect there google font name)</small>
                       </Form.Label>
                       <div id="list" className="hide formbold-chatbox-form">
-                        {fontLink.map((element, index) => (
+                        {fontLink?.map((element, index) => (
                           <div id="fetch" key={index}>
                             <Hint options={fontFamily}>
                               <input
@@ -724,7 +653,7 @@ function Profile(props) {
                         </div>
                       </div>
                     </Form.Group>
-                    <div id="button" className=" visually-hidden">
+                    <div id="button" className="">
                       {/* {location.state?.data ? ( */}
                       <Button
                         variant="primary"
@@ -769,11 +698,6 @@ New
 3:00
 })}
             </div> */}
-                    <div id="nxt">
-                      <Button variant="primary" onClick={() => next()}>
-                        Next
-                      </Button>
-                    </div>
                   </Form>
                 </Stack>
               </Card.Body>
