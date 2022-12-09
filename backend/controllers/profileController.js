@@ -3,7 +3,7 @@ import BrandModel from '../models/brandModel.js'
 
 const createProfile = async (req, res) => {
     try {
-        
+
         const data = await profileModel.create({
             ...req.body
         });
@@ -12,7 +12,7 @@ const createProfile = async (req, res) => {
             "data": data
         }).status(200);
     } catch (error) {
-        
+
         res.send({
             message: "Some Error on Server",
             error
@@ -55,7 +55,7 @@ const getProfileDetails = async (req, res) => {
 
             }).status(200);
         } catch (error) {
-           
+
 
             res.send({
                 message: "Some Error on Server",
@@ -63,7 +63,7 @@ const getProfileDetails = async (req, res) => {
             }).status(400);
         }
     } else {
-       
+
         try {
             const data = await profileModel.find({
                 // $or: [{ ...domain }, { ...name }],
@@ -76,7 +76,7 @@ const getProfileDetails = async (req, res) => {
                 "data": data
             }).status(200);
         } catch (error) {
-          
+
             res.send({
                 message: "Some Error on Server",
                 error: error
@@ -86,8 +86,8 @@ const getProfileDetails = async (req, res) => {
 }
 
 const updateProfile = async (req, res) => {
-   
-    let { name, aboutus ,fontLink} = req.body
+
+    let { name, aboutus, fontLink } = req.body
     let logo = req.body.logo;
     let links = req.body.links;
     let domain = req.body.domain;
@@ -98,7 +98,7 @@ const updateProfile = async (req, res) => {
     let verify = req.body.verify
     let link = req.body.links;
     let sharedEmail = req.body.sharedEmail ? req.body.sharedEmail : "";
-    
+
     try {
         const data = await profileModel.updateMany(
             {
@@ -120,13 +120,13 @@ const updateProfile = async (req, res) => {
                 }
             }
         )
-       
+
         res.json({
             "message": "Related Data is Successfully updated",
             "data": data
         }).status(200);
     } catch (error) {
-        
+
         res.send({
             message: "Some Error on Server",
             error
@@ -154,20 +154,20 @@ const getCompanyDetailss = async (req, res) => {
 const getCompanyJson = async (domain) => {
     try {
         var data = await profileModel.find({
-        domain : domain
+            domain: domain
 
         });
         const domain1 = data[0]._id;
-       
+
         const logos = await BrandModel.find({
             domain: domain1,
 
         });
-       
+
         // data = data.push(logos)
         return [{ logos, ...data }]
     } catch (error) {
-        
+
 
         return error
     }

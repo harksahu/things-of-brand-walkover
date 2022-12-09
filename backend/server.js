@@ -14,8 +14,8 @@ import profileRouters from "./routers/profileRouters.js";
 import puppy from "./details_feacher/getData.js"
 import getUpdatedData from "./details_feacher/gettingdata.js";
 import {setConfigTable,getUrlFromTable} from "./details_feacher/getUrlFromTable.js";
+import {getCompanyJson} from "./controllers/profileController.js";
 import dotenv from 'dotenv'
-import { log } from "console";
 import dns from "dns";
 dotenv.config({path:'../.env'})
 
@@ -51,6 +51,23 @@ app.get('/s3url',async(req,res)=>{
 
     res.send({url});
 })
+
+
+
+
+app.get('/:domain/json',async(req,res)=>{
+
+  // console.log("req");
+  // console.log(req?.params?.domain);
+  const data = await getCompanyJson(req?.params?.domain)
+  console.log("data");
+  console.log(data);
+  res.send({data});
+  // return data
+})
+
+
+
 
 
 app.get("/uploads/:id",(req,res)=>{
@@ -129,6 +146,32 @@ app.post("/getUpdatedData", async (req, res) => {
   }
  });
 
+
+
+ app.post("/getDomainTXT", async (req, res) => {
+  const url = req.body.link
+  console.log(req.body);
+  const xpath = req.body.xpath;
+  try {
+    dns.resolve(url, 'TXT', ( error,record)=>{
+      if (error) {
+        console.log(error);
+        res.send({
+          error: error,
+        });
+      }
+    else{
+      res.send({
+        data: record,
+      });
+    }
+  
+   })
+  } catch (error) {
+    
+  }
+
+});
 
 // console.log("abc")
 // ERROR HANDLE
