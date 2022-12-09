@@ -58,7 +58,7 @@ const getProfileDetails = async (req, res) => {
            
 
             res.send({
-                message: "Some Error on Server",
+                message: "Some Error on Server11",
                 error
             }).status(400);
         }

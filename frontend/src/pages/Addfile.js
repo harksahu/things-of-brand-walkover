@@ -3,6 +3,7 @@ import { createBrandAPI } from "../api";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { MdArrowBackIos, MdContentCopy } from "react-icons/md";
+import Home from "./Home"
 import {
   Card,
   Form,
@@ -48,10 +49,13 @@ const Addfile = () => {
   const [tags, setTags] = React.useState([]);
   const [domain, setDomain] = useState();
   const [id, setId] = useState();
+  const [domainToSelect, setDomainToSelect] = useState("");
   const [ffresult, setResult] = useState();
   const location = useLocation();
   const navigate = useNavigate();
   console.log(location.state.domain);  
+  const [shareEmailDomainOption,setShareEmailDomainOption] =useState(""); 
+  // console.log(location.state.domain);  
   // const [logo, setLogo] = useState();
 
   const addTags = (event) => {
@@ -61,7 +65,22 @@ const Addfile = () => {
       event.target.value = "";
     }
   };
-
+  const findSharedEmail = async (req, res) => {
+    var shareddEmail = await getProfileDetails({});
+    for(var i=0;i<shareddEmail?.data?.data?.length;i++)
+    {
+       for(var j =0;j<shareddEmail?.data?.data[i]?.sharedEmail.length;j++)
+       {
+        if(shareddEmail?.data?.data[i]?.sharedEmail[j] == user.email)
+        {
+          // console.log("entered in loop");
+          // console.log("user.email",user.email);
+          // console.log(shareddEmail?.data?.data[i]);
+          setShareEmailDomainOption(shareddEmail?.data?.data[i]?.domain);
+        }
+       }
+    }
+  };
   const removeTags = (index) => {
     setTags([...tags.filter((tag) => tags.indexOf(tag) !== index)]);
   };
@@ -72,7 +91,16 @@ const Addfile = () => {
       fresult = await getProfileDetails({ email: user.email });
       setResult(fresult.data.data);
     }
-    setDomain(fresult?.data?.data[0]?.domain);
+    if(location?.state?.domain)
+    {
+      setDomain(location?.state?.domain);
+      
+    }
+    else
+    {
+
+      setDomain(fresult?.data?.data[0]?.domain);
+    }
 
     setId(fresult?.data?.data[0]?._id);
   };
@@ -92,7 +120,7 @@ const Addfile = () => {
               email: user.email,
               domain: domain,
             });
-
+            console.log("result",result);
             const a = await createBrandAPI({
               url: imageUrl,
               title,
@@ -100,7 +128,8 @@ const Addfile = () => {
               email: user?.email,
               domain: result.data.data[0]._id,
             });
-
+            console.log("a");
+            console.log(a);
             var logo;
             var i;
             for (i = 0; i < ffresult.length; i++) {
@@ -140,12 +169,15 @@ const Addfile = () => {
 
   useEffect(() => {
     if (user) {
+      findSharedEmail();
       profileDetails();
+      setDomainToSelect(location?.state?.domain);
     }
   }, [user]);
   return (
     <>
-      <Container className="wrpr">
+    {user?
+      <Container  className="wrpr">
         <Row>
         <nav className="navbar bg-light">
           <div className="container-fluid">          
@@ -175,15 +207,29 @@ const Addfile = () => {
                       aria-label="Default select example"
                       onChange={(e) => {
                         setDomain(e.target.value);
+                        {console.log("domain seted"+e.target.value)}
                       }}
                       >
+                      
                       {ffresult &&
                         ffresult.map((domainName, index) => (
-                          // <option value={location.state.domain} selected>
-                          <option value={domainName.domain} key={index}>
+                          <>
+                          
+                          {domainToSelect==domainName.domain?
+                          <option key={index}  value={domainName.domain}  selected>
+                          {domainName.domain}
+                        </option>: <option key={index} value={domainName.domain} >
                             {domainName.domain}
-                          </option>                        
+                          </option>
+                          }
+                         
+                          </>
                         ))}
+                        {shareEmailDomainOption?<option   value={shareEmailDomainOption}  selected>
+                          {shareEmailDomainOption}
+                        </option>:""}
+                      
+                        
                     </Form.Select>
                   </FormGroup>
 
@@ -251,11 +297,13 @@ const Addfile = () => {
             </Card>
           </Col>
         </Row>
-      </Container>
+      </Container>:<Home/>
+}
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}
       />
+                      
     </>
   );
 };

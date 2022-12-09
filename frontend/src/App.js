@@ -21,7 +21,8 @@ import Home2 from './pages/Home2';
 import Profile from './pages/profile';
 import DomainVerificationPage from './pages/DomainVerificationPage';
 
-
+import PageNotFound from './pages/PageNotFound.js';
+import { Switch } from '@mui/material';
 
 function App() {
   const [isUserLoaded, setIsUserLoaded] = useState(false);
@@ -44,6 +45,7 @@ function App() {
           <AuthContextProvider>
           { window.location.pathname?(window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <NavigationBar />):<NavigationBar />}
             <Routes>
+             
               <Route path='/' element={<Home />} />
               <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
               <Route path='/search' element={<Search />} />
@@ -57,6 +59,7 @@ function App() {
               <Route path='/account' element={<Protected> <Account /> </Protected>} />
               <Route path='/company' element={<Protected> <MyCompany /> </Protected>} />
               <Route path='/:title/json' element={<Protected> <ShowJson/></Protected>} />
+              <Route path='*' element={<PageNotFound/>}/>
             </Routes>
           </AuthContextProvider>
         </ThemeProvider>

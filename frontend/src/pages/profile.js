@@ -80,6 +80,7 @@ function Profile(props) {
     
     if (domain && location.state?.data) {
       const data = await sendSearchAPI({ domain: id, active: 1 });
+      console.log("data",data);
       setDomainPost(data?.data?.data);
     }
   };
@@ -227,9 +228,7 @@ function Profile(props) {
       console.log("enteref in next ");
       document.getElementById("name").classList.remove("visually-hidden");
       document.getElementById("about").classList.remove("visually-hidden");
-      document
-        .getElementById("socialLinks")
-        .classList.remove("visually-hidden");
+      document.getElementById("socialLinks").classList.remove("visually-hidden");
       document.getElementById("Guidlines").classList.remove("visually-hidden");
       document.getElementById("list").classList.remove("visually-hidden");
       document.getElementById("fontLink").classList.remove("visually-hidden");
@@ -415,7 +414,7 @@ function Profile(props) {
                                         style={{ textDecoration: "none" }}
                                         className="text-center"
                                       >
-                                        {/* {brand.title} */}
+                                       
                                         <div>
                       {show ? (
                         <input

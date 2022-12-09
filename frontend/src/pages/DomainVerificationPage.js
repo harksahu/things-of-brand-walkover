@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Container, Button, InputGroup } from "react-bootstrap";
 import { MdArrowBackIos, MdContentCopy } from "react-icons/md";
+// import Button from "react-bootstrap/Button";
+
 function DomainVerificationPage() {
   const [id, setId] = useState();
   const [name, setName] = useState();
