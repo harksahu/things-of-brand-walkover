@@ -44,9 +44,12 @@ function DomainVerificationPage() {
   }
 
   const verifyDomain = async () => {
-    const TXT = await getTXT(domain);
+    // console.log(domain);
+    if (domain) {
+      const TXT = await getTXT(domain);
 
     var ifVerify = false;
+    console.log(TXT?.data?.data);
     for (let i = 0; i < TXT?.data?.data.length; i++) {
       if (TXT?.data?.data[i][0] == verify) {
         updateVerify("true");
@@ -56,8 +59,10 @@ function DomainVerificationPage() {
         console.log("not verify");
       }
     }
-    if (!ifVerify) {
-      document.getElementById("error").innerHTML = "not verify";
+    // if (!ifVerify) {
+    // document.getElementById("error").innerHTML = "not verify";
+    // }
+      
     }
   };
 
