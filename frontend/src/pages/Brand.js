@@ -81,6 +81,7 @@ function Brand() {
   const [loading, setLoading] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [isRepeatingEmail, setIsRepeatingEmail] = useState(false);
+  const [userEmail, setUserEmail] = useState(false);
   const handleClosee = () => 
   {
     setIsRepeatingEmail(false);
@@ -112,6 +113,10 @@ function Brand() {
     setIsRepeatingEmail(false);
     var repeatOrNot =false;
     for (var i = 0; i < sharedEmail?.length; i++) {
+        if(event.target.sharingEmail.value == user?.email)
+        {
+          setUserEmail(true);
+        }
       if(event.target.sharingEmail.value ==sharedEmail[i])
       {
         repeatOrNot = true;
@@ -122,7 +127,10 @@ function Brand() {
     {
       let temp = sharedEmail;
       let email = event.target.sharingEmail.value
-      temp.push(email);
+      if(email != user?.email)
+      {
+        temp.push(email);
+      }
       setSharedEmail([...temp]);
       updateLogo();
     }
@@ -299,7 +307,10 @@ function Brand() {
                           <Form onSubmit={handleSubmit}>
 
                             <Modal.Body>
-
+                              {userEmail?<Form.Label>You cant share your company with you</Form.Label>:""}
+                              <br></br>
+                            {isRepeatingEmail? <Form.Label>Repetation value not allowed </Form.Label>:""}
+                           {isRepeatingEmail?<br></br>:""}
                               <Form.Label>Email address</Form.Label>
                               <Form.Control
                                 type="email"
@@ -309,11 +320,17 @@ function Brand() {
                               />
 
                               <ListGroup variant="flush">
-                                {sharedEmail?.map((email, index) => {
-                                  return(
-                                    <ListGroup.Item key={index}>{email}</ListGroup.Item>
-                                  )
-                                })}
+                              {sharedEmail.map((email, index) => {
+                              return (
+                                <div key={index}>
+                                  <h5>{email}
+                                  <Button onClick={()=>{
+                                    removeSharedEmail(index);
+                                  }}><BsFillTrashFill/></Button>
+                                  </h5>
+                                </div>
+                              );
+                            })}
                               </ListGroup>                              
                             </Modal.Body>
                             <Modal.Footer>
