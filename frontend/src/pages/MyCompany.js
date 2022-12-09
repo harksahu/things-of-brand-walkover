@@ -8,7 +8,8 @@ import "../utils/svginline.css";
 import "../scss/company.scss";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import ClipLoader from "react-spinners/ClipLoader";
-
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 function MyCompany() {
   const [company, setCompany] = useState();
   const [allData, setAllData] = useState();
@@ -18,7 +19,10 @@ function MyCompany() {
   const location = useLocation();
   const [loading,setLoading] = useState(false);
 
+  const [show, setShow] = useState(false);
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   useEffect(() => {
     setLoading(true);
 
@@ -82,23 +86,43 @@ function MyCompany() {
               </div>
             );
           })}
-          <Link to="/profile" className="add-new">
+          {/* <Link to="/editProfile" className="add-new"> */}
             <Card className="h-100 item-company">
               <Card.Body className="add-icon align-items-center d-flex justify-content-center">
                 <Card.Title className="text-center">
-                  <BsFillPlusCircleFill style={{ fontSize: 40 }} />
+                  <BsFillPlusCircleFill style={{ fontSize: 40 }} onClick={handleShow}/>
                 </Card.Title>                
               </Card.Body>
               <Card.Body>
-                <Card.Title>Add New Brand</Card.Title>
+               {/* <Button variant="primary" onClick={handleShow}>
+                  Add New Brand
+               </Button> */}
+               <Card.Title className="text-center">Add New Brand</Card.Title>
               </Card.Body>              
             </Card>
-          </Link>
+            {/* <Button variant="primary" onClick={handleShow}>
+       Add New Brand
+      </Button> */}
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+          {/* </Link> */}
         </div>
       </Container>
 
       <br></br>
-          
       <Container>
         <div className="separator center my-5">
           <span className="sep-txt">Shared Companies</span>

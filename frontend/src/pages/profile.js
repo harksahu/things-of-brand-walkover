@@ -223,7 +223,7 @@ function Profile(props) {
   const config = {
     buttons: ["bold", "italic"],
   };
-  const next = () => {
+    const next = () => {
     if (location.state?.data) {
      
       document.getElementById("name").classList.remove("visually-hidden");

@@ -81,8 +81,10 @@ function Brand() {
   const [loading, setLoading] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [isRepeatingEmail, setIsRepeatingEmail] = useState(false);
+  const [userEmail, setUserEmail] = useState(false);
   const handleClosee = () => 
   {
+    setUserEmail(false);
     setIsRepeatingEmail(false);
     setShoww(false);
   }
@@ -109,9 +111,14 @@ function Brand() {
   }
   const handleSubmit = (event) => {
     event.preventDefault();
+    setUserEmail(false);
     setIsRepeatingEmail(false);
     var repeatOrNot =false;
     for (var i = 0; i < sharedEmail?.length; i++) {
+        if(event.target.sharingEmail.value == user?.email||event.target.sharingEmail.value == email)
+        {
+          setUserEmail(true);
+        }
       if(event.target.sharingEmail.value ==sharedEmail[i])
       {
         repeatOrNot = true;
@@ -122,7 +129,10 @@ function Brand() {
     {
       let temp = sharedEmail;
       let email = event.target.sharingEmail.value
-      temp.push(email);
+      if(email != user?.email)
+      {
+        temp.push(email);
+      }
       setSharedEmail([...temp]);
       updateLogo();
     }
@@ -299,7 +309,10 @@ function Brand() {
                           <Form onSubmit={handleSubmit}>
 
                             <Modal.Body>
-
+                              {userEmail?<Form.Label>You cant share your company with you</Form.Label>:""}
+                              <br></br>
+                            {isRepeatingEmail? <Form.Label>Repetation value not allowed </Form.Label>:""}
+                           {isRepeatingEmail?<br></br>:""}
                               <Form.Label>Email address</Form.Label>
                               <Form.Control
                                 type="email"
@@ -362,7 +375,7 @@ function Brand() {
                 
                 </a>
                 {user ? (
-                  email === user.email ? (
+                 isShared == true|| email === user.email  ? (
                     verify === "true" ? (
                       <MdVerified />
                     ) : (
@@ -457,7 +470,7 @@ function Brand() {
                   })}
 
                   {user ? (
-                    email === user.email ? (
+                    email === user.email ||isShared == true? (
                       <Link to="/addfile" className="add-new" state={{domain:domain}}>
                         <Card className="h-100 item-company">
                           <Card.Body className="add-icon align-items-center d-flex justify-content-center">

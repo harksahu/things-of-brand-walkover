@@ -53,7 +53,7 @@ const Addfile = () => {
   const [ffresult, setResult] = useState();
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location.state.domain);
+  // console.log(location.state.domain);
   const [shareEmailDomainOption, setShareEmailDomainOption] = useState([]);
   const addTags = (event) => {
     if (event.key === "Enter" && event.target.value !== "") {

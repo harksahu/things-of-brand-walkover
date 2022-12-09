@@ -54,7 +54,7 @@ function App() {
               <Route path='/:title' element={<Brand />} />
               <Route path='/domainVerify' element={<DomainVerificationPage />} />
               <Route path='/editProfile' element={<Profile />} />
-              <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
+              <Route path="/addfile" element={<Addfile/>} />
               <Route path="/MyStuff" element={<Protected> <MyStuff /> </Protected>} />
               <Route path='/account' element={<Protected> <Account /> </Protected>} />
               <Route path='/MyCompanies' element={<Protected> <MyCompany /> </Protected>} />
