@@ -53,7 +53,7 @@ const Addfile = () => {
   const [ffresult, setResult] = useState();
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location.state.domain);  
+  console.log(location?.state?.domain);  
   const [shareEmailDomainOption,setShareEmailDomainOption] =useState(""); 
   // console.log(location.state.domain);  
   // const [logo, setLogo] = useState();
@@ -193,7 +193,7 @@ const Addfile = () => {
               >
                 <MdArrowBackIos />
               </Button>
-              Add a file to <strong>{location.state.domain}</strong>
+              Add a file to <strong>{location?.state?.domain}</strong>
             </a>
           </div>
         </nav>                

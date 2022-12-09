@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
 import Protected from './components/Protected';
+import DomainValidate from './components/DomainValidate';
 import { AuthContextProvider, UserAuth } from './context/AuthContext';
 import Account from './pages/Account';
 import Home from './pages/Home';
@@ -26,7 +27,7 @@ import { Switch } from '@mui/material';
 
 function App() {
   const [isUserLoaded, setIsUserLoaded] = useState(false);
-  const  location = useLocation()
+  const location = useLocation()
   useEffect(() => {
     fetchUser()
   }, [])
@@ -43,23 +44,24 @@ function App() {
           minBreakpoint="xxs"
         >
           <AuthContextProvider>
-          { window.location.pathname?(window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <NavigationBar />):<NavigationBar />}
+            {window.location.pathname ? (window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <NavigationBar />) : <NavigationBar />}
             <Routes>
-             
+
               <Route path='/' element={<Home />} />
               <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
               <Route path='/AllCompanies' element={<Search />} />
               <Route path='/searchlogo' element={<HomeLogo />} />
               <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />
-              <Route path='/:title' element={<Brand />} />
+              <Route path='/:title' element={<DomainValidate>
+                <Brand />
+              </DomainValidate>} />
+              <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
               <Route path='/domainVerify' element={<DomainVerificationPage />} />
               <Route path='/editProfile' element={<Profile />} />
-              <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
               <Route path="/MyStuff" element={<Protected> <MyStuff /> </Protected>} />
               <Route path='/account' element={<Protected> <Account /> </Protected>} />
               <Route path='/MyCompanies' element={<Protected> <MyCompany /> </Protected>} />
-              <Route path='/:title/json' element={<Protected> <ShowJson/></Protected>} />
-              <Route path='*' element={<PageNotFound/>}/>
+              <Route path='*' element={<PageNotFound />} />
             </Routes>
           </AuthContextProvider>
         </ThemeProvider>

@@ -253,6 +253,7 @@ function Profile(props) {
           .classList.remove("visually-hidden");
       } else if (check === 0) {
         var domainParts = domain.split(".");
+        console.log(domainParts);
         if (domain) {
           if (domainParts.length >= 2 && domainParts[1].length >= 1) {
             document.getElementById("name").classList.remove("visually-hidden");
