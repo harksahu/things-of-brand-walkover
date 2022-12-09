@@ -35,7 +35,7 @@ const getProfileDetails = async ({email="",domain="",name="",searchfrom="false",
   const description="";
   const id="";
   var data = await axios.get(URL + "/api/profile?email="+email+"&domain="+domain+"&name="+name+"&searchfrom="+searchfrom+"&_id="+_id);  
-  const logos = await axios.get(URL + "/api/search?title=" + title+"&email="+email+"&active="+active+"&description="+description+"&_id=" + id+ "&domain=" +data?.data?.data[0]._id);
+  // const logos = await axios.get(URL + "/api/search?title=" + title+"&email="+email+"&active="+active+"&description="+description+"&_id=" + id+ "&domain=" +data?.data?.data[0]._id);
   // data?.data?.data[0].push(logos?.data?.data)  
   return data
 }

@@ -180,6 +180,7 @@ function Brand() {
   const getbrandslogo = async () => {
     if (domain) {
       const data = await sendSearchAPI({ domain: id, active: 1 });
+      console.log(data?.data?.data);
       setDomainPost(data?.data?.data);
     }
   };
@@ -194,22 +195,25 @@ function Brand() {
     // setResults(fresult.data);
 
    
-    
-    setCompany(fresult.data.data[0]);
-    setId(fresult.data.data[0]._id);
-    setName(fresult.data.data[0].name);
-    setAboutus(fresult.data.data[0].aboutus);
-    setLinks(fresult.data.data[0].links);
-    setDomain(fresult.data.data[0].domain);
-    setGuidlines(fresult.data.data[0].guidlines);
-    setFontSize(fresult.data.data[0].fontSize);
-    setFontLink(fresult.data.data[0].fontLink);
-    setAllColor(fresult.data.data[0].color);
-    setlogo(fresult.data.data[0].logo);
-    setEmail(fresult.data.data[0].email);
-    setVerify(fresult.data.data[0].verify);
+    if(fresult?.data?.data){
+    setCompany(fresult?.data?.data[0]);
+    setId(fresult?.data?.data[0]._id);
+    setName(fresult?.data?.data[0].name);
+    setAboutus(fresult?.data?.data[0].aboutus);
+    setLinks(fresult?.data?.data[0].links);
+    setDomain(fresult?.data?.data[0].domain);
+    setGuidlines(fresult?.data?.data[0].guidlines);
+    setFontSize(fresult?.data?.data[0].fontSize);
+    setFontLink(fresult?.data?.data[0].fontLink);
+    setAllColor(fresult?.data?.data[0].color);
+    setlogo(fresult?.data?.data[0].logo);
+    setEmail(fresult?.data?.data[0].email);
+    setVerify(fresult?.data?.data[0].verify);
     setSharedEmail(fresult.data.data[0].sharedEmail);
-    
+    }else{
+      setLoading(false);
+
+    }
     isCompanyShared();
   };
   

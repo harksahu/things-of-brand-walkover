@@ -66,18 +66,18 @@ function Profile(props) {
   const [valid, setvalid] = useState([false]);
   const [valid2, setvalid2] = useState([false]);
   const [fontFamily, setFontFamily] = useState([false]);
-  const [sharedEmail,setSharedEmail]= useState();
+  const [sharedEmail, setSharedEmail] = useState();
   const [loading, setLoading] = useState(false);
-  
+
   const location = useLocation();
   let countTemp = countTracker;
   let countTemp2 = linkCount;
   var fresult;
   const navigate = useNavigate();
-  
-  
+
+
   const getbrandslogo = async () => {
-    
+
     if (domain && location.state?.data) {
       const data = await sendSearchAPI({ domain: id, active: 1 });
 
@@ -112,13 +112,13 @@ function Profile(props) {
     setId(location?.state?.data?._id);
     if (user) {
       if (user?.email) {
-      
+
         profileDetails();
         // setLoading(false)
         next();
       }
     }
-    
+
   }, [user]);
   useEffect(() => {
     fontlist();
@@ -158,8 +158,9 @@ function Profile(props) {
   const updateProfileValue = async (req, res) => {
     if (name) {
       if (aboutus) {
-       
+
         const data = {
+          id: id,
           logo: logo,
           name: name,
           aboutus: aboutus,
@@ -170,7 +171,7 @@ function Profile(props) {
           PrimaryColors: PrimaryColors,
           secondaryColors: secondaryColors,
           backgroundColors: backgroundColors,
-          sharedEmail:sharedEmail,
+          sharedEmail: sharedEmail,
           email: user?.email,
           color: color,
         };
@@ -225,7 +226,7 @@ function Profile(props) {
   };
   const next = () => {
     if (location.state?.data) {
-     
+
       document.getElementById("name").classList.remove("visually-hidden");
       document.getElementById("about").classList.remove("visually-hidden");
       document.getElementById("socialLinks").classList.remove("visually-hidden");
@@ -321,7 +322,7 @@ function Profile(props) {
   };
   return (
     <div className="bg-gray h-100">
-     
+
       <Container className="wrpr">
         <Row>
           <nav className="navbar bg-light">
@@ -365,141 +366,141 @@ function Profile(props) {
                         tabIndex={1}
                       />
                     </Form.Group>
-                    {DomainPost?
-                    <div className="grid">
-                      <h6>logos</h6>
-                      <div className="d-flex flex-wrap justify-content-center">
-                        {DomainPost?.map((brand, index) => {
-                          return (
-                            <div key={index}>
-                              <div key={brand._id} className=" flex-wrap item">
-                                <Card>
-                                  <Dropdown className="ms-auto">
-                                    <Dropdown.Toggle variant="light" size="sm">
-                                      <BsThreeDotsVertical />
-                                    </Dropdown.Toggle>
+                    {DomainPost ?
+                      <div className="grid">
+                        <h6>logos</h6>
+                        <div className="d-flex flex-wrap justify-content-center">
+                          {DomainPost?.map((brand, index) => {
+                            return (
+                              <div key={index}>
+                                <div key={brand._id} className=" flex-wrap item">
+                                  <Card>
+                                    <Dropdown className="ms-auto">
+                                      <Dropdown.Toggle variant="light" size="sm">
+                                        <BsThreeDotsVertical />
+                                      </Dropdown.Toggle>
 
-                                    <Dropdown.Menu>
-                                      <Dropdown.Item
-                                        onClick={() => {
-                                          setShow(true);
-                                        }}
+                                      <Dropdown.Menu>
+                                        <Dropdown.Item
+                                          onClick={() => {
+                                            setShow(true);
+                                          }}
+                                        >
+                                          Rename
+                                        </Dropdown.Item>
+                                        <Dropdown.Item
+                                          onClick={async () => {
+                                            await deleteMyStuffAPI(brand?._id);
+                                            // alert("Deleted");
+                                            // window.location.reload();
+                                            navigate(-1);
+                                          }}
+                                          variant="outline-secondary"
+                                          size="sm"
+                                        >
+                                          Delete
+                                        </Dropdown.Item>
+                                      </Dropdown.Menu>
+                                    </Dropdown>
+                                    <Link to={"/stuff/" + brand._id}>
+                                      <div
+                                        style={{ overflow: "auto" }}
+                                        className="img_size"
                                       >
-                                        Rename
-                                      </Dropdown.Item>
-                                      <Dropdown.Item
-                                        onClick={async () => {
-                                          await deleteMyStuffAPI(brand?._id);
-                                          // alert("Deleted");
-                                          // window.location.reload();
-                                          navigate(-1);
-                                        }}
-                                        variant="outline-secondary"
-                                        size="sm"
-                                      >
-                                        Delete
-                                      </Dropdown.Item>
-                                    </Dropdown.Menu>
-                                  </Dropdown>
-                                  <Link to={"/stuff/" + brand._id}>
-                                    <div
-                                      style={{ overflow: "auto" }}
-                                      className="img_size"
-                                    >
-                                      <SvgInline {...brand} />
-                                    </div>
+                                        <SvgInline {...brand} />
+                                      </div>
                                     </Link>
                                     <Card.Body>
                                       <Card.Title
                                         style={{ textDecoration: "none" }}
                                         className="text-center"
                                       >
-                                       
+
                                         <div>
-                      {show ? (
-                        <input
-                          id="userInputBox"
-                          onChange={(e) => {
-                            savedata(brand.title, e.target.value);
-                          }}
-                          value={brand.title}
-                          className="form-control form-control-sm"
-                          autoFocus
-                        />
-                      ) : (
-                        <div
-                          id="showname"
-                          onClick={() => {
-                            setShow(true);
-                          }}
-                        >
-                          {brand.title}
-                        </div>
-                      )}
-                    </div>
+                                          {show ? (
+                                            <input
+                                              id="userInputBox"
+                                              onChange={(e) => {
+                                                savedata(brand.title, e.target.value);
+                                              }}
+                                              value={brand.title}
+                                              className="form-control form-control-sm"
+                                              autoFocus
+                                            />
+                                          ) : (
+                                            <div
+                                              id="showname"
+                                              onClick={() => {
+                                                setShow(true);
+                                              }}
+                                            >
+                                              {brand.title}
+                                            </div>
+                                          )}
+                                        </div>
                                       </Card.Title>
                                     </Card.Body>
-                                 
-                                </Card>
-                                {user ? (
-                                  user.email === user.email ? (
-                                    logo === brand.url ? (
-                                      <Button
-                                        variant="light"
-                                        size="sm"
-                                        disabled
-                                      >
-                                        Default logo
-                                      </Button>
+
+                                  </Card>
+                                  {user ? (
+                                    user.email === user.email ? (
+                                      logo === brand.url ? (
+                                        <Button
+                                          variant="light"
+                                          size="sm"
+                                          disabled
+                                        >
+                                          Default logo
+                                        </Button>
+                                      ) : (
+                                        <Button
+                                          variant="light"
+                                          size="sm"
+                                          onClick={() => {
+                                            setLogo(brand.url);
+                                          }}
+                                        >
+                                          Make default
+                                        </Button>
+                                      )
                                     ) : (
-                                      <Button
-                                        variant="light"
-                                        size="sm"
-                                        onClick={() => {
-                                          setLogo(brand.url);
-                                        }}
-                                      >
-                                        Make default
-                                      </Button>
+                                      ""
                                     )
                                   ) : (
                                     ""
-                                  )
-                                ) : (
-                                  ""
-                                )}
+                                  )}
+                                </div>
                               </div>
-                            </div>
-                          );
-                        })}
+                            );
+                          })}
 
-                        {user ? (
-                          <Link
-                            to="/addfile"
-                            className="add-new item"
-                            state={{ domain: domain }}
-                          >
-                            <Card className="h-100 item-company">
-                              <Card.Body className="align-items-center card-body d-flex justify-content-center">
-                                <Card.Title className="text-center">
-                                  <BsFillPlusCircleFill
-                                    style={{ fontSize: 40 }}
-                                  />
-                                </Card.Title>
-                                <Card.Text></Card.Text>
-                              </Card.Body>
-                              <div className="card-footer">
-                                <Button variant="link" size="sm">
-                                  Add new Logo
-                                </Button>
-                              </div>
-                            </Card>
-                          </Link>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>:""}
+                          {user ? (
+                            <Link
+                              to="/addfile"
+                              className="add-new item"
+                              state={{ domain: domain }}
+                            >
+                              <Card className="h-100 item-company">
+                                <Card.Body className="align-items-center card-body d-flex justify-content-center">
+                                  <Card.Title className="text-center">
+                                    <BsFillPlusCircleFill
+                                      style={{ fontSize: 40 }}
+                                    />
+                                  </Card.Title>
+                                  <Card.Text></Card.Text>
+                                </Card.Body>
+                                <div className="card-footer">
+                                  <Button variant="link" size="sm">
+                                    Add new Logo
+                                  </Button>
+                                </div>
+                              </Card>
+                            </Link>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      </div> : ""}
                     <div
                       className="tags-input mb-3 visually-hidden"
                       id="socialLinks"
@@ -600,9 +601,9 @@ function Profile(props) {
                                   ).value = e.target.value;
                                 }}
                               />
-                              
+
                               <Form.Control
-                              
+
                                 type="color"
                                 name="user_input"
                                 style={{ width: "20%" }}
