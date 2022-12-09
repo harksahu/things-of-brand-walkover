@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { updateProfileFields, getTXT } from "../api/index.js";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
-import Button from "react-bootstrap/Button";
+import { Container, Button, InputGroup } from "react-bootstrap";
+import { MdArrowBackIos, MdContentCopy } from "react-icons/md";
 function DomainVerificationPage() {
   const [id, setId] = useState();
   const [name, setName] = useState();
@@ -18,6 +19,7 @@ function DomainVerificationPage() {
   const [company, setCompany] = useState([]);
   const [verify, setVerify] = useState();
   const location = useLocation();
+  const navigate = useNavigate();
 
   async function makeid(length) {
     var result = "";
@@ -100,44 +102,59 @@ function DomainVerificationPage() {
     makeid(15);
   }, []);
   return (
-    <>
-      <h1>Please verify domain {domain}</h1>
-
-      <ListGroup variant="flush">
-        <ListGroup.Item>Step 1: Get your verification code</ListGroup.Item>
-        <ListGroup.Item>Step 2: Sign in to your domain host</ListGroup.Item>
-        <ListGroup.Item>
-          Step 3: Add the verification record to your domain's DNS records
-        </ListGroup.Item>
-        <ListGroup.Item>
-          Step 4: Tell Thingsofbrand Workspace to check your verification code
-        </ListGroup.Item>
-        <ListGroup.Item
-          as="li"
-          className="d-flex justify-content-center align-items-start"
-        >
-          <div className="ms-2 me-auto">
-            <div className="fw-bold">verification code</div>
-            <div
-              style={{
-                border: "2px solid #d4d4d4",
-                backgroundColor: "#ececec",
+    <Container>
+      <nav className="navbar bg-light">
+        <div className="container-fluid">          
+          <a
+            className="navbar-brand"            
+          >
+            <Button
+              variant="outline-dark"
+              className="me-3"
+              onClick={() => {
+                navigate(-1);
               }}
             >
-              {verify}
-            </div>
-          </div>
+              <MdArrowBackIos />
+            </Button>
+            Please verify <strong>{domain}</strong>
+          </a>
+        </div>
+      </nav>      
+
+      <ListGroup variant="flush">
+        <ListGroup.Item>
+          <div>
+            Create a TXT record in your DNS configuration for hostname
+          </div>          
+          <InputGroup className="my-2">
+            <InputGroup.Text>thingsofbrand-domain-verification</InputGroup.Text>            
+            <InputGroup.Text><MdContentCopy/></InputGroup.Text>
+          </InputGroup>
         </ListGroup.Item>
-      </ListGroup>
-      <Button
-        variant="primary"
-        onClick={() => {
-          verifyDomain();
-        }}
-      >
-        verify
-      </Button>
-    </>
+        <ListGroup.Item>
+          <div>
+            Use this code for value of the TXT record
+          </div>
+          <InputGroup className="my-2">
+            <InputGroup.Text>{verify}</InputGroup.Text>            
+            <InputGroup.Text><MdContentCopy/> </InputGroup.Text>
+          </InputGroup>            
+        </ListGroup.Item>
+        <ListGroup.Item>This could take up to 24 hours to propagate, Wait until your DNS configuration changes then click verify</ListGroup.Item>
+        
+        <ListGroup.Item>
+          <Button
+            variant="primary"
+            onClick={() => {
+              verifyDomain();
+            }}
+          >
+            verify
+          </Button>
+        </ListGroup.Item>
+      </ListGroup>      
+    </Container>
   );
 }
 

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { createBrandAPI } from "../api";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
+import { MdArrowBackIos, MdContentCopy } from "react-icons/md";
 import {
   Card,
   Form,
@@ -49,6 +50,7 @@ const Addfile = () => {
   const [id, setId] = useState();
   const [ffresult, setResult] = useState();
   const location = useLocation();
+  const navigate = useNavigate();
   console.log(location.state.domain);  
   // const [logo, setLogo] = useState();
 
@@ -143,12 +145,27 @@ const Addfile = () => {
   }, [user]);
   return (
     <>
-      <Container fluid className="wrpr">
+      <Container className="wrpr">
         <Row>
-          <Col md={3} lg={2}>
-            <SideBar />
-          </Col>
-          <Col md={9} lg={10}>
+        <nav className="navbar bg-light">
+          <div className="container-fluid">          
+            <a
+              className="navbar-brand"            
+            >
+              <Button
+                variant="outline-dark"
+                className="me-3"
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
+                <MdArrowBackIos />
+              </Button>
+              Add a file to <strong>{location.state.domain}</strong>
+            </a>
+          </div>
+        </nav>                
+          <Col md={9} lg={10} className="mt-4">
             <Card style={{ width: "30rem" }}>
               <Card.Body>
                 <Stack gap={3}>
@@ -165,11 +182,8 @@ const Addfile = () => {
                           // <option value={location.state.domain} selected>
                           <option value={domainName.domain} key={index}>
                             {domainName.domain}
-                          </option>
-                        
+                          </option>                        
                         ))}
-                      
-                        
                     </Form.Select>
                   </FormGroup>
 
@@ -212,7 +226,7 @@ const Addfile = () => {
                       onKeyUp={(event) => addTags(event)}
                     />
                     <Form.Text className="text-muted">
-                      Press enter to add tags
+                      Press enter
                     </Form.Text>
                     <ul className="tags my-3">
                       {tags.map((tag, index) => (
