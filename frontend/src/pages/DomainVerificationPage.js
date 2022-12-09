@@ -4,6 +4,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Container, Button, InputGroup } from "react-bootstrap";
 import { MdArrowBackIos, MdContentCopy } from "react-icons/md";
+import { v4 as uuidv4 } from 'uuid';
+import ToastContainer from 'react-bootstrap/ToastContainer';
+import Toast from 'react-bootstrap/Toast';
 function DomainVerificationPage() {
   const [id, setId] = useState();
   const [name, setName] = useState();
@@ -18,22 +21,18 @@ function DomainVerificationPage() {
   const [fontLink, setFontLink] = useState([]);
   const [company, setCompany] = useState([]);
   const [verify, setVerify] = useState();
+  const [show, setShow] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-
-  async function makeid(length) {
-    var result = "";
-    var characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-
+  async function makeid() {
+    
+    var result = "thingsofbrand-domain-verification="+uuidv4();
     if (
       location?.state?.data?.verify == undefined ||
       location?.state?.data?.verify == null ||
-      location?.state?.data?.verify === "false"
+      location?.state?.data?.verify === "false" ||
+      !location?.state?.data?.verify.includes("thingsofbrand-domain-verification=") 
+
     ) {
       setVerify(result);
 
@@ -57,7 +56,12 @@ function DomainVerificationPage() {
       }
     }
     if (!ifVerify) {
-      document.getElementById("error").innerHTML = "not verify";
+      document.getElementById("msg").innerHTML = "not verify";
+      document.getElementById("msg").style.color = "red";
+    }
+    else{
+      document.getElementById("msg").innerHTML = "Verify Done";
+      document.getElementById("msg").style.color = "green";
     }
   };
 
@@ -99,14 +103,14 @@ function DomainVerificationPage() {
 
   useEffect(() => {
     Fetchdata();
-    makeid(15);
+    makeid();
   }, []);
   return (
     <Container>
       <nav className="navbar bg-light">
-        <div className="container-fluid">          
+        <div className="container-fluid">
           <a
-            className="navbar-brand"            
+            className="navbar-brand"
           >
             <Button
               variant="outline-dark"
@@ -120,29 +124,33 @@ function DomainVerificationPage() {
             Please verify <strong>{domain}</strong>
           </a>
         </div>
-      </nav>      
+      </nav>
 
       <ListGroup variant="flush">
         <ListGroup.Item>
           <div>
-            Create a TXT record in your DNS configuration for hostname
-          </div>          
-          <InputGroup className="my-2">
-            <InputGroup.Text>thingsofbrand-domain-verification</InputGroup.Text>            
-            <InputGroup.Text><MdContentCopy/></InputGroup.Text>
-          </InputGroup>
+          1. Sign in to your domain name provider (e.g. godaddy.com )
+          </div>
+          <br />
+          <div>
+          2. Copy the TXT record below into the DNS configuration for
+          </div>
+          {/* <InputGroup className="my-2">
+            <InputGroup.Text>thingsofbrand-domain-verification</InputGroup.Text>
+            <InputGroup.Text><MdContentCopy /></InputGroup.Text>
+          </InputGroup> */}
         </ListGroup.Item>
         <ListGroup.Item>
           <div>
             Use this code for value of the TXT record
           </div>
           <InputGroup className="my-2">
-            <InputGroup.Text>{verify}</InputGroup.Text>            
-            <InputGroup.Text><MdContentCopy/> </InputGroup.Text>
-          </InputGroup>            
+            <InputGroup.Text>{verify}</InputGroup.Text>
+            <InputGroup.Text  onClick={() => {navigator.clipboard.writeText(verify);setShow(true)}}><MdContentCopy /> </InputGroup.Text>
+          </InputGroup>
         </ListGroup.Item>
         <ListGroup.Item>This could take up to 24 hours to propagate, Wait until your DNS configuration changes then click verify</ListGroup.Item>
-        
+
         <ListGroup.Item>
           <Button
             variant="primary"
@@ -153,7 +161,16 @@ function DomainVerificationPage() {
             verify
           </Button>
         </ListGroup.Item>
-      </ListGroup>      
+        <div id="msg"></div>
+      </ListGroup>
+
+
+
+      <ToastContainer className="p-3" position='bottom-center'>
+        <Toast onClose={() => setShow(false)} show={show} delay={3000} style={{backgroundColor : "#c5c6d0"}} autohide>
+          <Toast.Body>Copy in clipboard!</Toast.Body>
+        </Toast>
+        </ToastContainer>
     </Container>
   );
 }

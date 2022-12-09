@@ -4,10 +4,10 @@ import { UserAuth } from '../context/AuthContext';
 
 const Protected = ({ children }) => {
   const { user } = UserAuth();
-  if (!user) {
+  if (!user ) {
+    
     return <Navigate to='/' />;
   }
-
   return children;
 };
 

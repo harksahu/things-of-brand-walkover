@@ -12,7 +12,8 @@ import {
   Figure,
   Button, 
   Modal,
-  ListGroup,  
+  ListGroup,
+  ToastContainer,Toast  
 } from "react-bootstrap";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../utils/svginline.css";
@@ -60,7 +61,7 @@ function Brand() {
   const [sharedEmail, setSharedEmail] = useState([]);
   const { user } = UserAuth();
   const [links, setLinks] = React.useState([]);
-  // const [results, setResults] = useState();
+  const [showCopy, setShowCopy] = useState(false);
   const [DomainPost, setDomainPost] = useState();
   const [verify, setVerify] = useState();
   const [show, setShow] = useState(false);
@@ -188,6 +189,7 @@ function Brand() {
   const getbrandslogo = async () => {
     if (domain) {
       const data = await sendSearchAPI({ domain: id, active: 1 });
+      console.log(data?.data?.data);
       setDomainPost(data?.data?.data);
     }
   };
@@ -202,22 +204,25 @@ function Brand() {
     // setResults(fresult.data);
 
    
-    
-    setCompany(fresult.data.data[0]);
-    setId(fresult.data.data[0]._id);
-    setName(fresult.data.data[0].name);
-    setAboutus(fresult.data.data[0].aboutus);
-    setLinks(fresult.data.data[0].links);
-    setDomain(fresult.data.data[0].domain);
-    setGuidlines(fresult.data.data[0].guidlines);
-    setFontSize(fresult.data.data[0].fontSize);
-    setFontLink(fresult.data.data[0].fontLink);
-    setAllColor(fresult.data.data[0].color);
-    setlogo(fresult.data.data[0].logo);
-    setEmail(fresult.data.data[0].email);
-    setVerify(fresult.data.data[0].verify);
+    if(fresult?.data?.data){
+    setCompany(fresult?.data?.data[0]);
+    setId(fresult?.data?.data[0]._id);
+    setName(fresult?.data?.data[0].name);
+    setAboutus(fresult?.data?.data[0].aboutus);
+    setLinks(fresult?.data?.data[0].links);
+    setDomain(fresult?.data?.data[0].domain);
+    setGuidlines(fresult?.data?.data[0].guidlines);
+    setFontSize(fresult?.data?.data[0].fontSize);
+    setFontLink(fresult?.data?.data[0].fontLink);
+    setAllColor(fresult?.data?.data[0].color);
+    setlogo(fresult?.data?.data[0].logo);
+    setEmail(fresult?.data?.data[0].email);
+    setVerify(fresult?.data?.data[0].verify);
     setSharedEmail(fresult.data.data[0].sharedEmail);
-    
+    }else{
+      setLoading(false);
+
+    }
     isCompanyShared();
   };
   
@@ -529,7 +534,8 @@ function Brand() {
                                       var tooltip = document.getElementById(
                                         "myTooltip" + index
                                       );
-                                      tooltip.innerHTML = "Copied: " + colorTemp;
+                                      setShowCopy(true)
+                                      // tooltip.innerHTML = "Copied: " + colorTemp;
                                     }}
                                     onMouseOut={() => {
                                       var tooltip =
@@ -586,8 +592,18 @@ function Brand() {
         ) : (
           <Not_found />
         )}
+
+
+
+
+      
       </Container>
  } 
+ <ToastContainer className="p-3">
+        <Toast onClose={() => setShow(false)} show={showCopy} delay={3000} style={{backgroundColor : "#c5c6d0"}} autohide>
+          <Toast.Body>Copy in clipboard!</Toast.Body>
+        </Toast>
+        </ToastContainer>
     </>
   );
 }

@@ -96,12 +96,13 @@ const updateProfile = async (req, res) => {
     let email = req.body.email;
     let verify = req.body.verify
     let link = req.body.links;
+    let id = req.body.id;
     let sharedEmail = req.body.sharedEmail ? req.body.sharedEmail : "";
     
     try {
         const data = await profileModel.updateMany(
             {
-                domain: domain
+                _id: id
             },
             {
                 $set: {
@@ -126,7 +127,7 @@ const updateProfile = async (req, res) => {
             "data": data
         }).status(200);
     } catch (error) {
-        
+        // console.log(error);
         res.send({
             message: "Some Error on Server",
             error

@@ -128,7 +128,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              {location.pathname === "/companies" ? (
+              {location.pathname === "/AllCompanies" ? (
                 <Form className="justify-content-center">
                   <Form.Control
                     type="search"
