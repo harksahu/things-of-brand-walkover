@@ -11,6 +11,8 @@ import {
 } from "react-bootstrap";
 
 import { UserAuth } from "../context/AuthContext";
+
+import ImageComponent from "../components/ImageComponent"
 import {
   getProfileDetails,
   updateProfileFields,
@@ -299,107 +301,108 @@ function Profile(props) {
                       <h6>logos</h6>
                       <div className="d-flex flex-wrap justify-content-center">
                         {DomainPost?.map((brand, index) => {
-                          return (
-                            <div key={index}>
-                              <div key={brand._id} className=" flex-wrap item">
-                                <Card>
-                                  <Dropdown className="ms-auto">
-                                    <Dropdown.Toggle variant="light" size="sm">
-                                      <BsThreeDotsVertical />
-                                    </Dropdown.Toggle>
+                          return (<ImageComponent brandData={brand}/>)
+                    //       return (
+                    //         <div key={index}>
+                    //           <div key={brand._id} className=" flex-wrap item">
+                    //             <Card>
+                    //               <Dropdown className="ms-auto">
+                    //                 <Dropdown.Toggle variant="light" size="sm">
+                    //                   <BsThreeDotsVertical />
+                    //                 </Dropdown.Toggle>
 
-                                    <Dropdown.Menu>
-                                      <Dropdown.Item
-                                        onClick={() => {
-                                          setShow(true);
-                                        }}
-                                      >
-                                        Rename
-                                      </Dropdown.Item>
-                                      <Dropdown.Item
-                                        onClick={async () => {
-                                          await deleteMyStuffAPI(brand?._id);
-                                          // alert("Deleted");
-                                          // window.location.reload();
-                                          navigate(-1);
-                                        }}
-                                        variant="outline-secondary"
-                                        size="sm"
-                                      >
-                                        Delete
-                                      </Dropdown.Item>
-                                    </Dropdown.Menu>
-                                  </Dropdown>
-                                  <Link to={"/stuff/" + brand._id}>
-                                    <div
-                                      style={{ overflow: "auto" }}
-                                      className="img_size"
-                                    >
-                                      <SvgInline {...brand} />
-                                    </div>
-                                    </Link>
-                                    <Card.Body>
-                                      <Card.Title
-                                        style={{ textDecoration: "none" }}
-                                        className="text-center"
-                                      >
+                    //                 <Dropdown.Menu>
+                    //                   <Dropdown.Item
+                    //                     onClick={() => {
+                    //                       setShow(true);
+                    //                     }}
+                    //                   >
+                    //                     Rename
+                    //                   </Dropdown.Item>
+                    //                   <Dropdown.Item
+                    //                     onClick={async () => {
+                    //                       await deleteMyStuffAPI(brand?._id);
+                    //                       // alert("Deleted");
+                    //                       // window.location.reload();
+                    //                       navigate(-1);
+                    //                     }}
+                    //                     variant="outline-secondary"
+                    //                     size="sm"
+                    //                   >
+                    //                     Delete
+                    //                   </Dropdown.Item>
+                    //                 </Dropdown.Menu>
+                    //               </Dropdown>
+                    //               <Link to={"/stuff/" + brand._id}>
+                    //                 <div
+                    //                   style={{ overflow: "auto" }}
+                    //                   className="img_size"
+                    //                 >
+                    //                   <SvgInline {...brand} />
+                    //                 </div>
+                    //                 </Link>
+                    //                 <Card.Body>
+                    //                   <Card.Title
+                    //                     style={{ textDecoration: "none" }}
+                    //                     className="text-center"
+                    //                   >
                                        
-                                        <div>
-                      {show ? (
-                        <input
-                          id="userInputBox"
-                          onChange={(e) => {
-                            savedata(brand.title, e.target.value);
-                          }}
-                          value={brand.title}
-                          className="form-control form-control-sm"
-                          autoFocus
-                        />
-                      ) : (
-                        <div
-                          id="showname"
-                          onClick={() => {
-                            setShow(true);
-                          }}
-                        >
-                          {brand.title}
-                        </div>
-                      )}
-                    </div>
-                                      </Card.Title>
-                                    </Card.Body>
+                    //                     <div>
+                    //   {show ? (
+                    //     <input
+                    //       id="userInputBox"
+                    //       onChange={(e) => {
+                    //         savedata(brand.title, e.target.value);
+                    //       }}
+                    //       value={brand.title}
+                    //       className="form-control form-control-sm"
+                    //       autoFocus
+                    //     />
+                    //   ) : (
+                    //     <div
+                    //       id="showname"
+                    //       onClick={() => {
+                    //         setShow(true);
+                    //       }}
+                    //     >
+                    //       {brand.title}
+                    //     </div>
+                    //   )}
+                    // </div>
+                    //                   </Card.Title>
+                    //                 </Card.Body>
                                  
-                                </Card>
-                                {user ? (
-                                  user.email === user.email ? (
-                                    logo === brand.url ? (
-                                      <Button
-                                        variant="light"
-                                        size="sm"
-                                        disabled
-                                      >
-                                        Default logo
-                                      </Button>
-                                    ) : (
-                                      <Button
-                                        variant="light"
-                                        size="sm"
-                                        onClick={() => {
-                                          setLogo(brand.url);
-                                        }}
-                                      >
-                                        Make default
-                                      </Button>
-                                    )
-                                  ) : (
-                                    ""
-                                  )
-                                ) : (
-                                  ""
-                                )}
-                              </div>
-                            </div>
-                          );
+                    //             </Card>
+                    //             {user ? (
+                    //               user.email === user.email ? (
+                    //                 logo === brand.url ? (
+                    //                   <Button
+                    //                     variant="light"
+                    //                     size="sm"
+                    //                     disabled
+                    //                   >
+                    //                     Default logo
+                    //                   </Button>
+                    //                 ) : (
+                    //                   <Button
+                    //                     variant="light"
+                    //                     size="sm"
+                    //                     onClick={() => {
+                    //                       setLogo(brand.url);
+                    //                     }}
+                    //                   >
+                    //                     Make default
+                    //                   </Button>
+                    //                 )
+                    //               ) : (
+                    //                 ""
+                    //               )
+                    //             ) : (
+                    //               ""
+                    //             )}
+                    //           </div>
+                    //         </div>
+                    //       );
                         })}
 
                         {user ? (
