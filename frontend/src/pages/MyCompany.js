@@ -87,24 +87,18 @@ function MyCompany() {
             );
           })}
           {/* <Link to="/editProfile" className="add-new"> */}
-            <Card className="h-100 item-company">
+            <Card className="h-100 item-company" onClick={handleShow}>
               <Card.Body className="add-icon align-items-center d-flex justify-content-center">
                 <Card.Title className="text-center">
-                  <BsFillPlusCircleFill style={{ fontSize: 40 }} onClick={handleShow}/>
+                  <BsFillPlusCircleFill style={{ fontSize: 40 }} />
                 </Card.Title>                
               </Card.Body>
               <Card.Body>
-               {/* <Button variant="primary" onClick={handleShow}>
-                  Add New Brand
-               </Button> */}
                <Card.Title className="text-center">Add New Brand</Card.Title>
               </Card.Body>              
             </Card>
-            {/* <Button variant="primary" onClick={handleShow}>
-       Add New Brand
-      </Button> */}
 
-      <Modal show={show} onHide={handleClose}>
+          <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
@@ -118,7 +112,6 @@ function MyCompany() {
           </Button>
         </Modal.Footer>
       </Modal>
-          {/* </Link> */}
         </div>
       </Container>
 
