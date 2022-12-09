@@ -95,14 +95,14 @@ function MyCompany() {
             </Card>
           </Link>
         </div>
-      </Container>              
+      </Container>
 
       <br></br>
-      <h1>Shared Companies</h1>
-          {showSharedCompanies?"":"No shared Companies with you"}
+          
       <Container>
         <div className="separator center my-5">
           <span className="sep-txt">Shared Companies</span>
+          {showSharedCompanies?"":"No shared Companies with you"}
         </div>
         <div className="grid">
           {allData?.map((Company) => {

@@ -92,7 +92,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
-      navigate("/company");
+      navigate("/MyCompanies");
     } catch (error) {
       console.log(error);
     }
@@ -128,7 +128,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              {location.pathname === "/search" ? (
+              {location.pathname === "/companies" ? (
                 <Form className="justify-content-center">
                   <Form.Control
                     type="search"
@@ -204,7 +204,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
               >
                 <NavDropdown.Item
                   onClick={() => {
-                    navigate("/company");
+                    navigate("/MyCompanies");
                   }}
                 >
                   My Brands
@@ -212,7 +212,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
 
                 <NavDropdown.Item
                   onClick={() => {
-                    navigate("/search");
+                    navigate("/AllCompanies");
                   }}
                 >
                   Explore other brands
