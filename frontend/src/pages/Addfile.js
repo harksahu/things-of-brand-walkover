@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { createBrandAPI } from "../api";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
+import { MdArrowBackIos, MdContentCopy } from "react-icons/md";
 import Home from "./Home"
 import {
   Card,
@@ -51,8 +52,10 @@ const Addfile = () => {
   const [domainToSelect, setDomainToSelect] = useState("");
   const [ffresult, setResult] = useState();
   const location = useLocation();
+  const navigate = useNavigate();
+  console.log(location.state.domain);  
   const [shareEmailDomainOption,setShareEmailDomainOption] =useState(""); 
-   
+  // console.log(location.state.domain);  
   // const [logo, setLogo] = useState();
 
   const addTags = (event) => {
@@ -70,7 +73,9 @@ const Addfile = () => {
        {
         if(shareddEmail?.data?.data[i]?.sharedEmail[j] == user.email)
         {
-         
+          // console.log("entered in loop");
+          // console.log("user.email",user.email);
+          // console.log(shareddEmail?.data?.data[i]);
           setShareEmailDomainOption(shareddEmail?.data?.data[i]?.domain);
         }
        }
@@ -115,7 +120,7 @@ const Addfile = () => {
               email: user.email,
               domain: domain,
             });
-           
+            console.log("result",result);
             const a = await createBrandAPI({
               url: imageUrl,
               title,
@@ -123,7 +128,8 @@ const Addfile = () => {
               email: user?.email,
               domain: result.data.data[0]._id,
             });
-           
+            console.log("a");
+            console.log(a);
             var logo;
             var i;
             for (i = 0; i < ffresult.length; i++) {
@@ -171,12 +177,27 @@ const Addfile = () => {
   return (
     <>
     {user?
-      <Container fluid className="wrpr">
+      <Container  className="wrpr">
         <Row>
-          <Col md={3} lg={2}>
-            <SideBar />
-          </Col>
-          <Col md={9} lg={10}>
+        <nav className="navbar bg-light">
+          <div className="container-fluid">          
+            <a
+              className="navbar-brand"            
+            >
+              <Button
+                variant="outline-dark"
+                className="me-3"
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
+                <MdArrowBackIos />
+              </Button>
+              Add a file to <strong>{location.state.domain}</strong>
+            </a>
+          </div>
+        </nav>                
+          <Col md={9} lg={10} className="mt-4">
             <Card style={{ width: "30rem" }}>
               <Card.Body>
                 <Stack gap={3}>
@@ -186,7 +207,7 @@ const Addfile = () => {
                       aria-label="Default select example"
                       onChange={(e) => {
                         setDomain(e.target.value);
-                      
+                        {console.log("domain seted"+e.target.value)}
                       }}
                       >
                       
@@ -251,7 +272,7 @@ const Addfile = () => {
                       onKeyUp={(event) => addTags(event)}
                     />
                     <Form.Text className="text-muted">
-                      Press enter to add tags
+                      Press enter
                     </Form.Text>
                     <ul className="tags my-3">
                       {tags.map((tag, index) => (

@@ -31,8 +31,7 @@
     min-width: 200px;
     background-color: #ccc;
 }
-.popup_img .svgInline{
-    background-image: url("../constants/grid.png");    
+.popup_img .svgInline{    
     height: 100vh;
     overflow: auto;
 }

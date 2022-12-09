@@ -11,12 +11,13 @@
         }
     }
 }
-.tooltip1 {
+.icon-copy {
     position: relative;
     display: inline-block;
+    cursor: pointer;
   }
   
-  .tooltip1 .tooltiptext {
+  .icon-copy .tooltiptext {
     visibility: hidden;
     width: 140px;
     background-color: #555;
@@ -33,7 +34,7 @@
     transition: opacity 0.3s;
   }
   
-  .tooltip1 .tooltiptext::after {
+  .icon-copy .tooltiptext::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -44,7 +45,7 @@
     border-color: #555 transparent transparent transparent;
   }
   
-  .tooltip1:hover .tooltiptext {
+  .icon-copy:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
   }
