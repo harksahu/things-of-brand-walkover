@@ -170,6 +170,7 @@ function Brand() {
 
   const updateVerify = async (result) => {
     const data = {
+      _id:id,
       name: name,
       aboutus: aboutus,
       logo: logo,
@@ -240,6 +241,7 @@ function Brand() {
 
   const updateLogo = async (logo_url) => {
     const data = {
+      _id:id,
       name: name,
       aboutus: aboutus,
       logo: logo_url,

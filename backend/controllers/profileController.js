@@ -87,7 +87,7 @@ const getProfileDetails = async (req, res) => {
 }
 
 const updateProfile = async (req, res) => {
-
+    
     let { name, aboutus ,fontLink} = req.body
     let logo = req.body.logo;
     let links = req.body.links;
@@ -97,9 +97,9 @@ const updateProfile = async (req, res) => {
     let email = req.body.email;
     let verify = req.body.verify
     let link = req.body.links;
-    let id = req.body.id;
+    let id = req.body._id;
     let sharedEmail = req.body.sharedEmail ? req.body.sharedEmail : "";
-    
+    console.log("shared email",id)
     try {
         const data = await profileModel.updateMany(
             {

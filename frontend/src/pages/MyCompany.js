@@ -103,6 +103,7 @@ function MyCompany() {
     var shareddEmail = await getProfileDetails({});
 
     setAllData(shareddEmail.data.data);
+    console.log("ans",shareddEmail.data.data);
   };
   const profileDetails = async (req, res) => {
     fresult = await getProfileDetails({ email: user.email });
@@ -112,7 +113,6 @@ function MyCompany() {
     // } else {
     //   navigate("/editProfile");
     // }
-    console.log("ans",fresult);
   };
 
   return (
@@ -223,6 +223,8 @@ function MyCompany() {
                   >
                     {Company?.sharedEmail?.map((sharedEmail, index) => {
                       return (
+                        <>
+                      
                         <div key={index}>
                           {sharedEmail == user.email ? (
                             <Link to={"/" + Company.domain}>
@@ -256,6 +258,8 @@ function MyCompany() {
                             ""
                           )}
                         </div>
+                    
+                        </>
                       );
                     })}
                   </div>
