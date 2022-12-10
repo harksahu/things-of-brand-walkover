@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
-import { getProfileDetails, createProfile } from "../api/Index.js";
+import { getProfileDetails, createProfile } from "../api/index.js";
 import { Container, Row, Col, Form, Card } from "react-bootstrap";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import SvgInline from "../utils/SvgInline.js";

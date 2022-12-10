@@ -13,7 +13,7 @@ import { useLocation } from "react-router-dom";
 import { searchBrand, clearSearchBrand } from "../store/actions/search-brands";
 import { connect } from "react-redux";
 import Card from "react-bootstrap/Card";
-import { getProfileDetails, sendSearchAPI } from "../api/Index.js";
+import { getProfileDetails, sendSearchAPI } from "../api/index.js";
 import { BsArrowReturnRight } from "react-icons/bs";
 
 function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {

@@ -24,7 +24,7 @@ import {
   sendSearchAPI,
   updateProfileFields,
   getTXT,
-} from "../api/Index.js";
+} from "../api/index.js";
 import saveAs from "file-saver";
 import SvgInline from "../utils/SvgInline.js";
 import {

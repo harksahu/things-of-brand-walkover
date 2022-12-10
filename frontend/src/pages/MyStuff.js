@@ -4,7 +4,7 @@ import { Card, Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import SvgInline from "../utils/SvgInline.js";
 import "../utils/svginline.css";
-import { sendSearchAPI } from "../api/Index.js";
+import { sendSearchAPI } from "../api/index.js";
 import { AiFillPlusCircle } from "react-icons/ai";
 import SideBar from "../components/SideBar";
 import ClipLoader from "react-spinners/ClipLoader";
