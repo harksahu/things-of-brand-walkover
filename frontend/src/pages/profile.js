@@ -14,6 +14,7 @@ import { UserAuth } from "../context/AuthContext";
 import {
   getProfileDetails,
   updateProfileFields,
+  getCompanyDetails,
   getFontList,
   createProfile,
   deleteMyStuffAPI,
@@ -78,13 +79,13 @@ function Profile(props) {
 
 
   const getbrandslogo = async () => {
-
+    console.log("locatiom",location.state.data)
     if (domain && location.state?.data) {
       const data = await sendSearchAPI({ domain: id });
 
       setDomainPost(data?.data?.data);
+      // console.log("domain ",data );
       }
-      console.log("domain ",domain );
       console.log("id ",id );
 
      
@@ -115,12 +116,14 @@ function Profile(props) {
   };
   useEffect(() => {
     // setLoading(true);
-    setId(location?.state?.data?._id);
+    
+    console.log("useEffect",location?.state?.data)
     if (user) {
       if (user?.email) {
 
         profileDetails();
-        checkIfDomain();
+        
+        // checkIfDomain();
       }
     }
 
@@ -132,6 +135,7 @@ function Profile(props) {
     }
   }, [domain]);
   const updateProfileValue = async (req, res) => {
+    // console.log("idd",domain)
     if (name) {
       if (aboutus) {
 
@@ -161,22 +165,26 @@ function Profile(props) {
     }
   };
   const profileDetails = async (req, res) => {
-    fresult = await getProfileDetails({});
-    setResults(fresult.data.data);
+    console.log("domain hsdbjsd",location?.state?.data?.domain)
+    fresult = await getProfileDetails({domain:location?.state?.data?.domain});
+    // const ans =  await getCompanyDetails(id)
+    // setResults(ans.data.data);
+    console.log("fresult",fresult);
     if (location.state?.data != null) {
-      setName(location.state.data.name);
-      setAboutus(location.state.data.aboutus);
-      setLinks(location.state.data.links);
-      setDomain(location.state.data.domain);
-      setGuidlines(location.state.data.guidlines);
-      setFontSize(location.state.data.fontSize);
-      setPrimaryColors(location.state.data.PrimaryColors);
-      setSecondaryColors(location.state.data.secondaryColors);
-      setBackgroundColors(location.state.data.backgroundColors);
-      setSharedEmail(location.state.data.sharedEmail);
-      setFontLink(location.state.data.fontLink);
-      setcount(location.state.data.color);
-      setLogo(location.state.data.logo);
+      setId(location?.state?.data?._id);
+      setName(location?.state?.data?.name);
+      setAboutus(location?.state?.data?.aboutus);
+      setLinks(location?.state?.data?.links);
+      setDomain(location?.state?.data?.domain);
+      setGuidlines(location?.state?.data?.guidlines);
+      setFontSize(location?.state?.data?.fontSize);
+      setPrimaryColors(location?.state?.data?.PrimaryColors);
+      setSecondaryColors(location?.state?.data?.secondaryColors);
+      setBackgroundColors(location?.state?.data?.backgroundColors);
+      setSharedEmail(location?.state?.data?.sharedEmail);
+      setFontLink(location?.state?.data?.fontLink);
+      setcount(location?.state?.data?.color);
+      setLogo(location?.state?.data?.logo);
     }
     if (location.state?.data) {
       getbrandslogo();
@@ -200,15 +208,16 @@ function Profile(props) {
   const config = {
     buttons: ["bold", "italic"],
   };
-    const checkIfDomain = () => {
+  //   const checkIfDomain = () => {
 
-    if (location.state?.data  ) {
-     setDomain(location.state?.data);
-    } 
-    else{
-      // navigate("companies/new")
-    }
-  };
+  //   if (location.state?.data  ) {
+
+  //    setDomain(location.state?.data?.domain);
+  //   } 
+  //   else{
+  //     // navigate("companies/new")
+  //   }
+  // };
   const checkDomain = (datta) => {
     for (let i = 0; i < profiledata?.data?.data?.length; i++) {
       if (datta == profiledata?.data?.data[i].domain) {

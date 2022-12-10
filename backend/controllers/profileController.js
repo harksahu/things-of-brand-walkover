@@ -69,6 +69,7 @@ const getProfileDetails = async (req, res) => {
                 // $or: [{ ...domain }, { ...name }],
                 ...domain,
                 ...email,
+                ..._id
 
             });
             res.json({

@@ -65,6 +65,7 @@ function MyCompany() {
             console.log("data",data);
             alert("successfully saved domain " + d);
             navigate("/editProfile",{state:{data:domain}})
+            console.log("domain",domain);
           } catch (err) {
             console.log(err);
             alert("Profile is not created");
@@ -107,10 +108,11 @@ function MyCompany() {
     fresult = await getProfileDetails({ email: user.email });
     setCompany(fresult.data.data);
 
-    if (Array.isArray(fresult.data.data) && fresult.data.data.length) {
-    } else {
-      navigate("/editProfile");
-    }
+    // if (Array.isArray(fresult.data.data) && fresult.data.data.length) {
+    // } else {
+    //   navigate("/editProfile");
+    // }
+    console.log("ans",fresult);
   };
 
   return (
@@ -148,6 +150,7 @@ function MyCompany() {
                 );
               })}
               {/* <Link to="/editProfile" className="add-new"> */}
+              {/* <Link to="/addBrand"> */}
               <Card className="h-100 item-company" onClick={handleShow}>
                 <Card.Body className="add-icon align-items-center d-flex justify-content-center">
                   <Card.Title className="text-center">
@@ -158,7 +161,9 @@ function MyCompany() {
                   <Card.Title className="text-center">Add New Brand</Card.Title>
                 </Card.Body>
               </Card>
+              {/* </Link> */}
 
+             
               <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                   <Modal.Title>Create Your Brand</Modal.Title>
@@ -198,6 +203,8 @@ function MyCompany() {
                   </Form.Group>
                 </Modal.Body>
               </Modal>
+
+
             </div>
           </Container>
 
