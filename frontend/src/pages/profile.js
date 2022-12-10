@@ -51,7 +51,6 @@ function Profile(props) {
   const [backgroundColors, setBackgroundColors] = useState("");
   const { user } = UserAuth();
   const [links, setLinks] = React.useState([]);
-  const [results, setResults] = useState("");
   const [company, setCompany] = useState("");
   const [profiledata, setProfile] = useState("");
   const [check, setCheck] = useState(true);
@@ -79,17 +78,17 @@ function Profile(props) {
 
 
   const getbrandslogo = async () => {
-    console.log("locatiom",location.state.data)
+    console.log("locatiom", location.state.data)
     if (domain && location.state?.data) {
       const data = await sendSearchAPI({ domain: id });
 
       setDomainPost(data?.data?.data);
       // console.log("domain ",data );
-      }
-      console.log("id ",id );
-
-     
     }
+    console.log("id ", id);
+
+
+  }
 
   const addLinks = (event) => {
     if (event.key === "Enter" && event.target.value !== "") {
@@ -116,13 +115,13 @@ function Profile(props) {
   };
   useEffect(() => {
     // setLoading(true);
-    
-    console.log("useEffect",location?.state?.data)
+
+    console.log("useEffect", location?.state?.data)
     if (user) {
       if (user?.email) {
 
         profileDetails();
-        
+
         // checkIfDomain();
       }
     }
@@ -140,7 +139,7 @@ function Profile(props) {
       if (aboutus) {
 
         const data = {
-          id: id,
+          _id: id,
           logo: logo,
           name: name,
           aboutus: aboutus,
@@ -165,11 +164,11 @@ function Profile(props) {
     }
   };
   const profileDetails = async (req, res) => {
-    console.log("domain hsdbjsd",location?.state?.data?.domain)
-    fresult = await getProfileDetails({domain:location?.state?.data?.domain});
+    console.log("domain hsdbjsd", location?.state?.data?.domain)
+    fresult = await getProfileDetails({ domain: location?.state?.data?.domain });
     // const ans =  await getCompanyDetails(id)
     // setResults(ans.data.data);
-    console.log("fresult",fresult);
+    console.log("fresult", fresult);
     if (location.state?.data != null) {
       setId(location?.state?.data?._id);
       setName(location?.state?.data?.name);
@@ -190,34 +189,10 @@ function Profile(props) {
       getbrandslogo();
     }
   };
-  // function extractDomain(url) {
-  //   var domainName;
-  //   if (url.indexOf("://") > -1) {
-  //     domainName = url.split("/")[2];
-  //   } else {
-  //     domainName = url.split("/")[0];
-  //   }
-  //   //find & remove www
-  //   if (domainName.indexOf("www.") > -1) {
-  //     domainName = domainName.split("www.")[1];
-  //   }
-  //   domainName = domainName.split(":")[0];
-  //   domainName = domainName.split("?")[0];
-  //   return domainName;
-  // }
+
   const config = {
     buttons: ["bold", "italic"],
   };
-  //   const checkIfDomain = () => {
-
-  //   if (location.state?.data  ) {
-
-  //    setDomain(location.state?.data?.domain);
-  //   } 
-  //   else{
-  //     // navigate("companies/new")
-  //   }
-  // };
   const checkDomain = (datta) => {
     for (let i = 0; i < profiledata?.data?.data?.length; i++) {
       if (datta == profiledata?.data?.data[i].domain) {
@@ -345,7 +320,13 @@ function Profile(props) {
                                         style={{ overflow: "auto" }}
                                         className="img_size"
                                       >
-                                        <SvgInline {...brand} />
+                                        {
+
+                                          brand.url !== undefined && brand.url !== "null"
+                                            ? <img src={brand.url} alt="" />
+                                            : <img src="/assets/picture.svg" alt="" />
+
+                                        }
                                       </div>
                                     </Link>
                                     <Card.Body>
@@ -402,16 +383,16 @@ function Profile(props) {
                                           Make default
                                         </Button>
                                       )
-                                      
+
                                     ) : (
                                       ""
                                     )
                                   ) : (
                                     ""
                                   )
-                                  
-                                  
-                                  
+
+
+
                                   }
                                 </div>
                                 <div>
@@ -420,30 +401,29 @@ function Profile(props) {
 
                                       brand.active ? (
                                         <Button
-                                        variant="light"
-                                        size="sm"
-                                        onClick={async () => {
-                                          await deleteMyStuffAPI(brand?._id);
-                                          // alert("Deleted");
-                                          // window.location.reload();
-                                          navigate(-1);
-                                        }}
-                                      >
-                                        Delete
-                                      </Button>
+                                          variant="light"
+                                          size="sm"
+                                          onClick={async () => {
+                                            await deleteMyStuffAPI(brand?._id);
+
+                                            navigate(-1);
+                                          }}
+                                        >
+                                          Delete
+                                        </Button>
                                       ) : (
                                         <Button
-                                        variant="light"
-                                        size="sm"
-                                        onClick={async () => {
-                                          await restoreMyStuffAPI(brand?._id);
-                                          // alert("restore")
-                                          navigate(-1);
-                                        }}
+                                          variant="light"
+                                          size="sm"
+                                          onClick={async () => {
+                                            await restoreMyStuffAPI(brand?._id);
 
-                                      >
-                                        Restore
-                                      </Button>
+                                            navigate(-1);
+                                          }}
+
+                                        >
+                                          Restore
+                                        </Button>
                                       )
 
                                     )
@@ -517,9 +497,7 @@ function Profile(props) {
                         name="myBrowser"
                         id="domain"
                         onChange={(e) => {
-                          // setDomain(extractDomain(e.target.value));
                           setDomain(e.target.value);
-                          // checkDomain(e.target.value);
                         }}
                         value={domain}
                       />
@@ -546,7 +524,7 @@ function Profile(props) {
                       />
                     </Form.Group>
                     <div
-                        className="hide formbold-chatbox-form"
+                      className="hide formbold-chatbox-form"
                       id="list"
                     >
                       <Form.Group className="mb-3">
@@ -759,5 +737,5 @@ New
 
     </div>
   );
-          }
+}
 export default Profile;

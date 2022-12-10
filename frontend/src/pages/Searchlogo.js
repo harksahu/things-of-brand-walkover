@@ -40,7 +40,13 @@ function HomeLogo({ searchBrandData = [], getSearchBrand }) {
                 <Link to={"/stuff/" + brand._id}>
                   <Card>
                     <div style={{ overflow: "auto" }} className="img_size">
-                      <SvgInline url={brand.url} />
+                      {
+
+                        brand.url !== undefined && brand.url !== "null"
+                          ? <img src={brand.url} alt="" />
+                          : <img src="/assets/picture.svg" alt="" />
+
+                      }
                     </div>
 
                     <Card.Body>

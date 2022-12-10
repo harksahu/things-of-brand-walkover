@@ -9,7 +9,7 @@ const connectDB = async ()=>{
         })
         // console.log(`CONNECT TO M_DB ${conn.connection.host}`);
     } catch (error) {
-        // console.log(`ERROR:- ${error}`);
+        console.log(`ERROR:- ${error}`);
     }
 }
 
