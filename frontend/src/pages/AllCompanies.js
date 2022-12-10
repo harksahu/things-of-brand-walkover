@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { searchBrand } from "../store/actions/search-brands";
 import Figure from "react-bootstrap/Figure";
 import SvgInline from "../utils/SvgInline.js";
-import { getProfileDetails } from "../api/index.js";
+import { getProfileDetails } from "../api/Index.js";
 import { async } from "@firebase/util";
 import Pagination from "./Pagination";
 import ReactPaginate from "react-paginate";

@@ -24,7 +24,7 @@ import {
   sendSearchAPI,
   updateProfileFields,
   getTXT,
-} from "../api/index.js";
+} from "../api/Index.js";
 import saveAs from "file-saver";
 import SvgInline from "../utils/SvgInline.js";
 import {
@@ -133,12 +133,12 @@ function Brand() {
   };
 
   const DownloadToSvg = async (svg, fileName) => {
-    var svg = document.querySelector("svg");
-    var xml = new XMLSerializer().serializeToString(svg);
-    var svg64 = btoa(xml); //for utf8: btoa(unescape(encodeURIComponent(xml)))
-    var b64start = "data:image/svg+xml;base64,";
-    var image64 = b64start + svg64;
-    saveAs(image64, fileName);
+    // var svg = document.querySelector("svg");
+    // var xml = new XMLSerializer().serializeToString(svg);
+    // var svg64 = btoa(xml); //for utf8: btoa(unescape(encodeURIComponent(xml)))
+    // var b64start = "data:image/svg+xml;base64,";
+    // var image64 = b64start + svg64;
+    saveAs(svg, fileName);
   };
   const DownloadToPng = async (img, w, h) => {
     const preset = presets.offscreen();

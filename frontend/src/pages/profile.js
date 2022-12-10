@@ -21,10 +21,10 @@ import {
   restoreMyStuffAPI,
   saveMyStuffAPI,
   sendSearchAPI,
-} from "../api/index.js";
+} from "../api/Index.js";
 import CloseIcon from "@mui/icons-material/Close";
 import { BsFillPlusCircleFill, BsThreeDotsVertical } from "react-icons/bs";
-import RichtextEditor from "./jodit.js";
+import RichtextEditor from "./Jodit.js";
 import { BsFillTrashFill, BsChevronLeft } from "react-icons/bs";
 import { MdArrowBackIos } from "react-icons/md";
 import { useLocation, Link, useNavigate } from "react-router-dom";
@@ -315,7 +315,7 @@ function Profile(props) {
                                         </Dropdown.Item>
                                       </Dropdown.Menu>
                                     </Dropdown> */}
-                                    <Link to={"/stuff/" + brand._id}>
+                                    <Link to={"/Stuff/" + brand._id}>
                                       <div
                                         style={{ overflow: "auto" }}
                                         className="img_size"

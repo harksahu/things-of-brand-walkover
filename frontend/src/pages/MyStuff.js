@@ -4,7 +4,7 @@ import { Card, Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import SvgInline from "../utils/SvgInline.js";
 import "../utils/svginline.css";
-import { sendSearchAPI } from "../api/index.js";
+import { sendSearchAPI } from "../api/Index.js";
 import { AiFillPlusCircle } from "react-icons/ai";
 import SideBar from "../components/SideBar";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -79,7 +79,7 @@ function Home() {
                         key={brand._id}
                         className="d-flex justify-content-center item"
                       >
-                        <Link to={"/stuff/" + brand._id}>
+                        <Link to={"/Stuff/" + brand._id}>
                           <Card>
                             <div
                               style={{ overflow: "auto" }}
@@ -125,7 +125,7 @@ function Home() {
                         key={brand._id}
                         className="d-flex justify-content-center item"
                       >
-                        <Link to={"/stuff/" + brand._id}>
+                        <Link to={"/Stuff/" + brand._id}>
                           <Card>
                             <div
                               style={{ overflow: "auto" }}

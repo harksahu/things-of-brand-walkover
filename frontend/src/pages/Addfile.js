@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { createBrandAPI } from "../api";
+import { createBrandAPI } from "../api/Index";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { MdArrowBackIos, MdContentCopy } from "react-icons/md";
@@ -18,7 +18,7 @@ import {
   getS3SignUrl,
   getProfileDetails,
   updateProfileFields,
-} from "../api/index.js";
+} from "../api/Index.js";
 import { BsX, BsInfoCircle } from "react-icons/bs";
 import SideBar from "../components/SideBar";
 import "../scss/style.scss";

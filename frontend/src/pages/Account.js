@@ -10,7 +10,7 @@ import {
   FormLabel,
 } from "react-bootstrap";
 
-import { setAuthKey, storeAuthKey, deleteAuthKey } from "../api";
+import { setAuthKey, storeAuthKey, deleteAuthKey } from "../api/Index";
 import { BsFillTrashFill } from "react-icons/bs";
 
 import SideBar from "../components/SideBar";
