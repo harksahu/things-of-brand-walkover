@@ -111,7 +111,7 @@ function MyCompany() {
   };
 
   return (
-    <div className="h-100">
+    <>
       {loading ? (
         <ClipLoader />
       ) : (
@@ -127,7 +127,7 @@ function MyCompany() {
                     {/* <Link to={"/profile" }state={{ data: Company }}> */}
                     <Link to={"/" + Company.domain}>
                       <Card className="item-company">
-                        <div style={{ overflow: "auto" }} className="img_size">
+                        <div style={{ overflow: "auto" }} className="img_size pattern-square">
                           {
 
                             Company.logo !== undefined && Company.logo !== "null"
@@ -237,7 +237,7 @@ function MyCompany() {
                                 <Card className="item-company">
                                   <div
                                     style={{ overflow: "auto" }}
-                                    className="img_size"
+                                    className="img_size pattern-square"
                                   >
                                     {
 
@@ -275,7 +275,7 @@ function MyCompany() {
           </Container>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

@@ -426,7 +426,7 @@ function Brand() {
                             <Link to={"/stuff/" + brand._id}>
                               <div
                                 style={{ overflow: "auto" }}
-                                className="img_size"
+                                className="img_size pattern-square"
                               >
                                 {
 
