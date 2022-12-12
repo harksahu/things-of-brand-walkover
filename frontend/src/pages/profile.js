@@ -160,7 +160,7 @@ function Profile(props) {
   };
   const profileDetails = async (req, res) => {
     fresult = await getProfileDetails({ domain: location?.state?.data?.domain});
-
+    
     if (location.state?.data != null) {
       setId(location?.state?.data?._id);
       setName(location?.state?.data?.name);
