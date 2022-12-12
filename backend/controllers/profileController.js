@@ -12,7 +12,7 @@ const createProfile = async (req, res) => {
             "data": data
         }).status(200);
     } catch (error) {
-        
+        console.log(error);
         res.send({
             message: "Some Error on Server",
             error

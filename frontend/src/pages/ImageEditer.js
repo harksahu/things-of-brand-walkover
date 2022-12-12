@@ -56,12 +56,12 @@ function MyVerticallyCenteredModal(params) {
   }
 
   const DownloadToSvg = async (svg, fileName) => {
-    var svg = document.querySelector("svg");
-    var xml = new XMLSerializer().serializeToString(svg);
-    var svg64 = btoa(xml); //for utf8: btoa(unescape(encodeURIComponent(xml)))
-    var b64start = "data:image/svg+xml;base64,";
-    var image64 = b64start + svg64;
-    saveAs(image64, fileName);
+    // var svg = document.querySelector("svg");
+    // var xml = new XMLSerializer().serializeToString(svg);
+    // var svg64 = btoa(xml); //for utf8: btoa(unescape(encodeURIComponent(xml)))
+    // var b64start = "data:image/svg+xml;base64,";
+    // var image64 = b64start + svg64;
+    saveAs(svg, fileName);
   };
 
   const DownloadToPng = async (img, w, h) => {
@@ -159,6 +159,7 @@ function MyVerticallyCenteredModal(params) {
               </Button>
             </OverlayTrigger>
           </div>
+          {/* {console.log(props)} */}
           <SvgInline {...props} />
         </Col>
         <div style={{ position: "absolute" }}>

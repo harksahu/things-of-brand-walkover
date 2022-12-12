@@ -1,7 +1,6 @@
 import express from "express";
 import cors from 'cors';
 import path from "path";
-// import multer from "multer";
 import authKeyRouters from "./routers/authKeyRouters.js";
 import connectDB from './services/mongodb_service.js';
 import uploadRoutes from "./routers/uploadRoutes.js";

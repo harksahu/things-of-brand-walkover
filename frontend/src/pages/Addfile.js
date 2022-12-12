@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { createBrandAPI } from "../api";
+import { createBrandAPI } from "../api/index.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { MdArrowBackIos, MdContentCopy } from "react-icons/md";
