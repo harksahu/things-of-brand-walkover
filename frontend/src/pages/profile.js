@@ -11,8 +11,6 @@ import {
 } from "react-bootstrap";
 
 import { UserAuth } from "../context/AuthContext";
-
-import ImageComponent from "../components/ImageComponent"
 import {
   getProfileDetails,
   updateProfileFields,
