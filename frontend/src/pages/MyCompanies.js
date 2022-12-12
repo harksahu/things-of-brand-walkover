@@ -220,7 +220,7 @@ function MyCompany() {
             </div>
             <div className="grid">
               {allData?.map((Company) => {
-                 {console.log("consoleee",Company)}
+                 
                 return (
                   <div
                     key={Company._id}
