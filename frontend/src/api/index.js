@@ -50,6 +50,7 @@ const getProfileandLogoDetails = async ({email="",domain="",name="",searchfrom="
   
   const dataAndLogo = { ...data?.data?.data[0], allogosdata: [logos?.data?.data]};
 
+  console.log(dataAndLogo);
   return dataAndLogo;
 
 }
@@ -62,7 +63,8 @@ const searchBrandApi = async (id) => {
 
 
 const updateProfileFields = async(dataToSend) => {
-  
+  console.log("datToSend in index js");
+  console.log(dataToSend);
   const data = {
     ...dataToSend
   }

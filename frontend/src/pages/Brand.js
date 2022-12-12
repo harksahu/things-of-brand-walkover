@@ -587,7 +587,7 @@ function Brand() {
                 </div>
 
                 <div className="mt-5">
-                  {guidlines?.length <= 12 || guidlines == undefined ? "":<h5>Guidelines</h5>}
+                  {guidlines?.length > 12 || guidlines ? <h5>Guidelines</h5>:""}
                   <div dangerouslySetInnerHTML={{ __html: guidlines }}></div>
                 </div>
               </div>
