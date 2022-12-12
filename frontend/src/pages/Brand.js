@@ -19,6 +19,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import "../utils/svginline.css";
 import "../scss/brand.scss";
 import { UserAuth } from "../context/AuthContext";
+import CopyToClipboard from "../components/CopyToClipboard.js"
 import {
   getProfileDetails,
   sendSearchAPI,
@@ -522,36 +523,12 @@ function Brand() {
                                     backgroundColor: color.colorValue,
                                   }}
                                 ></div>
-
+                               
                                 <div className="color-footer" id="inputText">
                                   <div>{color.colorName}</div>
                                   <div className="d-flex justify-content-between">
                                     {color.colorValue}
-                                    <div className="icon-copy">
-                                      <MdContentCopy
-                                        onClick={() => {
-                                          let colorTemp = color.colorValue;
-
-                                          navigator.clipboard.writeText(colorTemp);
-                                          var tooltip = document.getElementById(
-                                            "myTooltip" + index
-                                          );
-                                          setShowCopy(true)
-                                          // tooltip.innerHTML = "Copied: " + colorTemp;
-                                        }}
-                                        onMouseOut={() => {
-                                          var tooltip =
-                                            document.getElementById("myTooltip");
-                                          tooltip.innerHTML = "Copy to clipboard";
-                                        }}
-                                      />
-                                      <span
-                                        className="tooltiptext"
-                                        id={`myTooltip${index}`}
-                                      >
-                                        Copy to clipboard
-                                      </span>
-                                    </div>
+                                    <CopyToClipboard color={color.colorValue}/>
                                   </div>
                                 </div>
                               </div>
@@ -601,11 +578,6 @@ function Brand() {
 
         </Container>
       }
-      <ToastContainer className="p-3">
-        <Toast onClose={() => setShow(false)} show={showCopy} delay={3000} style={{ backgroundColor: "#c5c6d0" }} autohide>
-          <Toast.Body>Copy in clipboard!</Toast.Body>
-        </Toast>
-      </ToastContainer>
     </>
   );
 }

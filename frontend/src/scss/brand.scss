@@ -17,7 +17,7 @@
     cursor: pointer;
   }
   
-  .icon-copy .tooltiptext {
+  .icon-copy .tooltiptext1 {
     visibility: hidden;
     width: 140px;
     background-color: #555;
@@ -34,7 +34,7 @@
     transition: opacity 0.3s;
   }
   
-  .icon-copy .tooltiptext::after {
+  .icon-copy .tooltiptext1::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -45,7 +45,7 @@
     border-color: #555 transparent transparent transparent;
   }
   
-  .icon-copy:hover .tooltiptext {
+  .icon-copy:hover .tooltiptext1 {
     visibility: visible;
     opacity: 1;
   }
