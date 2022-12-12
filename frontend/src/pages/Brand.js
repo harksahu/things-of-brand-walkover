@@ -113,7 +113,7 @@ function Brand() {
     setIsRepeatingEmail(false);
     var repeatOrNot = false;
     for (var i = 0; i < sharedEmail?.length; i++) {
-      if (event.target.sharingEmail.value == user?.email) {
+      if (event.target.sharingEmail.value == user?.email || event.target.sharingEmail.value == email) {
         setUserEmail(true);
       }
       if (event.target.sharingEmail.value == sharedEmail[i]) {
@@ -474,7 +474,7 @@ function Brand() {
                     })}
 
                     {user ? (
-                      email === user.email ? (
+                      email === user.email || isShared == true ? (
                         <Link to="/addfile" className="add-new" state={{ domain: domain }}>
                           <Card className="h-100 item-company">
                             <Card.Body className="add-icon align-items-center d-flex justify-content-center">

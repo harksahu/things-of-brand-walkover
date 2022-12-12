@@ -79,7 +79,7 @@ function Profile(props) {
 
   const getbrandslogo = async () => {
     console.log("locatiom", location.state.data)
-    if (domain && location.state?.data) {
+    if (domain && location.state?.data && id) {
       const data = await sendSearchAPI({ domain: id });
 
       setDomainPost(data?.data?.data);
@@ -164,8 +164,8 @@ function Profile(props) {
     }
   };
   const profileDetails = async (req, res) => {
-    console.log("domain hsdbjsd", location?.state?.data?.domain)
-    fresult = await getProfileDetails({ domain: location?.state?.data?.domain });
+    console.log("domain hsdbjsd", location?.state?.domain)
+    fresult = await getProfileDetails({ domain: location?.state?.data?.domain});
     // const ans =  await getCompanyDetails(id)
     // setResults(ans.data.data);
     console.log("fresult", fresult);
@@ -465,6 +465,7 @@ function Profile(props) {
                       id="socialLinks"
                       style={{ margin: "auto" }}
                     >
+
                       <h6>Social Links</h6>
                       <ul>
                         {links?.map((link, index) => (

@@ -64,7 +64,7 @@ function MyCompany() {
           });
           console.log("data", data);
           alert("successfully saved domain " + d);
-          navigate("/editProfile", { state: { data: domain } })
+          navigate("/editProfile", { state: { data: {domain:domain} } })
           console.log("domain", domain);
         } catch (err) {
           console.log(err);
@@ -219,12 +219,14 @@ function MyCompany() {
             </div>
             <div className="grid">
               {allData?.map((Company) => {
+                 {console.log("consoleee",Company)}
                 return (
                   <div
                     key={Company._id}
                     className="d-flex justify-content-center item"
                   >
                     {Company?.sharedEmail?.map((sharedEmail, index) => {
+                      {console.log("console",index,sharedEmail)}
                       return (
                         <>
 
