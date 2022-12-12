@@ -154,7 +154,9 @@ function Profile(props) {
           email: user?.email,
           color: color,
         };
-        await updateProfileFields(data);
+        const id1 = await updateProfileFields(data);
+        console.log("await updateProfileFields(data);",id1);
+        // await updateProfileFields(data);
         navigate(-1);
       } else {
         alert("about us field is compulsory");
@@ -164,7 +166,7 @@ function Profile(props) {
     }
   };
   const profileDetails = async (req, res) => {
-    console.log("domain hsdbjsd", location?.state?.domain)
+    console.log("domain hsdbjsd", location?.state?.data)
     fresult = await getProfileDetails({ domain: location?.state?.data?.domain});
     // const ans =  await getCompanyDetails(id)
     // setResults(ans.data.data);
@@ -174,7 +176,6 @@ function Profile(props) {
       setName(location?.state?.data?.name);
       setAboutus(location?.state?.data?.aboutus);
       setLinks(location?.state?.data?.links);
-      setDomain(location?.state?.data?.domain);
       setGuidlines(location?.state?.data?.guidlines);
       setFontSize(location?.state?.data?.fontSize);
       setPrimaryColors(location?.state?.data?.PrimaryColors);
@@ -184,6 +185,7 @@ function Profile(props) {
       setFontLink(location?.state?.data?.fontLink);
       setcount(location?.state?.data?.color);
       setLogo(location?.state?.data?.logo);
+      setDomain(location?.state?.data?.domain);
     }
     if (location.state?.data) {
       getbrandslogo();
@@ -548,17 +550,15 @@ function Profile(props) {
                                 }}
                                 className="contact-form-area"
                               />
-                              <Form.Control
-                                type="text"
-                                id={`colorinputbytext${index}`}
-                                maxLength="7"
-                                placeholder="Enter hex value of color"
+                              <Form.Control 
+                               value={color[index].colorValue}
+                              type="text" id={`colorinputbytext${index}`} maxLength="7" placeholder="Enter hex value of color"
                                 onChange={(e) => {
-                                  document.getElementById(
-                                    "colorinput" + index
-                                  ).value = e.target.value;
-                                }}
-                              />
+                                  document.getElementById("colorinput" + index).value = e.target.value;
+                                  let tempCount = color;
+                                  tempCount[index].colorValue = e.target.value;
+                                  setcount([...tempCount]);
+                                }} />
 
                               <Form.Control
 
