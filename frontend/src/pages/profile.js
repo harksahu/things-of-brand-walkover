@@ -16,9 +16,11 @@ import ImageComponent from "../components/ImageComponent"
 import {
   getProfileDetails,
   updateProfileFields,
+  getCompanyDetails,
   getFontList,
   createProfile,
   deleteMyStuffAPI,
+  restoreMyStuffAPI,
   saveMyStuffAPI,
   sendSearchAPI,
 } from "../api/index.js";
@@ -51,7 +53,6 @@ function Profile(props) {
   const [backgroundColors, setBackgroundColors] = useState("");
   const { user } = UserAuth();
   const [links, setLinks] = React.useState([]);
-  const [results, setResults] = useState("");
   const [company, setCompany] = useState("");
   const [profiledata, setProfile] = useState("");
   const [check, setCheck] = useState(true);
@@ -68,30 +69,29 @@ function Profile(props) {
   const [valid, setvalid] = useState([false]);
   const [valid2, setvalid2] = useState([false]);
   const [fontFamily, setFontFamily] = useState([false]);
-  const [sharedEmail,setSharedEmail]= useState();
+  const [sharedEmail, setSharedEmail] = useState();
   const [loading, setLoading] = useState(false);
-  
+
   const location = useLocation();
   let countTemp = countTracker;
   let countTemp2 = linkCount;
   var fresult;
   const navigate = useNavigate();
-  
-  
-  const getbrandslogo = async () => {
-    
-    if (domain && location.state?.data) {
-      if(id)
-      {
-      const data = await sendSearchAPI({ domain: id, active: 1 });
-      setDomainPost(data?.data?.data);
-      }
-      console.log("domain ",domain );
-      console.log("id ",id );
 
-     
+
+  const getbrandslogo = async () => {
+    console.log("locatiom", location.state.data)
+    if (domain && location.state?.data) {
+      const data = await sendSearchAPI({ domain: id });
+
+      setDomainPost(data?.data?.data);
+      // console.log("domain ",data );
     }
-  };
+    console.log("id ", id);
+
+
+  }
+
   const addLinks = (event) => {
     if (event.key === "Enter" && event.target.value !== "") {
       setLinks([...links, event.target.value]);
@@ -117,15 +117,17 @@ function Profile(props) {
   };
   useEffect(() => {
     // setLoading(true);
-    setId(location?.state?.data?._id);
+
+    console.log("useEffect", location?.state?.data)
     if (user) {
       if (user?.email) {
-      
+
         profileDetails();
-        checkIfDomain();
+
+        // checkIfDomain();
       }
     }
-    
+
   }, [user]);
   useEffect(() => {
     fontlist();
@@ -134,10 +136,12 @@ function Profile(props) {
     }
   }, [domain]);
   const updateProfileValue = async (req, res) => {
+    // console.log("idd",domain)
     if (name) {
       if (aboutus) {
-       
+
         const data = {
+          _id: id,
           logo: logo,
           name: name,
           aboutus: aboutus,
@@ -148,7 +152,7 @@ function Profile(props) {
           PrimaryColors: PrimaryColors,
           secondaryColors: secondaryColors,
           backgroundColors: backgroundColors,
-          sharedEmail:sharedEmail,
+          sharedEmail: sharedEmail,
           email: user?.email,
           color: color,
         };
@@ -162,53 +166,34 @@ function Profile(props) {
     }
   };
   const profileDetails = async (req, res) => {
-    fresult = await getProfileDetails({});
-    setResults(fresult.data.data);
+    console.log("domain hsdbjsd", location?.state?.data?.domain)
+    fresult = await getProfileDetails({ domain: location?.state?.data?.domain });
+    // const ans =  await getCompanyDetails(id)
+    // setResults(ans.data.data);
+    console.log("fresult", fresult);
     if (location.state?.data != null) {
-      setName(location.state.data.name);
-      setAboutus(location.state.data.aboutus);
-      setLinks(location.state.data.links);
-      setDomain(location.state.data.domain);
-      setGuidlines(location.state.data.guidlines);
-      setFontSize(location.state.data.fontSize);
-      setPrimaryColors(location.state.data.PrimaryColors);
-      setSecondaryColors(location.state.data.secondaryColors);
-      setBackgroundColors(location.state.data.backgroundColors);
-      setSharedEmail(location.state.data.sharedEmail);
-      setFontLink(location.state.data.fontLink);
-      setcount(location.state.data.color);
-      setLogo(location.state.data.logo);
+      setId(location?.state?.data?._id);
+      setName(location?.state?.data?.name);
+      setAboutus(location?.state?.data?.aboutus);
+      setLinks(location?.state?.data?.links);
+      setDomain(location?.state?.data?.domain);
+      setGuidlines(location?.state?.data?.guidlines);
+      setFontSize(location?.state?.data?.fontSize);
+      setPrimaryColors(location?.state?.data?.PrimaryColors);
+      setSecondaryColors(location?.state?.data?.secondaryColors);
+      setBackgroundColors(location?.state?.data?.backgroundColors);
+      setSharedEmail(location?.state?.data?.sharedEmail);
+      setFontLink(location?.state?.data?.fontLink);
+      setcount(location?.state?.data?.color);
+      setLogo(location?.state?.data?.logo);
     }
     if (location.state?.data) {
       getbrandslogo();
     }
   };
-  // function extractDomain(url) {
-  //   var domainName;
-  //   if (url.indexOf("://") > -1) {
-  //     domainName = url.split("/")[2];
-  //   } else {
-  //     domainName = url.split("/")[0];
-  //   }
-  //   //find & remove www
-  //   if (domainName.indexOf("www.") > -1) {
-  //     domainName = domainName.split("www.")[1];
-  //   }
-  //   domainName = domainName.split(":")[0];
-  //   domainName = domainName.split("?")[0];
-  //   return domainName;
-  // }
+
   const config = {
     buttons: ["bold", "italic"],
-  };
-    const checkIfDomain = () => {
-
-    if (location.state?.data  ) {
-     setDomain(location.state?.data);
-    } 
-    else{
-      // navigate("companies/new")
-    }
   };
   const checkDomain = (datta) => {
     for (let i = 0; i < profiledata?.data?.data?.length; i++) {
@@ -252,7 +237,7 @@ function Profile(props) {
   };
   return (
     <div className="bg-gray h-100">
-     
+
       <Container className="wrpr">
         <Row>
           <nav className="navbar bg-light">
@@ -296,142 +281,187 @@ function Profile(props) {
                         tabIndex={1}
                       />
                     </Form.Group>
-                    {DomainPost?
-                    <div className="grid">
-                      <h6>logos</h6>
-                      <div className="d-flex flex-wrap justify-content-center">
-                        {DomainPost?.map((brand, index) => {
-                          return (<ImageComponent brandData={brand}/>)
-                    //       return (
-                    //         <div key={index}>
-                    //           <div key={brand._id} className=" flex-wrap item">
-                    //             <Card>
-                    //               <Dropdown className="ms-auto">
-                    //                 <Dropdown.Toggle variant="light" size="sm">
-                    //                   <BsThreeDotsVertical />
-                    //                 </Dropdown.Toggle>
+                    {DomainPost ?
+                      <div className="grid">
+                        <h6>logos</h6>
+                        <div className="d-flex flex-wrap justify-content-center">
+                          {DomainPost?.map((brand, index) => {
+                            return (
+                              <div key={index}>
+                                <div key={brand._id} className=" flex-wrap item">
+                                  <Card>
+                                    {/* <Dropdown className="ms-auto">
+                                      <Dropdown.Toggle variant="light" size="sm">
+                                        <BsThreeDotsVertical />
+                                      </Dropdown.Toggle>
 
-                    //                 <Dropdown.Menu>
-                    //                   <Dropdown.Item
-                    //                     onClick={() => {
-                    //                       setShow(true);
-                    //                     }}
-                    //                   >
-                    //                     Rename
-                    //                   </Dropdown.Item>
-                    //                   <Dropdown.Item
-                    //                     onClick={async () => {
-                    //                       await deleteMyStuffAPI(brand?._id);
-                    //                       // alert("Deleted");
-                    //                       // window.location.reload();
-                    //                       navigate(-1);
-                    //                     }}
-                    //                     variant="outline-secondary"
-                    //                     size="sm"
-                    //                   >
-                    //                     Delete
-                    //                   </Dropdown.Item>
-                    //                 </Dropdown.Menu>
-                    //               </Dropdown>
-                    //               <Link to={"/stuff/" + brand._id}>
-                    //                 <div
-                    //                   style={{ overflow: "auto" }}
-                    //                   className="img_size"
-                    //                 >
-                    //                   <SvgInline {...brand} />
-                    //                 </div>
-                    //                 </Link>
-                    //                 <Card.Body>
-                    //                   <Card.Title
-                    //                     style={{ textDecoration: "none" }}
-                    //                     className="text-center"
-                    //                   >
-                                       
-                    //                     <div>
-                    //   {show ? (
-                    //     <input
-                    //       id="userInputBox"
-                    //       onChange={(e) => {
-                    //         savedata(brand.title, e.target.value);
-                    //       }}
-                    //       value={brand.title}
-                    //       className="form-control form-control-sm"
-                    //       autoFocus
-                    //     />
-                    //   ) : (
-                    //     <div
-                    //       id="showname"
-                    //       onClick={() => {
-                    //         setShow(true);
-                    //       }}
-                    //     >
-                    //       {brand.title}
-                    //     </div>
-                    //   )}
-                    // </div>
-                    //                   </Card.Title>
-                    //                 </Card.Body>
-                                 
-                    //             </Card>
-                    //             {user ? (
-                    //               user.email === user.email ? (
-                    //                 logo === brand.url ? (
-                    //                   <Button
-                    //                     variant="light"
-                    //                     size="sm"
-                    //                     disabled
-                    //                   >
-                    //                     Default logo
-                    //                   </Button>
-                    //                 ) : (
-                    //                   <Button
-                    //                     variant="light"
-                    //                     size="sm"
-                    //                     onClick={() => {
-                    //                       setLogo(brand.url);
-                    //                     }}
-                    //                   >
-                    //                     Make default
-                    //                   </Button>
-                    //                 )
-                    //               ) : (
-                    //                 ""
-                    //               )
-                    //             ) : (
-                    //               ""
-                    //             )}
-                    //           </div>
-                    //         </div>
-                    //       );
-                        })}
+                                      <Dropdown.Menu>
+                                        <Dropdown.Item
+                                          onClick={() => {
+                                            setShow(true);
+                                          }}
+                                        >
+                                          Rename
+                                        </Dropdown.Item>
+                                        <Dropdown.Item
+                                          onClick={async () => {
+                                            await deleteMyStuffAPI(brand?._id);
+                                            // alert("Deleted");
+                                            // window.location.reload();
+                                            navigate(-1);
+                                          }}
+                                          variant="outline-secondary"
+                                          size="sm"
+                                        >
+                                          Delete
+                                        </Dropdown.Item>
+                                      </Dropdown.Menu>
+                                    </Dropdown> */}
+                                    <Link to={"/Stuff/" + brand._id}>
+                                      <div
+                                        style={{ overflow: "auto" }}
+                                        className="img_size"
+                                      >
+                                        {
 
-                        {user ? (
-                          <Link
-                            to="/addfile"
-                            className="add-new item"
-                            state={{ domain: domain }}
-                          >
-                            <Card className="h-100 item-company">
-                              <Card.Body className="align-items-center card-body d-flex justify-content-center">
-                                <Card.Title className="text-center">
-                                  <BsFillPlusCircleFill
-                                    style={{ fontSize: 40 }}
-                                  />
-                                </Card.Title>
-                                <Card.Text></Card.Text>
-                              </Card.Body>
-                              <div className="card-footer">
-                                <Button variant="link" size="sm">
-                                  Add new Logo
-                                </Button>
+                                          brand.url !== undefined && brand.url !== "null"
+                                            ? <img src={brand.url} alt="" />
+                                            : <img src="/assets/picture.svg" alt="" />
+
+                                        }
+                                      </div>
+                                    </Link>
+                                    <Card.Body>
+                                      <Card.Title
+                                        style={{ textDecoration: "none" }}
+                                        className="text-center"
+                                      >
+
+                                        <div>
+                                          {/* {
+                                          show ? (
+                                            <input
+                                              id="userInputBox"
+                                              onChange={(e) => {
+                                                savedata(brand.title, e.target.value);
+                                              }}
+                                              value={brand.title}
+                                              className="form-control form-control-sm"
+                                              autoFocus
+                                            />
+                                          ) : ( */}
+                                          <div
+                                            id="showname"
+                                            onClick={() => {
+                                              setShow(true);
+                                            }}
+                                          >
+                                            {brand.title}
+                                          </div>
+                                          {/* )} */}
+                                        </div>
+                                      </Card.Title>
+                                    </Card.Body>
+
+                                  </Card>
+                                  {user ? (
+                                    user.email === user.email ? (
+                                      logo === brand.url ? (
+                                        <Button
+                                          variant="light"
+                                          size="sm"
+                                          disabled
+                                        >
+                                          Default logo
+                                        </Button>
+                                      ) : (
+                                        <Button
+                                          variant="light"
+                                          size="sm"
+                                          onClick={() => {
+                                            setLogo(brand.url);
+                                          }}
+                                        >
+                                          Make default
+                                        </Button>
+                                      )
+
+                                    ) : (
+                                      ""
+                                    )
+                                  ) : (
+                                    ""
+                                  )
+
+
+
+                                  }
+                                </div>
+                                <div>
+                                  {
+                                    (
+
+                                      brand.active ? (
+                                        <Button
+                                          variant="light"
+                                          size="sm"
+                                          onClick={async () => {
+                                            await deleteMyStuffAPI(brand?._id);
+
+                                            navigate(-1);
+                                          }}
+                                        >
+                                          Delete
+                                        </Button>
+                                      ) : (
+                                        <Button
+                                          variant="light"
+                                          size="sm"
+                                          onClick={async () => {
+                                            await restoreMyStuffAPI(brand?._id);
+
+                                            navigate(-1);
+                                          }}
+
+                                        >
+                                          Restore
+                                        </Button>
+                                      )
+
+                                    )
+                                  }
+                                </div>
                               </div>
-                            </Card>
-                          </Link>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>:""}
+                            );
+                          })}
+
+                          {user ? (
+                            <Link
+                              to="/addfile"
+                              className="add-new item"
+                              state={{ domain: domain }}
+                            >
+                              <Card className="h-100 item-company">
+                                <Card.Body className="align-items-center card-body d-flex justify-content-center">
+                                  <Card.Title className="text-center">
+                                    <BsFillPlusCircleFill
+                                      style={{ fontSize: 40 }}
+                                    />
+                                  </Card.Title>
+                                  <Card.Text></Card.Text>
+                                </Card.Body>
+                                <div className="card-footer">
+                                  <Button variant="link" size="sm">
+                                    Add new Logo
+                                  </Button>
+                                </div>
+                              </Card>
+                            </Link>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      </div> : ""}
                     <div
                       className="tags-input mb-3 "
                       id="socialLinks"
@@ -469,9 +499,7 @@ function Profile(props) {
                         name="myBrowser"
                         id="domain"
                         onChange={(e) => {
-                          // setDomain(extractDomain(e.target.value));
                           setDomain(e.target.value);
-                          // checkDomain(e.target.value);
                         }}
                         value={domain}
                       />
@@ -498,7 +526,7 @@ function Profile(props) {
                       />
                     </Form.Group>
                     <div
-                        className="hide formbold-chatbox-form"
+                      className="hide formbold-chatbox-form"
                       id="list"
                     >
                       <Form.Group className="mb-3">
@@ -532,9 +560,9 @@ function Profile(props) {
                                   ).value = e.target.value;
                                 }}
                               />
-                              
+
                               <Form.Control
-                              
+
                                 type="color"
                                 name="user_input"
                                 style={{ width: "20%" }}

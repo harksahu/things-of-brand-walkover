@@ -30,7 +30,7 @@ function Not_found() {
 function Home() {
   const { user } = UserAuth();
   const [searchBrandData, setSearchBrandData] = useState();
-  const [loading , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const getbrand = async () => {
     const data = await sendSearchAPI({
@@ -42,7 +42,7 @@ function Home() {
 
   useEffect(() => {
     setLoading(true);
-   
+
     if (
       user !== null &&
       user !== undefined &&
@@ -61,93 +61,105 @@ function Home() {
 
   return (
     <>
-    {loading?
-    <ClipLoader/>:
-      <Container className="wrpr">
-        <Link to={"/addfile"}>
-          <Button variant="dark">Add Stuff</Button>
-        </Link>
-        <Row md={4} className="g-4 flex p-3">
-          {searchBrandData?.data?.length === 0 ? (
-            <Not_found />
-          ) : (
-            searchBrandData?.data?.map((brand) => {
-              return (
-                <div key={brand._id}>
-                  {brand.active === true ? (
-                    <div
-                      key={brand._id}
-                      className="d-flex justify-content-center item"
-                    >
-                      <Link to={"/stuff/" + brand._id}>
-                        <Card>
-                          <div
-                            style={{ overflow: "auto" }}
-                            className="img_size"
-                          >
-                            <SvgInline url={brand.url} />
-                          </div>
-
-                          <Card.Body>
-                            <Card.Title
-                              style={{ textDecoration: "none" }}
-                              className="text-center"
+      {loading ?
+        <ClipLoader /> :
+        <Container className="wrpr">
+          <Link to={"/addfile"}>
+            <Button variant="dark">Add Stuff</Button>
+          </Link>
+          <Row md={4} className="g-4 flex p-3">
+            {searchBrandData?.data?.length === 0 ? (
+              <Not_found />
+            ) : (
+              searchBrandData?.data?.map((brand) => {
+                return (
+                  <div key={brand._id}>
+                    {brand.active === true ? (
+                      <div
+                        key={brand._id}
+                        className="d-flex justify-content-center item"
+                      >
+                        <Link to={"/Stuff/" + brand._id}>
+                          <Card>
+                            <div
+                              style={{ overflow: "auto" }}
+                              className="img_size"
                             >
-                              {brand.title}
-                            </Card.Title>
-                            <Card.Text></Card.Text>
-                          </Card.Body>
-                        </Card>
-                      </Link>
-                    </div>
-                  ) : null}
-                </div>
-              );
-            })
-          )}
-        </Row>
-        <h5 className="text-center">Deleted Items</h5>
-        <Row md={4} className="g-4 flex p-3">
-          {searchBrandData?.data?.length === 0 ? (
-            <Not_found />
-          ) : (
-            searchBrandData?.data?.map((brand) => {
-              return (
-                <div key={brand._id}>
-                  {brand.active === false ? (
-                    <div
-                      key={brand._id}
-                      className="d-flex justify-content-center item"
-                    >
-                      <Link to={"/stuff/" + brand._id}>
-                        <Card>
-                          <div
-                            style={{ overflow: "auto" }}
-                            className="img_size"
-                          >
-                            <SvgInline url={brand.url} />
-                          </div>
+                              {
 
-                          <Card.Body>
-                            <Card.Title
-                              style={{ textDecoration: "none" }}
-                              className="text-center"
+                                brand.url !== undefined && brand.url !== "null"
+                                  ? <img src={brand.url} alt="" />
+                                  : <img src="/assets/picture.svg" alt="" />
+
+                              }
+                            </div>
+
+                            <Card.Body>
+                              <Card.Title
+                                style={{ textDecoration: "none" }}
+                                className="text-center"
+                              >
+                                {brand.title}
+                              </Card.Title>
+                              <Card.Text></Card.Text>
+                            </Card.Body>
+                          </Card>
+                        </Link>
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })
+            )}
+          </Row>
+          <h5 className="text-center">Deleted Items</h5>
+          <Row md={4} className="g-4 flex p-3">
+            {searchBrandData?.data?.length === 0 ? (
+              <Not_found />
+            ) : (
+              searchBrandData?.data?.map((brand) => {
+                return (
+                  <div key={brand._id}>
+                    {brand.active === false ? (
+                      <div
+                        key={brand._id}
+                        className="d-flex justify-content-center item"
+                      >
+                        <Link to={"/Stuff/" + brand._id}>
+                          <Card>
+                            <div
+                              style={{ overflow: "auto" }}
+                              className="img_size"
                             >
-                              {brand.title}
-                            </Card.Title>
-                            <Card.Text></Card.Text>
-                          </Card.Body>
-                        </Card>
-                      </Link>
-                    </div>
-                  ) : null}
-                </div>
-              );
-            })
-          )}
-        </Row>
-      </Container>
-}
+                              {
+
+                                brand.url !== undefined && brand.url !== "null"
+                                  ? <img src={brand.url} alt="" />
+                                  : <img src="/assets/picture.svg" alt="" />
+
+                              }
+                            </div>
+
+                            <Card.Body>
+                              <Card.Title
+                                style={{ textDecoration: "none" }}
+                                className="text-center"
+                              >
+                                {brand.title}
+                              </Card.Title>
+                              <Card.Text></Card.Text>
+                            </Card.Body>
+                          </Card>
+                        </Link>
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })
+            )}
+          </Row>
+        </Container>
+      }
     </>
   );
 }

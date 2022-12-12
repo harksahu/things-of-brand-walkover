@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
-import { getProfileDetails,createProfile } from "../api/index.js";
+import { getProfileDetails, createProfile } from "../api/index.js";
 import { Container, Row, Col, Form, Card } from "react-bootstrap";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import SvgInline from "../utils/SvgInline.js";
@@ -53,48 +53,46 @@ function MyCompany() {
   }
 
   const storeProfileValue = async (req, res) => {
-      if (user) {
-        if (user?.email) {
-          try {
-            const d = extractDomain(domain);
-            setDomain(d);
-            const data = await createProfile({
-              domain: d,
-              email: user?.email,
-            });
-            console.log("data",data);
-            alert("successfully saved domain " + d);
-            navigate("/editProfile",{state:{data:domain}})
-          } catch (err) {
-            console.log(err);
-            alert("Profile is not created");
-          }
+    if (user) {
+      if (user?.email) {
+        try {
+          const d = extractDomain(domain);
+          setDomain(d);
+          const data = await createProfile({
+            domain: d,
+            email: user?.email,
+          });
+          console.log("data", data);
+          alert("successfully saved domain " + d);
+          navigate("/editProfile", { state: { data: domain } })
+          console.log("domain", domain);
+        } catch (err) {
+          console.log(err);
+          alert("Profile is not created");
+        }
       }
     }
   };
   const next = () => {
     var check = 0;
-    for (let i = 0; i < company?.length; i++)
-    {
+    for (let i = 0; i < company?.length; i++) {
       if (company[i].domain === domain) {
         check = 1;
         document.getElementById("domainError").classList.remove("visually-hidden");
         break;
       }
     }
-    if(check!=1)
-      {
-        var domainParts = domain.split("."); 
-            if (domainParts.length >= 2 && domainParts[1].length >= 1) 
-            {
-              storeProfileValue();
-              console.log("Invalid1");
-            }
-          else{
-            console.log("Invalid2");
-            document.getElementById("WrongdomainError").classList.remove("visually-hidden");
-          }
-          console.log("Invalid3");
+    if (check != 1) {
+      var domainParts = domain.split(".");
+      if (domainParts.length >= 2 && domainParts[1].length >= 1) {
+        storeProfileValue();
+        console.log("Invalid1");
+      }
+      else {
+        console.log("Invalid2");
+        document.getElementById("WrongdomainError").classList.remove("visually-hidden");
+      }
+      console.log("Invalid3");
     }
     // navigate("/editProfile")
   };
@@ -102,15 +100,16 @@ function MyCompany() {
     var shareddEmail = await getProfileDetails({});
 
     setAllData(shareddEmail.data.data);
+    console.log("ans", shareddEmail.data.data);
   };
   const profileDetails = async (req, res) => {
     fresult = await getProfileDetails({ email: user.email });
     setCompany(fresult.data.data);
 
-    if (Array.isArray(fresult.data.data) && fresult.data.data.length) {
-    } else {
-      navigate("/profile");
-    }
+    // if (Array.isArray(fresult.data.data) && fresult.data.data.length) {
+    // } else {
+    //   navigate("/editProfile");
+    // }
   };
 
   return (
@@ -131,7 +130,13 @@ function MyCompany() {
                     <Link to={"/" + Company.domain}>
                       <Card className="item-company">
                         <div style={{ overflow: "auto" }} className="img_size">
-                          <SvgInline name={Company.name} url={Company.logo} />
+                          {
+
+                            Company.logo !== undefined && Company.logo !== "null"
+                              ? <img src={Company.logo} alt="" />
+                              : <img src="/assets/picture.svg" alt="" />
+
+                          }
                         </div>
                         <Card.Body>
                           <Card.Title
@@ -148,6 +153,7 @@ function MyCompany() {
                 );
               })}
               {/* <Link to="/editProfile" className="add-new"> */}
+              {/* <Link to="/addBrand"> */}
               <Card className="h-100 item-company" onClick={handleShow}>
                 <Card.Body className="add-icon align-items-center d-flex justify-content-center">
                   <Card.Title className="text-center">
@@ -158,21 +164,23 @@ function MyCompany() {
                   <Card.Title className="text-center">Add New Brand</Card.Title>
                 </Card.Body>
               </Card>
+              {/* </Link> */}
+
 
               <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                   <Modal.Title>Create Your Brand</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                <div className="visually-hidden" id="domainError">
-                        This company is already created{" "}
-                        <Link to="/domainVerify" state={{ data: company }}>
-                          Clam your brand
-                        </Link>
-                      </div>
-               <div className="visually-hidden" id="WrongdomainError">
-                        Please Enter Correct Domain{" "}
-                </div>
+                  <div className="visually-hidden" id="domainError">
+                    This company is already created{" "}
+                    <Link to="/domainVerify" state={{ data: company }}>
+                      Clam your brand
+                    </Link>
+                  </div>
+                  <div className="visually-hidden" id="WrongdomainError">
+                    Please Enter Correct Domain{" "}
+                  </div>
                   <Form.Group className="mb-3">
                     <Form.Label>
                       Domain * <small>(example.com)</small>
@@ -189,7 +197,7 @@ function MyCompany() {
                         setDomain(e.target.value);
                         // checkDomain(e.target.value);
                       }}
-                      // value={domain}
+                    // value={domain}
                     />
                     <br></br>
                     {/* {console.log("data: company",company)} */}
@@ -198,6 +206,8 @@ function MyCompany() {
                   </Form.Group>
                 </Modal.Body>
               </Modal>
+
+
             </div>
           </Container>
 
@@ -216,39 +226,46 @@ function MyCompany() {
                   >
                     {Company?.sharedEmail?.map((sharedEmail, index) => {
                       return (
-                        <div key={index}>
-                          {sharedEmail == user.email ? (
-                            <Link to={"/" + Company.domain}>
-                              {showSharedCompanies
-                                ? ""
-                                : setShowSharedCompanies(true)}
-                              <Card className="item-company">
-                                <div
-                                  style={{ overflow: "auto" }}
-                                  className="img_size"
-                                >
-                                  <SvgInline
-                                    name={Company.name}
-                                    url={Company.logo}
-                                  />
-                                </div>
-                                <Card.Body>
-                                  <Card.Title
-                                    style={{ textDecoration: "none" }}
-                                    className="text-center"
+                        <>
+
+                          <div key={index}>
+                            {sharedEmail == user.email ? (
+                              <Link to={"/" + Company.domain}>
+                                {showSharedCompanies
+                                  ? ""
+                                  : setShowSharedCompanies(true)}
+                                <Card className="item-company">
+                                  <div
+                                    style={{ overflow: "auto" }}
+                                    className="img_size"
                                   >
-                                    {Company.name
-                                      ? Company.name
-                                      : Company.domain}
-                                  </Card.Title>
-                                  <Card.Text></Card.Text>
-                                </Card.Body>
-                              </Card>
-                            </Link>
-                          ) : (
-                            ""
-                          )}
-                        </div>
+                                    {
+
+                                      Company.logo !== undefined && Company.logo !== "null"
+                                        ? <img src={Company.logo} alt="" />
+                                        : <img src="/assets/picture.svg" alt="" />
+
+                                    }
+                                  </div>
+                                  <Card.Body>
+                                    <Card.Title
+                                      style={{ textDecoration: "none" }}
+                                      className="text-center"
+                                    >
+                                      {Company.name
+                                        ? Company.name
+                                        : Company.domain}
+                                    </Card.Title>
+                                    <Card.Text></Card.Text>
+                                  </Card.Body>
+                                </Card>
+                              </Link>
+                            ) : (
+                              ""
+                            )}
+                          </div>
+
+                        </>
                       );
                     })}
                   </div>

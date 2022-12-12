@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { createBrandAPI } from "../api";
+import { createBrandAPI } from "../api/index.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { MdArrowBackIos, MdContentCopy } from "react-icons/md";
@@ -53,8 +53,11 @@ const Addfile = () => {
   const [ffresult, setResult] = useState();
   const location = useLocation();
   const navigate = useNavigate();
-  // console.log(location.state.domain);
-  const [shareEmailDomainOption, setShareEmailDomainOption] = useState([]);
+  console.log(location?.state?.domain);  
+  const [shareEmailDomainOption,setShareEmailDomainOption] =useState(""); 
+  // console.log(location.state.domain);  
+  // const [logo, setLogo] = useState();
+
   const addTags = (event) => {
     if (event.key === "Enter" && event.target.value !== "") {
       setTags([...tags, event.target.value]);
@@ -179,40 +182,55 @@ const Addfile = () => {
   }, [user,shareEmailDomainOption]);
   return (
     <>
-      {user ? (
-        <Container className="wrpr">
-          <Row>
-            <nav className="navbar bg-light">
-              <div className="container-fluid">
-                <a className="navbar-brand">
-                  <Button
-                    variant="outline-dark"
-                    className="me-3"
-                    onClick={() => {
-                      navigate(-1);
-                    }}
-                  >
-                    <MdArrowBackIos />
-                  </Button>
-                  Add a file to <strong>{domain}</strong>
-                </a>
-              </div>
-            </nav>
-            <Col md={9} lg={10} className="mt-4">
-              <Card style={{ width: "30rem" }}>
-                <Card.Body>
-                  <Stack gap={3}>
-                    <FormGroup>
-                      <Form.Label>Choose a domain *</Form.Label>
-                      <Form.Select
-                        aria-label="Default select example"
-                        onChange={(e) => {
-                          setDomain(e.target.value);
-                          {
-                            console.log("domain seted" + e.target.value);
-                          }
-                        }}
+    {user?
+      <Container  className="wrpr">
+        <Row>
+        <nav className="navbar bg-light">
+          <div className="container-fluid">          
+            <a
+              className="navbar-brand"            
+            >
+              <Button
+                variant="outline-dark"
+                className="me-3"
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
+                <MdArrowBackIos />
+              </Button>
+              Add a file to <strong>{location?.state?.domain}</strong>
+            </a>
+          </div>
+        </nav>                
+          <Col md={9} lg={10} className="mt-4">
+            <Card style={{ width: "30rem" }}>
+              <Card.Body>
+                <Stack gap={3}>
+                  <FormGroup>
+                    <Form.Label>Choose a domain *</Form.Label>
+                    <Form.Select
+                      aria-label="Default select example"
+                      onChange={(e) => {
+                        setDomain(e.target.value);
+                        {console.log("domain seted"+e.target.value)}
+                      }}
                       >
+                      
+                      {ffresult &&
+                        ffresult.map((domainName, index) => (
+                          <>
+                          {domainToSelect==domainName.domain?
+                          <option key={index}  value={domainName.domain}  selected>
+                          {domainName.domain}
+                        </option>: <option key={index} value={domainName.domain} >
+                            {domainName.domain}
+                          </option>
+                         
+                          }
+                           </>))
+                        }
+                      
                         { ffresult&& shareEmailDomainOption&&shareEmailDomainOption.map((shareEmailDomainOptionTemp,index) => (
                           <>
                             <option key={index} value={shareEmailDomainOptionTemp} >
@@ -297,7 +315,7 @@ const Addfile = () => {
                       </ul>
                     </FormGroup>
                   </Stack>
-                  {/* </Card.Text> */}
+                 
                   <Button variant="primary" onClick={onSubmitClick}>
                     Submit
                   </Button>
@@ -306,9 +324,8 @@ const Addfile = () => {
             </Col>
           </Row>
         </Container>
-      ) : (
-        <Home />
-      )}
+        :<Home />
+                        }
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}

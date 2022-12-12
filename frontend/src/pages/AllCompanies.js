@@ -50,7 +50,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
       getSearchBrand({});
       setPosts(searchBrandData.data);
       setLoading(false);
-      
+
     };
 
     fetchPosts();
@@ -67,40 +67,46 @@ function Home({ searchBrandData = [], getSearchBrand }) {
 
   return (
     <div className="p-3 flex bg-light">
-      {loading?
-      <ClipLoader/>:
-      <div className="d-flex flex-wrap grid container">
-        {currentPosts?.data?.length === 0 ? (
-          <Not_found />
-        ) : (
-          currentPosts?.map((Company) => {
-            return (
-              <div
-                key={Company._id}
-                className="d-flex justify-content-center item"
-              >
-                <Link to={"/" + Company.domain}>
-                  <Card>
-                    <div style={{ overflow: "auto" }} className="img_size">
-                      <SvgInline url={Company.logo} />
-                    </div>
+      {loading ?
+        <ClipLoader /> :
+        <div className="d-flex flex-wrap grid container">
+          {currentPosts?.data?.length === 0 ? (
+            <Not_found />
+          ) : (
+            currentPosts?.map((Company) => {
+              return (
+                <div
+                  key={Company._id}
+                  className="d-flex justify-content-center item"
+                >
+                  <Link to={"/" + Company.domain}>
+                    <Card>
+                      <div style={{ overflow: "auto" }} className="img_size">
+                        {
 
-                    <Card.Body>
-                      <Card.Title
-                        style={{ textDecoration: "none" }}
-                        className="text-center"
-                      >
-                        {Company.name ? Company.name : Company.domain}
-                      </Card.Title>
-                    </Card.Body>
-                  </Card>
-                </Link>
-              </div>
-            );
-          })
-        )}
-      </div>
-}
+                          Company.logo !== undefined && Company.logo !== "null"
+                            ?  <img src={Company.logo} alt="" />
+                            :  <img src="/assets/picture.svg" alt="" />
+                       
+                      }
+                      </div>
+
+                      <Card.Body>
+                        <Card.Title
+                          style={{ textDecoration: "none" }}
+                          className="text-center"
+                        >
+                          {Company.name ? Company.name : Company.domain}
+                        </Card.Title>
+                      </Card.Body>
+                    </Card>
+                  </Link>
+                </div>
+              );
+            })
+          )}
+        </div>
+      }
 
       <div className="mt-5"></div>
       <Pagination
