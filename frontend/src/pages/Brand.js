@@ -187,7 +187,7 @@ function Brand() {
   const getbrandslogo = async () => {
     if (domain) {
       const data = await sendSearchAPI({ domain: id, active: 1 });
-      console.log(data?.data?.data);
+
       setDomainPost(data?.data?.data);
     }
   };

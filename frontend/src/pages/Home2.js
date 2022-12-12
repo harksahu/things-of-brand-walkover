@@ -20,7 +20,7 @@ function Home2() {
         await googleSignIn();
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
   return (

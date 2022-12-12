@@ -52,7 +52,7 @@ function DomainVerificationPage() {
         ifVerify = true;
         break;
       } else {
-        console.log("not verify");
+        // console.log("not verify");
       }
     }
     if (!ifVerify) {
