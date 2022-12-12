@@ -159,7 +159,6 @@ function MyVerticallyCenteredModal(params) {
               </Button>
             </OverlayTrigger>
           </div>
-          {/* {console.log(props)} */}
           <SvgInline {...props} />
         </Col>
         <div style={{ position: "absolute" }}>

@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 
 const DomainValidate = ({ children }) => {
     const location = useLocation()
-console.log("domainValidatiuon");
   if (!location.pathname.includes(".")) {
     return <Navigate to='/' />;
   }

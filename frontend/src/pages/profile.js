@@ -78,14 +78,11 @@ function Profile(props) {
 
 
   const getbrandslogo = async () => {
-    console.log("locatiom", location.state.data)
     if (domain && location.state?.data && id) {
       const data = await sendSearchAPI({ domain: id });
 
       setDomainPost(data?.data?.data);
-      // console.log("domain ",data );
     }
-    console.log("id ", id);
 
 
   }
@@ -93,7 +90,6 @@ function Profile(props) {
   const addLinks = (event) => {
     if (event.key === "Enter" && event.target.value !== "") {
       setLinks([...links, event.target.value]);
-      // props.selectedTags([...tags, event.target.value]);
       event.target.value = "";
     }
   };
@@ -116,7 +112,6 @@ function Profile(props) {
   useEffect(() => {
     // setLoading(true);
 
-    console.log("useEffect", location?.state?.data)
     if (user) {
       if (user?.email) {
 
@@ -134,7 +129,6 @@ function Profile(props) {
     }
   }, [domain]);
   const updateProfileValue = async (req, res) => {
-    // console.log("idd",domain)
     if (name) {
       if (aboutus) {
 
@@ -155,7 +149,6 @@ function Profile(props) {
           color: color,
         };
         const id1 = await updateProfileFields(data);
-        console.log("await updateProfileFields(data);",id1);
         // await updateProfileFields(data);
         navigate(-1);
       } else {
@@ -166,11 +159,8 @@ function Profile(props) {
     }
   };
   const profileDetails = async (req, res) => {
-    console.log("domain hsdbjsd", location?.state?.data)
     fresult = await getProfileDetails({ domain: location?.state?.data?.domain});
-    // const ans =  await getCompanyDetails(id)
-    // setResults(ans.data.data);
-    console.log("fresult", fresult);
+
     if (location.state?.data != null) {
       setId(location?.state?.data?._id);
       setName(location?.state?.data?.name);
@@ -684,50 +674,15 @@ function Profile(props) {
                       </div>
                     </Form.Group>
                     <div id="button" className="">
-                      {/* {location.state?.data ? ( */}
                       <Button
                         variant="primary"
                         onClick={() => updateProfileValue()}
                       >
                         Update
                       </Button>
-                      {/* // ) : (
-                    <Button variant="primary" onClick={() => storeProfileValue()}>
-                      Submit
-                    </Button>
-                  // )} */}
+                      
                     </div>
-                    {/* <div className="d-flex flex-wrap justify-content-center">
-              {DomainPost?.map((brand, index) => {
-                // console.log(brand);
-                return (
-                  <div key={index}>
-                    <div key={brand._id} className=" flex-wrap item">
-                      <Card>
-                        <Link to={"/stuff/" + brand._id}>
-                          <div
-                            style={{ overflow: "auto" }}
-                            className="img_size"
-                          >
-                            <SvgInline {...brand} />
-                          </div>
-                          <Card.Body>
-                            <Card.Title
-                              style={{ textDecoration: "none" }}
-                              className="text-center"
-                            >
-                              {brand.title}
-                            </Card.Title>
-                          </Card.Body>
-                        </Link>
-                      </Card>
-                    </div>
-                  </div>
-                );
-New
-3:00
-})}
-            </div> */}
+                    
                   </Form>
                 </Stack>
               </Card.Body>

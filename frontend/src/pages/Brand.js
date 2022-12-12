@@ -185,7 +185,6 @@ function Brand() {
   const getbrandslogo = async () => {
     if (domain) {
       const data = await sendSearchAPI({ domain: id, active: 1 });
-      console.log(data?.data?.data);
       setDomainPost(data?.data?.data);
     }
   };
@@ -415,7 +414,10 @@ function Brand() {
                 </div>
 
                 <div className="mt-5">
-                  <h5>Logos</h5>
+                  {console.log("DomainPost",DomainPost?.length)}
+                  {DomainPost?.length >0 ?
+                  <h5>Logos</h5>:""
+}
                   <div className="grid">
                     {DomainPost?.map((brand, index) => {
                       return (
@@ -585,7 +587,7 @@ function Brand() {
                 </div>
 
                 <div className="mt-5">
-                  {guidlines ? <h5>Guidelines</h5> : ""}
+                  {guidlines?.length <= 12 || guidlines == undefined ? "":<h5>Guidelines</h5>}
                   <div dangerouslySetInnerHTML={{ __html: guidlines }}></div>
                 </div>
               </div>

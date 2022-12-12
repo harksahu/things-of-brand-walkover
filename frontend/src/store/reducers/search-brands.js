@@ -17,7 +17,6 @@ const searchBrandStart = (state) => {
   };
   
   const searchBrandSuccess = (state, action) => {
-    // console.log(action);
     return { ...state, data: action?.data || [], isDone: +true, isLoading: false };
   };
   

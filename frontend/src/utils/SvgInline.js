@@ -4,7 +4,6 @@ const SvgInline = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isErrored, setIsErrored] = useState(false);
   useEffect(() => {
-    // console.log(props.url);
     var url =
       props.url !== undefined && props.url !== "null"
         ? props.url
