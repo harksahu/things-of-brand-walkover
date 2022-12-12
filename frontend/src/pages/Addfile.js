@@ -53,8 +53,8 @@ const Addfile = () => {
   const [ffresult, setResult] = useState();
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location?.state?.domain);  
-  const [shareEmailDomainOption,setShareEmailDomainOption] =useState(""); 
+  console.log(location?.state?.domain);
+  const [shareEmailDomainOption, setShareEmailDomainOption] = useState("");
   // console.log(location.state.domain);  
   // const [logo, setLogo] = useState();
 
@@ -68,16 +68,12 @@ const Addfile = () => {
   const findSharedEmail = async (req, res) => {
     var shareddEmail = await getProfileDetails({});
     for (var i = 0; i < shareddEmail?.data?.data?.length; i++) {
-      for (
-        var j = 0;
-        j < shareddEmail?.data?.data[i]?.sharedEmail.length;
-        j++
-      ) {
+      for (var j = 0; j < shareddEmail?.data?.data[i]?.sharedEmail.length; j++) {
         if (shareddEmail?.data?.data[i]?.sharedEmail[j] == user.email) {
-          var temp = shareEmailDomainOption;
-          temp.push(shareddEmail?.data?.data[i]?.domain);
-
-          setShareEmailDomainOption(temp);
+          // console.log("entered in loop");
+          // console.log("user.email",user.email);
+          // console.log(shareddEmail?.data?.data[i]);
+          setShareEmailDomainOption(shareddEmail?.data?.data[i]?.domain);
         }
       }
     }
@@ -94,9 +90,12 @@ const Addfile = () => {
        
       fresult = await getProfileDetails({ email: user.email });
       setResult(fresult.data.data);
-      // for(var i =0;i<fresult?.data?.data?.length;i++)
-      // { var temp = shareEmailDomainOption;
-      //   temp.push(fresult.data.data[i].domain);
+    }
+    if (location?.state?.domain) {
+      setDomain(location?.state?.domain);
+
+    }
+    else {
 
       //   setShareEmailDomainOption(temp);
       // }
@@ -140,27 +139,33 @@ const Addfile = () => {
             for (i = 0; i < ffresult.length; i++) {
               if (domain === ffresult[i]._id) {
                 logo = ffresult[i]?.logo;
+
                 break;
               }
             }
+            console.log("logo" + logo);
+            // console.log("logo" + final_result);
+            // console.log("logo="+imageUrl);
 
-            if (logo == "null") {
+            if (logo == "null" || logo == undefined) {
               const data = {
-                name: ffresult[i].name,
-                aboutus: ffresult[i].aboutus,
+                _id : result.data.data[0]._id,
+                name: result.data.data[0]?.name,
+                aboutus: result.data.data[0]?.aboutus,
                 logo: imageUrl,
-                links: ffresult[i].links,
-                domain: ffresult[i].domain,
-                guidlines: ffresult[i].guidlines,
-
-                color: ffresult[i].allColor,
-                email: ffresult[i].email,
-                verify: ffresult[i].verify,
+                links: result.data.data[0]?.links,
+                domain: result.data.data[0]?.domain,
+                guidlines: result.data.data[0]?.guidlines,
+                color: result.data.data[0]?.allColor,
+                email: result.data.data[0]?.email,
+                verify: result.data.data[0]?.verify,
               };
+              console.log("loogo="+imageUrl);
 
               await updateProfileFields(data);
+
             }
-          } catch (error) {}
+          } catch (error) { }
         } else {
           alert("Image imput required");
         }
@@ -182,82 +187,60 @@ const Addfile = () => {
   }, [user,shareEmailDomainOption]);
   return (
     <>
-    {user?
-      <Container  className="wrpr">
-        <Row>
-        <nav className="navbar bg-light">
-          <div className="container-fluid">          
-            <a
-              className="navbar-brand"            
-            >
-              <Button
-                variant="outline-dark"
-                className="me-3"
-                onClick={() => {
-                  navigate(-1);
-                }}
-              >
-                <MdArrowBackIos />
-              </Button>
-              Add a file to <strong>{location?.state?.domain}</strong>
-            </a>
-          </div>
-        </nav>                
-          <Col md={9} lg={10} className="mt-4">
-            <Card style={{ width: "30rem" }}>
-              <Card.Body>
-                <Stack gap={3}>
-                  <FormGroup>
-                    <Form.Label>Choose a domain *</Form.Label>
-                    <Form.Select
-                      aria-label="Default select example"
-                      onChange={(e) => {
-                        setDomain(e.target.value);
-                        {console.log("domain seted"+e.target.value)}
-                      }}
+      {user ?
+        <Container className="wrpr">
+          <Row>
+            <nav className="navbar bg-light">
+              <div className="container-fluid">
+                <a
+                  className="navbar-brand"
+                >
+                  <Button
+                    variant="outline-dark"
+                    className="me-3"
+                    onClick={() => {
+                      navigate(-1);
+                    }}
+                  >
+                    <MdArrowBackIos />
+                  </Button>
+                  Add a file to <strong>{location?.state?.domain}</strong>
+                </a>
+              </div>
+            </nav>
+            <Col md={9} lg={10} className="mt-4">
+              <Card style={{ width: "30rem" }}>
+                <Card.Body>
+                  <Stack gap={3}>
+                    <FormGroup>
+                      <Form.Label>Choose a domain *</Form.Label>
+                      <Form.Select
+                        aria-label="Default select example"
+                        onChange={(e) => {
+                          setDomain(e.target.value);
+                          { console.log("domain seted" + e.target.value) }
+                        }}
                       >
-                      
-                      {ffresult &&
-                        ffresult.map((domainName, index) => (
-                          <>
-                          {domainToSelect==domainName.domain?
-                          <option key={index}  value={domainName.domain}  selected>
-                          {domainName.domain}
-                        </option>: <option key={index} value={domainName.domain} >
-                            {domainName.domain}
-                          </option>
-                         
-                          }
-                           </>))
-                        }
-                      
-                        { ffresult&& shareEmailDomainOption&&shareEmailDomainOption.map((shareEmailDomainOptionTemp,index) => (
-                          <>
-                            <option key={index} value={shareEmailDomainOptionTemp} >
-                              {shareEmailDomainOptionTemp}
-                            </option>
-                            </>
-                          ))
-                          }
-                        {
-                          shareEmailDomainOption && ffresult && ffresult.map((domainName, index) => (
+
+                        {ffresult &&
+                          ffresult.map((domainName, index) => (
                             <>
-                              {domainToSelect == domainName.domain ? (
-                                <option
-                                  key={index}
-                                  value={domainName.domain}
-                                  selected
-                                >
+
+                              {domainToSelect == domainName.domain ?
+                                <option key={index} value={domainName.domain} selected>
+                                  {domainName.domain}
+                                </option> : <option key={index} value={domainName.domain} >
                                   {domainName.domain}
                                 </option>
-                              ) : (
-                                <option key={index} value={domainName.domain}>
-                                  {domainName.domain}
-                                </option>
-                              )}
+                              }
+
                             </>
                           ))}
-                         
+                        {shareEmailDomainOption ? <option value={shareEmailDomainOption} selected>
+                          {shareEmailDomainOption}
+                        </option> : ""}
+
+
                       </Form.Select>
                     </FormGroup>
 
@@ -299,7 +282,9 @@ const Addfile = () => {
                         type="text"
                         onKeyUp={(event) => addTags(event)}
                       />
-                      <Form.Text className="text-muted">Press enter</Form.Text>
+                      <Form.Text className="text-muted">
+                        Press enter
+                      </Form.Text>
                       <ul className="tags my-3">
                         {tags.map((tag, index) => (
                           <li key={index} className="tag-item">
@@ -315,7 +300,7 @@ const Addfile = () => {
                       </ul>
                     </FormGroup>
                   </Stack>
-                 
+                  {/* </Card.Text> */}
                   <Button variant="primary" onClick={onSubmitClick}>
                     Submit
                   </Button>
@@ -323,9 +308,8 @@ const Addfile = () => {
               </Card>
             </Col>
           </Row>
-        </Container>
-        :<Home />
-                        }
+        </Container> : <Home />
+      }
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}

@@ -34,7 +34,7 @@ const getProfileDetails = async (req, res) => {
     if (searchfrom == "true") {
         try {
             var data = await profileModel.find({
-                ...domain,
+                domain:domainCheck,
                 ...email,
                 ..._id
                 // ...domain

@@ -62,9 +62,9 @@ function MyCompany() {
             domain: d,
             email: user?.email,
           });
-          console.log("data", data);
+          console.log("data i store profile " , data.data.data);
           alert("successfully saved domain " + d);
-          navigate("/editProfile", { state: { data: domain } })
+          navigate("/editProfile", { state: { data: data.data.data }})
           console.log("domain", domain);
         } catch (err) {
           console.log(err);
@@ -75,8 +75,9 @@ function MyCompany() {
   };
   const next = () => {
     var check = 0;
-    for (let i = 0; i < company?.length; i++) {
-      if (company[i].domain === domain) {
+    for (let i = 0; i < allData?.length; i++) {
+      console.log("allData",allData[i].domain);
+      if (allData[i].domain === domain) {
         check = 1;
         document.getElementById("domainError").classList.remove("visually-hidden");
         break;
@@ -219,12 +220,14 @@ function MyCompany() {
             </div>
             <div className="grid">
               {allData?.map((Company) => {
+                 {console.log("consoleee",Company)}
                 return (
                   <div
                     key={Company._id}
                     className="d-flex justify-content-center item"
                   >
                     {Company?.sharedEmail?.map((sharedEmail, index) => {
+                      {console.log("console",index,sharedEmail)}
                       return (
                         <>
 
