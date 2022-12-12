@@ -30,7 +30,7 @@ function Not_found() {
 
 function Home({ searchBrandData = [], getSearchBrand }) {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(16);
   const { logOut } = UserAuth();
@@ -43,19 +43,25 @@ function Home({ searchBrandData = [], getSearchBrand }) {
   // const getProfile = async () =>{
   //   setSearchBrandData(await getProfileDetails({}));
   // }
-
+  const fetchPosts = async () => {
+      
+    await getSearchBrand({});
+    setPosts(searchBrandData.data);
+    
+    console.log("Loading1",loading);
+  };
+  const loadingFalse = async () => {
+    setLoading(false);
+  }
   useEffect(() => {
-    const fetchPosts = async () => {
-      setLoading(true);
-      getSearchBrand({});
-      setLoading(false);
-      setPosts(searchBrandData.data);
-
-    };
-    // setLoading(true);
-    fetchPosts();
-    // setLoading(false); 
-  }, []);
+    setLoading(true);
+    const fetchPosts1 = async () => {
+      await fetchPosts();
+      await loadingFalse();
+    }
+    fetchPosts1();
+    console.log("Loading2",loading);
+  }, [ ]);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -69,6 +75,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
     <div className="p-3 flex bg-light">
       {loading ?
         <ClipLoader /> :
+        <>
         <div className="d-flex flex-wrap grid container">
           {currentPosts?.data?.length === 0 ? (
             <Not_found />
@@ -106,14 +113,16 @@ function Home({ searchBrandData = [], getSearchBrand }) {
             })
           )}
         </div>
+        <div className="mt-5"></div>
+        {currentPosts?.data?.length >0?<Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={searchBrandData.data.length}
+          paginate={paginate}
+        />:""}
+        </>
       }
 
-      <div className="mt-5"></div>
-      <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={searchBrandData.data.length}
-        paginate={paginate}
-      />
+      
     </div>
   );
 }
