@@ -134,6 +134,7 @@ function MyCompany() {
                       <Card className="item-company">
                         <div style={{ overflow: "auto" }} className="img_size">
                           <SvgInline name={Company.name} url={Company.logo} />
+                          {/* <img src={Company.logo} alt="error"/> */}
                         </div>
                         <Card.Body>
                           <Card.Title
@@ -216,15 +217,16 @@ function MyCompany() {
             </div>
             <div className="grid">
               {allData?.map((Company) => {
+                 {console.log("consoleee",Company)}
                 return (
                   <div
                     key={Company._id}
                     className="d-flex justify-content-center item"
                   >
                     {Company?.sharedEmail?.map((sharedEmail, index) => {
+                      {console.log("console",index,sharedEmail)}
                       return (
-                        <>
-                      
+                        <>       
                         <div key={index}>
                           {sharedEmail == user.email ? (
                             <Link to={"/" + Company.domain}>
@@ -240,6 +242,7 @@ function MyCompany() {
                                     name={Company.name}
                                     url={Company.logo}
                                   />
+                                  {/* <img src={Company.logo} alt="error"/> */}
                                 </div>
                                 <Card.Body>
                                   <Card.Title
