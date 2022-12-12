@@ -446,7 +446,7 @@ function Brand() {
                               </Card.Body>
                             </Link>
                             <Card.Footer className="text-muted d-flex justify-content-center">
-                              <Button
+                       { /*    <Button
                                 variant="outline-secondary"
                                 size="sm"
                                 className="me-4"
@@ -456,7 +456,7 @@ function Brand() {
                               >
                                 PNG
                               </Button>
-
+*/}
                               <Button
                                 variant="outline-secondary"
                                 size="sm"
