@@ -11,7 +11,6 @@ import {
 } from "react-bootstrap";
 
 import { UserAuth } from "../context/AuthContext";
-
 import {
   getProfileDetails,
   updateProfileFields,
