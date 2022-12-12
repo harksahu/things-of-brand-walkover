@@ -94,7 +94,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
       await googleSignIn();
       navigate("/MyCompanies");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -103,7 +103,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
       await logOut();
       navigate("/home");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
