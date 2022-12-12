@@ -71,6 +71,7 @@ function Profile(props) {
   const [fontFamily, setFontFamily] = useState([false]);
   const [sharedEmail, setSharedEmail] = useState();
   const [loading, setLoading] = useState(false);
+  const [allData, setAllData] = useState();
 
   const location = useLocation();
   let countTemp = countTracker;
@@ -78,7 +79,10 @@ function Profile(props) {
   var fresult;
   const navigate = useNavigate();
 
-
+  const getAllData= async ()=>{
+    var allDataTemp = await getProfileDetails({});
+    setAllData(allDataTemp.data.data);
+  }
   const getbrandslogo = async () => {
     console.log("locatiom", location.state.data)
     if (domain && location.state?.data && id) {
@@ -90,6 +94,21 @@ function Profile(props) {
     console.log("id ", id);
 
 
+  }
+  function extractDomain(url) {
+    var domainName;
+    if (url.indexOf("://") > -1) {
+      domainName = url.split("/")[2];
+    } else {
+      domainName = url.split("/")[0];
+    }
+    //find & remove www
+    if (domainName.indexOf("www.") > -1) {
+      domainName = domainName.split("www.")[1];
+    }
+    domainName = domainName.split(":")[0];
+    domainName = domainName.split("?")[0];
+    return domainName;
   }
 
   const addLinks = (event) => {
@@ -136,17 +155,34 @@ function Profile(props) {
     }
   }, [domain]);
   const updateProfileValue = async (req, res) => {
-    // console.log("idd",domain)
+    var checkTemp =0;
+    console.log("checkTEMP1",checkTemp);
+    if(domain!=location?.state?.data?.domain)
+    {
+      for (let i = 0; i < allData?.length; i++) {
+        console.log("allData",allData[i].domain);
+        if (allData[i].domain === domain) {
+          checkTemp = 1;
+          break;
+        }
+      }
+    }
+    console.log("checkTEMP2",checkTemp);
+    var domainParts = domain.split(".");
+      if (domainParts.length >= 2 && domainParts[1].length >= 1) {
+        
+    if(checkTemp ==0)
+    {
     if (name) {
       if (aboutus) {
-
+        const domainTemp = extractDomain(domain);
         const data = {
           _id: id,
           logo: logo,
           name: name,
           aboutus: aboutus,
           links: links,
-          domain: domain,
+          domain: domainTemp,
           guidlines: guidlines,
           fontLink: fontLink,
           PrimaryColors: PrimaryColors,
@@ -161,11 +197,18 @@ function Profile(props) {
         // await updateProfileFields(data);
         navigate(-1);
       } else {
-        alert("about us field is compulsory");
+        alert("About us field is compulsory");
       }
     } else {
-      alert("name field is compulsory");
+      alert("Name field is compulsory");
     }
+  } else{
+    alert("Domain should be unique"); 
+  }
+}
+else {
+  alert("Enter proper domain"); 
+}
   };
   const profileDetails = async (req, res) => {
     console.log("domain hsdbjsd", location?.state?.data)
@@ -190,6 +233,7 @@ function Profile(props) {
       setDomain(location?.state?.data?.domain);
     }
     if (location.state?.data) {
+      getAllData();
       getbrandslogo();
     }
   };
