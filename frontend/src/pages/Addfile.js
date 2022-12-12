@@ -147,7 +147,7 @@ const Addfile = () => {
             // console.log("logo" + final_result);
             // console.log("logo="+imageUrl);
 
-            if (logo == "null" || logo == undefined) {
+            if (result.data.data[0]?.logo == undefined) {
               const data = {
                 _id : result.data.data[0]._id,
                 name: result.data.data[0]?.name,
