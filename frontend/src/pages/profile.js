@@ -24,7 +24,7 @@ import {
 } from "../api/index.js";
 import CloseIcon from "@mui/icons-material/Close";
 import { BsFillPlusCircleFill, BsThreeDotsVertical } from "react-icons/bs";
-import RichtextEditor from "./Jodit.js";
+import RichtextEditor from "./jodit.js";
 import { BsFillTrashFill, BsChevronLeft } from "react-icons/bs";
 import { MdArrowBackIos } from "react-icons/md";
 import { useLocation, Link, useNavigate } from "react-router-dom";
@@ -360,7 +360,7 @@ else {
                                         </Dropdown.Item>
                                       </Dropdown.Menu>
                                     </Dropdown> */}
-                                    <Link to={"/Stuff/" + brand._id}>
+                                    <Link to={"/stuff/" + brand._id}>
                                       <div
                                         style={{ overflow: "auto" }}
                                         className="img_size"
