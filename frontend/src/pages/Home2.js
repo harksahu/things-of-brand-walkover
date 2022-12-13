@@ -20,7 +20,7 @@ function Home2() {
         await googleSignIn();
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
   return (
@@ -58,43 +58,35 @@ function Home2() {
               They manage their brand here
             </div>
             <div className="d-flex brands-wrp align-items-center justify-content-center flex-wrap">
-              <div>
+              <a href="/walkover.in">
                 <img src="walkover.svg" />
-              </div>
-              <div>
+              </a>
+              
+              <a href="/msg91.com">
                 <img src="msg91.svg" />
-              </div>
-              <div>
+              </a>
+              
+              <a href="/giddh.com">
                 <img src="giddh.svg" />
-              </div>
-              <div>
+              </a>
+              
+              <a href="/halfkg.store">
                 <img src="halfkg.svg" />
-              </div>
-              <div>
+              </a>
+              
+              <a href="/viasocket.com">
                 <img src="socket.svg" />
-              </div>
-              <div>
+              </a>
+              
+              <a href="/workspace91.com">
                 <img src="workspace.svg" />
-              </div>
+              </a>
             </div>
             <Link to="/AllCompanies">Explore more...</Link>
           </Col>
         </Row>
-        <div className="flex-fill"></div>
-        <footer className="footer mt-auto small text-center">
-          © 2022 <strong>Things of brand</strong> by{" "}
-          <a href="https://walkover.in/" target="_blank">
-            WALKOVER
-          </a>
-          , All rights reserved.
-          <a
-            href="https://feature.thingsofbrand.com/feature-requests"
-            target="_blank"
-          >
-            FEATURE REQUESTS
-          </a>
-        </footer>
       </Container>
+      <div className="flex-fill"></div>        
     </>
   );
 }

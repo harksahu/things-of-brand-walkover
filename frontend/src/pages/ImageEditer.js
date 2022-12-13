@@ -179,9 +179,8 @@ function MyVerticallyCenteredModal(params) {
               </Button>
             </OverlayTrigger>
           </div>
-          {/* {console.log(props)} */}
-          {/* <SvgInline {...props} /> */}
-          <img src = {props?.url}></img>
+
+          <SvgInline {...props} />
         </Col>
 
         <div style={{ position: "absolute" }}>
@@ -317,7 +316,7 @@ function MyVerticallyCenteredModal(params) {
                 <div className="mt-4 mb-1">
                   <label className="small fw-bold">Download</label>
                 </div>
-                <Button
+                {/* <Button
                   variant="outline-secondary"
                   size="sm me-4"
                   onClick={() => {
@@ -326,7 +325,7 @@ function MyVerticallyCenteredModal(params) {
                   className=""
                 >
                   PNG
-                </Button>
+                </Button> */}
                 <Button
                   variant="outline-secondary"
                   size="sm"

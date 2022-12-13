@@ -187,7 +187,7 @@ function Brand() {
   const getbrandslogo = async () => {
     if (domain) {
       const data = await sendSearchAPI({ domain: id, active: 1 });
-      console.log(data?.data?.data);
+
       setDomainPost(data?.data?.data);
     }
   };
@@ -426,7 +426,7 @@ function Brand() {
                             <Link to={"/stuff/" + brand._id}>
                               <div
                                 style={{ overflow: "auto" }}
-                                className="img_size"
+                                className="img_size pattern-square"
                               >
                                 {
 
@@ -446,7 +446,7 @@ function Brand() {
                               </Card.Body>
                             </Link>
                             <Card.Footer className="text-muted d-flex justify-content-center">
-                              <Button
+                       { /*    <Button
                                 variant="outline-secondary"
                                 size="sm"
                                 className="me-4"
@@ -456,7 +456,7 @@ function Brand() {
                               >
                                 PNG
                               </Button>
-
+*/}
                               <Button
                                 variant="outline-secondary"
                                 size="sm"

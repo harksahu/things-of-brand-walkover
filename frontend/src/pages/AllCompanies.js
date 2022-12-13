@@ -48,7 +48,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
     await getSearchBrand({});
     setPosts(searchBrandData.data);
     
-    console.log("Loading1",loading);
+
   };
   const loadingFalse = async () => {
     setLoading(false);
@@ -60,7 +60,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
       await loadingFalse();
     }
     fetchPosts1();
-    console.log("Loading2",loading);
+
   }, [ ]);
 
   const indexOfLastPost = currentPage * postsPerPage;

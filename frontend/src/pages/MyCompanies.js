@@ -62,12 +62,12 @@ function MyCompany() {
             domain: d,
             email: user?.email,
           });
-          console.log("data i store profile " , data.data.data);
+
           alert("successfully saved domain " + d);
           navigate("/editProfile", { state: { data: data.data.data }})
-          console.log("domain", domain);
+
         } catch (err) {
-          console.log(err);
+          // console.log(err);
           alert("Profile is not created");
         }
       }
@@ -76,7 +76,7 @@ function MyCompany() {
   const next = () => {
     var check = 0;
     for (let i = 0; i < allData?.length; i++) {
-      console.log("allData",allData[i].domain);
+
       if (allData[i].domain === domain) {
         check = 1;
         document.getElementById("domainError").classList.remove("visually-hidden");
@@ -87,34 +87,31 @@ function MyCompany() {
       var domainParts = domain.split(".");
       if (domainParts.length >= 2 && domainParts[1].length >= 1) {
         storeProfileValue();
-        console.log("Invalid1");
+
       }
       else {
-        console.log("Invalid2");
+
         document.getElementById("WrongdomainError").classList.remove("visually-hidden");
       }
-      console.log("Invalid3");
+
     }
-    // navigate("/editProfile")
+
   };
   const findSharedEmail = async (req, res) => {
     var shareddEmail = await getProfileDetails({});
 
     setAllData(shareddEmail.data.data);
-    console.log("ans", shareddEmail.data.data);
+
   };
   const profileDetails = async (req, res) => {
     fresult = await getProfileDetails({ email: user.email });
     setCompany(fresult.data.data);
 
-    // if (Array.isArray(fresult.data.data) && fresult.data.data.length) {
-    // } else {
-    //   navigate("/editProfile");
-    // }
+
   };
 
   return (
-    <div className="h-100">
+    <>
       {loading ? (
         <ClipLoader />
       ) : (
@@ -130,7 +127,7 @@ function MyCompany() {
                     {/* <Link to={"/profile" }state={{ data: Company }}> */}
                     <Link to={"/" + Company.domain}>
                       <Card className="item-company">
-                        <div style={{ overflow: "auto" }} className="img_size">
+                        <div style={{ overflow: "auto" }} className="img_size pattern-square">
                           {
 
                             Company.logo !== undefined && Company.logo !== "null"
@@ -194,14 +191,14 @@ function MyCompany() {
                       name="myBrowser"
                       id="domain"
                       onChange={(e) => {
-                        // setDomain(extractDomain(e.target.value));
+
                         setDomain(e.target.value);
-                        // checkDomain(e.target.value);
+
                       }}
-                    // value={domain}
+
                     />
                     <br></br>
-                    {/* {console.log("data: company",company)} */}
+
 
                     <Button variant="primary" onClick={() => next()}>Next</Button>
                   </Form.Group>
@@ -227,7 +224,7 @@ function MyCompany() {
                     className="d-flex justify-content-center item"
                   >
                     {Company?.sharedEmail?.map((sharedEmail, index) => {
-                      {console.log("console",index,sharedEmail)}
+
                       return (
                         <>
 
@@ -240,7 +237,7 @@ function MyCompany() {
                                 <Card className="item-company">
                                   <div
                                     style={{ overflow: "auto" }}
-                                    className="img_size"
+                                    className="img_size pattern-square"
                                   >
                                     {
 
@@ -278,7 +275,7 @@ function MyCompany() {
           </Container>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

@@ -5,15 +5,21 @@ const SvgInline = (props) => {
   const [isErrored, setIsErrored] = useState(false);
   useEffect(() => {
     // console.log(props.url);
-    var url =
-      props.url !== undefined && props.url !== "null"
-        ? props.url
-        : "/assets/picture.svg";
+    // console.log(props?.url);
+    var url = props?.url
+    // console.log(url);
+      // props.url !== undefined && props.url !== "null"
+      //   ? props.url
+      //   : "/assets/picture.svg";
     fetch(url)
       .then((res) => res.text())
       .then((res) => {
         var svgToHe = res.toString();
         svgToHe = svgToHe?.replace("<svg ", `<svg id="${props.url}" `);
+        // console.log(res.json());
+        // console.log(res.toString());
+        // console.log(res);
+        // setSvg(res.toString());
         setSvg(svgToHe);
       })
       .catch(setIsErrored);

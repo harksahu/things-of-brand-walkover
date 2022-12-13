@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
+import Footer from './components/Footer';
 import Protected from './components/Protected';
 import DomainValidate from './components/DomainValidate';
 import { AuthContextProvider, UserAuth } from './context/AuthContext';
@@ -43,7 +44,7 @@ function App() {
           minBreakpoint="xxs"
         >
           <AuthContextProvider>
-            {window.location.pathname ? (window.location.pathname.slice(0, 7) === '/Stuff/' ? "" : <NavigationBar />) : <NavigationBar />}
+            {window.location.pathname ? (window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <NavigationBar />) : <NavigationBar />}
             <Routes>
 
               <Route path='/' element={<Home />} />
@@ -62,6 +63,7 @@ function App() {
               <Route path='/MyCompanies' element={<Protected> <MyCompany /> </Protected>} />
               <Route path='*' element={<PageNotFound />} />
             </Routes>
+            {window.location.pathname ? (window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <Footer />) :<Footer />}
           </AuthContextProvider>
         </ThemeProvider>
       }

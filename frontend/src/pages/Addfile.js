@@ -53,15 +53,13 @@ const Addfile = () => {
   const [ffresult, setResult] = useState();
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location?.state?.domain);
+
   const [shareEmailDomainOption, setShareEmailDomainOption] = useState("");
-  // console.log(location.state.domain);  
-  // const [logo, setLogo] = useState();
+
 
   const addTags = (event) => {
     if (event.key === "Enter" && event.target.value !== "") {
       setTags([...tags, event.target.value]);
-      // props.selectedTags([...tags, event.target.value]);
       event.target.value = "";
     }
   };
@@ -70,9 +68,7 @@ const Addfile = () => {
     for (var i = 0; i < shareddEmail?.data?.data?.length; i++) {
       for (var j = 0; j < shareddEmail?.data?.data[i]?.sharedEmail.length; j++) {
         if (shareddEmail?.data?.data[i]?.sharedEmail[j] == user.email) {
-          // console.log("entered in loop");
-          // console.log("user.email",user.email);
-          // console.log(shareddEmail?.data?.data[i]);
+
           setShareEmailDomainOption(shareddEmail?.data?.data[i]?.domain);
         }
       }
@@ -124,7 +120,7 @@ const Addfile = () => {
               email: user.email,
               domain: domain,
             });
-            console.log("result", result);
+
             const a = await createBrandAPI({
               url: imageUrl,
               title,
@@ -132,8 +128,7 @@ const Addfile = () => {
               email: user?.email,
               domain: result.data.data[0]._id,
             });
-            console.log("a");
-            console.log(a);
+
             var logo;
             var i;
             for (i = 0; i < ffresult.length; i++) {
@@ -143,9 +138,7 @@ const Addfile = () => {
                 break;
               }
             }
-            console.log("logo" + logo);
-            // console.log("logo" + final_result);
-            // console.log("logo="+imageUrl);
+
 
             if (result.data.data[0]?.logo == undefined) {
               const data = {
@@ -160,7 +153,7 @@ const Addfile = () => {
                 email: result.data.data[0]?.email,
                 verify: result.data.data[0]?.verify,
               };
-              console.log("loogo="+imageUrl);
+
 
               await updateProfileFields(data);
 
@@ -218,7 +211,7 @@ const Addfile = () => {
                         aria-label="Default select example"
                         onChange={(e) => {
                           setDomain(e.target.value);
-                          { console.log("domain seted" + e.target.value) }
+
                         }}
                       >
 
