@@ -76,46 +76,27 @@ function MyVerticallyCenteredModal(params) {
       h = y;
     }
 
-    // const preset = presets.offscreen();
-
-    const preset = presets.offscreen()
+    const preset = presets.offscreen();
 
     async function toPng(data) {
-      const {
-        width,
-        height,
-        svg
-      } = data
-      const canvas = new OffscreenCanvas(width, height)
-      const ctx = canvas.getContext('2d')
-      const v = await Canvg.from(ctx, svg, preset)
-    
-      /**
-       * Resize SVG to fit in given size.
-       * @param width
-       * @param height
-       * @param preserveAspectRatio
-       */
-      v.resize(width, height, 'xMidYMid meet')
-    
-      // Render only first frame, ignoring animations and mouse.
-      await v.render()
-    
-      const blob = await canvas.convertToBlob()
-      const pngUrl = URL.createObjectURL(blob)
-    
-      return pngUrl
+      const { width, height } = data;
+      // console.log(width);
+      const canvas = new OffscreenCanvas(width, height);
+      const ctx = canvas.getContext("2d");
+      const v = await Canvg.from(ctx, img, preset);
+      v.resize(width, height, "xMidYMid meet");
+      await v.render();
+      const blob = await canvas.convertToBlob();
+      const pngUrl = URL.createObjectURL(blob);
+      return pngUrl;
     }
-    
+
     toPng({
-      width: 600,
-      height: 600,
-      svg: 'https://s3.ap-south-1.amazonaws.com/walkover.things-of-brand.assets/31b8d4b202f075da1adfd87488f915fb'
+      width: w,
+      height: h,
     }).then((pngUrl) => {
-      const img = document.querySelector('img')
-    
-      img.src = pngUrl
-    })
+      saveAs(pngUrl);
+    });
   };
 
   const getData = async () => {

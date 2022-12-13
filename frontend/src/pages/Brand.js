@@ -7,7 +7,6 @@ import {
   Navbar,
   Nav,
   Card,
-  Overlay,
   Button,
   Modal,
   ListGroup
@@ -20,11 +19,9 @@ import CopyToClipboard from "../components/CopyToClipboard.js"
 import {
   getProfileDetails,
   sendSearchAPI,
-  updateProfileFields,
-  getTXT,
+  updateProfileFields
 } from "../api/index.js";
 import saveAs from "file-saver";
-import SvgInline from "../utils/SvgInline.js";
 import {
   BsFillPlusCircleFill,
   BsFillTrashFill,
@@ -39,7 +36,6 @@ import {
   MdOutlineModeEdit,
   MdContentCopy
 } from "react-icons/md";
-import Addfile from "./Addfile";
 
 function Not_found() {
 
@@ -325,7 +321,7 @@ function Brand() {
                               </ListGroup>
                             </Modal.Body>
                             <Modal.Footer>
-                              <Button variant="outline-dark" ref={target} onClick={() => setShow(!show)}>Copy link</Button>
+                              <Button variant="outline-dark" onClick={()=>{navigator.clipboard.writeText(window.location.href)}}>Copy link</Button>
                               <Button variant="secondary" onClick={handleClosee}>
                                 Close
                               </Button>
@@ -335,24 +331,6 @@ function Brand() {
                               >
                                 Share
                               </Button>
-                              <Overlay target={target.current} show={show} placement="right">
-                                {({ placement, arrowProps, show: _show, popper, ...props }) => (
-                                  <div
-                                    {...props}
-                                    style={{
-                                      position: 'absolute',
-                                      backgroundColor: 'rgba(255, 100, 100, 0.85)',
-                                      padding: '2px 10px',
-                                      color: 'white',
-                                      borderRadius: 3,
-                                      ...props.style,
-                                    zIndex:9876
-                                    }}
-                                  >
-                                    Simple tooltip
-                                  </div>
-                                )}
-                              </Overlay>
                             </Modal.Footer>
                           </Form>
                         </Modal>
@@ -424,7 +402,9 @@ function Brand() {
                 </div>
 
                 <div className="mt-5">
-                  <h5>Logos</h5>
+                  {
+                    DomainPost?.length > 0?<h5>Logos</h5>:""
+                  }
                   <div className="grid">
                     {DomainPost?.map((brand, index) => {
                       return (
@@ -569,7 +549,7 @@ function Brand() {
                 </div>
 
                 <div className="mt-5">
-                  {guidlines ? <h5>Guidelines</h5> : ""}
+                  {guidlines?.length >12 ? <h5>Guidelines</h5> : ""}
                   <div dangerouslySetInnerHTML={{ __html: guidlines }}></div>
                 </div>
               </div>
