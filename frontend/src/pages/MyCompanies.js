@@ -112,7 +112,7 @@ function MyCompany() {
   return (
     <>
       {loading ? (
-        <ClipLoader />
+        <div className="center-loader"><ClipLoader /></div>
       ) : (
         <div>
           <Container>

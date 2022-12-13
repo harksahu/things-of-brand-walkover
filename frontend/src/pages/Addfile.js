@@ -186,7 +186,8 @@ const Addfile = () => {
   }, [user,shareEmailDomainOption]);
   return (
     <>
-    {loading?<ClipLoader/>:
+    {loading?<div className="center-loader"
+    ><ClipLoader/></div>:
     <div>
       {user ?
         <Container className="wrpr">

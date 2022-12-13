@@ -53,6 +53,7 @@ function Profile(props) {
   const [links, setLinks] = React.useState([]);
   const [company, setCompany] = useState("");
   const [profiledata, setProfile] = useState("");
+
   const [check, setCheck] = useState(true);
   const [id, setId] = useState("");
   const [logo, setLogo] = useState();
@@ -134,7 +135,7 @@ function Profile(props) {
   };
   useEffect(() => {
 
-
+    setLoading(true);
 
     if (user) {
       if (user?.email) {
@@ -214,8 +215,7 @@ else {
   const profileDetails = async (req, res) => {
 
     fresult = await getProfileDetails({ domain: location?.state?.data?.domain});
-
-
+    setLoading(false);
     if (location.state?.data != null) {
       setId(location?.state?.data?._id);
       setName(location?.state?.data?.name);
@@ -283,7 +283,7 @@ else {
   };
   return (
     <div className="bg-gray h-100">
-
+      {loading?<div className="center-loader"><ClipLoader/></div>:
       <Container className="wrpr">
         <Row>
           <nav className="navbar bg-light">
@@ -747,7 +747,7 @@ else {
           </Col>
         </Row>
       </Container>
-
+}
     </div>
   );
 }

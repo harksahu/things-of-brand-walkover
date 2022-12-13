@@ -92,3 +92,8 @@
     @include pattern-square;
 }
 
+.center-loader{
+    position: fixed;
+     top: 50%;
+    left: 50%;
+}

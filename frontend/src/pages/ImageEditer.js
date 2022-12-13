@@ -131,7 +131,7 @@ function MyVerticallyCenteredModal(params) {
 
   return (
     <>
-    {loading?<ClipLoader/>:
+    {loading?<div className="center-loader"><ClipLoader/></div>:
     <Container fluid>
       <Row className="h-90">
         <Col className="popup_img">
