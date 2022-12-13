@@ -39,7 +39,6 @@ import {
 
 function Not_found() {
 
-
   return <div className="not-found">Not found</div>;
 }
 
