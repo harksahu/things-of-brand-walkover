@@ -96,7 +96,6 @@ function MyCompany() {
       }
 
     }
-
   };
   const findSharedEmail = async (req, res) => {
     var shareddEmail = await getProfileDetails({});
@@ -107,7 +106,6 @@ function MyCompany() {
   const profileDetails = async (req, res) => {
     fresult = await getProfileDetails({ email: user.email });
     setCompany(fresult.data.data);
-
 
   };
 

@@ -37,7 +37,7 @@ function HomeLogo({ searchBrandData = [], getSearchBrand }) {
                 key={brand._id}
                 className="d-flex justify-content-center item"
               >
-                <Link to={"/stuff/" + brand._id}>
+                <Link to={"/Stuff/" + brand._id}>
                   <Card>
                     <div style={{ overflow: "auto" }} className="img_size">
                       {

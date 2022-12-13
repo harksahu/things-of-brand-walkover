@@ -17,7 +17,7 @@ import './App.css';
 import { auth } from './firebase.js';
 import MyVerticallyCenteredModal from './pages/ImageEditer';
 import Brand from './pages/Brand.js';
-import SearchLogo from './pages/Searchlogo.js';
+import SearchLogo from './pages/SearchLogo';
 import Home2 from './pages/Home2';
 import Profile from './pages/profile';
 import DomainVerificationPage from './pages/DomainVerificationPage';
@@ -51,7 +51,7 @@ function App() {
 
               <Route path='/' element={<Home />} />
               <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
-              <Route path='/allcompanies' element={<AllCompanies />} />
+              <Route path='/all-companies' element={<AllCompanies />} />
               <Route path='/searchlogo' element={<SearchLogo />} />
               <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />
               <Route path='/:title' element={<DomainValidate>
@@ -60,9 +60,9 @@ function App() {
               <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
               <Route path='/domainverify' element={<DomainVerificationPage />} />
               <Route path='/editprofile' element={<Profile />} />
-              <Route path="/mystuff" element={<Protected> <MyStuff /> </Protected>} />
+              <Route path="/my-stuff" element={<Protected> <MyStuff /> </Protected>} />
               <Route path='/account' element={<Protected> <Account /> </Protected>} />
-              <Route path='/mycompanies' element={<Protected> <MyCompany /> </Protected>} />
+              <Route path='/my-companies' element={<Protected> <MyCompany /> </Protected>} />
               <Route path='*' element={<PageNotFound />} />
             </Routes>
 

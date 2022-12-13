@@ -88,7 +88,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
                 >
                   <Link to={"/" + Company.domain}>
                     <Card>
-                      <div style={{ overflow: "auto" }} className="img_size">
+                      <div style={{ overflow: "auto" }} className="img_size  pattern-square">
                         {
 
                           Company.logo !== undefined && Company.logo !== "null"
