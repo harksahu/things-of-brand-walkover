@@ -35,7 +35,7 @@ function MyVerticallyCenteredModal(params) {
   const { user } = UserAuth();
   const [show, setShow] = useState(false);
   const [props, setProps] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   function size(img) {
     setWidth(document.getElementById(img).clientWidth);
     setHeight(document.getElementById(img).clientHeight);
@@ -122,6 +122,7 @@ function MyVerticallyCenteredModal(params) {
     const data = await searchBrandApi(id.id);
     setProps(data?.data?.data[0]);
     setName(data?.data?.data[0].title);
+
   };
 
   const renderTooltip = (props) => (
@@ -179,8 +180,9 @@ function MyVerticallyCenteredModal(params) {
               </Button>
             </OverlayTrigger>
           </div>
-
+           
           <SvgInline {...props} />
+              
         </Col>
 
         <div style={{ position: "absolute" }}>

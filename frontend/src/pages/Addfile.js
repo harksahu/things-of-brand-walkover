@@ -14,6 +14,8 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
+import CopyToClipboard from "../components/CopyToClipboard.js"
+
 import {
   getS3SignUrl,
   getProfileDetails,
@@ -23,6 +25,7 @@ import { BsX, BsInfoCircle } from "react-icons/bs";
 import "../scss/style.scss";
 import "../scss/addfile.scss";
 import { FormGroup } from "@mui/material";
+import ClipLoader from "react-spinners/ClipLoader.js";
 function MyVerticallyCenteredModal(props) {
   return (
     <Modal
@@ -52,6 +55,8 @@ const Addfile = () => {
   const [ffresult, setResult] = useState();
   const location = useLocation();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+
 
   const [shareEmailDomainOption, setShareEmailDomainOption] = useState("");
 
@@ -73,6 +78,7 @@ const Addfile = () => {
       }
     }
     profileDetails();
+    setLoading(false);
     
   };
   const removeTags = (index) => {
@@ -170,15 +176,18 @@ const Addfile = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     findSharedEmail(); 
+    // setLoading(false);
     if (user) {
-      
       
       setDomainToSelect(location?.state?.domain);
     }
   }, [user,shareEmailDomainOption]);
   return (
     <>
+    {loading?<ClipLoader/>:
+    <div>
       {user ?
         <Container className="wrpr">
           <Row>
@@ -302,6 +311,8 @@ const Addfile = () => {
           </Row>
         </Container> : <Home />
       }
+      </div>
+    }
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}
