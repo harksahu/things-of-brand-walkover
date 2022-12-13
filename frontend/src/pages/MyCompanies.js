@@ -64,8 +64,9 @@ function MyCompany() {
           });
 
           alert("successfully saved domain " + d);
+
           navigate("/editprofile", { state: { data: data.data.data }})
-          console.log("domain", domain);
+
         } catch (err) {
           // console.log(err);
           alert("Profile is not created");
@@ -95,7 +96,6 @@ function MyCompany() {
       }
 
     }
-    // navigate("/editprofile")
   };
   const findSharedEmail = async (req, res) => {
     var shareddEmail = await getProfileDetails({});
@@ -107,10 +107,6 @@ function MyCompany() {
     fresult = await getProfileDetails({ email: user.email });
     setCompany(fresult.data.data);
 
-    // if (Array.isArray(fresult.data.data) && fresult.data.data.length) {
-    // } else {
-    //   navigate("/editprofile");
-    // }
   };
 
   return (
