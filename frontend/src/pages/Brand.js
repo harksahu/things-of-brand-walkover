@@ -7,8 +7,10 @@ import {
   Navbar,
   Nav,
   Card,
+  OverlayTrigger,
   Button,
   Modal,
+  Tooltip,
   ListGroup
 } from "react-bootstrap";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -39,6 +41,7 @@ import {
 
 function Not_found() {
 
+
   return <div className="not-found">Not found</div>;
 }
 
@@ -68,6 +71,7 @@ function Brand() {
   const [loading, setLoading] = useState(false);
   const [isRepeatingEmail, setIsRepeatingEmail] = useState(false);
   const [userEmail, setUserEmail] = useState(false);
+  const [CopyValue, setCopyValue] = useState("Copy link");
   const handleClosee = () => {
     setIsRepeatingEmail(false);
     setShoww(false);
@@ -272,7 +276,7 @@ function Brand() {
                     email === user.email || isShared == true ? (
                       <>
                         <Nav className="nav-action">
-                          <Nav.Link onClick={handleShoww}>
+                          <Nav.Link onClick={()=>{handleShoww();setCopyValue("Copy link")}}>
                             <MdShare />
                           </Nav.Link>
 
@@ -320,7 +324,7 @@ function Brand() {
                               </ListGroup>
                             </Modal.Body>
                             <Modal.Footer>
-                              <Button variant="outline-dark" onClick={()=>{navigator.clipboard.writeText(window.location.href)}}>Copy link</Button>
+                              <Button variant="outline-dark" onClick={() => { navigator.clipboard.writeText(window.location.href); setCopyValue("copied!!") }}>{CopyValue}</Button>
                               <Button variant="secondary" onClick={handleClosee}>
                                 Close
                               </Button>
@@ -402,7 +406,7 @@ function Brand() {
 
                 <div className="mt-5">
                   {
-                    DomainPost?.length > 0?<h5>Logos</h5>:""
+                    DomainPost?.length > 0 ? <h5>Logos</h5> : ""
                   }
                   <div className="grid">
                     {DomainPost?.map((brand, index) => {
@@ -548,7 +552,7 @@ function Brand() {
                 </div>
 
                 <div className="mt-5">
-                  {guidlines?.length >12 ? <h5>Guidelines</h5> : ""}
+                  {guidlines?.length > 12 ? <h5>Guidelines</h5> : ""}
                   <div dangerouslySetInnerHTML={{ __html: guidlines }}></div>
                 </div>
               </div>

@@ -114,7 +114,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
           )}
         </div>
         <div className="mt-5"></div>
-        {currentPosts?.data?.length >0?<Pagination
+        {searchBrandData?.data?.length >postsPerPage?<Pagination
           postsPerPage={postsPerPage}
           totalPosts={searchBrandData.data.length}
           paginate={paginate}

@@ -151,6 +151,9 @@ function Profile(props) {
     if (domain) {
       getbrandslogo();
     }
+    else{
+      navigate("/my-companies")
+    }
   }, [domain]);
   const updateProfileValue = async (req, res) => {
     var checkTemp =0;
