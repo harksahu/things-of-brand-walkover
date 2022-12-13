@@ -44,7 +44,7 @@ function App() {
           minBreakpoint="xxs"
         >
           <AuthContextProvider>
-            {window.location.pathname ? (window.location.pathname.slice(0, 7) === '/Stuff/' ? "" : <NavigationBar />) : <NavigationBar />}
+            {window.location.pathname ? (window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <NavigationBar />) : <NavigationBar />}
             <Routes>
 
               <Route path='/' element={<Home />} />
@@ -63,7 +63,7 @@ function App() {
               <Route path='/mycompanies' element={<Protected> <MyCompany /> </Protected>} />
               <Route path='*' element={<PageNotFound />} />
             </Routes>
-            <Footer />
+            {window.location.pathname ? (window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <Footer />) :<Footer />}
           </AuthContextProvider>
         </ThemeProvider>
       }
