@@ -82,14 +82,14 @@ function Profile(props) {
     setAllData(allDataTemp.data.data);
   }
   const getbrandslogo = async () => {
-    console.log("locatiom", location.state.data)
+
     if (domain && location.state?.data && id) {
       const data = await sendSearchAPI({ domain: id });
 
       setDomainPost(data?.data?.data);
-      // console.log("domain ",data );
+
     }
-    console.log("id ", id);
+
 
 
   }
@@ -133,15 +133,15 @@ function Profile(props) {
     setFontFamily(result);
   };
   useEffect(() => {
-    // setLoading(true);
 
-    console.log("useEffect", location?.state?.data)
+
+
     if (user) {
       if (user?.email) {
 
         profileDetails();
 
-        // checkIfDomain();
+
       }
     }
 
@@ -154,18 +154,18 @@ function Profile(props) {
   }, [domain]);
   const updateProfileValue = async (req, res) => {
     var checkTemp =0;
-    console.log("checkTEMP1",checkTemp);
+
     if(domain!=location?.state?.data?.domain)
     {
       for (let i = 0; i < allData?.length; i++) {
-        console.log("allData",allData[i].domain);
+
         if (allData[i].domain === domain) {
           checkTemp = 1;
           break;
         }
       }
     }
-    console.log("checkTEMP2",checkTemp);
+
     var domainParts = domain.split(".");
       if (domainParts.length >= 2 && domainParts[1].length >= 1) {
         
@@ -191,8 +191,8 @@ function Profile(props) {
           color: color,
         };
         const id1 = await updateProfileFields(data);
-        console.log("await updateProfileFields(data);",id1);
-        // await updateProfileFields(data);
+
+
         navigate(-1);
       } else {
         alert("About us field is compulsory");
@@ -209,11 +209,10 @@ else {
 }
   };
   const profileDetails = async (req, res) => {
-    console.log("domain hsdbjsd", location?.state?.data)
+
     fresult = await getProfileDetails({ domain: location?.state?.data?.domain});
-    // const ans =  await getCompanyDetails(id)
-    // setResults(ans.data.data);
-    console.log("fresult", fresult);
+
+
     if (location.state?.data != null) {
       setId(location?.state?.data?._id);
       setName(location?.state?.data?.name);
@@ -735,43 +734,9 @@ else {
                       >
                         Update
                       </Button>
-                      {/* // ) : (
-                    <Button variant="primary" onClick={() => storeProfileValue()}>
-                      Submit
-                    </Button>
-                  // )} */}
+                     
                     </div>
-                    {/* <div className="d-flex flex-wrap justify-content-center">
-              {DomainPost?.map((brand, index) => {
-                // console.log(brand);
-                return (
-                  <div key={index}>
-                    <div key={brand._id} className=" flex-wrap item">
-                      <Card>
-                        <Link to={"/stuff/" + brand._id}>
-                          <div
-                            style={{ overflow: "auto" }}
-                            className="img_size"
-                          >
-                            <SvgInline {...brand} />
-                          </div>
-                          <Card.Body>
-                            <Card.Title
-                              style={{ textDecoration: "none" }}
-                              className="text-center"
-                            >
-                              {brand.title}
-                            </Card.Title>
-                          </Card.Body>
-                        </Link>
-                      </Card>
-                    </div>
-                  </div>
-                );
-New
-3:00
-})}
-            </div> */}
+                    
                   </Form>
                 </Stack>
               </Card.Body>

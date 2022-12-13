@@ -94,7 +94,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
       await googleSignIn();
       navigate("/mycompanies");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -103,7 +103,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
       await logOut();
       navigate("/home");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -115,10 +115,10 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
             onClick={() => {
               navigate("/home");
             }}
-            className="bo"
+            id="logo"
             style={{ cursor: "pointer" }}
           >
-            Things of Brand
+            <img src="tob-icon.svg" /> Things of Brand            
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
