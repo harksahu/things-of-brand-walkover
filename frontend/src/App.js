@@ -49,7 +49,7 @@ function App() {
 
               <Route path='/' element={<Home />} />
               <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
-              <Route path='/allcompanies' element={<AllCompanies />} />
+              <Route path='/all-companies' element={<AllCompanies />} />
               <Route path='/searchlogo' element={<SearchLogo />} />
               <Route path='/Stuff/:id' element={<MyVerticallyCenteredModal />} />
               <Route path='/:title' element={<DomainValidate>
@@ -58,9 +58,9 @@ function App() {
               <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
               <Route path='/domainverify' element={<DomainVerificationPage />} />
               <Route path='/editprofile' element={<Profile />} />
-              <Route path="/mystuff" element={<Protected> <MyStuff /> </Protected>} />
+              <Route path="/my-stuff" element={<Protected> <MyStuff /> </Protected>} />
               <Route path='/account' element={<Protected> <Account /> </Protected>} />
-              <Route path='/mycompanies' element={<Protected> <MyCompany /> </Protected>} />
+              <Route path='/my-companies' element={<Protected> <MyCompany /> </Protected>} />
               <Route path='*' element={<PageNotFound />} />
             </Routes>
             <Footer />
