@@ -74,7 +74,8 @@ function Home({ searchBrandData = [], getSearchBrand }) {
   return (
     <div className="p-3 flex bg-light">
       {loading ?
-        <ClipLoader /> :
+        <div className="center-loader"
+        ><ClipLoader /> </div>:
         <>
         <div className="d-flex flex-wrap grid container">
           {currentPosts?.data?.length === 0 ? (

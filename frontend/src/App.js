@@ -17,7 +17,7 @@ import './App.css';
 import { auth } from './firebase.js';
 import MyVerticallyCenteredModal from './pages/ImageEditer';
 import Brand from './pages/Brand.js';
-import SearchLogo from './pages/SearchLogo';
+import SearchLogo from './pages/Searchlogo.js';
 import Home2 from './pages/Home2';
 import Profile from './pages/profile';
 import DomainVerificationPage from './pages/DomainVerificationPage';

@@ -62,7 +62,7 @@ function Home() {
   return (
     <>
       {loading ?
-        <ClipLoader /> :
+       <div className="center-loader"><ClipLoader /></div> :
         <Container className="wrpr">
           <Link to={"/addfile"}>
             <Button variant="dark">Add Stuff</Button>

@@ -247,7 +247,7 @@ function Brand() {
 
   return (
     <>
-      {loading ? <ClipLoader /> :
+      {loading ? <div className="center-loader"><ClipLoader /></div> :
         <Container>
           {domain ? (
             <div className="row mt-4">
