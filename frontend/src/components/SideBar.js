@@ -18,17 +18,17 @@ function SideBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
       </Nav.Item>
 
       <Nav.Item>
-        <Nav.Link className={ location.pathname === '/MyStuff' ? 'active' : ''}
+        <Nav.Link className={ location.pathname === '/mystuff' ? 'active' : ''}
         onClick={() => {
-          navigate("/MyStuff");
+          navigate("/mystuff");
         }}
         >My Stuff</Nav.Link>
       </Nav.Item>
       
       <Nav.Item>
-        <Nav.Link className={ location.pathname === '/MyCompanies' || location.pathname === '/editProfile' ? 'active' : ''}
+        <Nav.Link className={ location.pathname === '/mycompanies' || location.pathname === '/editprofile' ? 'active' : ''}
         onClick={() => {
-          navigate("/MyCompanies");
+          navigate("/mycompanies");
         }}
         >My Brands</Nav.Link>
       </Nav.Item>      
@@ -36,7 +36,7 @@ function SideBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
       <Nav.Item>
         <Nav.Link
         onClick={() => {
-          navigate("/AllCompanies");
+          navigate("/allcompanies");
         }}
         >Explore other brands</Nav.Link>
       </Nav.Item>      

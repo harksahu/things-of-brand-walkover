@@ -64,7 +64,8 @@ function MyCompany() {
           });
 
           alert("successfully saved domain " + d);
-          navigate("/editProfile", { state: { data: data.data.data }})
+
+          navigate("/editprofile", { state: { data: data.data.data }})
 
         } catch (err) {
           // console.log(err);
@@ -150,9 +151,9 @@ function MyCompany() {
                   </div>
                 );
               })}
-              {/* <Link to="/editProfile" className="add-new"> */}
+              {/* <Link to="/editprofile" className="add-new"> */}
               {/* <Link to="/addBrand"> */}
-              <Card className="h-100 item-company" onClick={handleShow}>
+              <Card className="h-100 item-company add-new" onClick={handleShow}>
                 <Card.Body className="add-icon align-items-center d-flex justify-content-center">
                   <Card.Title className="text-center">
                     <BsFillPlusCircleFill style={{ fontSize: 40 }} />
@@ -161,6 +162,7 @@ function MyCompany() {
                 <Card.Body>
                   <Card.Title className="text-center">Add New Brand</Card.Title>
                 </Card.Body>
+                
               </Card>
               {/* </Link> */}
 
@@ -172,7 +174,7 @@ function MyCompany() {
                 <Modal.Body>
                   <div className="visually-hidden" id="domainError">
                     This company is already created{" "}
-                    <Link to="/domainVerify" state={{ data: company }}>
+                    <Link to="/domainverify" state={{ data: company }}>
                       Clam your brand
                     </Link>
                   </div>
