@@ -15,7 +15,7 @@ function Home2() {
   const handleGoogleSignIn = async () => {
     try {
       if (user) {
-        navigate("/MyCompanies");
+        navigate("/mycompanies");
       } else {
         await googleSignIn();
       }
@@ -77,7 +77,7 @@ function Home2() {
                 <img src="workspace.svg" />
               </div>
             </div>
-            <Link to="/AllCompanies">Explore more...</Link>
+            <Link to="/allcompanies">Explore more...</Link>
           </Col>
         </Row>
         <div className="flex-fill"></div>

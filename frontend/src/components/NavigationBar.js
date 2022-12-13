@@ -56,7 +56,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
     if (text === "") {
       setItems(null);
 
-      if (location.pathname === "/MyStuff") {
+      if (location.pathname === "/mystuff") {
         await getSearchBrand({
           title: "",
           email: user.email,
@@ -67,7 +67,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
         await getSearchBrand({ title: "", active: "1" });
       }
     } else {
-      if (location.pathname === "/MyStuff") {
+      if (location.pathname === "/mystuff") {
         if (user.email) {
           await getSearchBrand({
             title: text,
@@ -92,7 +92,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
-      navigate("/MyCompanies");
+      navigate("/mycompanies");
     } catch (error) {
       console.log(error);
     }
@@ -128,7 +128,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              {location.pathname === "/AllCompanies" ? (
+              {location.pathname === "/allcompanies" ? (
                 <Form className="justify-content-center">
                   <Form.Control
                     type="search"
@@ -204,7 +204,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
               >
                 <NavDropdown.Item
                   onClick={() => {
-                    navigate("/MyCompanies");
+                    navigate("/mycompanies");
                   }}
                 >
                   My Brands
@@ -212,7 +212,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
 
                 <NavDropdown.Item
                   onClick={() => {
-                    navigate("/AllCompanies");
+                    navigate("/allcompanies");
                   }}
                 >
                   Explore other brands

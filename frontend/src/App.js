@@ -48,18 +48,18 @@ function App() {
 
               <Route path='/' element={<Home />} />
               <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
-              <Route path='/AllCompanies' element={<AllCompanies />} />
-              <Route path='/SearchLogo' element={<SearchLogo />} />
+              <Route path='/allcompanies' element={<AllCompanies />} />
+              <Route path='/searchlogo' element={<SearchLogo />} />
               <Route path='/Stuff/:id' element={<MyVerticallyCenteredModal />} />
               <Route path='/:title' element={<DomainValidate>
                 <Brand />
               </DomainValidate>} />
               <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
               <Route path='/domainVerify' element={<DomainVerificationPage />} />
-              <Route path='/editProfile' element={<Profile />} />
-              <Route path="/MyStuff" element={<Protected> <MyStuff /> </Protected>} />
+              <Route path='/editprofile' element={<Profile />} />
+              <Route path="/mystuff" element={<Protected> <MyStuff /> </Protected>} />
               <Route path='/account' element={<Protected> <Account /> </Protected>} />
-              <Route path='/MyCompanies' element={<Protected> <MyCompany /> </Protected>} />
+              <Route path='/mycompanies' element={<Protected> <MyCompany /> </Protected>} />
               <Route path='*' element={<PageNotFound />} />
             </Routes>
           </AuthContextProvider>

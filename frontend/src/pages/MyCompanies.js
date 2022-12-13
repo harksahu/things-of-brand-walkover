@@ -64,7 +64,7 @@ function MyCompany() {
           });
           console.log("data i store profile " , data.data.data);
           alert("successfully saved domain " + d);
-          navigate("/editProfile", { state: { data: data.data.data }})
+          navigate("/editprofile", { state: { data: data.data.data }})
           console.log("domain", domain);
         } catch (err) {
           console.log(err);
@@ -95,7 +95,7 @@ function MyCompany() {
       }
       console.log("Invalid3");
     }
-    // navigate("/editProfile")
+    // navigate("/editprofile")
   };
   const findSharedEmail = async (req, res) => {
     var shareddEmail = await getProfileDetails({});
@@ -109,7 +109,7 @@ function MyCompany() {
 
     // if (Array.isArray(fresult.data.data) && fresult.data.data.length) {
     // } else {
-    //   navigate("/editProfile");
+    //   navigate("/editprofile");
     // }
   };
 
@@ -153,9 +153,9 @@ function MyCompany() {
                   </div>
                 );
               })}
-              {/* <Link to="/editProfile" className="add-new"> */}
+              {/* <Link to="/editprofile" className="add-new"> */}
               {/* <Link to="/addBrand"> */}
-              <Card className="h-100 item-company" onClick={handleShow}>
+              <Card className="h-100 item-company add-new" onClick={handleShow}>
                 <Card.Body className="add-icon align-items-center d-flex justify-content-center">
                   <Card.Title className="text-center">
                     <BsFillPlusCircleFill style={{ fontSize: 40 }} />
