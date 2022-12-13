@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Canvg, presets } from "canvg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Container,
-  Row,
   Form,
-  Col,
   Navbar,
   Nav,
   Card,
-  Figure,
+  Overlay,
   Button,
   Modal,
-  ListGroup,
-  ToastContainer, Toast
+  ListGroup
 } from "react-bootstrap";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../utils/svginline.css";
@@ -62,12 +59,8 @@ function Brand() {
   const [sharedEmail, setSharedEmail] = useState([]);
   const { user } = UserAuth();
   const [links, setLinks] = React.useState([]);
-  const [showCopy, setShowCopy] = useState(false);
   const [DomainPost, setDomainPost] = useState();
   const [verify, setVerify] = useState();
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const [allColor, setAllColor] = useState();
   const [fontLink, setFontLink] = useState([]);
   const [company, setCompany] = useState([]);
@@ -75,13 +68,9 @@ function Brand() {
   const [showw, setShoww] = useState(false);
   const [isShared, setSharedCompany] = useState(false);
   const handleShoww = () => setShoww(true);
-  const [showUploadFile, setShowUploadFile] = useState(false);
-  const handleShowUploadFile = () => setShowUploadFile(true);
-  const handleCloseUploadFile = () => setShowUploadFile(false);
-  const [mwidth, setWidth] = useState(250);
-  const [mheight, setHeight] = useState(250);
+  const [show, setShow] = useState(false);
+  const target = useRef(null);
   const [loading, setLoading] = useState(false);
-  const [fullscreen, setFullscreen] = useState(true);
   const [isRepeatingEmail, setIsRepeatingEmail] = useState(false);
   const [userEmail, setUserEmail] = useState(false);
   const handleClosee = () => {
@@ -336,7 +325,7 @@ function Brand() {
                               </ListGroup>
                             </Modal.Body>
                             <Modal.Footer>
-                              <Button variant="outline-dark">Copy link</Button>
+                              <Button variant="outline-dark" ref={target} onClick={() => setShow(!show)}>Copy link</Button>
                               <Button variant="secondary" onClick={handleClosee}>
                                 Close
                               </Button>
@@ -346,6 +335,24 @@ function Brand() {
                               >
                                 Share
                               </Button>
+                              <Overlay target={target.current} show={show} placement="right">
+                                {({ placement, arrowProps, show: _show, popper, ...props }) => (
+                                  <div
+                                    {...props}
+                                    style={{
+                                      position: 'absolute',
+                                      backgroundColor: 'rgba(255, 100, 100, 0.85)',
+                                      padding: '2px 10px',
+                                      color: 'white',
+                                      borderRadius: 3,
+                                      ...props.style,
+                                    zIndex:9876
+                                    }}
+                                  >
+                                    Simple tooltip
+                                  </div>
+                                )}
+                              </Overlay>
                             </Modal.Footer>
                           </Form>
                         </Modal>
@@ -446,7 +453,7 @@ function Brand() {
                               </Card.Body>
                             </Link>
                             <Card.Footer className="text-muted d-flex justify-content-center">
-                          <Button
+                              <Button
                                 variant="outline-secondary"
                                 size="sm"
                                 className="me-4"
@@ -491,7 +498,7 @@ function Brand() {
                               <Button variant="outline-light" size="sm">
                                 -
                               </Button>
-                            </div>  
+                            </div>
                           </Card>
                         </Link>
                       ) : (
@@ -522,12 +529,12 @@ function Brand() {
                                     backgroundColor: color.colorValue,
                                   }}
                                 ></div>
-                               
+
                                 <div className="color-footer" id="inputText">
                                   <div>{color.colorName}</div>
                                   <div className="d-flex justify-content-between">
                                     {color.colorValue}
-                                    <CopyToClipboard color={color.colorValue}/>
+                                    <CopyToClipboard color={color.colorValue} />
                                   </div>
                                 </div>
                               </div>

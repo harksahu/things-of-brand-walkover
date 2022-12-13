@@ -360,7 +360,7 @@ else {
                                         </Dropdown.Item>
                                       </Dropdown.Menu>
                                     </Dropdown> */}
-                                    <Link to={"/Stuff/" + brand._id}>
+                                    <Link to={"/stuff/" + brand._id}>
                                       <div
                                         style={{ overflow: "auto" }}
                                         className="img_size"

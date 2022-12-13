@@ -79,7 +79,7 @@ function SearchBar() {
       if (a == LogoData[i]?._id) {
         // navigate(-1) 
 
-        navigate("/Stuff/" + a);
+        navigate("/stuff/" + a);
         window.onload();
       }
     }
