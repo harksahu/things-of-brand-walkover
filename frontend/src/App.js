@@ -44,14 +44,16 @@ function App() {
           minBreakpoint="xxs"
         >
           <AuthContextProvider>
-            {window.location.pathname ? (window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <NavigationBar />) : <NavigationBar />}
+
+            {window.location.pathname ? (window.location.pathname.slice(0, 7).toLocaleLowerCase() === '/stuff/' ? "" : <NavigationBar />) : <NavigationBar />}
+
             <Routes>
 
               <Route path='/' element={<Home />} />
               <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
               <Route path='/all-companies' element={<AllCompanies />} />
               <Route path='/searchlogo' element={<SearchLogo />} />
-              <Route path='/Stuff/:id' element={<MyVerticallyCenteredModal />} />
+              <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />
               <Route path='/:title' element={<DomainValidate>
                 <Brand />
               </DomainValidate>} />
@@ -63,7 +65,8 @@ function App() {
               <Route path='/my-companies' element={<Protected> <MyCompany /> </Protected>} />
               <Route path='*' element={<PageNotFound />} />
             </Routes>
-            {window.location.pathname ? (window.location.pathname.slice(0, 7) === '/stuff/' ? "" : <Footer />) :<Footer />}
+
+            {window.location.pathname ? (window.location.pathname.slice(0, 7).toLocaleLowerCase() === '/stuff/'? "" : <Footer />) :<Footer />}
           </AuthContextProvider>
         </ThemeProvider>
       }
