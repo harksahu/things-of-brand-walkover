@@ -1,4 +1,9 @@
 @import 'theme';
+@mixin pattern-square() {
+    background-image:  repeating-linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd), repeating-linear-gradient(45deg, #ddd 25%, #eee 25%, #eee 75%, #ddd 75%, #ddd);
+    background-position: 0 0, 10px 10px;
+    background-size: 20px 20px;
+}
 .not-found{
     font-size: 100px;
     font-weight: bold;
@@ -84,8 +89,6 @@
     background-position: 0 0,10px 10px;
 }
 .pattern-square{    
-    background-image:  repeating-linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd), repeating-linear-gradient(45deg, #ddd 25%, #eee 25%, #eee 75%, #ddd 75%, #ddd);
-    background-position: 0 0, 10px 10px;
-    background-size: 20px 20px;
+    @include pattern-square;
 }
 

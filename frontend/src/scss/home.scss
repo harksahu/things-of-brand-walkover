@@ -1,3 +1,8 @@
+#root{
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
 .heading {
 	font-weight: 800 !important;    
 }
@@ -7,9 +12,21 @@
 .q {
 	color: #888;
 }
+#logo{
+	img{
+		height: 42px;
+		margin-right: 5px;
+	}
+	font-weight: bold;
+	font-size: 24px;
+	color: #333;
+}
+#footer-icon{
+	height: 20px;
+}
 .brands-wrp {
 	margin: 24px 0;
-	div {
+	a {
 		margin: 20px;
 		img {
 			height: 28px;

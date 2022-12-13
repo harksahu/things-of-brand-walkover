@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
+import Footer from './components/Footer';
 import Protected from './components/Protected';
 import DomainValidate from './components/DomainValidate';
 import { AuthContextProvider, UserAuth } from './context/AuthContext';
@@ -62,6 +63,7 @@ function App() {
               <Route path='/mycompanies' element={<Protected> <MyCompany /> </Protected>} />
               <Route path='*' element={<PageNotFound />} />
             </Routes>
+            <Footer />
           </AuthContextProvider>
         </ThemeProvider>
       }
