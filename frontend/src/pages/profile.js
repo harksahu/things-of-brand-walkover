@@ -24,7 +24,7 @@ import {
 } from "../api/index.js";
 import CloseIcon from "@mui/icons-material/Close";
 import { BsFillPlusCircleFill, BsThreeDotsVertical } from "react-icons/bs";
-import RichtextEditor from "./jodit.js";
+import RichtextEditor from "./Jodit.js";
 import { BsFillTrashFill, BsChevronLeft } from "react-icons/bs";
 import { MdArrowBackIos } from "react-icons/md";
 import { useLocation, Link, useNavigate } from "react-router-dom";
