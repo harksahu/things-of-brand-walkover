@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
-import Footer from './components/Footer';
+import Footer from './components/Footer.js';
 import Protected from './components/Protected';
 import DomainValidate from './components/DomainValidate';
 import { AuthContextProvider, UserAuth } from './context/AuthContext';
