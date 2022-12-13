@@ -46,7 +46,6 @@ import Addfile from "./Addfile";
 
 function Not_found() {
 
-
   return <div className="not-found">Not found</div>;
 }
 

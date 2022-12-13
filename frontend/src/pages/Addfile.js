@@ -20,7 +20,6 @@ import {
   updateProfileFields,
 } from "../api/index.js";
 import { BsX, BsInfoCircle } from "react-icons/bs";
-import SideBar from "../components/SideBar";
 import "../scss/style.scss";
 import "../scss/addfile.scss";
 import { FormGroup } from "@mui/material";
