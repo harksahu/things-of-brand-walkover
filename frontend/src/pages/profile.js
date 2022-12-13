@@ -550,7 +550,7 @@ else {
                       />
                       <div className="visually-hidden" id="domainError">
                         This company is already created{" "}
-                        <Link to="/domainVerify" state={{ data: company }}>
+                        <Link to="/domainverify" state={{ data: company }}>
                           Clam your brand
                         </Link>
                       </div>

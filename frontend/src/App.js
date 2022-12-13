@@ -55,7 +55,7 @@ function App() {
                 <Brand />
               </DomainValidate>} />
               <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
-              <Route path='/domainVerify' element={<DomainVerificationPage />} />
+              <Route path='/domainverify' element={<DomainVerificationPage />} />
               <Route path='/editprofile' element={<Profile />} />
               <Route path="/mystuff" element={<Protected> <MyStuff /> </Protected>} />
               <Route path='/account' element={<Protected> <Account /> </Protected>} />

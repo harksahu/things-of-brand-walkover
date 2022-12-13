@@ -382,7 +382,7 @@ function Brand() {
                           (Not verified)
                           <div className="flex-fill"></div>
                           <Link
-                            to="/domainVerify"
+                            to="/domainverify"
                             className="text-sm"
                             state={{ data: company }}
                           >
@@ -491,7 +491,7 @@ function Brand() {
                               <Button variant="outline-light" size="sm">
                                 -
                               </Button>
-                            </div>
+                            </div>  
                           </Card>
                         </Link>
                       ) : (

@@ -164,6 +164,7 @@ function MyCompany() {
                 <Card.Body>
                   <Card.Title className="text-center">Add New Brand</Card.Title>
                 </Card.Body>
+                
               </Card>
               {/* </Link> */}
 
@@ -175,7 +176,7 @@ function MyCompany() {
                 <Modal.Body>
                   <div className="visually-hidden" id="domainError">
                     This company is already created{" "}
-                    <Link to="/domainVerify" state={{ data: company }}>
+                    <Link to="/domainverify" state={{ data: company }}>
                       Clam your brand
                     </Link>
                   </div>
