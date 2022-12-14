@@ -35,13 +35,13 @@ app.use(express.json());
 
 
 app.use('/api/uploads',uploadRoutes);
-app.use('/api/brands',StuffRouters);
+app.use('/api/stuff',StuffRouters);
 app.use('/api/search',SearchRouters);
 app.use('/api/MyStuff',MyStuffRouters);
 app.use('/api/deteteItems',MyStuffdeleteitemRouters);
 app.use('/api/storeKey',authKeyRouters);
 app.use('/api/deleteKey',authKeyRouters);
-app.use('/api/profile',CompanyRouters);
+app.use('/api/companies',CompanyRouters);
 
 app.get('/s3url',async(req,res)=>{
     // console.log("file:-");
