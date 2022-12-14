@@ -47,10 +47,10 @@ function Home({ searchBrandData = [], getSearchBrand }) {
       
     await getSearchBrand({});
     setPosts(searchBrandData.data);
-    
 
   };
   const loadingFalse = async () => {
+
     setLoading(false);
   }
   useEffect(() => {
@@ -61,7 +61,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
     }
     fetchPosts1();
 
-  }, [ ]);
+  }, [loading ]);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;

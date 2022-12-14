@@ -55,6 +55,17 @@ function MyVerticallyCenteredModal(params) {
     document.getElementById(props.url).style.height = h + "px";
   }
 
+  const clearCacheData = () => {
+    caches.keys().then((names) => {
+      names.forEach((name) => {
+        caches.delete(name);
+      });
+    });
+    alert('Complete Cache Cleared')
+  };
+
+
+
   const DownloadToSvg = async (svg, fileName) => {
     // var svg = document.querySelector("svg");
     // var xml = new XMLSerializer().serializeToString(svg);
@@ -124,6 +135,7 @@ function MyVerticallyCenteredModal(params) {
     navigate("/" + forwardTo?.data?.data[0]?.domain);
   };
   useEffect(() => {
+    
     setLoading(true);
     getData();
     setLoading(false);
