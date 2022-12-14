@@ -1,8 +1,8 @@
-import BrandModel from '../models/brandModel.js'
-const createBrand = async (req,res)=>{
+import StuffModel from '../models/StuffModel.js'
+const createStuff = async (req,res)=>{
     try {
        
-        const data = await BrandModel.create({
+        const data = await StuffModel.create({
             ...req.body,
             Url:req.body.url
         
@@ -20,9 +20,9 @@ const createBrand = async (req,res)=>{
 }
 
 
-const deleteBrand = async (req,res)=>{
+const deleteStuff = async (req,res)=>{
     try {
-        const data = await BrandModel.updateOne({
+        const data = await StuffModel.updateOne({
             url: req.body.url
         },{
             $set: {
@@ -42,9 +42,9 @@ const deleteBrand = async (req,res)=>{
 }
 
 
-const UpdateBrand = async (req,res)=>{
+const UpdateStuff = async (req,res)=>{
     try {
-        const data = await BrandModel.find({
+        const data = await StuffModel.find({
             url: req.body.url
         },{
             $set: {
@@ -68,11 +68,11 @@ const UpdateBrand = async (req,res)=>{
 
 
 
-const searchBrandName = async (req,res)=>{
+const searchStuffName = async (req,res)=>{
     const id = req.params.id
    
     try {
-        const data = await BrandModel.find({
+        const data = await StuffModel.find({
             _id: id
         });
         res.json({
@@ -90,10 +90,10 @@ const searchBrandName = async (req,res)=>{
 
 
 export {
-    createBrand,
-    deleteBrand,
-    searchBrandName,
-    UpdateBrand 
+    createStuff,
+    deleteStuff,
+    searchStuffName,
+    UpdateStuff 
 
 }
 

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'; 
-const profileSchema = new mongoose.Schema({
+const CompanySchema = new mongoose.Schema({
 
     sno_id:String,
     name: {
@@ -41,6 +41,6 @@ const profileSchema = new mongoose.Schema({
 
     })
 
-    const Profile = mongoose.model("profiles",profileSchema)
+    const Companies = mongoose.model("profiles",CompanySchema)
 
-export default Profile;
+export default Companies;

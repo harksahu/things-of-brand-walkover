@@ -1,9 +1,9 @@
-import BrandModel from '../models/brandModel.js'
+import StuffModel from '../models/StuffModel.js'
 
 
-const restoreBrand = async (req,res)=>{
+const restoreStuff = async (req,res)=>{
     try {
-        const data = await BrandModel.updateOne({
+        const data = await StuffModel.updateOne({
             _id: req.params.id
         },{
             $set: {
@@ -23,9 +23,9 @@ const restoreBrand = async (req,res)=>{
 }
 
 
-const UpdateBrand = async (req,res)=>{
+const UpdateStuff = async (req,res)=>{
     try {
-        const data = await BrandModel.find({
+        const data = await StuffModel.find({
             url: req.params.url
         },{
             $set: {
@@ -49,10 +49,10 @@ const UpdateBrand = async (req,res)=>{
 
 
 
-const searchBrandName = async (req,res)=>{
+const searchStuffName = async (req,res)=>{
     try {
        
-        const data = await BrandModel.find({
+        const data = await StuffModel.find({
             $and: [
                 { email : req.params.email },
                 { active: 0 }
@@ -73,9 +73,9 @@ const searchBrandName = async (req,res)=>{
 
 
 export {
-    restoreBrand,
-    searchBrandName,
-    UpdateBrand 
+    restoreStuff,
+    searchStuffName,
+    UpdateStuff 
 
 }
 

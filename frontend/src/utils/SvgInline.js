@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../scss/style.scss"
+import {awsDataCall} from "../api/index.js"
+import { async } from "@firebase/util";
 
 const SvgInline = (props) => {
   const [svg, setSvg] = useState(null);
@@ -16,18 +18,28 @@ const SvgInline = (props) => {
     // props.url !== undefined && props.url !== "null"
     //   ? props.url
     //   : "/assets/picture.svg";
-    fetch(url)
-      .then((res) => res.text())
-      .then((res) => {
-        var svgToHe = res.toString();
-        svgToHe = svgToHe?.replace("<svg ", `<svg id="${props.url}" `);
-        setSvg(svgToHe);
-      })
-      .then(() => {
-        setLoading(false);
-      })
-      .catch(setIsErrored);
+    // fetch(url,{mode:"no-cors"})
+    //   .then((res) => res.text())
+    //   .then((res) => {
+    //     // var svgToHe = res.toString();
+    //     // svgToHe = svgToHe?.replace("<svg ", `<svg id="${props.url}" `);
+    //     // setSvg(svgToHe);
+    //     console.log(res);
+    //   })
+    //   .then(() => {
+    //     setLoading(false);
+    //   })
+    //   .catch(setIsErrored);
+    callImage(url)
+    
   }, [props.url]);
+
+  const callImage = async(url) =>{
+    var data = await awsDataCall(url)
+    // console.log(data?.data);
+    setSvg(data?.data);
+    setLoading(false);
+  }
 
   useEffect(() => {}, [svg]);
 

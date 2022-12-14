@@ -1,10 +1,10 @@
-import profileModel from '../models/profileModel.js'
-import BrandModel from '../models/brandModel.js'
+import CompanyModel from '../models/CompanyModel.js'
+import StuffModel from '../models/StuffModel.js'
 
-const createProfile = async (req, res) => {
+const createCompany = async (req, res) => {
     try {
         
-        const data = await profileModel.create({
+        const data = await CompanyModel.create({
             ...req.body
         });
         res.json({
@@ -21,7 +21,7 @@ const createProfile = async (req, res) => {
 }
 
 
-const getProfileDetails = async (req, res) => {
+const getCompanyDetails = async (req, res) => {
 
     var email = req.query.email === "" ? {} : { email: req.query.email };
     var _id = req.query._id === "" ? {} : { _id: req.query._id };
@@ -33,7 +33,7 @@ const getProfileDetails = async (req, res) => {
     // === "" ? {} : { name: { '$regex': req?.query?.name, "$options": "i" } };
     if (searchfrom == "true") {
         try {
-            var data = await profileModel.find({
+            var data = await CompanyModel.find({
                 domain:domainCheck,
                 ...email,
                 ..._id
@@ -41,7 +41,7 @@ const getProfileDetails = async (req, res) => {
 
             });
             const domain1 = data[0]._id;
-            const logos = await BrandModel.find({
+            const logos = await StuffModel.find({
                 domain: domain1,
 
             });
@@ -65,7 +65,7 @@ const getProfileDetails = async (req, res) => {
     } else {
        
         try {
-            const data = await profileModel.find({
+            const data = await CompanyModel.find({
                 // $or: [{ ...domain }, { ...name }],
                 ...domain,
                 ...email,
@@ -86,7 +86,7 @@ const getProfileDetails = async (req, res) => {
     }
 }
 
-const updateProfile = async (req, res) => {
+const updateCompany = async (req, res) => {
     
     let { name, aboutus ,fontLink} = req.body
     let logo = req.body.logo;
@@ -101,7 +101,7 @@ const updateProfile = async (req, res) => {
     let sharedEmail = req.body.sharedEmail ? req.body.sharedEmail : "";
     console.log("shared email",id)
     try {
-        const data = await profileModel.updateMany(
+        const data = await CompanyModel.updateMany(
             {
                 _id: id
             },
@@ -139,7 +139,7 @@ const updateProfile = async (req, res) => {
 
 const getCompanyDetailss = async (req, res) => {
     try {
-        const data = await profileModel.find({
+        const data = await CompanyModel.find({
             _id: req.params.id
         });
         res.json({
@@ -155,13 +155,13 @@ const getCompanyDetailss = async (req, res) => {
 }
 const getCompanyJson = async (domain) => {
     try {
-        var data = await profileModel.find({
+        var data = await CompanyModel.find({
         domain : domain
 
         });
         const domain1 = data[0]._id;
        
-        const logos = await BrandModel.find({
+        const logos = await StuffModel.find({
             domain: domain1,
 
         });
@@ -182,9 +182,9 @@ const getCompanyJson = async (domain) => {
 
 
 export {
-    createProfile,
-    getProfileDetails,
-    updateProfile,
+    createCompany,
+    getCompanyDetails,
+    updateCompany,
     getCompanyDetailss,
     getCompanyJson
 }

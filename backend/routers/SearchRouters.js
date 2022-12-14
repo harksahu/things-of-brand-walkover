@@ -1,10 +1,10 @@
 import express from "express";
-import { searchBrandName } from "../controllers/SearchController.js";
+import { searchStuffName } from "../controllers/SearchController.js";
 
 
 const routes = express.Router();
 
 
-routes.route('/').get(searchBrandName);
+routes.route('/').get(searchStuffName);
 
 export default routes;

@@ -4,17 +4,17 @@ import path from "path";
 import authKeyRouters from "./routers/authKeyRouters.js";
 import connectDB from './services/mongodb_service.js';
 import uploadRoutes from "./routers/uploadRoutes.js";
-import brandRouters from "./routers/brandRouters.js";
+import StuffRouters from "./routers/StuffRouters.js";
 import MyStuffRouters from "./routers/MyStuffRouters.js";
 import SearchRouters from "./routers/SearchRouters.js";
 import MyStuffdeleteitemRouters from "./routers/MyStuffdeleteitemRouters.js";
 import {generateUploadURL} from './services/s3.js';
-import profileRouters from "./routers/profileRouters.js";
+import CompanyRouters from "./routers/CompanyRouters.js";
 import puppy from "./details_feacher/getData.js"
 import getUpdatedData from "./details_feacher/gettingdata.js";
 import {setConfigTable,getUrlFromTable} from "./details_feacher/getUrlFromTable.js";
 import dotenv from 'dotenv'
-import {getCompanyJson} from "./controllers/profileController.js";
+import {getCompanyJson} from "./controllers/CompanyController.js";
 import dns from "dns";
 dotenv.config({path:'../.env'})
 
@@ -35,13 +35,13 @@ app.use(express.json());
 
 
 app.use('/api/uploads',uploadRoutes);
-app.use('/api/brands',brandRouters);
+app.use('/api/stuff',StuffRouters);
 app.use('/api/search',SearchRouters);
 app.use('/api/MyStuff',MyStuffRouters);
 app.use('/api/deteteItems',MyStuffdeleteitemRouters);
 app.use('/api/storeKey',authKeyRouters);
 app.use('/api/deleteKey',authKeyRouters);
-app.use('/api/profile',profileRouters);
+app.use('/api/companies',CompanyRouters);
 
 app.get('/s3url',async(req,res)=>{
     // console.log("file:-");

@@ -113,7 +113,7 @@ function MyVerticallyCenteredModal(params) {
   const getData = async () => {
     const data = await searchBrandApi(id.id);
     setProps(data?.data?.data[0]);
-    setName(data?.data?.data[0].title);
+    setName(data?.data?.data[0]?.title);
 
   };
 

@@ -152,7 +152,7 @@ function Profile(props) {
     if (domain) {
       getbrandslogo();
     }
-    else{
+    if(!location?.state?.data?.domain){
       navigate("/my-companies")
     }
   }, [domain]);
