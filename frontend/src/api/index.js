@@ -12,7 +12,9 @@ const URL = "https://thingsofbrand.com";
 //   return data;
 // };
 
-
+const awsDataCall = async (link)=>{
+  return await axios.get(link)
+}
 
 const createBrandAPI = async (dataToSend) => {
   const data = {
@@ -165,5 +167,6 @@ export {
   getProfileDetails,
   updateProfileFields,
   getCompanyDetails,
-  getProfileandLogoDetails
+  getProfileandLogoDetails,
+  awsDataCall
 };
