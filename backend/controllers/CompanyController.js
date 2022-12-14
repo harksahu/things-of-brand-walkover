@@ -1,5 +1,5 @@
 import CompanyModel from '../models/CompanyModel.js'
-import BrandModel from '../models/brandModel.js'
+import StuffModel from '../models/StuffModel.js'
 
 const createCompany = async (req, res) => {
     try {
@@ -41,7 +41,7 @@ const getCompanyDetails = async (req, res) => {
 
             });
             const domain1 = data[0]._id;
-            const logos = await BrandModel.find({
+            const logos = await StuffModel.find({
                 domain: domain1,
 
             });
@@ -161,7 +161,7 @@ const getCompanyJson = async (domain) => {
         });
         const domain1 = data[0]._id;
        
-        const logos = await BrandModel.find({
+        const logos = await StuffModel.find({
             domain: domain1,
 
         });

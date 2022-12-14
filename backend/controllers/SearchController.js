@@ -1,7 +1,7 @@
-import BrandModel from '../models/brandModel.js'
+import StuffModel from '../models/StuffModel.js'
 
 
-const searchBrandName = async (req, res) => {
+const searchStuffName = async (req, res) => {
     try {
         var title = req.query.title === "" ? {} : { title: { '$regex': req.query.title, "$options": "i" } };
         var description = req.query.description === "" ? {} : { description: { '$regex': req.query.description, "$options": "i" } };
@@ -9,7 +9,7 @@ const searchBrandName = async (req, res) => {
         var active = req.query.active === "" ? {} : { active: req.query.active };
         var _id = req.query._id === "" ? {} : { _id: req.query._id };
         var domain = req.query.domain === "" ? {} : { domain: req.query.domain };
-        const data = await BrandModel.find({
+        const data = await StuffModel.find({
 
 
             //  $or: [ { ...title  }, { ...description } ] ,
@@ -38,7 +38,7 @@ const searchBrandName = async (req, res) => {
 
 export {
 
-    searchBrandName
+    searchStuffName
 
 }
 

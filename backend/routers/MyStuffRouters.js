@@ -1,11 +1,11 @@
 import express from "express";
-import {  deleteBrand, searchBrandName, UpdateBrand } from "../controllers/MyStuffController.js";
+import {  deleteStuff, searchStuffName, UpdateStuff } from "../controllers/MyStuffController.js";
 
 
 const routes = express.Router();
 
 
-routes.route('/').put(UpdateBrand)
-routes.route('/:email').get(searchBrandName)
-routes.route('/:id').delete(deleteBrand);
+routes.route('/').put(UpdateStuff)
+routes.route('/:email').get(searchStuffName)
+routes.route('/:id').delete(deleteStuff);
 export default routes;

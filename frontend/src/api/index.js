@@ -1,4 +1,4 @@
-import axios from "../interceptor//interceptor.js";
+import axios from "../interceptor/interceptor.js";
 // const URL = "https://thingsofbrand.com";
 
 const URL = "http://localhost:8080";

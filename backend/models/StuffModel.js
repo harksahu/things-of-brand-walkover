@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'; 
-const brandsSchema = new mongoose.Schema({
+const StuffSchema = new mongoose.Schema({
 
     sno_id:String,
     email: {
@@ -27,6 +27,6 @@ const brandsSchema = new mongoose.Schema({
     }
     })
 
-    const Brand = mongoose.model("brands",brandsSchema)
+    const Stuff = mongoose.model("brands",StuffSchema)
 
-export default Brand;
+export default Stuff;

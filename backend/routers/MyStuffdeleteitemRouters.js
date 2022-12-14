@@ -1,11 +1,11 @@
 import express from "express";
-import {  restoreBrand, searchBrandName, UpdateBrand } from "../controllers/MyDeletedStuffController.js";
+import {  restoreStuff, searchStuffName, UpdateStuff } from "../controllers/MyDeletedStuffController.js";
 
 
 const routes = express.Router();
 
 
-routes.route('/').put(UpdateBrand)
-routes.route('/:email').get(searchBrandName)
-routes.route('/:id').delete(restoreBrand);
+routes.route('/').put(UpdateStuff)
+routes.route('/:email').get(searchStuffName)
+routes.route('/:id').delete(restoreStuff);
 export default routes;

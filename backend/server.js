@@ -4,7 +4,7 @@ import path from "path";
 import authKeyRouters from "./routers/authKeyRouters.js";
 import connectDB from './services/mongodb_service.js';
 import uploadRoutes from "./routers/uploadRoutes.js";
-import brandRouters from "./routers/brandRouters.js";
+import StuffRouters from "./routers/StuffRouters.js";
 import MyStuffRouters from "./routers/MyStuffRouters.js";
 import SearchRouters from "./routers/SearchRouters.js";
 import MyStuffdeleteitemRouters from "./routers/MyStuffdeleteitemRouters.js";
@@ -35,7 +35,7 @@ app.use(express.json());
 
 
 app.use('/api/uploads',uploadRoutes);
-app.use('/api/brands',brandRouters);
+app.use('/api/brands',StuffRouters);
 app.use('/api/search',SearchRouters);
 app.use('/api/MyStuff',MyStuffRouters);
 app.use('/api/deteteItems',MyStuffdeleteitemRouters);
