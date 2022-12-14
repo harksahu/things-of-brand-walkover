@@ -113,15 +113,19 @@ function MyVerticallyCenteredModal(params) {
   );
 
   const companyPage = async () => {
+    // console.log(props?.domain);
+
     const forwardTo = await getProfileDetails({
       email: "",
       domain: "",
       name: "",
-      searchfrom: "true",
+      searchfrom: "false",
       _id: props?.domain,
     });
+    // console.log(forwardTo?.data?.data[0]?.domain);
 
-    navigate("/" + forwardTo?.data?.data[0]?.domain);
+    const moveTo = "/" + forwardTo?.data?.data[0]?.domain
+    navigate(moveTo);
   };
   useEffect(() => {
     setLoading(true);
@@ -131,201 +135,201 @@ function MyVerticallyCenteredModal(params) {
 
   return (
     <>
-    {loading?<div className="center-loader"><ClipLoader/></div>:
-    <Container fluid>
-      <Row className="h-90">
-        <Col className="popup_img">
-          <div className="d-flex" style={{ position: "absolute" }}>
-            <Button
-              style={{ margin: 10, zIndex: 1 }}
-              onClick={() => {
-                navigate(-1);
-              }}
-              variant="dark"
-            >
-              Back
-            </Button>
-            <OverlayTrigger
-              placement="right"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip}
-            >
-              <Button
-                style={{ margin: 10, zIndex: 1 }}
-                onClick={() => {
-                  companyPage();
-                }}
-                variant="dark"
-              >
-                Company page
-              </Button>
-            </OverlayTrigger>
-          </div>
-           
-          <SvgInline {...props} />
-              
-        </Col>
+      {loading ? <div className="center-loader"><ClipLoader /></div> :
+        <Container fluid>
+          <Row className="h-90">
+            <Col className="popup_img">
+              <div className="d-flex" style={{ position: "absolute" }}>
+                <Button
+                  style={{ margin: 10, zIndex: 1 }}
+                  onClick={() => {
+                    navigate(-1);
+                  }}
+                  variant="dark"
+                >
+                  Back
+                </Button>
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip}
+                >
+                  <Button
+                    style={{ margin: 10, zIndex: 1 }}
+                    onClick={() => {
+                      companyPage();
+                    }}
+                    variant="dark"
+                  >
+                    Company page
+                  </Button>
+                </OverlayTrigger>
+              </div>
 
-        <div style={{ position: "absolute" }}>
-          <Draggable defaultPosition={{ x: window.innerWidth - 350, y: 10 }}>
-            <div className="card property-box" style={{ cursor: "grab" }}>
-              <div className="card-header d-flex align-items-center">
-                {user !== null &&
-                user !== undefined &&
-                user &&
-                Object.keys(user).length > 0 ? (
-                  user?.email === props?.email ? (
-                    <div>
-                      {show ? (
-                        <input
-                          id="userInputBox"
-                          onChange={(e) => {
-                            savedata(props?._id, e.target.value);
-                          }}
-                          value={name}
-                          className="form-control form-control-sm"
-                          autoFocus
-                        />
-                      ) : (
-                        <div
-                          id="showname"
-                          onClick={() => {
-                            setShow(true);
-                          }}
-                        >
-                          {name}
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <div>{props?.title}</div>
-                  )
-                ) : (
-                  <div>{props?.title}</div>
-                )}
-                {user !== null &&
-                user !== undefined &&
-                user &&
-                Object.keys(user).length > 0 ? (
-                  user?.email === props?.email ? (
-                    <>
-                      <Dropdown className="ms-auto">
-                        <Dropdown.Toggle variant="light" size="sm">
-                          <BsThreeDotsVertical />
-                        </Dropdown.Toggle>
+              <SvgInline {...props} />
 
-                        <Dropdown.Menu>
-                          <Dropdown.Item
-                            onClick={() => {
-                              setShow(true);
-                            }}
-                          >
-                            Rename
-                          </Dropdown.Item>
-                          {props.active === false ? (
-                            <Dropdown.Item
-                              onClick={async () => {
-                                await restoreMyStuffAPI(props?._id);
-                                // alert("restore")
-                                navigate(-1);
+            </Col>
+
+            <div style={{ position: "absolute" }}>
+              <Draggable defaultPosition={{ x: window.innerWidth - 350, y: 10 }}>
+                <div className="card property-box" style={{ cursor: "grab" }}>
+                  <div className="card-header d-flex align-items-center">
+                    {user !== null &&
+                      user !== undefined &&
+                      user &&
+                      Object.keys(user).length > 0 ? (
+                      user?.email === props?.email ? (
+                        <div>
+                          {show ? (
+                            <input
+                              id="userInputBox"
+                              onChange={(e) => {
+                                savedata(props?._id, e.target.value);
                               }}
-                              variant="outline-secondary"
-                              size="sm"
-                            >
-                              Restore
-                            </Dropdown.Item>
+                              value={name}
+                              className="form-control form-control-sm"
+                              autoFocus
+                            />
                           ) : (
-                            <Dropdown.Item
-                              onClick={async () => {
-                                await deleteMyStuffAPI(props?._id);
-                                // alert("Deleted");
-                                // window.location.reload();
-                                navigate(-1);
+                            <div
+                              id="showname"
+                              onClick={() => {
+                                setShow(true);
                               }}
-                              variant="outline-secondary"
-                              size="sm"
                             >
-                              Delete
-                            </Dropdown.Item>
+                              {name}
+                            </div>
                           )}
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </>
-                  ) : (
-                    ""
-                  )
-                ) : (
-                  ""
-                )}
-              </div>
-              <div className="card-body">
-                <label className="small fw-bold mb-1">Size</label>
-                <Row>
-                  <Col>
-                    <Form.Group
-                      className="mb-3"
-                      controlId="exampleForm.ControlInput1"
+                        </div>
+                      ) : (
+                        <div>{props?.title}</div>
+                      )
+                    ) : (
+                      <div>{props?.title}</div>
+                    )}
+                    {user !== null &&
+                      user !== undefined &&
+                      user &&
+                      Object.keys(user).length > 0 ? (
+                      user?.email === props?.email ? (
+                        <>
+                          <Dropdown className="ms-auto">
+                            <Dropdown.Toggle variant="light" size="sm">
+                              <BsThreeDotsVertical />
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                              <Dropdown.Item
+                                onClick={() => {
+                                  setShow(true);
+                                }}
+                              >
+                                Rename
+                              </Dropdown.Item>
+                              {props.active === false ? (
+                                <Dropdown.Item
+                                  onClick={async () => {
+                                    await restoreMyStuffAPI(props?._id);
+                                    // alert("restore")
+                                    navigate(-1);
+                                  }}
+                                  variant="outline-secondary"
+                                  size="sm"
+                                >
+                                  Restore
+                                </Dropdown.Item>
+                              ) : (
+                                <Dropdown.Item
+                                  onClick={async () => {
+                                    await deleteMyStuffAPI(props?._id);
+                                    // alert("Deleted");
+                                    // window.location.reload();
+                                    navigate(-1);
+                                  }}
+                                  variant="outline-secondary"
+                                  size="sm"
+                                >
+                                  Delete
+                                </Dropdown.Item>
+                              )}
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </>
+                      ) : (
+                        ""
+                      )
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className="card-body">
+                    <label className="small fw-bold mb-1">Size</label>
+                    <Row>
+                      <Col>
+                        <Form.Group
+                          className="mb-3"
+                          controlId="exampleForm.ControlInput1"
+                        >
+                          <Form.Label>W</Form.Label>
+                          <Form.Control
+                            onChange={(e) => (
+                              setWidth(e.target.value),
+                              changeHW(e.target.value, mheight)
+                            )}
+                            value={mwidth}
+                            size="sm"
+                            autoComplete="off"
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col>
+                        <Form.Group
+                          className="mb-3"
+                          controlId="exampleForm.ControlInput1"
+                        >
+                          <Form.Label>H</Form.Label>
+                          <Form.Control
+                            onChange={(e) => (
+                              setHeight(e.target.value),
+                              changeHW(mwidth, e.target.value)
+                            )}
+                            value={mheight}
+                            size="sm"
+                            autoComplete="off"
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <div className="mt-4 mb-1">
+                      <label className="small fw-bold">Download</label>
+                    </div>
+                    <Button
+                      variant="outline-secondary"
+                      size="sm me-4"
+                      onClick={() => {
+                        DownloadToPng(props.url, mwidth, mheight);
+                      }}
+                      className=""
                     >
-                      <Form.Label>W</Form.Label>
-                      <Form.Control
-                        onChange={(e) => (
-                          setWidth(e.target.value),
-                          changeHW(e.target.value, mheight)
-                        )}
-                        value={mwidth}
-                        size="sm"
-                        autoComplete="off"
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group
-                      className="mb-3"
-                      controlId="exampleForm.ControlInput1"
+                      PNG
+                    </Button>
+                    <Button
+                      variant="outline-secondary"
+                      size="sm"
+                      onClick={() => {
+                        const canvas = DownloadToSvg(props.url, props.title);
+                      }}
+                    // onClick={() => saveAs(props.title)}
                     >
-                      <Form.Label>H</Form.Label>
-                      <Form.Control
-                        onChange={(e) => (
-                          setHeight(e.target.value),
-                          changeHW(mwidth, e.target.value)
-                        )}
-                        value={mheight}
-                        size="sm"
-                        autoComplete="off"
-                      />
-                    </Form.Group>
-                  </Col>
-                </Row>
-                <div className="mt-4 mb-1">
-                  <label className="small fw-bold">Download</label>
+                      SVG
+                    </Button>
+                  </div>
                 </div>
-                <Button
-                  variant="outline-secondary"
-                  size="sm me-4"
-                  onClick={() => {
-                    DownloadToPng(props.url, mwidth, mheight);
-                  }}
-                  className=""
-                >
-                  PNG
-                </Button>
-                <Button
-                  variant="outline-secondary"
-                  size="sm"
-                  onClick={() => {
-                    const canvas = DownloadToSvg(props.url, props.title);
-                  }}
-                  // onClick={() => saveAs(props.title)}
-                >
-                  SVG
-                </Button>
-              </div>
+              </Draggable>
             </div>
-          </Draggable>
-        </div>
-      </Row>
-    </Container>
-}
+          </Row>
+        </Container>
+      }
     </>
 
     //     </Modal.Body>

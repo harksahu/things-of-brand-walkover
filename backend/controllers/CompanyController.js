@@ -28,7 +28,7 @@ const getCompanyDetails = async (req, res) => {
     var searchfrom = req.query.searchfrom
     var domainCheck = req.params.domain || req.query.domain
 
-    var domain = domainCheck?.length ? { domain: { '$regex': domainCheck, "$options": "i" } } : '';
+    var domain = domainCheck ? { domain: { '$regex': domainCheck, "$options": "i" } } : '';
     var name = req?.query?.name
     // === "" ? {} : { name: { '$regex': req?.query?.name, "$options": "i" } };
     if (searchfrom == "true") {
@@ -55,7 +55,7 @@ const getCompanyDetails = async (req, res) => {
 
             }).status(200);
         } catch (error) {
-           
+           console.log(error);
 
             res.send({
                 message: "Some Error on Server11",

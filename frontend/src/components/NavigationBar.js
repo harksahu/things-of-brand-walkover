@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect,useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import {
@@ -23,6 +23,40 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const [LogoData, setLogoData] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
+
+
+
+
+  const handleKeyPress = useCallback((event) => {
+
+    if (event.ctrlKey === true) {
+      // console.log(event);
+      if(event.key ==="k"){
+        // console.log("autoFocus")
+        document.getElementById("searchbar").focus()
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    // attach the event listener
+    document.addEventListener('keydown', handleKeyPress);
+
+    // remove the event listener
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleKeyPress]);
+
+
+
+
+
+
+
+
+
+
 
   const searchbar = async (searchData) => {
     const C_data = await getProfileDetails({
