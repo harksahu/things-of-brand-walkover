@@ -43,6 +43,8 @@ function Home({ searchBrandData = [], getSearchBrand }) {
   // const getProfile = async () =>{
   //   setSearchBrandData(await getProfileDetails({}));
   // }
+
+  
   const fetchPosts = async () => {
       
     await getSearchBrand({});
