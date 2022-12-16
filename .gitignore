@@ -7,3 +7,4 @@ uploads/
 app.yaml
 /frontend/.DS_Store
 .DS_Store
+/frontend/src/api/Index.js
