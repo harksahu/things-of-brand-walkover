@@ -43,7 +43,7 @@ const SvgInline = (props) => {
             } ${isErrored ? "svgInline--errored" : ""}`}
           dangerouslySetInnerHTML={{ __html: svg }}
           offset="30%"
-          id={props?.url}
+          id="largeImage"
         ></div>
       )}
     </>
