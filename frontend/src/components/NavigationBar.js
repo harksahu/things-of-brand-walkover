@@ -135,7 +135,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
   const handleSignOut = async () => {
     try {
       await logOut();
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       // console.log(error);
     }
@@ -147,7 +147,7 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
         <Container>
           <Navbar.Brand
             onClick={() => {
-              navigate("/home");
+              navigate("/");
             }}
             id="logo"
             style={{ cursor: "pointer" }}

@@ -18,7 +18,6 @@ import { auth } from './firebase.js';
 import MyVerticallyCenteredModal from './pages/ImageEditer';
 import Brand from './pages/Brand.js';
 import SearchLogo from './pages/SearchLogo.js';
-import Home2 from './pages/Home2';
 import Profile from './pages/profile';
 import DomainVerificationPage from './pages/DomainVerificationPage';
 import SearchBar from "./components/searchBar"
@@ -50,7 +49,6 @@ function App() {
             <Routes>
 
               <Route path='/' element={<Home />} />
-              <Route path="/home" element={<Protected> <Home2 /> </Protected>} />
               <Route path='/all-companies' element={<AllCompanies />} />
               <Route path='/searchlogo' element={<SearchLogo />} />
               <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />
