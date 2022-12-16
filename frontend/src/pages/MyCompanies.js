@@ -226,7 +226,7 @@ function MyCompany() {
                     {Company?.sharedEmail?.map((sharedEmail, index) => {
 
                       return (
-                        <>
+              
 
                           <div key={index}>
                             {sharedEmail == user.email ? (
@@ -265,7 +265,7 @@ function MyCompany() {
                             )}
                           </div>
 
-                        </>
+                 
                       );
                     })}
                   </div>

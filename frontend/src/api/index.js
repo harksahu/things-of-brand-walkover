@@ -13,7 +13,9 @@ const URL = "http://localhost:8080";
 // };
 
 const awsDataCall = async (link)=>{
-  return await axios.get(link)
+  // return await axios.get(`${link}?timestamp=${new Date().getTime()}`);
+  return await axios.get(link);
+
 }
 
 const createBrandAPI = async (dataToSend) => {

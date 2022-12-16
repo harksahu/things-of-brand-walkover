@@ -216,34 +216,28 @@ const Addfile = () => {
                   <Stack gap={3}>
                     <FormGroup>
                       <Form.Label>Choose a domain *</Form.Label>
-                      <Form.Select
+                      <Form.Control
                         aria-label="Default select example"
                         onChange={(e) => {
                           setDomain(e.target.value);
 
                         }}
+                        as="select"
+                        value={domainToSelect}
                       >
 
                         {ffresult &&
                           ffresult.map((domainName, index) => (
-                            <>
-
-                              {domainToSelect == domainName.domain ?
-                                <option key={index} value={domainName.domain} selected>
-                                  {domainName.domain}
-                                </option> : <option key={index} value={domainName.domain} >
-                                  {domainName.domain}
-                                </option>
-                              }
-
-                            </>
+                            <option key={index} value={domainName.domain}>
+                              {domainName.domain}{index}
+                            </option>
                           ))}
-                        {shareEmailDomainOption ? <option value={shareEmailDomainOption} selected>
+                        {/* {shareEmailDomainOption ? <option value={shareEmailDomainOption} selected>
                           {shareEmailDomainOption}
-                        </option> : ""}
+                        </option> : ""} */}
 
 
-                      </Form.Select>
+                      </Form.Control>
                     </FormGroup>
 
                     <FormGroup>

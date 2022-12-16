@@ -16,7 +16,7 @@ function Home() {
   useEffect(() => {
     if (user) {
      
-      navigate("/my-companies");
+      // navigate("/my-companies");
     }
   }, [user]);
   return (

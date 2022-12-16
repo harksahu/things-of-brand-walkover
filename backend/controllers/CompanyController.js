@@ -27,10 +27,8 @@ const getCompanyDetails = async (req, res) => {
     var _id = req.query._id === "" ? {} : { _id: req.query._id };
     var searchfrom = req.query.searchfrom
     var domainCheck = req.params.domain || req.query.domain
-
     var domain = domainCheck ? { domain: { '$regex': domainCheck, "$options": "i" } } : '';
     var name = req?.query?.name
-    // === "" ? {} : { name: { '$regex': req?.query?.name, "$options": "i" } };
     if (searchfrom == "true") {
         try {
             var data = await CompanyModel.find({

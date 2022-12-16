@@ -21,7 +21,7 @@ import SearchLogo from './pages/SearchLogo.js';
 import Home2 from './pages/Home2';
 import Profile from './pages/profile';
 import DomainVerificationPage from './pages/DomainVerificationPage';
-
+import SearchBar from "./components/searchBar"
 import PageNotFound from './pages/PageNotFound.js';
 import { Switch } from '@mui/material';
 
@@ -46,7 +46,7 @@ function App() {
           <AuthContextProvider>
 
             {window.location.pathname ? (window.location.pathname.slice(0, 7).toLocaleLowerCase() === '/stuff/' ? "" : <NavigationBar />) : <NavigationBar />}
-
+            {/* <SearchBar /> */}
             <Routes>
 
               <Route path='/' element={<Home />} />
@@ -66,7 +66,7 @@ function App() {
               <Route path='*' element={<PageNotFound />} />
             </Routes>
 
-            {window.location.pathname ? (window.location.pathname.slice(0, 7).toLocaleLowerCase() === '/stuff/'? "" : <Footer />) :<Footer />}
+            {window.location.pathname ? (window.location.pathname.slice(0, 7).toLocaleLowerCase() === '/stuff/' ? "" : <Footer />) : <Footer />}
           </AuthContextProvider>
         </ThemeProvider>
       }
