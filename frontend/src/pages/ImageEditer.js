@@ -307,7 +307,7 @@ function MyVerticallyCenteredModal(params) {
                       variant="outline-secondary"
                       size="sm me-4"
                       onClick={() => {
-                        DownloadToPng(props.url, mwidth, mheight);
+                        DownloadToPng(document.getElementById("largeImage").innerHTML, mwidth, mheight);
                       }}
                       className=""
                     >
