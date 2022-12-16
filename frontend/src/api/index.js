@@ -3,21 +3,6 @@ import axios from "../interceptor/interceptor.js";
 
 const URL = "http://localhost:8080";
 
-
-// const uploadSingleFileAPI = async (fileObject) => {
-//   const config = {
-//     header: { "Content-Type": "multipart/form-data" },
-//   };
-//   const { data } = await axios.post(URL + "/api/uploads", fileObject, config);
-//   return data;
-// };
-
-const awsDataCall = async (link)=>{
-  // return await axios.get(`${link}?timestamp=${new Date().getTime()}`);
-  return await axios.get(link);
-
-}
-
 const createBrandAPI = async (dataToSend) => {
   const data = {
     ...dataToSend,
@@ -170,5 +155,4 @@ export {
   updateProfileFields,
   getCompanyDetails,
   getProfileandLogoDetails,
-  awsDataCall
 };
