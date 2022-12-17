@@ -2,7 +2,6 @@ import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
 export default function CompanyCard(props) {
-    console.log(props?.props?._id);
     return ( <div
         key={props?.props?._id}
         className="d-flex justify-content-center item "

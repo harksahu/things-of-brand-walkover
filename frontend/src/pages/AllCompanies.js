@@ -83,7 +83,9 @@ function Home({ searchBrandData = [], getSearchBrand }) {
           ) : (
             currentPosts?.map((Company) => {
               return (
-               <CompanyCard props={Company}/>
+                <div key={Company._id}>
+                   <CompanyCard props={Company} />
+                 </div>
               );
             })
           )}

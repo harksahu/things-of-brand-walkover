@@ -11,6 +11,10 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import CompanyCard from "../components/CompanyCard.js"
+import InputComponent from "../components/InputComponent.js";
+
+
+
 
 function MyCompany() {
   const [company, setCompany] = useState();
@@ -67,7 +71,7 @@ function MyCompany() {
 
           alert("successfully saved domain " + d);
 
-          navigate("/editprofile", { state: { data: data.data.data }})
+          navigate("/editprofile", { state: { data: data.data.data } })
 
         } catch (err) {
           // console.log(err);
@@ -121,7 +125,9 @@ function MyCompany() {
             <div className="grid">
               {company?.map((Company) => {
                 return (
-                  <CompanyCard props={Company}/>
+                 <div key={Company._id}>
+                   <CompanyCard props={Company} />
+                 </div>
                 );
               })}
               {/* <Link to="/editprofile" className="add-new"> */}
@@ -135,7 +141,7 @@ function MyCompany() {
                 <Card.Body>
                   <Card.Title className="text-center">Add New Brand</Card.Title>
                 </Card.Body>
-                
+
               </Card>
               {/* </Link> */}
 
@@ -192,30 +198,14 @@ function MyCompany() {
             </div>
             <div className="grid">
               {allData?.map((Company) => {
-                 
-                return (
-                  <div
-                    key={Company._id}
-                    className="d-flex justify-content-center item"
-                  >
-                    {Company?.sharedEmail?.map((sharedEmail, index) => {
-
-                      return (
-              
-
-                          <div key={index}>
-                            {sharedEmail == user.email ? (
-                             <CompanyCard props={Company}/>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-
-                 
-                      );
-                    })}
+                if (Company?.sharedEmail?.includes(user.email)) {
+                  return (
+                    <div key={Company._id}>
+                    <CompanyCard props={Company} />
                   </div>
-                );
+
+                  );
+                }
               })}
             </div>
           </Container>

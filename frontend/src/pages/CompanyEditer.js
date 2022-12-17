@@ -249,14 +249,14 @@ function Profile(props) {
       setcount(location?.state?.data?.color);
       setLogo(location?.state?.data?.logo);
       setDomain(location?.state?.data?.domain);
-      let colorData =[];
-      location?.state?.data?.color.map((colorDataTemp)=>{
+      let colorData = [];
+      location?.state?.data?.color.map((colorDataTemp) => {
         colorData.push({
           "label": colorDataTemp?.colorValue,
           "value": colorDataTemp?.colorValue
         })
       })
-      console.log("colorData",colorData);
+      console.log("colorData", colorData);
       setValue(colorData)
 
     }
@@ -269,8 +269,8 @@ function Profile(props) {
 
 
   useEffect(() => {
-   
-}, [value]);
+
+  }, [value]);
 
 
   const config = {
@@ -329,7 +329,7 @@ function Profile(props) {
           <ClipLoader />
         </div>
       ) : (
-        <Container className="wrpr">
+        <Container className="wrpr w-100">
           <Row>
             <nav className="navbar bg-light">
               <div className="container-fluid">
@@ -363,7 +363,7 @@ function Profile(props) {
                           value={name}
                         />
                       </Form.Group> */}
-                      <InputComponent label={"Name"} setValue={setName} valuee={name}/>
+                      <InputComponent label={"Name"} setValue={setName} valuee={name} />
                       <Form.Group className="mb-3 " id="about">
                         <Form.Label>About us</Form.Label>
                         <RichtextEditor
@@ -376,15 +376,16 @@ function Profile(props) {
                       {DomainPost ? (
                         <div className="grid">
                           <h6>logos</h6>
-                          <div className="d-flex flex-wrap justify-content-center">
-                            {DomainPost?.map((brand, index) => {
+                           <div className="grid d-flex"style={{ overflow: "auto" }}>
+                           {DomainPost?.map((brand, index) => {
                               return (
-                                <div key={index}>
+                                <div key={index} className="d-flex flex-wrap d-flex justify-content-center ">
+
                                   <div
                                     key={brand._id}
-                                    className=" flex-wrap item"
+                                    className="item "
                                   >
-                                    <Card>
+                                    <Card  className="box-shadow">
                                       {/* <Dropdown className="ms-auto">
                                       <Dropdown.Toggle variant="light" size="sm">
                                         <BsThreeDotsVertical />
@@ -415,10 +416,10 @@ function Profile(props) {
                                       <Link to={"/stuff/" + brand._id}>
                                         <div
                                           style={{ overflow: "auto" }}
-                                          className="img_size"
+                                          className="img_size  pattern-square"
                                         >
                                           {brand.url !== undefined &&
-                                          brand.url !== "null" ? (
+                                            brand.url !== "null" ? (
                                             <img src={brand.url} alt="" />
                                           ) : (
                                             <img
@@ -457,93 +458,95 @@ function Profile(props) {
                                             {/* )} */}
                                           </div>
                                         </Card.Title>
+                                        <Card.Footer>
+                                          {user ? (
+                                            user.email === user.email ? (
+                                              logo === brand.url ? (
+                                                <Button
+                                                  variant="outline-secondary"
+                                                  size="sm"
+                                                  disabled
+                                                >
+                                                  Default logo
+                                                </Button>
+                                              ) : (
+                                                <Button
+                                                  variant="outline-secondary"
+                                                  size="sm"
+                                                  onClick={() => {
+                                                    setLogo(brand.url);
+                                                  }}
+                                                >
+                                                  Make default
+                                                </Button>
+                                              )
+                                            ) : (
+                                              ""
+                                            )
+                                          ) : (
+                                            ""
+                                          )}
+                                          {brand.active ? (
+                                            <Button
+                                              variant="outline-secondary"
+                                              size="sm"
+                                              onClick={async () => {
+                                                await deleteMyStuffAPI(brand?._id);
+
+                                                navigate(-1);
+                                              }}
+                                            >
+                                              Delete
+                                            </Button>
+                                          ) : (
+                                            <Button
+                                              variant="outline-secondary"
+                                              size="sm"
+                                              onClick={async () => {
+                                                await restoreMyStuffAPI(brand?._id);
+
+                                                navigate(-1);
+                                              }}
+                                            >
+                                              Restore
+                                            </Button>
+                                          )}
+                                        </Card.Footer>
                                       </Card.Body>
                                     </Card>
-                                    {user ? (
-                                      user.email === user.email ? (
-                                        logo === brand.url ? (
-                                          <Button
-                                            variant="light"
-                                            size="sm"
-                                            disabled
-                                          >
-                                            Default logo
-                                          </Button>
-                                        ) : (
-                                          <Button
-                                            variant="light"
-                                            size="sm"
-                                            onClick={() => {
-                                              setLogo(brand.url);
-                                            }}
-                                          >
-                                            Make default
-                                          </Button>
-                                        )
-                                      ) : (
-                                        ""
-                                      )
-                                    ) : (
-                                      ""
-                                    )}
+
                                   </div>
                                   <div>
-                                    {brand.active ? (
-                                      <Button
-                                        variant="light"
-                                        size="sm"
-                                        onClick={async () => {
-                                          await deleteMyStuffAPI(brand?._id);
 
-                                          navigate(-1);
-                                        }}
-                                      >
-                                        Delete
-                                      </Button>
-                                    ) : (
-                                      <Button
-                                        variant="light"
-                                        size="sm"
-                                        onClick={async () => {
-                                          await restoreMyStuffAPI(brand?._id);
-
-                                          navigate(-1);
-                                        }}
-                                      >
-                                        Restore
-                                      </Button>
-                                    )}
                                   </div>
                                 </div>
                               );
                             })}
 
                             {user ? (
-                              <Link
-                                to="/addfile"
-                                className="add-new item"
-                                state={{ domain: domain }}
-                              >
-                                <Card className="h-100 item-company">
-                                  <Card.Body className="align-items-center card-body d-flex justify-content-center">
-                                    <Card.Title className="text-center">
-                                      <BsFillPlusCircleFill
-                                        style={{ fontSize: 40 }}
-                                      />
-                                    </Card.Title>
-                                    <Card.Text></Card.Text>
-                                  </Card.Body>
-                                  <div className="card-footer">
-                                    <Button variant="link" size="sm">
-                                      Add new Logo
-                                    </Button>
-                                  </div>
-                                </Card>
-                              </Link>
+                            <Link to="/addfile" className="add-new" state={{ domain: domain }}>
+                            <Card className="item">
+                              <Card.Body className="add-icon align-items-center d-flex justify-content-center">
+                                <Card.Title className="text-center">
+                                  <BsFillPlusCircleFill style={{ fontSize: 40 }} />
+                                </Card.Title>
+                                <Card.Text></Card.Text>
+                              </Card.Body>
+                              <Card.Body>
+                                <Card.Title>Add New File</Card.Title>
+                              </Card.Body>
+                              <div className="card-footer">
+                                <Button variant="outline-light" size="sm">
+                                  -
+                                </Button>
+                              </div>
+                            </Card>
+                          </Link>
                             ) : (
                               ""
                             )}
-                          </div>
+                           </div>
+
                         </div>
                       ) : (
                         ""
@@ -596,14 +599,14 @@ function Profile(props) {
                           </Link>
                         </div>
                         {/* autocompate domain */}
-                        {/* <datalist id="doaminBrowsers">
+                      {/* <datalist id="doaminBrowsers">
                         {results &&
                           results.map((brandData) => {
                             return <option key={brandData._id} value={brandData.domain} />;
                           })}
                       </datalist> */}
                       {/* </Form.Group> */}
-                      <InputComponent label={"Domain"} setValue={setDomain} valuee={domain}/>
+                      <InputComponent label={"Domain * <small>(example.com)</small>"} setValue={setDomain} valuee={domain} />
 
                       <Form.Group className="mb-3" id="Guidlines">
                         <Form.Label>Guidlines</Form.Label>
@@ -648,9 +651,9 @@ function Profile(props) {
                                       ).value = newValue.value;
                                       let tempCount = color;
                                       tempCount[index].colorValue =
-                                        newValue.value ;
+                                        newValue.value;
                                       setcount([...tempCount]);
-                                      let tempCount1 = value; 
+                                      let tempCount1 = value;
                                       tempCount1[index] = newValue;
                                       setValue([...tempCount1]);
                                       console.log(tempCount1);
@@ -658,16 +661,16 @@ function Profile(props) {
                                       document.getElementById(
                                         "colorinput" + index
                                       ).value = newValue;
-                                      let tempCount1 = value; 
+                                      let tempCount1 = value;
                                       tempCount1[index].label = newValue;
                                       tempCount1[index].value = newValue;
                                       setValue([...tempCount1]);
-                                      console.log("else if ",tempCount1);
+                                      console.log("else if ", tempCount1);
                                     } else {
                                       document.getElementById(
                                         "colorinput" + index
                                       ).value = newValue;
-                                      let tempCount1 = value; 
+                                      let tempCount1 = value;
                                       tempCount1[index].label = newValue;
                                       tempCount1[index].value = newValue;
                                       setValue([...tempCount1]);
@@ -680,7 +683,7 @@ function Profile(props) {
                                     setInputValue(newInputValue);
                                     if (newInputValue.includes("#")) {
                                       // console.log("value", newInputValue);
-                                      let tempCount1 = value; 
+                                      let tempCount1 = value;
                                       tempCount1[index].label = newInputValue;
                                       tempCount1[index].value = newInputValue;
                                       setValue([...tempCount1]);
