@@ -20,7 +20,7 @@ import Brand from './pages/Brand.js';
 import SearchLogo from './pages/Searchlogo.js';
 import Profile from './pages/profile';
 import DomainVerificationPage from './pages/DomainVerificationPage';
-import SearchBar from "./components/searchbar"
+import SearchBar from "./components/searchbar";
 import PageNotFound from './pages/PageNotFound.js';
 import { Switch } from '@mui/material';
 
