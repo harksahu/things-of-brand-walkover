@@ -9,7 +9,7 @@ import {
   Dropdown,
   Stack,
 } from "react-bootstrap";
-
+import input from '../components/InputComponent.js'
 import { UserAuth } from "../context/AuthContext";
 import {
   getProfileDetails,
@@ -35,6 +35,7 @@ import { Hint } from "react-autocomplete-hint";
 // import { Tokenizer } from 'react-typeahead';
 // import {  Typeahead } from 'react-bootstrap-typeahead';
 import ClipLoader from "react-spinners/ClipLoader";
+import InputComponent from "../components/InputComponent.js";
 
 
 
@@ -305,18 +306,9 @@ else {
               <Card.Body>
                 <Stack gap={3}>
                   <Form>
-                    <Form.Group className="mb-3 " id="name">
-                      <Form.Label>name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter name"
-                        aria-describedby="btnGroupAddon"
-                        onChange={(e) => {
-                          setName(e.target.value);
-                        }}
-                        value={name}
-                      />
-                    </Form.Group>
+                   
+                    <InputComponent label={"Name"} setValue={setName} valuee={name}/>
+                    
                     <Form.Group className="mb-3 " id="about">
                       <Form.Label>About us</Form.Label>
                       <RichtextEditor
@@ -335,33 +327,7 @@ else {
                               <div key={index}>
                                 <div key={brand._id} className=" flex-wrap item">
                                   <Card>
-                                    {/* <Dropdown className="ms-auto">
-                                      <Dropdown.Toggle variant="light" size="sm">
-                                        <BsThreeDotsVertical />
-                                      </Dropdown.Toggle>
-
-                                      <Dropdown.Menu>
-                                        <Dropdown.Item
-                                          onClick={() => {
-                                            setShow(true);
-                                          }}
-                                        >
-                                          Rename
-                                        </Dropdown.Item>
-                                        <Dropdown.Item
-                                          onClick={async () => {
-                                            await deleteMyStuffAPI(brand?._id);
-                                            // alert("Deleted");
-                                            // window.location.reload();
-                                            navigate(-1);
-                                          }}
-                                          variant="outline-secondary"
-                                          size="sm"
-                                        >
-                                          Delete
-                                        </Dropdown.Item>
-                                      </Dropdown.Menu>
-                                    </Dropdown> */}
+                                   
                                     <Link to={"/stuff/" + brand._id}>
                                       <div
                                         style={{ overflow: "auto" }}
@@ -383,18 +349,7 @@ else {
                                       >
 
                                         <div>
-                                          {/* {
-                                          show ? (
-                                            <input
-                                              id="userInputBox"
-                                              onChange={(e) => {
-                                                savedata(brand.title, e.target.value);
-                                              }}
-                                              value={brand.title}
-                                              className="form-control form-control-sm"
-                                              autoFocus
-                                            />
-                                          ) : ( */}
+                                          
                                           <div
                                             id="showname"
                                             onClick={() => {
@@ -533,36 +488,8 @@ else {
                         placeholder="Press enter to add tags"
                       />
                     </div>
-                    <Form.Group className="mb-3">
-                      <Form.Label>
-                        Domain * <small>(example.com)</small>
-                      </Form.Label>
-                      <Form.Control
-                        type="domain"
-                        placeholder="Enter domain name"
-                        list="doaminBrowsers"
-                        autoComplete="off"
-                        name="myBrowser"
-                        id="domain"
-                        onChange={(e) => {
-                          setDomain(e.target.value);
-                        }}
-                        value={domain}
-                      />
-                      <div className="visually-hidden" id="domainError">
-                        This company is already created{" "}
-                        <Link to="/domainverify" state={{ data: company }}>
-                          Clam your brand
-                        </Link>
-                      </div>
-                      {/* autocompate domain */}
-                      {/* <datalist id="doaminBrowsers">
-                        {results &&
-                          results.map((brandData) => {
-                            return <option key={brandData._id} value={brandData.domain} />;
-                          })}
-                      </datalist> */}
-                    </Form.Group>
+                    <InputComponent label={"Domain"} setValue={setDomain} valuee={domain}/>
+                  
                     <Form.Group className="mb-3" id="Guidlines">
                       <Form.Label>Guidlines</Form.Label>
                       <RichtextEditor
