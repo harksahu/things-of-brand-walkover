@@ -1,40 +1,29 @@
-import axios from "../interceptor/interceptor";
-const URL = "https://thingsofbrand.com";
+import axios from "../interceptor/Intercepter.js";
+// const URL = "https://thingsofbrand.com";
 
-// const URL = "http://localhost:8080";
-
-
-// const uploadSingleFileAPI = async (fileObject) => {
-//   const config = {
-//     header: { "Content-Type": "multipart/form-data" },
-//   };
-//   const { data } = await axios.post(URL + "/api/uploads", fileObject, config);
-//   return data;
-// };
-
-
+const URL = "http://localhost:8080";
 
 const createBrandAPI = async (dataToSend) => {
   const data = {
     ...dataToSend,
     // url: URL + "/" + dataToSend.url,
   };
-  return await axios.post(URL + "/api/brands", data);
+  return await axios.post(URL + "/api/stuff", data);
 };
 
 const createProfile   = async (dataToSend) => {
   const data = {
     ...dataToSend,
   }
-  return await axios.post(URL + "/api/profile", data);
+  return await axios.post(URL + "/api/companies", data);
 };
 
 const getProfileDetails = async ({email="",domain="",name="",searchfrom="false",_id=""}) => {  
-  const title="";
-  const active="1";
-  const description="";
-  const id="";
-  var data = await axios.get(URL + "/api/profile?email="+email+"&domain="+domain+"&name="+name+"&searchfrom="+searchfrom+"&_id="+_id);  
+  // const title="";
+  // const active="1";
+  // const description="";
+  // const id="";
+  var data = await axios.get(URL + "/api/companies?email="+email+"&domain="+domain+"&name="+name+"&searchfrom="+searchfrom+"&_id="+_id);  
   // const logos = await axios.get(URL + "/api/search?title=" + title+"&email="+email+"&active="+active+"&description="+description+"&_id=" + id+ "&domain=" +data?.data?.data[0]._id);
   // data?.data?.data[0].push(logos?.data?.data)  
   return data
@@ -44,7 +33,7 @@ const getProfileandLogoDetails = async ({email="",domain="",name="",searchfrom="
   const active="1";
   const description="";
   const id="";
-  var data = await axios.get(URL + "/api/profile?email="+email+"&domain="+domain+"&name="+name+"&searchfrom="+searchfrom+"&_id="+_id);
+  var data = await axios.get(URL + "/api/companies?email="+email+"&domain="+domain+"&name="+name+"&searchfrom="+searchfrom+"&_id="+_id);
   
   const logos = await axios.get(URL + "/api/search?title=" + title+"&email="+email+"&active="+active+"&description="+description+"&_id=" + id+ "&domain=" +data?.data?.data[0]._id);
   
@@ -58,7 +47,7 @@ const getProfileandLogoDetails = async ({email="",domain="",name="",searchfrom="
 
 
 const searchBrandApi = async (id) => {
-  return await axios.get(URL + "/api/brands/"+id);
+  return await axios.get(URL + "/api/stuff/"+id);
 }
 
 
@@ -68,7 +57,7 @@ const updateProfileFields = async(dataToSend) => {
     ...dataToSend
   }
 
-  return await axios.put(URL + "/api/profile", data);
+  return await axios.put(URL + "/api/companies", data);
 }
 
 const getFontList = async () => {
@@ -76,7 +65,7 @@ const getFontList = async () => {
   return data
 };
 const sendBrandAPI = async () => {
-  return await axios.get(URL + "/api/brands/");
+  return await axios.get(URL + "/api/stuff/");
 };
 const sendMyStuffAPI = async (email) => {
   return await axios.get(URL + "/api/Mystuff/" + email);
@@ -89,7 +78,7 @@ const sendSearchAPI = async ({title = "" , email = "" , active = "",description=
 };
 
 const getCompanyDetails = async (id) => {
-  return await axios.get(URL + "/api/profile/" +  id );
+  return await axios.get(URL + "/api/companies/" +  id );
 }
 
 const sendMydeleteStuffAPI = async (email) => {
@@ -165,5 +154,5 @@ export {
   getProfileDetails,
   updateProfileFields,
   getCompanyDetails,
-  getProfileandLogoDetails
+  getProfileandLogoDetails,
 };

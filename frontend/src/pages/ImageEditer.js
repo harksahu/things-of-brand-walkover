@@ -8,9 +8,9 @@ import { Canvg, presets } from "canvg";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import "../utils/svginline.css";
+import "../utils/SvgInLine.css";
 import "../scss/popup.scss";
-import SvgInline from "../utils/SvgInline.js";
+import SvgInline from "../utils/SvgInLine.js";
 import { useNavigate, useParams } from "react-router-dom";
 import Draggable from "react-draggable";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -22,7 +22,7 @@ import {
   getProfileDetails,
   restoreMyStuffAPI,
   saveMyStuffAPI,
-} from "../api/index.js";
+} from "../api/Index.js";
 import ClipLoader from "react-spinners/ClipLoader";
 
 

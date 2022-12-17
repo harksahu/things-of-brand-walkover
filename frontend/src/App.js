@@ -17,10 +17,9 @@ import './App.css';
 import { auth } from './firebase.js';
 import MyVerticallyCenteredModal from './pages/ImageEditer';
 import Brand from './pages/Brand.js';
-import SearchLogo from './pages/Searchlogo.js';
-import Profile from './pages/profile';
+import SearchLogo from './pages/SearchLogo.js';
+import Profile from './pages/Comapny.js';
 import DomainVerificationPage from './pages/DomainVerificationPage';
-import SearchBar from "./components/searchbar";
 import PageNotFound from './pages/PageNotFound.js';
 import { Switch } from '@mui/material';
 

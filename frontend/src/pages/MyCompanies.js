@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
-import { getProfileDetails, createProfile } from "../api/index.js";
+import { getProfileDetails, createProfile } from "../api/Index.js";
 import { Container, Row, Col, Form, Card } from "react-bootstrap";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import SvgInline from "../utils/SvgInline.js";
-import "../utils/svginline.css";
+import SvgInline from "../utils/SvgInLine.js";
+import "../utils/SvgInLine.css";
 import "../scss/company.scss";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import ClipLoader from "react-spinners/ClipLoader";

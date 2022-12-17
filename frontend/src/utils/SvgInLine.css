@@ -1,0 +1,51 @@
+.item{
+    margin: 0;    
+}
+.item a{
+    text-decoration: none;
+}
+.item .card-title{    
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 250px;
+    color: var(--bs-gray-700);
+}
+.img_size{
+    padding: 16px;    
+    text-align: center;
+}
+.img_size img{
+    width: 60%;
+    /* opacity: .1; */
+}
+.img_size .svgInline{    
+    border-radius: var(--bs-card-border-radius);
+}
+.img_size img{
+    width: 250px;
+    height: 250px;    
+}
+.img_size .svgInline svg{
+    width: 250px;
+    height: 250px;    
+}
+.popup_img{
+    padding: 0 !important;
+    min-width: 200px;
+    background-color: #ccc;
+}
+.popup_img .svgInline{    
+    height: 100vh;
+    overflow: auto;
+}
+.popup_img .svgInline svg{
+    width: 600px;
+    height: 500px;
+    margin: auto;
+    display: block;
+}
+.mystuff_img .svgInline svg{
+    height: 5px;
+    width: 20px;
+}
