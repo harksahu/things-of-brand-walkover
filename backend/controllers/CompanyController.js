@@ -3,7 +3,7 @@ import StuffModel from '../models/StuffModel.js'
 
 const createCompany = async (req, res) => {
     try {
-        
+
         const data = await CompanyModel.create({
             ...req.body
         });
@@ -26,67 +26,39 @@ const getCompanyDetails = async (req, res) => {
     var email = req.query.email === "" ? {} : { email: req.query.email };
     var _id = req.query._id === "" ? {} : { _id: req.query._id };
     var searchfrom = req.query.searchfrom
-    var domainCheck = req.params.domain || req.query.domain
-    var domain = domainCheck ? { domain: { '$regex': domainCheck, "$options": "i" } } : '';
-    var name = req?.query?.name
-    if (searchfrom == "true") {
+    const doaminData = req.query.domain
+    var domain =  { '$regex': doaminData, "$options": "i" } 
+    var name = req?.query?.name ? {name : { '$regex': req?.query?.name, "$options": "i" } } :{}
+    const search = searchfrom == "true" ? {
+        domain: doaminData,
+    } : {
+        $or: [{ domain }, { ...name }],
+        ...email,
+        ..._id
+
+    }
+
         try {
-            var data = await CompanyModel.find({
-                domain:domainCheck,
-                ...email,
-                ..._id
-                // ...domain
-
-            });
-            const domain1 = data[0]._id;
-            const logos = await StuffModel.find({
-                domain: domain1,
-
-            });
-            // data = data.push(logos)
+            var data = await CompanyModel.find(search);
             res.json({
                 "message": "Related Data is Successfully Find",
-                "data": {
-                    logos,
-                    ...data
-                }
+                "data": data
 
             }).status(200);
         } catch (error) {
-           console.log(error);
+            console.log(error);
 
             res.send({
                 message: "Some Error on Server11",
                 error
             }).status(400);
         }
-    } else {
-       
-        try {
-            const data = await CompanyModel.find({
-                // $or: [{ ...domain }, { ...name }],
-                ...domain,
-                ...email,
-                ..._id
-
-            });
-            res.json({
-                "message": "Related Data is Successfully Find",
-                "data": data
-            }).status(200);
-        } catch (error) {
-          
-            res.send({
-                message: "Some Error on Server",
-                error: error
-            }).status(400);
-        }
-    }
+    
 }
 
 const updateCompany = async (req, res) => {
-    
-    let { name, aboutus ,fontLink} = req.body
+
+    let { name, aboutus, fontLink } = req.body
     let logo = req.body.logo;
     let links = req.body.links;
     let domain = req.body.domain;
@@ -97,7 +69,7 @@ const updateCompany = async (req, res) => {
     let link = req.body.links;
     let id = req.body._id;
     let sharedEmail = req.body.sharedEmail ? req.body.sharedEmail : "";
-    console.log("shared email",id)
+    console.log("shared email", id)
     try {
         const data = await CompanyModel.updateMany(
             {
@@ -120,7 +92,7 @@ const updateCompany = async (req, res) => {
                 }
             }
         )
-       
+
         res.json({
             "message": "Related Data is Successfully updated",
             "data": data
@@ -154,20 +126,20 @@ const getCompanyDetailss = async (req, res) => {
 const getCompanyJson = async (domain) => {
     try {
         var data = await CompanyModel.find({
-        domain : domain
+            domain: domain
 
         });
         const domain1 = data[0]._id;
-       
+
         const logos = await StuffModel.find({
             domain: domain1,
 
         });
-       
+
         // data = data.push(logos)
         return [{ logos, ...data }]
     } catch (error) {
-        
+
 
         return error
     }

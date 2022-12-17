@@ -41,7 +41,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 function Profile(props) {
   const [DomainPost, setDomainPost] = useState();
   const [name, setName] = useState("");
-  const [defaultLogo, setDefaultLogo] = useState("");
   const [aboutus, setAboutus] = useState("");
   const [domain, setDomain] = useState("");
   const [guidlines, setGuidlines] = useState("");
