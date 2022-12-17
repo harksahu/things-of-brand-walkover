@@ -28,11 +28,3 @@ class Middleware{
 
 
 export default new Middleware();
-
-
-// app.use((req,res,next)=>{
-//     console.log("http method :- "+req.method + ", Url:-" + req.url);
-//     next()
-
-// })
-
