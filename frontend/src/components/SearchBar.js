@@ -4,7 +4,7 @@ import { UserAuth } from "../context/AuthContext";
 
 import { useLocation } from "react-router-dom";
 import Box from "@mui/material/Box";
-import { getProfileDetails, sendSearchAPI } from "../api/Index.js";
+import { getProfileDetails, sendSearchAPI } from "../api/index.js";
 import { styled, lighten, darken } from "@mui/system";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import TextField from "@mui/material/TextField";
@@ -77,9 +77,9 @@ function SearchBar() {
     }
     for (let i = 0; i < LogoData.length; i++) {
       if (a == LogoData[i]?._id) {
-        // navigate(-1)
+        // navigate(-1) 
 
-        navigate("/stuff/" + a);
+        navigate("/Stuff/" + a);
         window.onload();
       }
     }
