@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import "../utils/SvgInLine.css";
 import { connect } from "react-redux";
-import { searchBrand } from "../store/actions/search-brands";
+import { searchBrand } from "../store/actions/Search-Brands.js";
 import Figure from "react-bootstrap/Figure";
 import SvgInline from "../utils/SvgInLine.js";
 import { getProfileDetails } from "../api/Index.js";

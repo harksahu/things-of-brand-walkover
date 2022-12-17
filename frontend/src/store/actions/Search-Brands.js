@@ -1,4 +1,4 @@
-import * as actionTypes from '../enums';
+import * as actionTypes from '../Enums.js';
 import {getProfileDetails} from '../../api/Index.js';
 
 export const clearSearchBrand = () => {

@@ -10,7 +10,7 @@ import {
   NavDropdown,
 } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-import { searchBrand, clearSearchBrand } from "../store/actions/search-brands";
+import { searchBrand, clearSearchBrand } from "../store/actions/Search-Brands.js";
 import { connect } from "react-redux";
 import Card from "react-bootstrap/Card";
 import { getProfileDetails, sendSearchAPI } from "../api/Index.js";

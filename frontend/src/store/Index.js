@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { createStore} from 'redux'
 
 
-import searchBrandReducer from './reducers/search-brands'
+import searchBrandReducer from './reducers/Search-Brands.js'
 
 
 const rootReducer = combineReducers({searchBrandReducer})
