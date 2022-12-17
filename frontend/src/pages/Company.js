@@ -66,7 +66,7 @@ function Brand() {
   const handleShoww = () => setShoww(true);
   const [show, setShow] = useState(false);
   const target = useRef(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isRepeatingEmail, setIsRepeatingEmail] = useState(false);
   const [userEmail, setUserEmail] = useState(false);
   const [CopyValue, setCopyValue] = useState("Copy link");
@@ -189,21 +189,21 @@ function Brand() {
 
     // setResults(fresult.data);
 
-    if (fresult?.data?.data) {
+    if (fresult?.data?.data[0]) {
       setCompany(fresult?.data?.data[0]);
-      setId(fresult?.data?.data[0]._id);
-      setName(fresult?.data?.data[0].name);
-      setAboutus(fresult?.data?.data[0].aboutus);
-      setLinks(fresult?.data?.data[0].links);
-      setDomain(fresult?.data?.data[0].domain);
-      setGuidlines(fresult?.data?.data[0].guidlines);
-      setFontSize(fresult?.data?.data[0].fontSize);
-      setFontLink(fresult?.data?.data[0].fontLink);
-      setAllColor(fresult?.data?.data[0].color);
-      setlogo(fresult?.data?.data[0].logo);
-      setEmail(fresult?.data?.data[0].email);
-      setVerify(fresult?.data?.data[0].verify);
-      setSharedEmail(fresult.data.data[0].sharedEmail);
+      setId(fresult?.data?.data[0]?._id);
+      setName(fresult?.data?.data[0]?.name);
+      setAboutus(fresult?.data?.data[0]?.aboutus);
+      setLinks(fresult?.data?.data[0]?.links);
+      setDomain(fresult?.data?.data[0]?.domain);
+      setGuidlines(fresult?.data?.data[0]?.guidlines);
+      setFontSize(fresult?.data?.data[0]?.fontSize);
+      setFontLink(fresult?.data?.data[0]?.fontLink);
+      setAllColor(fresult?.data?.data[0]?.color);
+      setlogo(fresult?.data?.data[0]?.logo);
+      setEmail(fresult?.data?.data[0]?.email);
+      setVerify(fresult?.data?.data[0]?.verify);
+      setSharedEmail(fresult.data.data[0]?.sharedEmail);
     } else {
       setLoading(false);
     }
