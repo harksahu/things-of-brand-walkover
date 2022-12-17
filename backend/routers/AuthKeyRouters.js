@@ -1,5 +1,5 @@
 import express from "express";
-import {storeAuthKey, getAuthorizedKey,deleteAuthKey} from "../controllers/authKeyControllers.js";
+import {storeAuthKey, getAuthorizedKey,deleteAuthKey} from "../controllers/AuthKeyControllers.js";
 const routes = express.Router();
 
 routes.route('/:email').get(getAuthorizedKey);
