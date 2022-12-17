@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { updateProfileFields, getTXT } from "../api/index.js";
+import { updateProfileFields, getTXT } from "../api/Index.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Container, Button, InputGroup } from "react-bootstrap";

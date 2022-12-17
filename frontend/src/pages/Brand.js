@@ -22,7 +22,7 @@ import {
   getProfileDetails,
   sendSearchAPI,
   updateProfileFields
-} from "../api/index.js";
+} from "../api/Index.js";
 import saveAs from "file-saver";
 import {
   BsFillPlusCircleFill,

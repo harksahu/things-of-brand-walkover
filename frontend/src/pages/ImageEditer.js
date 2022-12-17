@@ -22,7 +22,7 @@ import {
   getProfileDetails,
   restoreMyStuffAPI,
   saveMyStuffAPI,
-} from "../api/index.js";
+} from "../api/Index.js";
 import ClipLoader from "react-spinners/ClipLoader";
 
 

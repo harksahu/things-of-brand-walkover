@@ -1,5 +1,5 @@
 import * as actionTypes from '../enums';
-import {getProfileDetails} from '../../api';
+import {getProfileDetails} from '../../api/Index.js';
 
 export const clearSearchBrand = () => {
   return {

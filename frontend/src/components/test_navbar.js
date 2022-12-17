@@ -4,7 +4,7 @@ import { UserAuth } from "../context/AuthContext";
 
 import { useLocation } from "react-router-dom";
 import Box from "@mui/material/Box";
-import { getProfileDetails, sendSearchAPI } from "../api/index.js";
+import { getProfileDetails, sendSearchAPI } from "../api/Index.js";
 import { styled, lighten, darken } from "@mui/system";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import TextField from "@mui/material/TextField";
