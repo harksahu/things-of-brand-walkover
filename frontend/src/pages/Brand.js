@@ -14,7 +14,7 @@ import {
   ListGroup
 } from "react-bootstrap";
 import ClipLoader from "react-spinners/ClipLoader";
-import "../utils/svginline.css";
+import "../utils/SvgInLine.css";
 import "../scss/brand.scss";
 import { UserAuth } from "../context/AuthContext";
 import CopyToClipboard from "../components/CopyToClipboard.js"

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
-import "../utils/svginline.css";
+import "../utils/SvgInLine.css";
 import { connect } from "react-redux";
 import { searchBrand } from "../store/actions/search-brands";
 import Figure from "react-bootstrap/Figure";
-import SvgInline from "../utils/SvgInline.js";
+import SvgInline from "../utils/SvgInLine.js";
 import { getProfileDetails } from "../api/Index.js";
 import { async } from "@firebase/util";
 import Pagination from "./Pagination";
