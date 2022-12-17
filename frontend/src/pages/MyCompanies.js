@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import { getProfileDetails, createProfile } from "../api/Index.js";
-import { Container, Row, Col, Form, Card } from "react-bootstrap";
+import { Container, Row, Col, Form, Card, CardGroup } from "react-bootstrap";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import SvgInline from "../utils/SvgInLine.js";
 import "../utils/SvgInLine.css";
@@ -10,6 +10,8 @@ import { BsFillPlusCircleFill } from "react-icons/bs";
 import ClipLoader from "react-spinners/ClipLoader";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import CompanyCard from "../components/CompanyCard.js"
+
 function MyCompany() {
   const [company, setCompany] = useState();
   const [allData, setAllData] = useState();
@@ -119,34 +121,7 @@ function MyCompany() {
             <div className="grid">
               {company?.map((Company) => {
                 return (
-                  <div
-                    key={Company._id}
-                    className="d-flex justify-content-center item"
-                  >
-                    {/* <Link to={"/profile" }state={{ data: Company }}> */}
-                    <Link to={"/" + Company.domain}>
-                      <Card className="item-company">
-                        <div style={{ overflow: "auto" }} className="img_size pattern-square">
-                          {
-
-                            Company.logo !== undefined && Company.logo !== "null"
-                              ? <img src={Company.logo} alt="" />
-                              : <img src="/assets/picture.svg" alt="" />
-
-                          }
-                        </div>
-                        <Card.Body>
-                          <Card.Title
-                            style={{ textDecoration: "none" }}
-                            className="text-center"
-                          >
-                            {Company.name ? Company.name : Company.domain}
-                          </Card.Title>
-                          <Card.Text></Card.Text>
-                        </Card.Body>
-                      </Card>
-                    </Link>
-                  </div>
+                  <CompanyCard props={Company}/>
                 );
               })}
               {/* <Link to="/editprofile" className="add-new"> */}
@@ -230,36 +205,7 @@ function MyCompany() {
 
                           <div key={index}>
                             {sharedEmail == user.email ? (
-                              <Link to={"/" + Company.domain}>
-                                {showSharedCompanies
-                                  ? ""
-                                  : setShowSharedCompanies(true)}
-                                <Card className="item-company">
-                                  <div
-                                    style={{ overflow: "auto" }}
-                                    className="img_size pattern-square"
-                                  >
-                                    {
-
-                                      Company.logo !== undefined && Company.logo !== "null"
-                                        ? <img src={Company.logo} alt="" />
-                                        : <img src="/assets/picture.svg" alt="" />
-
-                                    }
-                                  </div>
-                                  <Card.Body>
-                                    <Card.Title
-                                      style={{ textDecoration: "none" }}
-                                      className="text-center"
-                                    >
-                                      {Company.name
-                                        ? Company.name
-                                        : Company.domain}
-                                    </Card.Title>
-                                    <Card.Text></Card.Text>
-                                  </Card.Body>
-                                </Card>
-                              </Link>
+                             <CompanyCard props={Company}/>
                             ) : (
                               ""
                             )}

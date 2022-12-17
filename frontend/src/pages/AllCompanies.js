@@ -12,7 +12,7 @@ import Pagination from "./Pagination";
 import ReactPaginate from "react-paginate";
 import { UserAuth } from "../context/AuthContext";
 import ClipLoader from "react-spinners/ClipLoader";
-
+import CompanyCard from "../components/CompanyCard.js"
 
 function Not_found() {
   return (
@@ -83,33 +83,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
           ) : (
             currentPosts?.map((Company) => {
               return (
-                <div
-                  key={Company._id}
-                  className="d-flex justify-content-center item"
-                >
-                  <Link to={"/" + Company.domain}>
-                    <Card>
-                      <div style={{ overflow: "auto" }} className="img_size  pattern-square">
-                        {
-
-                          Company.logo !== undefined && Company.logo !== "null"
-                            ?  <img src={Company.logo} alt="" />
-                            :  <img src="/assets/picture.svg" alt="" />
-                       
-                      }
-                      </div>
-
-                      <Card.Body>
-                        <Card.Title
-                          style={{ textDecoration: "none" }}
-                          className="text-center"
-                        >
-                          {Company.name ? Company.name : Company.domain}
-                        </Card.Title>
-                      </Card.Body>
-                    </Card>
-                  </Link>
-                </div>
+               <CompanyCard props={Company}/>
               );
             })
           )}
