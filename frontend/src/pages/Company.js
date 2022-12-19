@@ -38,6 +38,7 @@ import {
   MdOutlineModeEdit,
   MdContentCopy
 } from "react-icons/md";
+import Addfile from "./Addfile.js"
 
 function Not_found() {
 
@@ -72,6 +73,8 @@ function Brand() {
   const [isRepeatingEmail, setIsRepeatingEmail] = useState(false);
   const [userEmail, setUserEmail] = useState(false);
   const [CopyValue, setCopyValue] = useState("Copy link");
+  const [fullscreen, setFullscreen] = useState(true);
+
   const handleClosee = () => {
     setIsRepeatingEmail(false);
     setShoww(false);
@@ -248,7 +251,10 @@ function Brand() {
       setLoading(false);
     }
   }, [domain, title, user]);
-
+  function handleShow() {
+    setFullscreen("md-down");
+    setShow(true);
+  }
   return (
     <>
       {loading ? <div className="center-loader"><ClipLoader /></div> :
@@ -276,7 +282,7 @@ function Brand() {
                     email === user.email || isShared == true ? (
                       <>
                         <Nav className="nav-action">
-                          <Nav.Link onClick={()=>{handleShoww();setCopyValue("Copy link")}}>
+                          <Nav.Link onClick={() => { handleShoww(); setCopyValue("Copy link") }}>
                             <MdShare />
                           </Nav.Link>
 
@@ -466,8 +472,10 @@ function Brand() {
 
                     {user ? (
                       email === user.email || isShared == true ? (
-                        <Link to="/addfile" className="add-new" state={{ domain: domain }}>
-                          <Card className="h-100 item-company">
+                        // <Link to="/addfile" className="add-new" state={{ domain: domain }}>
+                        <div className="add-new">
+                          <Card className="item" onClick={() => handleShow()} >
+                            {/* <Card className="h-100 item-company"> */}
                             <Card.Body className="add-icon align-items-center d-flex justify-content-center">
                               <Card.Title className="text-center">
                                 <BsFillPlusCircleFill style={{ fontSize: 40 }} />
@@ -482,13 +490,15 @@ function Brand() {
                                 -
                               </Button>
                             </div>
+
                           </Card>
-                        </Link>
-                      ) : (
-                        ""
-                      )
+                        </div>
+
                     ) : (
-                      ""
+                    ""
+                    )
+                    ) : (
+                    ""
                     )}
                   </div>
                 </div>
@@ -556,6 +566,11 @@ function Brand() {
                   <div dangerouslySetInnerHTML={{ __html: guidlines }}></div>
                 </div>
               </div>
+              <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
+                <Modal.Header closeButton>
+                </Modal.Header>
+                <Modal.Body><Addfile domain={domain} /></Modal.Body>
+              </Modal>
             </div>
           ) : (
             <Not_found />

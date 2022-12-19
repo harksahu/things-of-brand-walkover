@@ -37,9 +37,6 @@ const getCompanyDetails = async (req, res) => {
             ...email,
             ..._id
         }
-
-
-
     try {
         var data = await CompanyModel.find(search);
         res.json({
