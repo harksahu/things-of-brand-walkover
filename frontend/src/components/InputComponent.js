@@ -9,7 +9,7 @@ import {
   Dropdown,
   Stack,
 } from "react-bootstrap";
-function InputComponent({ label, setValue,valuee }) {
+function InputComponent({ label, setValue,valuee, placeholderr }) {
   return (
     <>
      
@@ -18,7 +18,7 @@ function InputComponent({ label, setValue,valuee }) {
                 <Form.Label>{label}</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter name"
+                  placeholder={placeholderr}
                   aria-describedby="btnGroupAddon"
                   onChange={(e) => {
                     setValue(e.target.value);

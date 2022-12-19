@@ -363,7 +363,7 @@ function Profile(props) {
                           value={name}
                         />
                       </Form.Group> */}
-                      <InputComponent label={"Name"} setValue={setName} valuee={name} />
+                      <InputComponent label={"Name"} placeholderr={"Enter name"} setValue={setName} valuee={name} />
                       <Form.Group className="mb-3 " id="about">
                         <Form.Label>About us</Form.Label>
                         <RichtextEditor
@@ -606,7 +606,7 @@ function Profile(props) {
                           })}
                       </datalist> */}
                       {/* </Form.Group> */}
-                      <InputComponent label={"Domain * <small>(example.com)</small>"} setValue={setDomain} valuee={domain} />
+                      <InputComponent placeholderr={"Enter domain"} label={"Domain * <small>(example.com)</small>"} setValue={setDomain} valuee={domain} />
 
                       <Form.Group className="mb-3" id="Guidlines">
                         <Form.Label>Guidlines</Form.Label>
