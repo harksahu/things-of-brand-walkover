@@ -124,6 +124,7 @@ const Addfile = () => {
             const result = await getProfileDetails({
               email: user.email,
               domain: domain,
+              searchfrom: "true"
             });
 
             const a = await createBrandAPI({
@@ -206,7 +207,7 @@ const Addfile = () => {
                   >
                     <MdArrowBackIos />
                   </Button>
-                  Add a file to <strong>{location?.state?.domain}</strong>
+                  Add a file to <strong>{domainToSelect}</strong>
                 </a>
               </div>
             </nav>
@@ -220,7 +221,7 @@ const Addfile = () => {
                         aria-label="Default select example"
                         onChange={(e) => {
                           setDomain(e.target.value);
-
+                          setDomainToSelect(e.target.value)
                         }}
                         as="select"
                         value={domainToSelect}
@@ -229,12 +230,12 @@ const Addfile = () => {
                         {ffresult &&
                           ffresult.map((domainName, index) => (
                             <option key={index} value={domainName.domain}>
-                              {domainName.domain}{index}
+                              {domainName.domain}
                             </option>
                           ))}
-                        {/* {shareEmailDomainOption ? <option value={shareEmailDomainOption} selected>
+                        {shareEmailDomainOption ? <option value={shareEmailDomainOption} selected>
                           {shareEmailDomainOption}
-                        </option> : ""} */}
+                        </option> : ""}
 
 
                       </Form.Control>
