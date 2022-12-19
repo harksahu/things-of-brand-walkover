@@ -12,8 +12,6 @@ import {
 function InputComponent({ label, setValue,valuee, placeholderr }) {
   return (
     <>
-     
-            <Form>
               <Form.Group className="mb-3 " id="name">
                 <Form.Label>{label}</Form.Label>
                 <Form.Control
@@ -26,7 +24,6 @@ function InputComponent({ label, setValue,valuee, placeholderr }) {
                   value={valuee}
                 />
               </Form.Group>
-            </Form>
     </>
   );
 }
