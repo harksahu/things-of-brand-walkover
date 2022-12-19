@@ -104,21 +104,7 @@ function Profile(props) {
       setJsonValue(temp);
     });
   };
-  const getData = async () => {
-    // fetch("../src/api/colors.json", {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json",
-    //   },
-    // })
-    //   .then(function (response) {
-    //     console.log(response);
-    //     // return response.json();
-    //   })
-    //   .then(function (myJson) {
-    //     console.log(myJson);
-    //   });
-  };
+ 
   function extractDomain(url) {
     var domainName;
     if (url.indexOf("://") > -1) {
@@ -165,7 +151,6 @@ function Profile(props) {
       if (user?.email) {
         setJsonLabelAndValue();
         profileDetails();
-        // getData();
       }
     }
   }, [user]);
