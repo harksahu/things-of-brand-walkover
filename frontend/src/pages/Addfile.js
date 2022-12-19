@@ -43,7 +43,7 @@ function MyVerticallyCenteredModal(props) {
   );
 }
 
-const Addfile = () => {
+const Addfile = (props) => {
   const { user } = UserAuth();
   const [modalShow, setModalShow] = React.useState(false);
   const [file, setFile] = useState();
@@ -92,8 +92,8 @@ const Addfile = () => {
       fresult = await getProfileDetails({ email: user.email });
       setResult(fresult.data.data);
     }
-    if (location?.state?.domain) {
-      setDomain(location?.state?.domain);
+    if (props.domain) {
+      setDomain(props.domain);
 
     }
     else {
@@ -101,8 +101,8 @@ const Addfile = () => {
       //   setShareEmailDomainOption(temp);
       // }
     }
-    if (location?.state?.domain) {
-      setDomain(location?.state?.domain);
+    if (props.domain) {
+      setDomain(props.domain);
     } else {
       setDomain(fresult?.data?.data[0]?.domain);
     }
@@ -181,8 +181,8 @@ const Addfile = () => {
     findSharedEmail(); 
     // setLoading(false);
     if (user) {
-      
-      setDomainToSelect(location?.state?.domain);
+
+      setDomainToSelect(props.domain);
     }
   }, [user,shareEmailDomainOption]);
   return (
@@ -194,25 +194,16 @@ const Addfile = () => {
         <Container className="wrpr">
           <Row>
             <nav className="navbar bg-light">
-              <div className="container-fluid">
+              {/* <div className="container-fluid"> */}
                 <a
                   className="navbar-brand"
                 >
-                  <Button
-                    variant="outline-dark"
-                    className="me-3"
-                    onClick={() => {
-                      navigate(-1);
-                    }}
-                  >
-                    <MdArrowBackIos />
-                  </Button>
                   Add a file to <strong>{domainToSelect}</strong>
                 </a>
-              </div>
+              {/* </div> */}
             </nav>
             <Col md={9} lg={10} className="mt-4">
-              <Card style={{ width: "30rem" }}>
+              <Card style={{ width: "28rem" }}>
                 <Card.Body>
                   <Stack gap={3}>
                     <FormGroup>

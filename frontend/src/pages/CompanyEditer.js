@@ -6,13 +6,13 @@ import {
   Col,
   Form,
   Button,
-  Dropdown,
+  Modal,
   Stack,
 } from "react-bootstrap";
 import colors from "../api/colors.json";
 import { Autocomplete } from "@mui/material";
 import { TextField, Box } from "@mui/material";
-
+import Addfile from "./Addfile.js"
 import { UserAuth } from "../context/AuthContext";
 import {
   getProfileDetails,
@@ -58,7 +58,7 @@ function Profile(props) {
   const [links, setLinks] = React.useState([]);
   const [company, setCompany] = useState("");
   const [profiledata, setProfile] = useState("");
-
+  const [fullscreen, setFullscreen] = useState(true);
   const [check, setCheck] = useState(true);
   const [id, setId] = useState("");
   const [logo, setLogo] = useState();
@@ -322,6 +322,13 @@ function Profile(props) {
 
 
   };
+
+
+  function handleShow() {
+    setFullscreen("md-down");
+    setShow(true);
+  }
+
   return (
     <div className="bg-gray h-100">
       {loading ? (
@@ -351,18 +358,6 @@ function Profile(props) {
                 <Card.Body>
                   <Stack gap={3}>
                     <Form>
-                      {/* <Form.Group className="mb-3 " id="name">
-                        <Form.Label>name</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter name"
-                          aria-describedby="btnGroupAddon"
-                          onChange={(e) => {
-                            setName(e.target.value);
-                          }}
-                          value={name}
-                        />
-                      </Form.Group> */}
                       <InputComponent label={"Name"} setValue={setName} valuee={name} />
                       <Form.Group className="mb-3 " id="about">
                         <Form.Label>About us</Form.Label>
@@ -376,8 +371,8 @@ function Profile(props) {
                       {DomainPost ? (
                         <div className="grid">
                           <h6>logos</h6>
-                           <div className="grid d-flex"style={{ overflow: "auto" }}>
-                           {DomainPost?.map((brand, index) => {
+                          <div className="grid d-flex" style={{ overflow: "auto" }}>
+                            {DomainPost?.map((brand, index) => {
                               return (
                                 <div key={index} className="d-flex flex-wrap d-flex justify-content-center ">
 
@@ -385,7 +380,7 @@ function Profile(props) {
                                     key={brand._id}
                                     className="item "
                                   >
-                                    <Card  className="box-shadow">
+                                    <Card className="box-shadow">
                                       {/* <Dropdown className="ms-auto">
                                       <Dropdown.Toggle variant="light" size="sm">
                                         <BsThreeDotsVertical />
@@ -524,28 +519,30 @@ function Profile(props) {
                             })}
 
                             {user ? (
-                            <Link to="/addfile" className="add-new" state={{ domain: domain }}>
-                            <Card className="item">
-                              <Card.Body className="add-icon align-items-center d-flex justify-content-center">
-                                <Card.Title className="text-center">
-                                  <BsFillPlusCircleFill style={{ fontSize: 40 }} />
-                                </Card.Title>
-                                <Card.Text></Card.Text>
-                              </Card.Body>
-                              <Card.Body>
-                                <Card.Title>Add New File</Card.Title>
-                              </Card.Body>
-                              <div className="card-footer">
-                                <Button variant="outline-light" size="sm">
-                                  -
-                                </Button>
+                              // <Link to="/addfile" className="add-new" state={{ domain: domain }}>
+                              <div className="add-new">
+                                <Card className="item" onClick={() => handleShow()} >
+                                  <Card.Body className="add-icon align-items-center d-flex justify-content-center">
+                                    <Card.Title className="text-center">
+                                      <BsFillPlusCircleFill style={{ fontSize: 40 }} />
+                                    </Card.Title>
+                                    <Card.Text></Card.Text>
+                                  </Card.Body>
+                                  <Card.Body>
+                                    <Card.Title>Add New File</Card.Title>
+                                  </Card.Body>
+                                  <div className="card-footer">
+                                    <Button variant="outline-light" size="sm">
+                                      -
+                                    </Button>
+                                  </div>
+                                </Card>
                               </div>
-                            </Card>
-                          </Link>
+                              // </Link>
                             ) : (
                               ""
                             )}
-                           </div>
+                          </div>
 
                         </div>
                       ) : (
@@ -812,6 +809,14 @@ function Profile(props) {
               </Card>
             </Col>
           </Row>
+          <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
+            <Modal.Header closeButton>
+            </Modal.Header>
+            <Modal.Body><Addfile domain={domain} /></Modal.Body>
+          </Modal>
+
+
+
         </Container>
       )}
     </div>
