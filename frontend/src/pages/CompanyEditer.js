@@ -106,7 +106,7 @@ function Profile(props) {
     });
   };
   const getData = async () => {
-    fetch("../src/api/colors .json", {
+    fetch("../src/api/colors.json", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
