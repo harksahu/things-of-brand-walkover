@@ -6,38 +6,31 @@ const URL = "http://localhost:8080";
 const createBrandAPI = async (dataToSend) => {
   const data = {
     ...dataToSend,
-    // url: URL + "/" + dataToSend.url,
   };
   return await axios.post(URL + "/api/stuff", data);
 };
 
-const createProfile   = async (dataToSend) => {
+const createProfile = async (dataToSend) => {
   const data = {
     ...dataToSend,
   }
   return await axios.post(URL + "/api/companies", data);
 };
 
-const getProfileDetails = async ({email="",domain="",name="",searchfrom="false",_id=""}) => {  
-  // const title="";
-  // const active="1";
-  // const description="";
-  // const id="";
-  var data = await axios.get(URL + "/api/companies?email="+email+"&domain="+domain+"&name="+name+"&searchfrom="+searchfrom+"&_id="+_id);  
-  // const logos = await axios.get(URL + "/api/search?title=" + title+"&email="+email+"&active="+active+"&description="+description+"&_id=" + id+ "&domain=" +data?.data?.data[0]._id);
-  // data?.data?.data[0].push(logos?.data?.data)  
+const getProfileDetails = async ({ email = "", domain = "", name = "", searchfrom = "false", _id = "" }) => {
+  var data = await axios.get(URL + "/api/companies?email=" + email + "&domain=" + domain + "&name=" + name + "&searchfrom=" + searchfrom + "&_id=" + _id);
   return data
 }
-const getProfileandLogoDetails = async ({email="",domain="",name="",searchfrom="false",_id=""}) => {
-  const title="";
-  const active="1";
-  const description="";
-  const id="";
-  var data = await axios.get(URL + "/api/companies?email="+email+"&domain="+domain+"&name="+name+"&searchfrom="+searchfrom+"&_id="+_id);
-  
-  const logos = await axios.get(URL + "/api/search?title=" + title+"&email="+email+"&active="+active+"&description="+description+"&_id=" + id+ "&domain=" +data?.data?.data[0]._id);
-  
-  const dataAndLogo = { ...data?.data?.data[0], allogosdata: [logos?.data?.data]};
+const getProfileandLogoDetails = async ({ email = "", domain = "", name = "", searchfrom = "false", _id = "" }) => {
+  const title = "";
+  const active = "1";
+  const description = "";
+  const id = "";
+  var data = await axios.get(URL + "/api/companies?email=" + email + "&domain=" + domain + "&name=" + name + "&searchfrom=" + searchfrom + "&_id=" + _id);
+
+  const logos = await axios.get(URL + "/api/search?title=" + title + "&email=" + email + "&active=" + active + "&description=" + description + "&_id=" + id + "&domain=" + data?.data?.data[0]._id);
+
+  const dataAndLogo = { ...data?.data?.data[0], allogosdata: [logos?.data?.data] };
 
 
   return dataAndLogo;
@@ -47,11 +40,11 @@ const getProfileandLogoDetails = async ({email="",domain="",name="",searchfrom="
 
 
 const searchBrandApi = async (id) => {
-  return await axios.get(URL + "/api/stuff/"+id);
+  return await axios.get(URL + "/api/stuff/" + id);
 }
 
 
-const updateProfileFields = async(dataToSend) => {
+const updateProfileFields = async (dataToSend) => {
 
   const data = {
     ...dataToSend
@@ -73,12 +66,12 @@ const sendMyStuffAPI = async (email) => {
 const deleteMyStuffAPI = async (id) => {
   return await axios.delete(URL + "/api/Mystuff/" + id);
 };
-const sendSearchAPI = async ({title = "" , email = "" , active = "",description="",_id="",domain=""}) => {  
-  return await axios.get(URL + "/api/search?title="+title+"&email="+email+"&active="+active+"&description="+description+"&_id="+_id+"&domain="+domain);
+const sendSearchAPI = async ({ title = "", email = "", active = "", description = "", _id = "", domain = "" }) => {
+  return await axios.get(URL + "/api/search?title=" + title + "&email=" + email + "&active=" + active + "&description=" + description + "&_id=" + _id + "&domain=" + domain);
 };
 
 const getCompanyDetails = async (id) => {
-  return await axios.get(URL + "/api/companies/" +  id );
+  return await axios.get(URL + "/api/companies/" + id);
 }
 
 const sendMydeleteStuffAPI = async (email) => {
@@ -87,40 +80,61 @@ const sendMydeleteStuffAPI = async (email) => {
 const restoreMyStuffAPI = async (id) => {
   return await axios.delete(URL + "/api/deteteItems/" + id);
 };
-const saveMyStuffAPI = async ({_id ="" , title = "" }) => {
+const saveMyStuffAPI = async ({ _id = "", title = "" }) => {
 
-  return await axios.put(URL + "/api/Mystuff?_id=" + _id+"&title="+title);
+  return await axios.put(URL + "/api/Mystuff?_id=" + _id + "&title=" + title);
 };
-const storeAuthKey =  async (authdata)=>{
-const data = {
-  ...authdata
+
+
+
+
+
+
+// Authkey 
+
+
+//Store Authkey
+const storeAuthKey = async (authdata) => {
+  const data = {
+    ...authdata
+  }
+
+  return await axios.post(URL + "/api/storeKey", data);
 }
 
-  return await axios.post(URL + "/api/storeKey",data);
+
+//Delete Authkey
+const deleteAuthKey = async ({ authKey = "", email = "" }) => {
+  return await axios.delete(URL + "/api/deleteKey?authKey=" + authKey + "&email=" + email);
 }
 
-const deleteAuthKey = async ({authKey="",email=""}) => {
-    return await axios.delete(URL + "/api/deleteKey?authKey=" + authKey + "&email=" + email);
+
+//get AuthKey
+const setAuthKey = async (email) => {
+
+  return await axios.get(URL + "/api/storeKey/" + email);
 }
 
-const setAuthKey =  async (email)=>{
 
-  return await axios.get(URL + "/api/storeKey/"+email);
-}
-const getTXT =  async (link)=>{
+
+
+// get domain TXT values
+const getTXT = async (link) => {
   const data = {
     link
   }
-  return await axios.post(URL + "/getDomainTXT",data);
+  return await axios.post(URL + "/getDomainTXT", data);
 }
+
+
+
 
 
 
 
 
 //AWS
-
-const getS3SignUrl = async (file ) => {
+const getS3SignUrl = async (file) => {
   const { url } = await fetch(URL + "/s3url").then(res => res.json())
   await fetch(url, {
     method: "PUT",
@@ -129,8 +143,8 @@ const getS3SignUrl = async (file ) => {
     },
     body: file
   })
-return url;
-  
+  return url;
+
 };
 
 
@@ -138,12 +152,26 @@ return url;
 
 //collections
 
-//create
-const createCollection   = async (dataToSend) => {
+//create collection
+const createCollection = async (dataToSend) => {
   const data = {
     ...dataToSend,
   }
   return await axios.post(URL + "/api/Collection", data);
+};
+
+//update collection
+const updateCollection = async (dataToSend) => {
+  const data = {
+    ...dataToSend,
+  }
+  return await axios.put(URL + "/api/Collection", data);
+};
+
+//get collection data
+const getCollection = async ({ CollectionName= "" , email=""}) => {
+
+  return await axios.get(URL + "/api/Collection?CollectionName=" + CollectionName + "&email=" + email);
 };
 
 
@@ -170,5 +198,7 @@ export {
   updateProfileFields,
   getCompanyDetails,
   getProfileandLogoDetails,
-  createCollection
+  createCollection,
+  getCollection,
+  updateCollection
 };
