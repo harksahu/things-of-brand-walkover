@@ -9,6 +9,7 @@ import MyStuffRouters from "./routers/MyStuffRouters.js";
 import SearchRouters from "./routers/SearchRouters.js";
 import MyStuffdeleteitemRouters from "./routers/MyStuffdeleteitemRouters.js";
 import {generateUploadURL} from './services/s3.js';
+import CollectionRouters from "./routers/CollectionRouters.js";
 import CompanyRouters from "./routers/CompanyRouters.js";
 import puppy from "./details_feacher/getData.js"
 import getUpdatedData from "./details_feacher/gettingdata.js";
@@ -41,6 +42,7 @@ app.use('/api/MyStuff',MyStuffRouters);
 app.use('/api/deteteItems',MyStuffdeleteitemRouters);
 app.use('/api/storeKey',authKeyRouters);
 app.use('/api/deleteKey',authKeyRouters);
+app.use('/api/Collection',CollectionRouters);
 app.use('/api/companies',CompanyRouters);
 
 app.get('/s3url',async(req,res)=>{

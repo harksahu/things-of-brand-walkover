@@ -116,6 +116,10 @@ const getTXT =  async (link)=>{
 
 
 
+
+
+//AWS
+
 const getS3SignUrl = async (file ) => {
   const { url } = await fetch(URL + "/s3url").then(res => res.json())
   await fetch(url, {
@@ -130,7 +134,18 @@ return url;
 };
 
 
-// image/svg+xml
+
+
+//collections
+
+//create
+const createCollection   = async (dataToSend) => {
+  const data = {
+    ...dataToSend,
+  }
+  return await axios.post(URL + "/api/Collection", data);
+};
+
 
 
 
@@ -155,4 +170,5 @@ export {
   updateProfileFields,
   getCompanyDetails,
   getProfileandLogoDetails,
+  createCollection
 };
