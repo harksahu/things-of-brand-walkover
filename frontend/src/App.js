@@ -6,6 +6,9 @@ import Protected from './components/Protected';
 import DomainValidate from './components/DomainValidate';
 import { AuthContextProvider } from './context/AuthContext';
 import Account from './pages/Account';
+import MyCollection from './pages/MyCollection';
+import Collection from './pages/Collection';
+
 import Home from './pages/Home';
 import Addfile from './pages/Addfile';
 import MyStuff from './pages/MyStuff';
@@ -20,6 +23,7 @@ import Brand from './pages/Company.js';
 import SearchLogo from './pages/SearchLogo.js';
 import Profile from './pages/CompanyEditer.js';
 import DomainVerificationPage from './pages/DomainVerificationPage';
+
 import PageNotFound from './pages/PageNotFound.js';
 
 function App() {
@@ -58,6 +62,8 @@ function App() {
               <Route path="/my-stuff" element={<Protected> <MyStuff /> </Protected>} />
               <Route path='/account' element={<Protected> <Account /> </Protected>} />
               <Route path='/my-companies' element={<Protected> <MyCompany /> </Protected>} />
+              <Route path='/collection' element={<Protected> <MyCollection /> </Protected>} />
+              <Route path='/collection/:id' element={<Protected> <Collection /> </Protected>} />
               <Route path='*' element={<PageNotFound />} />
             </Routes>
 

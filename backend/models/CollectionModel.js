@@ -5,11 +5,9 @@ const CollectionSchema = new mongoose.Schema({
     sno_id:String,
     CollectionName: {
         type: String,
-        unique: true
     },
     email:{
         type: String,
-        unique: true
     },
     Logos:{
         type: [String]
