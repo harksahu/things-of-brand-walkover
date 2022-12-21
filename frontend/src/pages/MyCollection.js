@@ -80,7 +80,7 @@ const MyCollection = () => {
             allCollection.map((collection) => {
               return (
                 <div key={collection._id}>
-                  <div
+                  <div 
                     className="d-flex justify-content-center item "
                   >
                     <Link to={"/collection/" +collection._id}>

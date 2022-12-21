@@ -419,14 +419,14 @@ function Brand() {
                               >
                                 SVG
                               </Button>
-                              {user?
+                             
                               <FavoriteIcon variant="primary" onClick={() =>
                               {
                                  setModalShow(true)
                                  setAddImageToCollection(brand._id)
                                
-                               } }/>:""}
-                              {console.log("ab",brand?._id)}
+                               } }/>
+                              
                                 <ModalComponent
                                 id = {addImageToCollection}
                                 allcollection={collections}
