@@ -33,7 +33,7 @@ const getCollectionDetails = async (req, res) => {
         const details =data
         for (let i = 0; i < data?.length; i++) {
             const logo_array = data[i]?.Logos;
-            var logo = {}
+            var logo = []
             for (let i = 0; i < logo_array?.length; i++) {
                 const logos = await StuffModel.find({
                     _id: logo_array[i],
@@ -43,7 +43,7 @@ const getCollectionDetails = async (req, res) => {
                 const logodata = {}
                 logodata["name"] = logos[0]?.title
                 logodata["url"] = logos[0]?.url;
-                logo[i] = logodata
+                logo.push(logodata)
             }
             details[i] = {
                 ...data[i]?._doc,logo
@@ -95,7 +95,7 @@ const getCollectionJson = async (_id) => {
         });
         const logo_array = data[0]?.Logos;
         console.log(logo_array);
-        var logo = {}
+        var logo = []
         for (let i = 0; i < logo_array?.length; i++) {
             console.log("sdf");
             const logos = await StuffModel.find({
@@ -103,12 +103,10 @@ const getCollectionJson = async (_id) => {
                 active:1
 
             });
-            console.log(logos[0]?.title);
             const logodata = {}
             logodata["name"] = logos[0]?.title
             logodata["url"] = logos[0]?.url;
             logo[i] = logodata
-            console.log(logo);
         }
         console.log(logo);
         return [{ logo, ...data[0]._doc }]

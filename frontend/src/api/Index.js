@@ -170,7 +170,7 @@ const updateCollection = async (dataToSend) => {
 
 const getCollection = async ({ _id= "" , email=""}) => {
 
-  return await axios.get(URL + "/api/Collection?CollectionName=" + _id + "&email=" + email);
+  return await axios.get(URL + "/api/Collection?_id=" + _id + "&email=" + email);
 
 };
 
