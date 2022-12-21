@@ -41,7 +41,7 @@ function Profile() {
   const [aboutus, setAboutus] = useState("");
   const [domain, setDomain] = useState("");
   const [guidlines, setGuidlines] = useState("");
-  const [fontSize, setFontSize] = useState([]);
+
   const [PrimaryColors, setPrimaryColors] = useState("");
   const [secondaryColors, setSecondaryColors] = useState("");
   const [backgroundColors, setBackgroundColors] = useState("");
@@ -68,7 +68,7 @@ function Profile() {
   const location = useLocation();
   let countTemp = countTracker;
   let countTemp2 = linkCount;
-  var fresult;
+
   const navigate = useNavigate();
 
   const getAllData = async () => {
@@ -186,7 +186,7 @@ function Profile() {
               email: user?.email,
               color: color,
             };
-            const id1 = await updateProfileFields(data);
+           await updateProfileFields(data);
 
             navigate(-1);
           } else {
@@ -203,7 +203,7 @@ function Profile() {
     }
   };
   const profileDetails = async () => {
-    fresult = await getProfileDetails({
+     await getProfileDetails({
       domain: location?.state?.data?.domain,
     });
     setLoading(false);
@@ -213,7 +213,7 @@ function Profile() {
       setAboutus(location?.state?.data?.aboutus);
       setLinks(location?.state?.data?.links);
       setGuidlines(location?.state?.data?.guidlines);
-      setFontSize(location?.state?.data?.fontSize);
+
       setPrimaryColors(location?.state?.data?.PrimaryColors);
       setSecondaryColors(location?.state?.data?.secondaryColors);
       setBackgroundColors(location?.state?.data?.backgroundColors);

@@ -38,6 +38,7 @@ const MyCollection = () => {
     });
     showAllCollections();
     setShowSuccess(true);
+    setShow(false);
   };
   useEffect(() => {
     if (user?.email) 

@@ -22,7 +22,6 @@ function Not_found() {
 }
 
 function Home({ searchBrandData = [], getSearchBrand }) {
-  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(16);
@@ -36,7 +35,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
   const fetchPosts = () => {
 
     getSearchBrand({});
-    setPosts(searchBrandData.data);
+
 
 
   };
