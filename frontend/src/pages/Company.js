@@ -84,20 +84,6 @@ function Brand() {
     setIsRepeatingEmail(false);
     setShoww(false);
   }
-  async function makeid(length) {
-    var result = "";
-    var characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    if (verify == undefined || verify == null || verify === "false") {
-      setVerify(result);
-      await updateVerify(result);
-    }
-    return result;
-  }
 
   const removeSharedEmail = (index) => {
     let temp = sharedEmail;
@@ -111,7 +97,7 @@ function Brand() {
     setIsRepeatingEmail(false);
     var repeatOrNot = false;
     for (var i = 0; i < sharedEmail?.length; i++) {
-      if (event.target.sharingEmail.value == user?.email || event.target.sharingEmail.value == email) {
+      if (event.target.sharingEmail.value == (user?.email ?? email)) {
         setUserEmail(true);
       }
       if (event.target.sharingEmail.value == sharedEmail[i]) {
@@ -131,53 +117,9 @@ function Brand() {
   };
 
   const DownloadToSvg = async (svg, fileName) => {
-    // var svg = document.querySelector("svg");
-    // var xml = new XMLSerializer().serializeToString(svg);
-    // var svg64 = btoa(xml); //for utf8: btoa(unescape(encodeURIComponent(xml)))
-    // var b64start = "data:image/svg+xml;base64,";
-    // var image64 = b64start + svg64;
     saveAs(svg, fileName);
   };
-  const DownloadToPng = async (img, w, h) => {
-    const preset = presets.offscreen();
 
-    async function toPng(data) {
-      const { width, height } = data;
-      const canvas = new OffscreenCanvas(width, height);
-      const ctx = canvas.getContext("2d");
-      const v = await Canvg.from(ctx, img, preset);
-      v.resize(width, height, "xMidYMid meet");
-      await v.render();
-      const blob = await canvas.convertToBlob();
-      const pngUrl = URL.createObjectURL(blob);
-      return pngUrl;
-    }
-
-    toPng({
-      width: w,
-      height: h,
-    }).then((pngUrl) => {
-      saveAs(pngUrl);
-    });
-  };
-
-  const updateVerify = async (result) => {
-    const data = {
-      _id: id,
-      name: name,
-      aboutus: aboutus,
-      logo: logo,
-      links: links,
-      domain: domain,
-      guidlines: guidlines,
-      color: allColor,
-      email: email,
-      verify: result,
-    };
-    if (verify === undefined || verify === null || verify === "false") {
-      await updateProfileFields(data);
-    }
-  };
 
   const title = useParams();
   const getbrandslogo = async () => {
@@ -195,7 +137,6 @@ function Brand() {
       searchfrom: true,
     });
 
-    // setResults(fresult.data);
 
 
     if (fresult?.data?.data) {
