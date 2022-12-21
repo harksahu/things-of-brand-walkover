@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../scss/style.scss"
-import { async } from "@firebase/util";
 
 const SvgInline = (props) => {
   const [svg, setSvg] = useState(null);

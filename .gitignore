@@ -6,4 +6,5 @@ uploads/
 .vscode
 app.yaml
 /frontend/.DS_Store
+/frontend/.eslintrc.js
 .DS_Store

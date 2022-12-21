@@ -10,41 +10,34 @@ import {
   Stack,
 } from "react-bootstrap";
 import colors from "../api/colors.json";
-import { Autocomplete } from "@mui/material";
-import { TextField, Box } from "@mui/material";
+import { Autocomplete ,TextField} from "@mui/material";
 import Addfile from "./Addfile.js"
 import { UserAuth } from "../context/AuthContext";
 import {
   getProfileDetails,
   updateProfileFields,
-  getCompanyDetails,
   getFontList,
-  createProfile,
   deleteMyStuffAPI,
   restoreMyStuffAPI,
   saveMyStuffAPI,
   sendSearchAPI,
 } from "../api/Index.js";
 import CloseIcon from "@mui/icons-material/Close";
-import { BsFillPlusCircleFill, BsThreeDotsVertical } from "react-icons/bs";
+import { BsFillPlusCircleFill } from "react-icons/bs";
 import RichtextEditor from "./JoditEditor.js";
-import { BsFillTrashFill, BsChevronLeft } from "react-icons/bs";
+import { BsFillTrashFill } from "react-icons/bs";
 import { MdArrowBackIos } from "react-icons/md";
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import SideBar from "../components/SideBar";
 import { Hint } from "react-autocomplete-hint";
-import Select from "react-select";
-
 import ClipLoader from "react-spinners/ClipLoader";
 import InputComponent from "../components/InputComponent.js";
 
-function Profile(props) {
+function Profile() {
   const [inputValue, setInputValue] = React.useState("");
   const [DomainPost, setDomainPost] = useState();
   const [jsonLabel, setJsonLabel] = useState([]);
   const [jsonValue, setJsonValue] = useState([]);
   const [name, setName] = useState("");
-  const [defaultLogo, setDefaultLogo] = useState("");
   const [aboutus, setAboutus] = useState("");
   const [domain, setDomain] = useState("");
   const [guidlines, setGuidlines] = useState("");
@@ -54,13 +47,9 @@ function Profile(props) {
   const [backgroundColors, setBackgroundColors] = useState("");
   const { user } = UserAuth();
   const [links, setLinks] = React.useState([]);
-  const [company, setCompany] = useState("");
-  const [profiledata, setProfile] = useState("");
   const [fullscreen, setFullscreen] = useState(true);
-  const [check, setCheck] = useState(true);
   const [id, setId] = useState("");
   const [logo, setLogo] = useState();
-  const [verify, setVerify] = useState("false");
   const [show, setShow] = useState(false);
   const [color, setcount] = useState([
     { colorName: "", colorValue: "#FFFFFF" },
@@ -75,7 +64,6 @@ function Profile(props) {
   const [sharedEmail, setSharedEmail] = useState();
   const [loading, setLoading] = useState(false);
   const [allData, setAllData] = useState();
-  const [locationData, setLocationData] = useState();
 
   const location = useLocation();
   let countTemp = countTracker;
@@ -156,7 +144,6 @@ function Profile(props) {
   }, [user]);
 
   useEffect(() => {
-    setLocationData(location?.state?.data);
     fontlist();
     if (domain) {
       getbrandslogo();
@@ -165,7 +152,7 @@ function Profile(props) {
       navigate("/my-companies");
     }
   }, [domain]);
-  const updateProfileValue = async (req, res) => {
+  const updateProfileValue = async () => {
     var checkTemp = 0;
 
     if (domain != location?.state?.data?.domain) {
@@ -215,7 +202,7 @@ function Profile(props) {
       alert("Enter proper domain");
     }
   };
-  const profileDetails = async (req, res) => {
+  const profileDetails = async () => {
     fresult = await getProfileDetails({
       domain: location?.state?.data?.domain,
     });
@@ -256,18 +243,7 @@ function Profile(props) {
   const config = {
     buttons: ["bold", "italic"],
   };
-  const checkDomain = (datta) => {
-    for (let i = 0; i < profiledata?.data?.data?.length; i++) {
-      if (datta == profiledata?.data?.data[i].domain) {
-        const domainId = document.getElementById("domain");
-        domainId.innerHTML = "**this domain already resister**";
-        setCheck(false);
-      } else {
-        const domainId = document.getElementById("domain");
-        setCheck(true);
-      }
-    }
-  };
+
   let addFormFields = () => {
     setcount([...color, { colorName: "", colorValue: "#000000" }]);
     setCountTracker(countTemp + 1);
@@ -519,7 +495,6 @@ function Profile(props) {
                                   </div>
                                 </Card>
                               </div>
-                              // </Link>
                             ) : (
                               ""
                             )}

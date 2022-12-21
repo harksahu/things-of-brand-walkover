@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Canvg, presets } from "canvg";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Container,
@@ -7,10 +6,8 @@ import {
   Navbar,
   Nav,
   Card,
-  OverlayTrigger,
   Button,
   Modal,
-  Tooltip,
   ListGroup
 } from "react-bootstrap";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -29,16 +26,12 @@ import saveAs from "file-saver";
 import {
   BsFillPlusCircleFill,
   BsFillTrashFill,
-  BsPencilSquare,
-  BsFillExclamationDiamondFill,
-  BsShieldCheck,
 } from "react-icons/bs";
 import {
   MdArrowBackIos,
   MdVerified,
   MdShare,
-  MdOutlineModeEdit,
-  MdContentCopy
+  MdOutlineModeEdit
 } from "react-icons/md";
 import Addfile from "./Addfile.js"
 import ModalComponent from "../components/ModalComponent.js"
@@ -71,7 +64,6 @@ function Brand() {
   const [isShared, setSharedCompany] = useState(false);
   const handleShoww = () => setShoww(true);
   const [show, setShow] = useState(false);
-  const target = useRef(null);
   const [loading, setLoading] = useState(false);
   const [isRepeatingEmail, setIsRepeatingEmail] = useState(false);
   const [userEmail, setUserEmail] = useState(false);
@@ -161,7 +153,7 @@ function Brand() {
     isCompanyShared();
   };
 
-  const isCompanyShared = async (req, res) => {
+  const isCompanyShared = async () => {
 
     for (var i = 0; i < sharedEmail?.length; i++) {
 
@@ -189,7 +181,7 @@ function Brand() {
     await updateProfileFields(data);
   };
 
-  const getCollectionDetails = async (req,res)=>{
+  const getCollectionDetails = async ()=>{
     const collection = await getCollection({
       email : user.email
     })
@@ -370,7 +362,7 @@ function Brand() {
                     DomainPost?.length > 0 ? <h5>Logos</h5> : ""
                   }
                   <div className="grid">
-                    {DomainPost?.map((brand, index) => {
+                    {DomainPost?.map((brand) => {
                       return (
                         <div key={brand._id} className="item">
                           <Card className="box-shadow">
@@ -411,7 +403,7 @@ function Brand() {
                                 variant="outline-secondary"
                                 size="sm"
                                 onClick={() => {
-                                  const canvas = DownloadToSvg(
+                                   DownloadToSvg(
                                     brand.url,
                                     brand.title
                                   );
