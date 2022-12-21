@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createBrandAPI } from "../api/Index.js";
-import { useLocation, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
-import { MdArrowBackIos, MdContentCopy } from "react-icons/md";
 import Home from "./Home";
 import {
   Card,
@@ -14,7 +12,6 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
-import CopyToClipboard from "../components/CopyToClipboard.js"
 
 import {
   getS3SignUrl,
@@ -51,11 +48,8 @@ const Addfile = (props) => {
   const [title, setTitle] = useState("");
   const [tags, setTags] = React.useState([]);
   const [domain, setDomain] = useState();
-  const [id, setId] = useState();
   const [domainToSelect, setDomainToSelect] = useState("");
   const [ffresult, setResult] = useState();
-  const location = useLocation();
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
 
@@ -68,7 +62,7 @@ const Addfile = (props) => {
       event.target.value = "";
     }
   };
-  const findSharedEmail = async (req, res) => {
+  const findSharedEmail = async () => {
     var shareddEmail = await getProfileDetails({});
     for (var i = 0; i < shareddEmail?.data?.data?.length; i++) {
       for (var j = 0; j < shareddEmail?.data?.data[i]?.sharedEmail.length; j++) {
@@ -86,7 +80,7 @@ const Addfile = (props) => {
     setTags([...tags.filter((tag) => tags.indexOf(tag) !== index)]);
   };
 
-  const profileDetails = async (req, res) => {
+  const profileDetails = async () => {
     let fresult = "";
     if (user.email) {
        
@@ -108,7 +102,6 @@ const Addfile = (props) => {
       setDomain(fresult?.data?.data[0]?.domain);
     }
 
-    setId(fresult?.data?.data[0]?._id);
   };
 
   const onSubmitClick = async () => {
@@ -128,7 +121,7 @@ const Addfile = (props) => {
               searchfrom: "true"
             });
 
-            const a = await createBrandAPI({
+             await createBrandAPI({
               url: imageUrl,
               title,
               description: tags,
@@ -165,7 +158,9 @@ const Addfile = (props) => {
               await updateProfileFields(data);
 
             }
-          } catch (error) { }
+          } catch (error) { 
+             //TODO: error message
+          }
         } else {
           alert("Image imput required");
         }

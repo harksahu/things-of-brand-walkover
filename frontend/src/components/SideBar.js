@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import {  useNavigate } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import { useLocation } from "react-router-dom";
 
-function SideBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {  
+function SideBar() {  
   const navigate = useNavigate();
   const location = useLocation();
   return (
@@ -61,4 +61,3 @@ function SideBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
 }
 
 export default SideBar;
-//export default connect(mapStateToProp, mapDispatchToProp)(SideBar);

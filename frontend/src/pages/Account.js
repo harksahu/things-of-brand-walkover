@@ -7,13 +7,11 @@ import {
   Card,
   Button,
   ListGroup,
-  FormLabel,
 } from "react-bootstrap";
 
 import { setAuthKey, storeAuthKey, deleteAuthKey } from "../api/Index.js";
 import { BsFillTrashFill } from "react-icons/bs";
 
-import SideBar from "../components/SideBar";
 import "../scss/account.scss";
 
 const Account = () => {
@@ -27,12 +25,14 @@ const Account = () => {
     try {
       const keyValue = rand() + rand();
       document.getElementById("authKeybtn").style.display = "none";
-      const data = await storeAuthKey({
+       await storeAuthKey({
         authKey: keyValue,
         email: user?.email,
       });
       setKey(keyValue);
-    } catch (error) {}
+    } catch (error) {
+      //TODO: error message
+    }
   };
 
   const setAuth = async () => {
@@ -40,18 +40,18 @@ const Account = () => {
       const x = await setAuthKey(user.email);
       const authinfo = x?.data?.data[0];
       setKey(authinfo.authKey);
-    } catch (e) {}
+    } catch (e) { //TODO: error message
+    }
   };
 
   const deleteKey = async () => {
     setKey();
-    const data = await deleteAuthKey({
+    await deleteAuthKey({
       authKey: key,
       email: user?.email,
     });
     setKey();
   };
-  const [value, setValue] = useState("");
 
   useEffect(() => {
     if (user && user.email) {

@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { UserAuth } from "../context/AuthContext";
+import React from "react";
 import {
   Container,  
 } from "react-bootstrap";
@@ -16,14 +14,14 @@ function Footer() {
         </div>
         <a
           href="https://feature.thingsofbrand.com/feature-requests"
-          target="_blank"
+          target="_blank" rel="noreferrer"
         >
           <strong>Feature request</strong>
         </a>
 
         <div>
           <span className="me-2">Product by</span> 
-          <a href="https://walkover.in/" target="_blank" className="me-3">
+          <a href="https://walkover.in/" target="_blank" className="me-3" rel="noreferrer">
             WALKOVER
           </a>
         </div>

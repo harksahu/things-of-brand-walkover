@@ -1,9 +1,8 @@
 import React, { useEffect,useCallback, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import {
   Container,
-  Row,
   Form,
   Nav,
   Navbar,
@@ -12,15 +11,11 @@ import {
 import { useLocation } from "react-router-dom";
 import { searchBrand, clearSearchBrand } from "../store/actions/Search-Brands.js";
 import { connect } from "react-redux";
-import Card from "react-bootstrap/Card";
 import { getProfileDetails, sendSearchAPI } from "../api/Index.js";
-import { BsArrowReturnRight } from "react-icons/bs";
 
-function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
+function NavigationBar({ getSearchBrand }) {
   const { logOut } = UserAuth();
   const { googleSignIn, user } = UserAuth();
-  const [CompanyData, setCompanydata] = useState([]);
-  const [LogoData, setLogoData] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -66,9 +61,6 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
       searchfrom: "false",
     });
 
-    const array_data = C_data?.data?.data;
-    setCompanydata(array_data);
-
     const L_data = await sendSearchAPI({
       title: searchData,
       email: "",
@@ -78,8 +70,6 @@ function NavigationBar({ getSearchBrand, clearSearchBrand, searchBrandData }) {
       domain: "",
     });
 
-    const array_logo_data = L_data?.data?.data;
-    setLogoData(array_logo_data);
   };
 
   const [searchItem, setItems] = useState();
