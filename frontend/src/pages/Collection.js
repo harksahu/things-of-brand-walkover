@@ -1,61 +1,61 @@
 import React, { useEffect, useState } from "react";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
-import {getCollection} from "../api/Index"
+import { getCollection } from "../api/Index";
 import { Container, Form, Card } from "react-bootstrap";
 const Collection = (props) => {
-    const [allLogos,setallLogos] = useState([]);
-    const { user } = UserAuth();
-    const id = useParams();
-   const getAllLogosFromCollection = async (req,res) =>{
-    const data =await getCollection(
-        {
-        CollectionName:id ,
-         email:user?.email
-        })
-        setallLogos(data);
-        console.log("data ="+data?.data?.data);
-        console.log(data);
-    
-   }
-    useEffect (()=>{
-        if(user)
-        getAllLogosFromCollection();
-    },[id,user]);
+  const [allLogos, setallLogos] = useState(null);
+  const { user } = UserAuth();
+  const id = useParams();
+  const getAllLogosFromCollection = async (req, res) => {
+    const data = await getCollection({
+      CollectionName: id,
+      email: user?.email,
+    });
+    setallLogos(data?.data?.data[0]?.logo);
+  };
+  useEffect(() => {
+    if (user?.email && id) getAllLogosFromCollection();
+  }, [user]);
   return (
-    <div> 
-       <Container>
-        {/* <div className="grid">
+    <div>
+      <Container>
+        {console.log(allLogos)}
+        <div className="grid">
           {allLogos &&
             allLogos?.map((collection) => {
               return (
                 <div key={collection._id}>
-                  <div
-                    className="d-flex justify-content-center item "
-                  >
-                      <Card className="item-company">
-                        <div
-                          style={{ overflow: "auto" }}
-                          className="img_size  pattern-square"
-                        > 
-                        <img src="/assets/picture.svg" alt="" />
-                        </div>
-                        <Card.Body>
-                          <Card.Title
-                            style={{ textDecoration: "none" }}
-                            className="text-center"
-                          >{collection.CollectionName}
-                          </Card.Title>
-                        </Card.Body>
-                      </Card>
+                  <div className="d-flex justify-content-center item ">
+                    <Card className="item-company">
+                      <div
+                        style={{ overflow: "auto" }}
+                        className="img_size  pattern-square"
+                      >
+                        {collection?.logo !== undefined &&
+                        collection?.logo !== "null" ? (
+                          <img src={collection?.logo} alt="" />
+                        ) : (
+                          <img src="/assets/picture.svg" alt="" />
+                        )}
+                      </div>
+                      <Card.Body>
+                        <Card.Title
+                          style={{ textDecoration: "none" }}
+                          className="text-center"
+                        >
+                          {collection.name}
+                        </Card.Title>
+                      </Card.Body>
+                    </Card>
                   </div>
                 </div>
               );
             })}
-        </div> */}
+        </div>
       </Container>
     </div>
-  )
-}
+  );
+};
 
-export default Collection
+export default Collection;
