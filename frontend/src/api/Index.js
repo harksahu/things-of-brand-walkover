@@ -88,8 +88,6 @@ const saveMyStuffAPI = async ({ _id = "", title = "" }) => {
 
 
 
-
-
 // Authkey 
 
 
@@ -170,7 +168,6 @@ const updateCollection = async (dataToSend) => {
 
 //get collection data
 const getCollection = async ({ CollectionName= "" , email=""}) => {
-
   return await axios.get(URL + "/api/Collection?CollectionName=" + CollectionName + "&email=" + email);
 };
 
