@@ -241,7 +241,13 @@ function NavigationBar({ getSearchBrand }) {
                 >
                   Explore other brands
                 </NavDropdown.Item>
-
+                <NavDropdown.Item
+                  onClick={() => {
+                    navigate("/collection");
+                  }}
+                >
+                  My Collection
+                </NavDropdown.Item>
                 <NavDropdown.Item
                   onClick={() => {
                     navigate("/account");
