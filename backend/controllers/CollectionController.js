@@ -21,10 +21,10 @@ const createCollection = async (req, res) => {
 }
 
 const getCollectionDetails = async (req, res) => {
-    const CollectionName = req?.query?.CollectionName
+    const _id = req?.query?._id
     const email = req?.query?.email
-    const search = CollectionName ? {
-        CollectionName: CollectionName,
+    const search = _id ? {
+        _id: _id,
         email: email
     } :
         {
@@ -40,6 +40,7 @@ const getCollectionDetails = async (req, res) => {
             for (let i = 0; i < logo_array?.length; i++) {
                 const logos = await StuffModel.find({
                     _id: logo_array[i],
+                    active: 1
     
                 });
                 const logodata = {}
@@ -112,6 +113,7 @@ const getCollectionJson = async (_id) => {
             console.log("sdf");
             const logos = await StuffModel.find({
                 _id: logo_array[i],
+                active:1
 
             });
             console.log(logos[0]?.title);
