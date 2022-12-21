@@ -47,9 +47,7 @@ function Brand() {
   const [name, setName] = useState();
   const [aboutus, setAboutus] = useState();
   const [domain, setDomain] = useState();
-  const [logo, setlogo] = useState();
   const [guidlines, setGuidlines] = useState();
-  const [fontSize, setFontSize] = useState();
   const [email, setEmail] = useState();
   const [sharedEmail, setSharedEmail] = useState([]);
   const { user } = UserAuth();
@@ -70,8 +68,8 @@ function Brand() {
   const [CopyValue, setCopyValue] = useState("Copy link");
   const [fullscreen, setFullscreen] = useState(true);
   const [modalShow, setModalShow] = useState(false);
-  const[collections,setCollections] = useState("");
-  const[addImageToCollection, setAddImageToCollection]=useState();
+  const [collections, setCollections] = useState("");
+  const [addImageToCollection, setAddImageToCollection] = useState();
   const handleClosee = () => {
     setIsRepeatingEmail(false);
     setShoww(false);
@@ -79,7 +77,7 @@ function Brand() {
 
   const removeSharedEmail = (index) => {
     let temp = sharedEmail;
-    var spliced = temp.splice(index, 1);
+    temp.splice(index, 1);
     setSharedEmail([...temp]);
     updateLogo();
   }
@@ -139,10 +137,8 @@ function Brand() {
       setLinks(fresult?.data?.data[0].links);
       setDomain(fresult?.data?.data[0].domain);
       setGuidlines(fresult?.data?.data[0].guidlines);
-      setFontSize(fresult?.data?.data[0].fontSize);
       setFontLink(fresult?.data?.data[0].fontLink);
       setAllColor(fresult?.data?.data[0].color);
-      setlogo(fresult?.data?.data[0].logo);
       setEmail(fresult?.data?.data[0].email);
       setVerify(fresult?.data?.data[0].verify);
       setSharedEmail(fresult.data.data[0].sharedEmail);
@@ -181,12 +177,12 @@ function Brand() {
     await updateProfileFields(data);
   };
 
-  const getCollectionDetails = async ()=>{
+  const getCollectionDetails = async () => {
     const collection = await getCollection({
-      email : user.email
+      email: user.email
     })
     setCollections(collection);
-    
+
   }
 
   useEffect(() => {
@@ -403,7 +399,7 @@ function Brand() {
                                 variant="outline-secondary"
                                 size="sm"
                                 onClick={() => {
-                                   DownloadToSvg(
+                                  DownloadToSvg(
                                     brand.url,
                                     brand.title
                                   );
@@ -411,20 +407,19 @@ function Brand() {
                               >
                                 SVG
                               </Button>
-                              {user?
-                              <FavoriteIcon variant="primary" onClick={() =>
-                              {
-                                 setModalShow(true)
-                                 setAddImageToCollection(brand._id)
-                               
-                               } }/>:""}
-                              {console.log("ab",brand?._id)}
-                                <ModalComponent
-                                id = {addImageToCollection}
+                              {user ?
+                                <FavoriteIcon variant="primary" onClick={() => {
+                                  setModalShow(true)
+                                  setAddImageToCollection(brand._id)
+
+                                }} /> : ""}
+                              {console.log("ab", brand?._id)}
+                              <ModalComponent
+                                id={addImageToCollection}
                                 allcollection={collections}
-                                show={modalShow}  
+                                show={modalShow}
                                 onHide={() => setModalShow(false)}
-                                />
+                              />
                             </Card.Footer>
                           </Card>
                         </div>
@@ -455,11 +450,11 @@ function Brand() {
                           </Card>
                         </div>
 
+                      ) : (
+                        ""
+                      )
                     ) : (
-                    ""
-                    )
-                    ) : (
-                    ""
+                      ""
                     )}
                   </div>
                 </div>
