@@ -132,6 +132,7 @@ const getCompanyJson = async (domain) => {
 
         const logos = await StuffModel.find({
             domain: domain1,
+            active: 1
 
         });
 
