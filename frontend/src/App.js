@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
 import Footer from './components/Footer';
 import Protected from './components/Protected';
 import DomainValidate from './components/DomainValidate';
-import { AuthContextProvider, UserAuth } from './context/AuthContext';
+import { AuthContextProvider } from './context/AuthContext';
 import Account from './pages/Account';
 import MyCollection from './pages/MyCollection';
 import Collection from './pages/Collection';
@@ -25,11 +25,9 @@ import Profile from './pages/CompanyEditer.js';
 import DomainVerificationPage from './pages/DomainVerificationPage';
 
 import PageNotFound from './pages/PageNotFound.js';
-import { Switch } from '@mui/material';
 
 function App() {
   const [isUserLoaded, setIsUserLoaded] = useState(false);
-  const location = useLocation()
   useEffect(() => {
     fetchUser()
   }, [])

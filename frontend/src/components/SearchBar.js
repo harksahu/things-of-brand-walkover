@@ -1,20 +1,12 @@
-import React, { useEffect, useCallback, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { UserAuth } from "../context/AuthContext";
-
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import {  useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { getProfileDetails, sendSearchAPI } from "../api/index.js";
-import { styled, lighten, darken } from "@mui/system";
-import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import CircularProgress from "@mui/material/CircularProgress";
 function SearchBar() {
-  const { user } = UserAuth();
   const [CompanyData, setCompanydata] = useState([]);
   const [LogoData, setLogoData] = useState([]);
-  const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
   const getdata = async (searchData = "") => {

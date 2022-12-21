@@ -46,7 +46,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "eslint": "eslint --ext .js,.jsx src",
+    "eslint-fix": "eslint --fix --ext .js,.jsx ./src"
   },
   "eslintConfig": {
     "extends": [
@@ -68,6 +70,8 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.5",
+    "eslint": "^8.30.0",
+    "eslint-plugin-react": "^7.31.11",
     "postcss": "^8.4.12",
     "sass": "^1.56.0",
     "tailwindcss": "^3.0.24"
