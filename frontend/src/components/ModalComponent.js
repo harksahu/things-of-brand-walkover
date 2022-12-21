@@ -50,7 +50,7 @@ function ModalComponent(props) {
               return(
                   <>  
                   {console.log("jh",collection.Logos)}
-                    <h5 onClick={()=>{createNewCollection(collection,id)}}>{index+1 + " "}{collection?._id}</h5>
+                    <h5 onClick={()=>{createNewCollection(collection,id)}}>{index+1 + " "}{collection?.CollectionName}</h5>
                 </>
             );
           })
