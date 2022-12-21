@@ -18,10 +18,12 @@ import "../utils/SvgInLine.css";
 import "../scss/brand.scss";
 import { UserAuth } from "../context/AuthContext";
 import CopyToClipboard from "../components/CopyToClipboard.js"
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import {
   getProfileDetails,
   sendSearchAPI,
-  updateProfileFields
+  updateProfileFields,
+  getCollection
 } from "../api/Index.js";
 import saveAs from "file-saver";
 import {
@@ -39,6 +41,7 @@ import {
   MdContentCopy
 } from "react-icons/md";
 import Addfile from "./Addfile.js"
+import ModalComponent from "../components/ModalComponent.js"
 
 function Not_found() {
 
@@ -74,7 +77,9 @@ function Brand() {
   const [userEmail, setUserEmail] = useState(false);
   const [CopyValue, setCopyValue] = useState("Copy link");
   const [fullscreen, setFullscreen] = useState(true);
-
+  const [modalShow, setModalShow] = useState(false);
+  const[collections,setCollections] = useState("");
+  const[addImageToCollection, setAddImageToCollection]=useState();
   const handleClosee = () => {
     setIsRepeatingEmail(false);
     setShoww(false);
@@ -184,6 +189,14 @@ function Brand() {
     await updateProfileFields(data);
   };
 
+  const getCollectionDetails = async (req,res)=>{
+    const collection = await getCollection({
+      email : user.email
+    })
+    setCollections(collection);
+    
+  }
+
   useEffect(() => {
     setLoading(true);
     getbrand();
@@ -191,6 +204,7 @@ function Brand() {
       getbrandslogo();
       setLoading(false);
     }
+    getCollectionDetails();
   }, [domain, title, user]);
   function handleShow() {
     setFullscreen("md-down");
@@ -405,6 +419,20 @@ function Brand() {
                               >
                                 SVG
                               </Button>
+                              {user?
+                              <FavoriteIcon variant="primary" onClick={() =>
+                              {
+                                 setModalShow(true)
+                                 setAddImageToCollection(brand._id)
+                               
+                               } }/>:""}
+                              {console.log("ab",brand?._id)}
+                                <ModalComponent
+                                id = {addImageToCollection}
+                                allcollection={collections}
+                                show={modalShow}  
+                                onHide={() => setModalShow(false)}
+                                />
                             </Card.Footer>
                           </Card>
                         </div>
