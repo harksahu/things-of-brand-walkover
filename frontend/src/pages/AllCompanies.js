@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Card from "react-bootstrap/Card";
 import "../utils/SvgInLine.css";
 import { connect } from "react-redux";
 import { searchBrand } from "../store/actions/Search-Brands.js";
 import Figure from "react-bootstrap/Figure";
-import SvgInline from "../utils/SvgInLine.js";
-import { getProfileDetails } from "../api/Index.js";
-import { async } from "@firebase/util";
 import Pagination from "./Pagination";
-import ReactPaginate from "react-paginate";
-import { UserAuth } from "../context/AuthContext";
 import ClipLoader from "react-spinners/ClipLoader";
 import CompanyCard from "../components/CompanyCard.js"
 
@@ -33,9 +26,6 @@ function Home({ searchBrandData = [], getSearchBrand }) {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(16);
-  const { logOut } = UserAuth();
-  const { googleSignIn, user } = UserAuth();
-  const navigate = useNavigate();
   // const [loading,setLoading] = useState(false);
 
   // function Home() {
@@ -43,25 +33,25 @@ function Home({ searchBrandData = [], getSearchBrand }) {
   // const getProfile = async () =>{
   //   setSearchBrandData(await getProfileDetails({}));
   // }
-  const fetchPosts = async () => {
-      
-    await getSearchBrand({});
+  const fetchPosts = () => {
+
+    getSearchBrand({});
     setPosts(searchBrandData.data);
-    
+
 
   };
-  const loadingFalse = async () => {
+  const loadingFalse = () => {
     setLoading(false);
   }
   useEffect(() => {
     setLoading(true);
-    const fetchPosts1 = async () => {
-      await fetchPosts();
-      await loadingFalse();
+    const fetchPosts1 = () => {
+      fetchPosts();
+      loadingFalse();
     }
     fetchPosts1();
 
-  }, [ ]);
+  }, []);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -75,31 +65,31 @@ function Home({ searchBrandData = [], getSearchBrand }) {
     <div className="p-3 flex bg-light">
       {loading ?
         <div className="center-loader"
-        ><ClipLoader /> </div>:
+        ><ClipLoader /> </div> :
         <>
-        <div className="d-flex flex-wrap grid container">
-          {currentPosts?.data?.length === 0 ? (
-            <Not_found />
-          ) : (
-            currentPosts?.map((Company) => {
-              return (
-                <div key={Company._id}>
-                   <CompanyCard props={Company} />
-                 </div>
-              );
-            })
-          )}
-        </div>
-        <div className="mt-5"></div>
-        {searchBrandData?.data?.length >postsPerPage?<Pagination
-          postsPerPage={postsPerPage}
-          totalPosts={searchBrandData.data.length}
-          paginate={paginate}
-        />:""}
+          <div className="d-flex flex-wrap grid container">
+            {currentPosts?.data?.length === 0 ? (
+              <Not_found />
+            ) : (
+              currentPosts?.map((Company) => {
+                return (
+                  <div key={Company._id}>
+                    <CompanyCard props={Company} />
+                  </div>
+                );
+              })
+            )}
+          </div>
+          <div className="mt-5"></div>
+          {searchBrandData?.data?.length > postsPerPage ? <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={searchBrandData.data.length}
+            paginate={paginate}
+          /> : ""}
         </>
       }
 
-      
+
     </div>
   );
 }
