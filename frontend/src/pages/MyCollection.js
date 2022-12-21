@@ -12,14 +12,17 @@ const MyCollection = () => {
   const [allCollection, setAllCollection] = useState([]);
   const [show, setShow] = useState(false);
   const [collectionName, setCollectionName] = useState();
+  const [showSuccess, setShowSuccess] = useState(false);
   const { user } = UserAuth();
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    setShowSuccess(false);
+}
   const handleShow = () => setShow(true);
   const showAllCollections = async () => {
     const data = await getCollection({
       email: user?.email,
     });
-    console.log(data.data.data);
     setAllCollection(data.data.data);
   };
   const createNewCollection = async () => {
@@ -34,8 +37,7 @@ const MyCollection = () => {
       email: user?.email,
     });
     showAllCollections();
-    console.log(data);
-    alert("collection created");
+    setShowSuccess(true);
   };
   useEffect(() => {
     if (user?.email) 
@@ -49,7 +51,7 @@ const MyCollection = () => {
         </Modal.Header>
         <Modal.Body>
           <Form.Group className="mb-3">
-            <Form.Label></Form.Label>
+            {showSuccess&&<Form.Label>Collection Created</Form.Label>}
             <Form.Control
               type="domain"
               placeholder="Enter collection name"
@@ -74,21 +76,28 @@ const MyCollection = () => {
         </Modal.Body>
       </Modal>
       <Container>
+            <h1>All Collections</h1><br></br>
         <div className="grid">
           {allCollection &&
             allCollection.map((collection) => {
               return (
                 <div key={collection._id}>
+                    
                   <div
                     className="d-flex justify-content-center item "
                   >
                     <Link to={"/collection/" +collection._id}>
                       <Card className="item-company">
-                        <div
+                      <div
                           style={{ overflow: "auto" }}
                           className="img_size  pattern-square"
-                        > 
-                        <img src="/assets/picture.svg" alt="" />
+                        >
+                          {collection?.logo[0]?.url !== undefined &&
+                          collection?.logo[0]?.url !== "null" ? (
+                            <img src={collection?.logo[0]?.url} alt="" />
+                          ) : (
+                            <img src="/assets/picture.svg" alt="" />
+                          )}
                         </div>
                         <Card.Body>
                           <Card.Title
