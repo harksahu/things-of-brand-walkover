@@ -6,13 +6,13 @@ import {
   Col,
   Form,
   Button,
-  Dropdown,
+  Modal,
   Stack,
 } from "react-bootstrap";
 import colors from "../api/colors.json";
 import { Autocomplete } from "@mui/material";
 import { TextField, Box } from "@mui/material";
-
+import Addfile from "./Addfile.js"
 import { UserAuth } from "../context/AuthContext";
 import {
   getProfileDetails,
@@ -33,10 +33,8 @@ import { MdArrowBackIos } from "react-icons/md";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import SideBar from "../components/SideBar";
 import { Hint } from "react-autocomplete-hint";
-// import SvgInline from "../utils/SvgInline.js";
 import Select from "react-select";
-// import { Tokenizer } from 'react-typeahead';
-// import {  Typeahead } from 'react-bootstrap-typeahead';
+
 import ClipLoader from "react-spinners/ClipLoader";
 import InputComponent from "../components/InputComponent.js";
 
@@ -58,7 +56,7 @@ function Profile(props) {
   const [links, setLinks] = React.useState([]);
   const [company, setCompany] = useState("");
   const [profiledata, setProfile] = useState("");
-
+  const [fullscreen, setFullscreen] = useState(true);
   const [check, setCheck] = useState(true);
   const [id, setId] = useState("");
   const [logo, setLogo] = useState();
@@ -77,6 +75,7 @@ function Profile(props) {
   const [sharedEmail, setSharedEmail] = useState();
   const [loading, setLoading] = useState(false);
   const [allData, setAllData] = useState();
+  const [locationData, setLocationData] = useState();
 
   const location = useLocation();
   let countTemp = countTracker;
@@ -105,21 +104,7 @@ function Profile(props) {
       setJsonValue(temp);
     });
   };
-  // const getData = async () => {
-  //   fetch("../src/api/colors .json", {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json",
-  //     },
-  //   })
-  //     .then(function (response) {
-  //       console.log(response);
-  //       // return response.json();
-  //     })
-  //     .then(function (myJson) {
-  //       console.log(myJson);
-  //     });
-  // };
+ 
   function extractDomain(url) {
     var domainName;
     if (url.indexOf("://") > -1) {
@@ -166,11 +151,12 @@ function Profile(props) {
       if (user?.email) {
         setJsonLabelAndValue();
         profileDetails();
-        // getData();
       }
     }
   }, [user]);
+
   useEffect(() => {
+    setLocationData(location?.state?.data);
     fontlist();
     if (domain) {
       getbrandslogo();
@@ -252,13 +238,12 @@ function Profile(props) {
       let colorData = [];
       location?.state?.data?.color.map((colorDataTemp) => {
         colorData.push({
-          "label": colorDataTemp?.colorValue,
-          "value": colorDataTemp?.colorValue
-        })
-      })
+          label: colorDataTemp?.colorValue,
+          value: colorDataTemp?.colorValue,
+        });
+      });
       console.log("colorData", colorData);
-      setValue(colorData)
-
+      setValue(colorData);
     }
     if (location.state?.data) {
       getAllData();
@@ -266,12 +251,7 @@ function Profile(props) {
     }
   };
 
-
-
-  useEffect(() => {
-
-  }, [value]);
-
+  useEffect(() => {}, [value]);
 
   const config = {
     buttons: ["bold", "italic"],
@@ -319,9 +299,14 @@ function Profile(props) {
     let newFormValues1 = [...value];
     newFormValues1.splice(i, 1);
     setValue(newFormValues1);
-
-
   };
+
+
+  function handleShow() {
+    setFullscreen("md-down");
+    setShow(true);
+  }
+
   return (
     <div className="bg-gray h-100">
       {loading ? (
@@ -351,18 +336,6 @@ function Profile(props) {
                 <Card.Body>
                   <Stack gap={3}>
                     <Form>
-                      {/* <Form.Group className="mb-3 " id="name">
-                        <Form.Label>name</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter name"
-                          aria-describedby="btnGroupAddon"
-                          onChange={(e) => {
-                            setName(e.target.value);
-                          }}
-                          value={name}
-                        />
-                      </Form.Group> */}
                       <InputComponent label={"Name"} setValue={setName} valuee={name} />
                       <Form.Group className="mb-3 " id="about">
                         <Form.Label>About us</Form.Label>
@@ -371,13 +344,15 @@ function Profile(props) {
                           setGuidlines={setAboutus}
                           config={config}
                           tabIndex={1}
+                          
                         />
+
                       </Form.Group>
                       {DomainPost ? (
                         <div className="grid">
                           <h6>logos</h6>
-                           <div className="grid d-flex"style={{ overflow: "auto" }}>
-                           {DomainPost?.map((brand, index) => {
+                          <div className="grid d-flex" style={{ overflow: "auto" }}>
+                            {DomainPost?.map((brand, index) => {
                               return (
                                 <div key={index} className="d-flex flex-wrap d-flex justify-content-center ">
 
@@ -385,7 +360,7 @@ function Profile(props) {
                                     key={brand._id}
                                     className="item "
                                   >
-                                    <Card  className="box-shadow">
+                                    <Card className="box-shadow">
                                       {/* <Dropdown className="ms-auto">
                                       <Dropdown.Toggle variant="light" size="sm">
                                         <BsThreeDotsVertical />
@@ -419,7 +394,7 @@ function Profile(props) {
                                           className="img_size  pattern-square"
                                         >
                                           {brand.url !== undefined &&
-                                            brand.url !== "null" ? (
+                                          brand.url !== "null" ? (
                                             <img src={brand.url} alt="" />
                                           ) : (
                                             <img
@@ -491,7 +466,9 @@ function Profile(props) {
                                               variant="outline-secondary"
                                               size="sm"
                                               onClick={async () => {
-                                                await deleteMyStuffAPI(brand?._id);
+                                                await deleteMyStuffAPI(
+                                                  brand?._id
+                                                );
 
                                                 navigate(-1);
                                               }}
@@ -503,7 +480,9 @@ function Profile(props) {
                                               variant="outline-secondary"
                                               size="sm"
                                               onClick={async () => {
-                                                await restoreMyStuffAPI(brand?._id);
+                                                await restoreMyStuffAPI(
+                                                  brand?._id
+                                                );
 
                                                 navigate(-1);
                                               }}
@@ -514,39 +493,37 @@ function Profile(props) {
                                         </Card.Footer>
                                       </Card.Body>
                                     </Card>
-
                                   </div>
-                                  <div>
-
-                                  </div>
+                                  <div></div>
                                 </div>
                               );
                             })}
 
                             {user ? (
-                            <Link to="/addfile" className="add-new" state={{ domain: domain }}>
-                            <Card className="item">
-                              <Card.Body className="add-icon align-items-center d-flex justify-content-center">
-                                <Card.Title className="text-center">
-                                  <BsFillPlusCircleFill style={{ fontSize: 40 }} />
-                                </Card.Title>
-                                <Card.Text></Card.Text>
-                              </Card.Body>
-                              <Card.Body>
-                                <Card.Title>Add New File</Card.Title>
-                              </Card.Body>
-                              <div className="card-footer">
-                                <Button variant="outline-light" size="sm">
-                                  -
-                                </Button>
+                              // <Link to="/addfile" className="add-new" state={{ domain: domain }}>
+                              <div className="add-new">
+                                <Card className="item" onClick={() => handleShow()} >
+                                  <Card.Body className="add-icon align-items-center d-flex justify-content-center">
+                                    <Card.Title className="text-center">
+                                      <BsFillPlusCircleFill style={{ fontSize: 40 }} />
+                                    </Card.Title>
+                                    <Card.Text></Card.Text>
+                                  </Card.Body>
+                                  <Card.Body>
+                                    <Card.Title>Add New File</Card.Title>
+                                  </Card.Body>
+                                  <div className="card-footer">
+                                    <Button variant="outline-light" size="sm">
+                                      -
+                                    </Button>
+                                  </div>
+                                </Card>
                               </div>
-                            </Card>
-                          </Link>
+                              // </Link>
                             ) : (
                               ""
                             )}
-                           </div>
-
+                          </div>
                         </div>
                       ) : (
                         ""
@@ -576,37 +553,13 @@ function Profile(props) {
                           placeholder="Press enter to add tags"
                         />
                       </div>
-                      {/* <Form.Group className="mb-3">
-                        <Form.Label>
-                          Domain * <small>(example.com)</small>
-                        </Form.Label>
-                        <Form.Control
-                          type="domain"
-                          placeholder="Enter domain name"
-                          list="doaminBrowsers"
-                          autoComplete="off"
-                          name="myBrowser"
-                          id="domain"
-                          onChange={(e) => {
-                            setDomain(e.target.value);
-                          }}
-                          value={domain}
-                        />
-                        <div className="visually-hidden" id="domainError">
-                          This company is already created{" "}
-                          <Link to="/domainverify" state={{ data: company }}>
-                            Clam your brand
-                          </Link>
-                        </div>
-                        {/* autocompate domain */}
-                      {/* <datalist id="doaminBrowsers">
-                        {results &&
-                          results.map((brandData) => {
-                            return <option key={brandData._id} value={brandData.domain} />;
-                          })}
-                      </datalist> */}
-                      {/* </Form.Group> */}
-                      <InputComponent label={"Domain * <small>(example.com)</small>"} setValue={setDomain} valuee={domain} />
+
+                      <InputComponent
+                        placeholderr={"Enter domain"}
+                        label={"Domain * <small>(example.com)</small>"}
+                        setValue={setDomain}
+                        valuee={domain}
+                      />
 
                       <Form.Group className="mb-3" id="Guidlines">
                         <Form.Label>Guidlines</Form.Label>
@@ -714,7 +667,7 @@ function Profile(props) {
                                   onChange={(e) => {
                                     value[index] = {
                                       label: e.target.value,
-                                      value: e.target.value
+                                      value: e.target.value,
                                     };
                                     setValue([...value]);
                                     let tempCount = color;
@@ -812,6 +765,14 @@ function Profile(props) {
               </Card>
             </Col>
           </Row>
+          <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
+            <Modal.Header closeButton>
+            </Modal.Header>
+            <Modal.Body><Addfile domain={domain} /></Modal.Body>
+          </Modal>
+
+
+
         </Container>
       )}
     </div>

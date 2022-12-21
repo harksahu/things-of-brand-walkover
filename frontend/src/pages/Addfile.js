@@ -26,6 +26,7 @@ import "../scss/style.scss";
 import "../scss/addfile.scss";
 import { FormGroup } from "@mui/material";
 import ClipLoader from "react-spinners/ClipLoader.js";
+import InputComponent from "../components/InputComponent.js";
 function MyVerticallyCenteredModal(props) {
   return (
     <Modal
@@ -43,7 +44,7 @@ function MyVerticallyCenteredModal(props) {
   );
 }
 
-const Addfile = () => {
+const Addfile = (props) => {
   const { user } = UserAuth();
   const [modalShow, setModalShow] = React.useState(false);
   const [file, setFile] = useState();
@@ -92,8 +93,8 @@ const Addfile = () => {
       fresult = await getProfileDetails({ email: user.email });
       setResult(fresult.data.data);
     }
-    if (location?.state?.domain) {
-      setDomain(location?.state?.domain);
+    if (props.domain) {
+      setDomain(props.domain);
 
     }
     else {
@@ -101,8 +102,8 @@ const Addfile = () => {
       //   setShareEmailDomainOption(temp);
       // }
     }
-    if (location?.state?.domain) {
-      setDomain(location?.state?.domain);
+    if (props.domain) {
+      setDomain(props.domain);
     } else {
       setDomain(fresult?.data?.data[0]?.domain);
     }
@@ -124,6 +125,7 @@ const Addfile = () => {
             const result = await getProfileDetails({
               email: user.email,
               domain: domain,
+              searchfrom: "true"
             });
 
             const a = await createBrandAPI({
@@ -180,8 +182,8 @@ const Addfile = () => {
     findSharedEmail(); 
     // setLoading(false);
     if (user) {
-      
-      setDomainToSelect(location?.state?.domain);
+
+      setDomainToSelect(props.domain);
     }
   }, [user,shareEmailDomainOption]);
   return (
@@ -193,25 +195,16 @@ const Addfile = () => {
         <Container className="wrpr">
           <Row>
             <nav className="navbar bg-light">
-              <div className="container-fluid">
+              {/* <div className="container-fluid"> */}
                 <a
                   className="navbar-brand"
                 >
-                  <Button
-                    variant="outline-dark"
-                    className="me-3"
-                    onClick={() => {
-                      navigate(-1);
-                    }}
-                  >
-                    <MdArrowBackIos />
-                  </Button>
-                  Add a file to <strong>{location?.state?.domain}</strong>
+                  Add a file to <strong>{domainToSelect}</strong>
                 </a>
-              </div>
+              {/* </div> */}
             </nav>
             <Col md={9} lg={10} className="mt-4">
-              <Card style={{ width: "30rem" }}>
+              <Card style={{ width: "28rem" }}>
                 <Card.Body>
                   <Stack gap={3}>
                     <FormGroup>
@@ -220,7 +213,7 @@ const Addfile = () => {
                         aria-label="Default select example"
                         onChange={(e) => {
                           setDomain(e.target.value);
-
+                          setDomainToSelect(e.target.value)
                         }}
                         as="select"
                         value={domainToSelect}
@@ -229,12 +222,12 @@ const Addfile = () => {
                         {ffresult &&
                           ffresult.map((domainName, index) => (
                             <option key={index} value={domainName.domain}>
-                              {domainName.domain}{index}
+                              {domainName.domain}
                             </option>
                           ))}
-                        {/* {shareEmailDomainOption ? <option value={shareEmailDomainOption} selected>
+                        {shareEmailDomainOption ? <option value={shareEmailDomainOption} selected>
                           {shareEmailDomainOption}
-                        </option> : ""} */}
+                        </option> : ""}
 
 
                       </Form.Control>
@@ -261,16 +254,7 @@ const Addfile = () => {
                       />
                     </FormGroup>
 
-                    <FormGroup>
-                      <Form.Label>Give a name to file *</Form.Label>
-                      <Form.Control
-                        type="text"
-                        aria-describedby="btnGroupAddon"
-                        // onChange={(e) => setTitle(e.target.value)}
-                        onChange={(e) => setTitle(e.target.value)}
-                        value={title}
-                      />
-                    </FormGroup>
+                    <InputComponent label={"Give a name to file *"} setValue={setTitle} valuee={title} placeholderr={"Enter file name"}/>
 
                     <FormGroup>
                       <Form.Label>Add tags(Optional)</Form.Label>

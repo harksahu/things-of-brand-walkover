@@ -27,33 +27,32 @@ const getCompanyDetails = async (req, res) => {
     var _id = req.query._id === "" ? {} : { _id: req.query._id };
     var searchfrom = req.query.searchfrom
     const doaminData = req.query.domain
-    var domain =  { '$regex': doaminData, "$options": "i" } 
-    var name = req?.query?.name ? {name : { '$regex': req?.query?.name, "$options": "i" } } :{}
+    var domain = { '$regex': doaminData, "$options": "i" }
+    var name = req?.query?.name ? { name: { '$regex': req?.query?.name, "$options": "i" } } : {}
     const search = searchfrom == "true" ? {
         domain: doaminData,
-    } : {
-        $or: [{ domain }, { ...name }],
-        ...email,
-        ..._id
+    } :
+        {
+            $or: [{ domain }, { ...name }],
+            ...email,
+            ..._id
+        }
+    try {
+        var data = await CompanyModel.find(search);
+        res.json({
+            "message": "Related Data is Successfully Find",
+            "data": data
 
+        }).status(200);
+    } catch (error) {
+        console.log(error);
+
+        res.send({
+            message: "Some Error on Server11",
+            error
+        }).status(400);
     }
 
-        try {
-            var data = await CompanyModel.find(search);
-            res.json({
-                "message": "Related Data is Successfully Find",
-                "data": data
-
-            }).status(200);
-        } catch (error) {
-            console.log(error);
-
-            res.send({
-                message: "Some Error on Server11",
-                error
-            }).status(400);
-        }
-    
 }
 
 const updateCompany = async (req, res) => {
