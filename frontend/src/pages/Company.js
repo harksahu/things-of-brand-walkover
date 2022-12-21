@@ -79,6 +79,7 @@ function Brand() {
   const [fullscreen, setFullscreen] = useState(true);
   const [modalShow, setModalShow] = useState(false);
   const[collections,setCollections] = useState("");
+  const[addImageToCollection, setAddImageToCollection]=useState();
   const handleClosee = () => {
     setIsRepeatingEmail(false);
     setShoww(false);
@@ -477,9 +478,16 @@ function Brand() {
                               >
                                 SVG
                               </Button>
-                              <FavoriteIcon variant="primary" onClick={() => setModalShow(true)}/>
+                              {user?
+                              <FavoriteIcon variant="primary" onClick={() =>
+                              {
+                                 setModalShow(true)
+                                 setAddImageToCollection(brand._id)
+                               
+                               } }/>:""}
+                              {console.log("ab",brand?._id)}
                                 <ModalComponent
-                                url={brand?.url}
+                                id = {addImageToCollection}
                                 allcollection={collections}
                                 show={modalShow}  
                                 onHide={() => setModalShow(false)}
