@@ -74,7 +74,12 @@ function ModalComponent(props) {
                           style={{ overflow: "auto" }}
                           className="img_size  pattern-square"
                         > 
-                        <img src="/assets/picture.svg" alt="" />
+                        {collection?.logo[0]?.url !== undefined &&
+                          collection?.logo[0]?.url !== "null" ? (
+                            <img src={collection?.logo[0]?.url} alt="" />
+                          ) : (
+                            <img src="/assets/picture.svg" alt="" />
+                          )}
                         </div>
                         <Card.Body>
                           <Card.Title
