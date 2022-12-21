@@ -1,13 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
-import Button from "react-bootstrap/Button";
+import React, { useState } from "react";
 import {
-    MdArrowBackIos,
-    MdVerified,
-    MdShare,
-    MdOutlineModeEdit,
-    MdContentCopy
-  } from "react-icons/md";
-function CopyToClipboard({ color}) {
+  MdContentCopy
+} from "react-icons/md";
+function CopyToClipboard({ color }) {
   const [value, setValue] = useState("Copy to clipboard");
 
   return (
@@ -24,7 +19,7 @@ function CopyToClipboard({ color}) {
           }}
         />
         <span className="tooltiptext1" id="myTooltip">
-        {value}
+          {value}
         </span>
       </div>
     </>

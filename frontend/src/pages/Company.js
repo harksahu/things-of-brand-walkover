@@ -343,7 +343,7 @@ function Brand() {
                   {links?.map((link) => {
                     return (
                       <div key={link}>
-                        <a target="_blank" href={link}>
+                        <a target="_blank" href={link} rel="noreferrer">
                           {link}
                         </a>
                       </div>
@@ -494,7 +494,7 @@ function Brand() {
                   {fontLink?.map((link, index) => {
                     return (
                       <div key={index}>
-                        <a href={link} target="_blank">
+                        <a href={link} target="_blank" rel="noreferrer">
                           {link}
                         </a>
                       </div>
