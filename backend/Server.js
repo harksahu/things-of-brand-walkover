@@ -69,8 +69,8 @@ app.get('/:domain/json',async(req,res)=>{
 
 app.get('/collection/:id/json',async(req,res)=>{
 
-  // console.log("req");
-  console.log(req?.params?.domain);
+  console.log("req");
+  console.log(req?.params?.id);
   const data = await getCollectionJson(req?.params?.id)
   // console.log("data");
   // console.log(data);

@@ -94,10 +94,8 @@ const getCollectionJson = async (_id) => {
             _id: _id
         });
         const logo_array = data[0]?.Logos;
-        console.log(logo_array);
         var logo = []
         for (let i = 0; i < logo_array?.length; i++) {
-            console.log("sdf");
             const logos = await StuffModel.find({
                 _id: logo_array[i],
                 active:1
@@ -106,9 +104,8 @@ const getCollectionJson = async (_id) => {
             const logodata = {}
             logodata["name"] = logos[0]?.title
             logodata["url"] = logos[0]?.url;
-            logo[i] = logodata
+            logo.push(logodata)
         }
-        console.log(logo);
         return [{ logo, ...data[0]._doc }]
     } catch (error) {
         return error
