@@ -1,4 +1,5 @@
 import CollectionModel from '../models/CollectionModel.js'
+import StuffModel from '../models/StuffModel.js'
 
 const createCollection = async (req, res) => {
     try {
@@ -24,17 +25,37 @@ const getCollectionDetails = async (req, res) => {
     const email = req?.query?.email
     const search = CollectionName ? {
         CollectionName: CollectionName,
-        email : email
+        email: email
     } :
         {
-            email :email
+            email: email
         }
-        console.log(search);
+    console.log(search);
     try {
         var data = await CollectionModel.find(search);
+        const details =data
+        for (let i = 0; i < data?.length; i++) {
+            const logo_array = data[i]?.Logos;
+            var logo = {}
+            for (let i = 0; i < logo_array?.length; i++) {
+                const logos = await StuffModel.find({
+                    _id: logo_array[i],
+    
+                });
+                const logodata = {}
+                logodata["name"] = logos[0]?.title
+                logodata["url"] = logos[0]?.url;
+                logo[i] = logodata
+            }
+            details[i] = {
+                ...data[i]?._doc,logo
+            }
+        }
+
+        console.log(logo);
         res.json({
             "message": "Related Data is Successfully Find",
-            "data": data
+            "data": details
 
         }).status(200);
     } catch (error) {
@@ -50,54 +71,65 @@ const getCollectionDetails = async (req, res) => {
 
 const updateCollection = async (req, res) => {
 
-        let { CollectionName, _id, Logos } = req.body
-        try {
-            const data = await CollectionModel.updateMany(
-                {
-                    _id: _id
-                },
-                {
-                    $set: {
-                        CollectionName,
-                        Logos
-                    }
+    let { CollectionName, _id, Logos } = req.body
+    try {
+        const data = await CollectionModel.updateMany(
+            {
+                _id: _id
+            },
+            {
+                $set: {
+                    CollectionName,
+                    Logos
                 }
-            )
+            }
+        )
 
-            res.json({
-                "message": "Related Data is Successfully updated",
-                "data": data
-            }).status(200);
-        } catch (error) {
-            // console.log(error);
-            res.send({
-                message: "Some Error on Server",
-                error
-            }).status(400);
-        }
+        res.json({
+            "message": "Related Data is Successfully updated",
+            "data": data
+        }).status(200);
+    } catch (error) {
+        // console.log(error);
+        res.send({
+            message: "Some Error on Server",
+            error
+        }).status(400);
+    }
 }
 
 
-const getCollectionJson = async (domain) => {
-    //     try {
-    //         var data = await CollectionModel.find({
-    //             domain: domain
+const getCollectionJson = async (_id) => {
+    try {
+        var data = await CollectionModel.find({
+            _id: _id
 
-    //         });
-    //         const domain1 = data[0]._id;
+        });
+        const logo_array = data[0]?.Logos;
+        console.log(logo_array);
+        var logo = {}
+        for (let i = 0; i < logo_array?.length; i++) {
+            console.log("sdf");
+            const logos = await StuffModel.find({
+                _id: logo_array[i],
 
-    //         const logos = await StuffModel.find({
-    //             domain: domain1,
+            });
+            console.log(logos[0]?.title);
+            const logodata = {}
+            logodata["name"] = logos[0]?.title
+            logodata["url"] = logos[0]?.url;
+            logo[i] = logodata
+            console.log(logo);
+        }
 
-    //         });
 
-    //         // data = data.push(logos)
-    //         return [{ logos, ...data }]
-    //     } catch (error) {
+        console.log(logo);
+        return [{ logo, ...data[0]._doc }]
+    } catch (error) {
 
 
-    //         return error
-    //     }
+        return error
+    }
 }
 
 

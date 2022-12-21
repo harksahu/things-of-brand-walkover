@@ -16,6 +16,7 @@ import getUpdatedData from "./details_feacher/gettingdata.js";
 import {setConfigTable,getUrlFromTable} from "./details_feacher/getUrlFromTable.js";
 import dotenv from 'dotenv'
 import {getCompanyJson} from "./controllers/CompanyController.js";
+import {getCollectionJson} from "./controllers/CollectionController.js";
 import dns from "dns";
 dotenv.config({path:'../.env'})
 
@@ -62,6 +63,17 @@ app.get('/:domain/json',async(req,res)=>{
   const data = await getCompanyJson(req?.params?.domain)
   console.log("data");
   console.log(data);
+  res.send({data});
+  // return data
+})
+
+app.get('/collection/:id/json',async(req,res)=>{
+
+  // console.log("req");
+  console.log(req?.params?.domain);
+  const data = await getCollectionJson(req?.params?.id)
+  // console.log("data");
+  // console.log(data);
   res.send({data});
   // return data
 })
