@@ -478,10 +478,9 @@ function Brand() {
                                 SVG
                               </Button>
                               <FavoriteIcon variant="primary" onClick={() => setModalShow(true)}/>
-        
-
                                 <ModalComponent
-                                AllCollection={collections}
+                                url={brand?.url}
+                                allcollection={collections}
                                 show={modalShow}  
                                 onHide={() => setModalShow(false)}
                                 />

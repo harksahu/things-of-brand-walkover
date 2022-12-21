@@ -4,10 +4,11 @@ import Modal from 'react-bootstrap/Modal';
 
 function ModalComponent(props) {
     const [collection,setCollection] = useState("");
-
+    const[url,setUrl] = useState("");
 
     useEffect(() => {
-        setCollection(props?.AllCollection?.data?.data);
+        setCollection(props?.allcollection?.data?.data);
+        setUrl(props?.url)
       }, []);
     
   return (
@@ -24,12 +25,14 @@ function ModalComponent(props) {
       </Modal.Header>
       <Modal.Body>
         <p>
+        {console.log(url)}
+
           {collection && collection?.map((collectionn,index)=>{
             return(
                 <>
-                {console.log(collectionn)}
                 
                     <h5>{index+1 + " "}{collectionn?.CollectionName}</h5>
+                    {/* <img src={url} alt="" /> */}
                 </>
             );
           })
