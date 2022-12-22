@@ -19,7 +19,7 @@ import {
   getFontList,
   deleteMyStuffAPI,
   restoreMyStuffAPI,
-  saveMyStuffAPI,
+  // saveMyStuffAPI,
   sendSearchAPI,
 } from "../api/Index.js";
 import CloseIcon from "@mui/icons-material/Close";
@@ -33,7 +33,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import InputComponent from "../components/InputComponent.js";
 
 function Profile() {
-  const [inputValue, setInputValue] = React.useState("");
+  // const [inputValue, setInputValue] = React.useState("");
   const [DomainPost, setDomainPost] = useState();
   const [jsonLabel, setJsonLabel] = useState([]);
   const [jsonValue, setJsonValue] = useState([]);
@@ -83,7 +83,7 @@ function Profile() {
     }
   };
   const setJsonLabelAndValue = async () => {
-    colors.map((colors, index) => {
+    colors.map((colors) => {
       var temp = jsonLabel;
       temp.push(colors.label);
       setJsonLabel(temp);
@@ -116,13 +116,13 @@ function Profile() {
       event.target.value = "";
     }
   };
-  const savedata = async (id, n) => {
-    const new_data = {
-      _id: id,
-      title: n,
-    };
-    await saveMyStuffAPI(new_data);
-  };
+  // const savedata = async (id, n) => {
+  //   const new_data = {
+  //     _id: id,
+  //     title: n,
+  //   };
+  //   await saveMyStuffAPI(new_data);
+  // };
   const removeLinks = (index) => {
     setLinks([...links.filter((link) => links.indexOf(link) !== index)]);
   };
@@ -608,7 +608,7 @@ function Profile() {
                                   freeSolo
                                   // inputValue={inputValue}
                                   onInputChange={(event, newInputValue) => {
-                                    setInputValue(newInputValue);
+                                    // setInputValue(newInputValue);
                                     if (newInputValue.includes("#")) {
                                       // console.log("value", newInputValue);
                                       let tempCount1 = value;

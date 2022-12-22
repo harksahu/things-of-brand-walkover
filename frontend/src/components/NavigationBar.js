@@ -15,7 +15,7 @@ import { getProfileDetails, sendSearchAPI } from "../api/Index.js";
 
 function NavigationBar({ getSearchBrand }) {
   const { logOut } = UserAuth();
-  const { googleSignIn, user } = UserAuth();
+  const { googleSignIn, user , isLoading} = UserAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -272,7 +272,7 @@ function NavigationBar({ getSearchBrand }) {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <button
+             !isLoading&&(<button
                 type="button"
                 className="btn btn-outline-primary"
                 onClick={() => {
@@ -280,7 +280,7 @@ function NavigationBar({ getSearchBrand }) {
                 }}
               >
                 Get started
-              </button>
+              </button>)
             )}
           </Navbar.Collapse>
         </Container>
