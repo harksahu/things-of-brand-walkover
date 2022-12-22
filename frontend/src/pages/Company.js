@@ -447,7 +447,9 @@ function Brand() {
                             {/* <Card className="h-100 item-company"> */}
                             <Card.Body className="add-icon align-items-center d-flex justify-content-center">
                               <Card.Title className="text-center">
+                                
                                 <BsFillPlusCircleFill style={{ fontSize: 40 }} />
+                                
                               </Card.Title>
                               <Card.Text></Card.Text>
                             </Card.Body>
