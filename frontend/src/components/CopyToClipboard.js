@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import {
   MdContentCopy
 } from "react-icons/md";
+import PropTypes from 'prop-types';
+
 function CopyToClipboard({ color }) {
   const [value, setValue] = useState("Copy to clipboard");
 
@@ -27,3 +29,13 @@ function CopyToClipboard({ color }) {
 }
 
 export default CopyToClipboard;
+
+
+
+
+
+
+CopyToClipboard.propTypes = {
+  color: PropTypes.string
+};
+

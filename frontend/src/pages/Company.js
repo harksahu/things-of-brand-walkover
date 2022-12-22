@@ -121,14 +121,13 @@ function Brand() {
         const collection = await getCollection({
           email: user.email,
         });
-        console.log(collection.data.data);
-        console.log(data.data.data);
+
         setCollections(collection);
             setvariants([]);
             var temp = [];
         for (var j = 0; j < data?.data?.data?.length; j++) {
           var flag = true; 
-          console.log("hello = ", data?.data?.data[j]?._id);
+
           for (var i = 0; i < collection?.data?.data?.length; i++) {
             if (collection?.data?.data[i]?.Logos.includes(data?.data?.data[j]?._id)) {
               flag = false;
@@ -144,11 +143,11 @@ function Brand() {
           }
         }
         setvariants([...temp]);
-        console.log("temp",temp);
+
       }
     }
   };
-  console.log(variants);
+
   const getbrand = async () => {
     const fresult = await getProfileDetails({
       domain: title.title,
@@ -449,7 +448,7 @@ function Brand() {
                               >
                                 SVG
                               </Button>
-                                {console.log("temp m,c s= ",variants)}
+
                               <FavoriteIcon
                                 style={{ color: variants[index] }}
                                 onClick={() => {
@@ -470,7 +469,6 @@ function Brand() {
                                 show={modalShow}
                                 onHide={() => setModalShow(false)}
                               />
-                              {console.log(addedCollection)}
                             </Card.Footer>
                           </Card>
                         </div>

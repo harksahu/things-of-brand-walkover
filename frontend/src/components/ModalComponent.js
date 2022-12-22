@@ -28,8 +28,7 @@ function ModalComponent(props) {
       allLogos.push(logo_id);
     var temp =  props.variants
     temp[props.index]= "red"
-    console.log(props.index);
-    console.log(temp);
+
       props.setVariants([...temp]) ;
     }
     const data = await updateCollection({
