@@ -13,13 +13,13 @@ const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
+  const[isLoading,setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   const googleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider)
     navigate("/my-companies")
-
     // signInWithRedirect(auth, provider)
   };
 
@@ -30,6 +30,8 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setIsLoading(false)
+
     });
     return () => {
       unsubscribe();
@@ -37,7 +39,7 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ googleSignIn, logOut, user }}>
+    <AuthContext.Provider value={{ googleSignIn, logOut, user, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

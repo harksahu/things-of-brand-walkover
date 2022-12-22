@@ -15,7 +15,7 @@ import { getProfileDetails, sendSearchAPI } from "../api/Index.js";
 
 function NavigationBar({ getSearchBrand }) {
   const { logOut } = UserAuth();
-  const { googleSignIn, user } = UserAuth();
+  const { googleSignIn, user , isLoading} = UserAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -25,9 +25,7 @@ function NavigationBar({ getSearchBrand }) {
   const handleKeyPress = useCallback((event) => {
 
     if (event.ctrlKey === true) {
-      // console.log(event);
       if(event.key ==="k"){
-        // console.log("autoFocus")
         document.getElementById("searchbar").focus()
       }
     }
@@ -219,8 +217,7 @@ function NavigationBar({ getSearchBrand }) {
                 ""
               )}
             </Nav>
-
-            {user?.displayName ? (
+            { user?.displayName ? (
               <NavDropdown
                 title={user?.displayName}
                 id="collasible-nav-dropdown"
@@ -272,7 +269,8 @@ function NavigationBar({ getSearchBrand }) {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <button
+              
+              !isLoading?(<button
                 type="button"
                 className="btn btn-outline-primary"
                 onClick={() => {
@@ -280,7 +278,7 @@ function NavigationBar({ getSearchBrand }) {
                 }}
               >
                 Get started
-              </button>
+              </button>):" "
             )}
           </Navbar.Collapse>
         </Container>
