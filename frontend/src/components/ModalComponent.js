@@ -17,14 +17,13 @@ function ModalComponent(props) {
   const { user } = UserAuth();
 
   useEffect(() => {
+    setDuplicateError(false);
     setCollection(props?.allcollection?.data?.data);
     setId(props?.id);
     setLogos(props?.allcollection?.data?.data);
-    setDuplicateError(false);
   }, [props]);
 
   const createNewCollection = async (collection, logo_id) => {
-    console.log("logos", collection);
 
     var allLogos = collection?.Logos;
     if (allLogos.includes(logo_id)) {
@@ -32,6 +31,11 @@ function ModalComponent(props) {
       return;
     } else {
       allLogos.push(logo_id);
+    var temp =  props.variants
+    temp[props.index]= "red"
+    console.log(props.index);
+    console.log(temp);
+      props.setVariants([...temp]) ;
     }
 
     const data = await updateCollection({
@@ -41,6 +45,8 @@ function ModalComponent(props) {
     });
     if (data) {
       setDuplicateError("Logo is added to the collection");
+      props.setAddedCollection(true);
+      
     }
   };
 
@@ -51,13 +57,14 @@ function ModalComponent(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
-        <h1> {duplicateError}</h1>
+      <Modal.Header closeButton >
+        <h4 style={{width:"500%"}}> {duplicateError}</h4>
         <Link to="/collection">
-        <BsFillPlusCircleFill style={{ fontSize: 40 , marginLeft:700}} />
+        <BsFillPlusCircleFill style={{ fontSize: 40}} />
         </Link>
       </Modal.Header>
       <Modal.Body>
+    
         {collection &&
           collection.map((collection) => {
             return (
