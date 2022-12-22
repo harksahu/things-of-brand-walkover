@@ -125,11 +125,10 @@ const Addfile = (props) => {
               url: imageUrl,
               title,
               description: tags,
+              collections: tags,
               email: user?.email,
               domain: result.data.data[0]._id,
             });
-
-            var logo;
             var i;
             for (i = 0; i < ffresult.length; i++) {
               if (domain === ffresult[i]._id) {

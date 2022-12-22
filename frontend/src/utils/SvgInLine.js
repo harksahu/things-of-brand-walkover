@@ -4,7 +4,7 @@ import "../scss/style.scss"
 
 const SvgInline = (props) => {
   const [svg, setSvg] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+
   const [isErrored, setIsErrored] = useState(false);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -38,8 +38,7 @@ const SvgInline = (props) => {
 
       ) : (
         <div
-          className={`pattern-square svgInline svgInline--${isLoaded ? "loaded" : "loading"
-            } ${isErrored ? "svgInline--errored" : ""}`}
+          className={`pattern-square svgInline svgInline--loaded ${isErrored ? "svgInline--errored" : ""}`}
           dangerouslySetInnerHTML={{ __html: svg }}
           offset="30%"
           id="largeImage"

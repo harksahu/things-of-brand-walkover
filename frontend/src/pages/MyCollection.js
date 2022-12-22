@@ -32,7 +32,7 @@ const MyCollection = () => {
       alert("collection name is required");
       return;
     }
-    const data = await createCollection({
+    await createCollection({
       CollectionName: collectionName,
       email: user?.email,
     });

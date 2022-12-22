@@ -18,7 +18,6 @@ function MyCompany() {
   const [company, setCompany] = useState();
   const [allData, setAllData] = useState();
   const [domain, setDomain] = useState();
-  const [showSharedCompanies, setShowSharedCompanies] = useState(false);
   const { user } = UserAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -193,7 +192,6 @@ function MyCompany() {
           <Container>
             <div className="separator center my-5">
               <span className="sep-txt">Shared Companies</span>
-              {showSharedCompanies ? "" : "No shared Companies with you"}
             </div>
             <div className="grid">
               {allData?.map((Company) => {
