@@ -74,7 +74,7 @@ const Addfile = (props) => {
     }
     profileDetails();
     setLoading(false);
-    
+
   };
   const removeTags = (index) => {
     setTags([...tags.filter((tag) => tags.indexOf(tag) !== index)]);
@@ -83,7 +83,7 @@ const Addfile = (props) => {
   const profileDetails = async () => {
     let fresult = "";
     if (user.email) {
-       
+
       fresult = await getProfileDetails({ email: user.email });
       setResult(fresult.data.data);
     }
@@ -105,184 +105,176 @@ const Addfile = (props) => {
   };
 
   const onSubmitClick = async () => {
-    if (domain) {
-      if (title) {
-        if (file) {
-          try {
-            const data = await getS3SignUrl(file);
-
-            setModalShow(+true);
-            const imageUrl = data.split("?")[0];
-            tags.push(domain);
-
-            const result = await getProfileDetails({
-              email: user.email,
-              domain: domain,
-              searchfrom: "true"
-            });
-
-             await createBrandAPI({
-              url: imageUrl,
-              title,
-              description: tags,
-              collections: tags,
-              email: user?.email,
-              domain: result.data.data[0]._id,
-            });
-            var i;
-            for (i = 0; i < ffresult.length; i++) {
-              if (domain === ffresult[i]._id) {
-                logo = ffresult[i]?.logo;
-
-                break;
-              }
-            }
-
-
-            if (result.data.data[0]?.logo == undefined) {
-              const data = {
-                _id : result.data.data[0]._id,
-                name: result.data.data[0]?.name,
-                aboutus: result.data.data[0]?.aboutus,
-                logo: imageUrl,
-                links: result.data.data[0]?.links,
-                domain: result.data.data[0]?.domain,
-                guidlines: result.data.data[0]?.guidlines,
-                color: result.data.data[0]?.allColor,
-                email: result.data.data[0]?.email,
-                verify: result.data.data[0]?.verify,
-              };
-
-
-              await updateProfileFields(data);
-
-            }
-          } catch (error) { 
-             //TODO: error message
-          }
-        } else {
-          alert("Image imput required");
-        }
-      } else {
-        alert("title is required");
-      }
-    } else {
+    if (!domain) {
       alert("Complete your profile page");
+      return
+    }
+    if (!title) {
+      alert("title is required");
+      return
+    }
+    if (!file) {
+      alert("Image imput required");
+      return
+    }
+    try {
+      const data = await getS3SignUrl(file);
+
+      setModalShow(+true);
+      const imageUrl = data.split("?")[0];
+      tags.push(domain);
+
+      const result = await getProfileDetails({
+        email: user.email,
+        domain: domain,
+        searchfrom: "true"
+      });
+
+      await createBrandAPI({
+        url: imageUrl,
+        title,
+        description: tags,
+        collections: tags,
+        email: user?.email,
+        domain: result.data.data[0]._id,
+      });
+
+
+      if (result.data.data[0]?.logo == undefined) {
+        const data = {
+          _id: result.data.data[0]._id,
+          name: result.data.data[0]?.name,
+          aboutus: result.data.data[0]?.aboutus,
+          logo: imageUrl,
+          links: result.data.data[0]?.links,
+          domain: result.data.data[0]?.domain,
+          guidlines: result.data.data[0]?.guidlines,
+          color: result.data.data[0]?.allColor,
+          email: result.data.data[0]?.email,
+          verify: result.data.data[0]?.verify,
+        };
+
+
+        await updateProfileFields(data);
+
+      }
+    } catch (error) {
+      //TODO: error message
     }
   };
 
   useEffect(() => {
     setLoading(true);
-    findSharedEmail(); 
+    findSharedEmail();
     // setLoading(false);
     if (user) {
 
       setDomainToSelect(props.domain);
     }
-  }, [user,shareEmailDomainOption]);
+  }, [user, shareEmailDomainOption]);
   return (
     <>
-    {loading?<div className="center-loader"
-    ><ClipLoader/></div>:
-    <div>
-      {user ?
-        <Container className="wrpr">
-          <Row>
-            <nav className="navbar bg-light">
-                <a
-                  className="navbar-brand"
-                >
-                  Add a file to <strong>{domainToSelect}</strong>
-                </a>
-            </nav>
-            <Col md={9} lg={10} className="mt-4">
-              <Card style={{ width: "28rem" }}>
-                <Card.Body>
-                  <Stack gap={3}>
-                    <FormGroup>
-                      <Form.Label>Choose a domain *</Form.Label>
-                      <Form.Control
-                        aria-label="Default select example"
-                        onChange={(e) => {
-                          setDomain(e.target.value);
-                          setDomainToSelect(e.target.value)
-                        }}
-                        as="select"
-                        value={domainToSelect}
-                      >
+      {loading ? <div className="center-loader"
+      ><ClipLoader /></div> :
+        <div>
+          {user ?
+            <Container className="wrpr">
+              <Row>
+                <nav className="navbar bg-light">
+                  <a
+                    className="navbar-brand"
+                  >
+                    Add a file to <strong>{domainToSelect}</strong>
+                  </a>
+                </nav>
+                <Col md={9} lg={10} className="mt-4">
+                  <Card style={{ width: "28rem" }}>
+                    <Card.Body>
+                      <Stack gap={3}>
+                        <FormGroup>
+                          <Form.Label>Choose a domain *</Form.Label>
+                          <Form.Control
+                            aria-label="Default select example"
+                            onChange={(e) => {
+                              setDomain(e.target.value);
+                              setDomainToSelect(e.target.value)
+                            }}
+                            as="select"
+                            value={domainToSelect}
+                          >
 
-                        {ffresult &&
-                          ffresult.map((domainName, index) => (
-                            <option key={index} value={domainName.domain}>
-                              {domainName.domain}
-                            </option>
-                          ))}
-                        {shareEmailDomainOption ? <option value={shareEmailDomainOption} selected>
-                          {shareEmailDomainOption}
-                        </option> : ""}
+                            {ffresult &&
+                              ffresult.map((domainName, index) => (
+                                <option key={index} value={domainName.domain}>
+                                  {domainName.domain}
+                                </option>
+                              ))}
+                            {shareEmailDomainOption ? <option value={shareEmailDomainOption} selected>
+                              {shareEmailDomainOption}
+                            </option> : ""}
 
 
-                      </Form.Control>
-                    </FormGroup>
+                          </Form.Control>
+                        </FormGroup>
 
-                    <FormGroup>
-                      <Form.Label>
-                        Select SVG file * <small>(Logo, Icon etc)</small>{" "}
-                        <a
-                          href="https://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
-                          target="_new"
-                        >
-                          <BsInfoCircle />
-                        </a>
-                      </Form.Label>
-                      <Form.Control
-                        type="file"
-                        size="m"
-                        onChange={(e) => {
-                          setFile(e.target.files[0]);
-                          setTitle(e.target.files[0].name.replace(".svg", ""));
-                        }}
-                        accept=".svg"
-                      />
-                    </FormGroup>
-
-                    <InputComponent label={"Give a name to file *"} setValue={setTitle} valuee={title} placeholderr={"Enter file name"}/>
-
-                    <FormGroup>
-                      <Form.Label>Add tags(Optional)</Form.Label>
-                      <Form.Control
-                        type="text"
-                        onKeyUp={(event) => addTags(event)}
-                      />
-                      <Form.Text className="text-muted">
-                        Press enter
-                      </Form.Text>
-                      <ul className="tags my-3">
-                        {tags.map((tag, index) => (
-                          <li key={index} className="tag-item">
-                            <span>{tag}</span>
-                            <i
-                              className="tag-icon"
-                              onClick={() => removeTags(index)}
+                        <FormGroup>
+                          <Form.Label>
+                            Select SVG file * <small>(Logo, Icon etc)</small>{" "}
+                            <a
+                              href="https://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
+                              target="_new"
                             >
-                              <BsX />
-                            </i>
-                          </li>
-                        ))}
-                      </ul>
-                    </FormGroup>
-                  </Stack>
-                  <Button variant="primary" onClick={onSubmitClick}>
-                    Submit
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-        </Container> : <Home />
+                              <BsInfoCircle />
+                            </a>
+                          </Form.Label>
+                          <Form.Control
+                            type="file"
+                            size="m"
+                            onChange={(e) => {
+                              setFile(e.target.files[0]);
+                              setTitle(e.target.files[0].name.replace(".svg", ""));
+                            }}
+                            accept=".svg"
+                          />
+                        </FormGroup>
+
+                        <InputComponent label={"Give a name to file *"} setValue={setTitle} valuee={title} placeholderr={"Enter file name"} />
+
+                        <FormGroup>
+                          <Form.Label>Add tags(Optional)</Form.Label>
+                          <Form.Control
+                            type="text"
+                            onKeyUp={(event) => addTags(event)}
+                          />
+                          <Form.Text className="text-muted">
+                            Press enter
+                          </Form.Text>
+                          <ul className="tags my-3">
+                            {tags.map((tag, index) => (
+                              <li key={index} className="tag-item">
+                                <span>{tag}</span>
+                                <i
+                                  className="tag-icon"
+                                  onClick={() => removeTags(index)}
+                                >
+                                  <BsX />
+                                </i>
+                              </li>
+                            ))}
+                          </ul>
+                        </FormGroup>
+                      </Stack>
+                      <Button variant="primary" onClick={onSubmitClick}>
+                        Submit
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </Row>
+            </Container> : <Home />
+          }
+        </div>
       }
-      </div>
-    }
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}

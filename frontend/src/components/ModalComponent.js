@@ -4,19 +4,20 @@ import Modal from "react-bootstrap/Modal";
 import { updateCollection } from "../api/Index.js";
 import { UserAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
-
 import {
   BsFillPlusCircleFill,
 } from "react-icons/bs";
 function ModalComponent(props) {
   const [collection, setCollection] = useState("");
   const [id, setId] = useState("");
+
   const [duplicateError, setDuplicateError] = useState(false);
   const { user } = UserAuth();
   useEffect(() => {
     setDuplicateError(false);
     setCollection(props?.allcollection?.data?.data);
     setId(props?.id);
+
   }, [props]);
   const createNewCollection = async (collection, logo_id) => {
     var allLogos = collection?.Logos;
