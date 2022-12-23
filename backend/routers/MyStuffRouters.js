@@ -8,4 +8,5 @@ const routes = express.Router();
 routes.route('/').put(UpdateStuff)
 routes.route('/:email').get(searchStuffName)
 routes.route('/:id').delete(deleteStuff);
+
 export default routes;

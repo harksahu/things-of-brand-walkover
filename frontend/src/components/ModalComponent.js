@@ -20,11 +20,15 @@ function ModalComponent(props) {
   useEffect(() => {
     console.log(props?.allcollection?.data?.data);
     setShowComponent(false);
-    setDuplicateError(false);
+    
     setCollection(props?.allcollection?.data?.data);
     setId(props?.id);
     setLogos(props?.allcollection?.data?.data);
   }, [props]);
+
+  useEffect(() => {
+    setDuplicateError(false);
+  },[]);
 
   const createCollections = async (collectionName) => {
     console.log(collectionName);
@@ -74,7 +78,7 @@ function ModalComponent(props) {
       <Modal.Header closeButton>
         {/* <Link to="/collection"> */}
         {showComponent ? (
-          <>
+          <div style={{marginRight: "250px"}}>
             <InputComponent
               // label={"Collection Name"}
               setValue={setCollectionName}
@@ -89,14 +93,14 @@ function ModalComponent(props) {
             >
               Submit
             </Button>
-          </>
+          </div>
         ) : (
           <h4 style={{ width: "500%" }}> {duplicateError}</h4>
         )}
         {props?.allcollection?.data?.data?.length ? (
           <BsFillPlusCircleFill
-            size="150px"
-            style={{ margin: "-150px 5px" }}
+            size="50px"
+            // style={{ margin: "-150px 5px" }}
             onClick={() => {
               setShowComponent(true);
             }}
@@ -150,12 +154,12 @@ function ModalComponent(props) {
                       collection?.logo[0]?.url !== "null" ? (
                         <img style={{height: "4rem" ,  width:"5rem" }} src={collection?.logo[0]?.url} alt="" />
                       ) : (
-                        <img style={{height: "5rem" ,  width:"5rem" }} src="/assets/picture.svg" alt="" />
+                        <img style={{height: "4rem" ,  width:"5rem" }} src="/assets/picture.svg" alt="" />
                       )}
                     </div>
                     <div style={{textalign:"center" , paddingLeft:"18%"}}>
 
-                    {collection.CollectionName}
+                          {collection.CollectionName}
                     </div>
                     {/* <Card.Body>
                       <Card.Title 
