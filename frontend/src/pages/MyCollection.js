@@ -6,7 +6,6 @@ import { BsFillPlusCircleFill } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 import "../scss/company.scss";
 import "../utils/SvgInLine.css";
-import CompanyCard from "../components/CompanyCard.js";
 import { createCollection, getCollection } from "../api/Index.js";
 import { Link} from "react-router-dom";
 const MyCollection = () => {
@@ -20,25 +19,26 @@ const MyCollection = () => {
     setShowSuccess(false);
 }
   const handleShow = () => setShow(true);
-  const showAllCollections = async (req, res) => {
+  const showAllCollections = async () => {
     const data = await getCollection({
       email: user?.email,
     });
     setAllCollection(data.data.data);
   };
-  const createNewCollection = async (req, res) => {
+  const createNewCollection = async () => {
     var temp = collectionName;
     temp = temp.trim();
     if (temp == undefined || temp == "") {
       alert("collection name is required");
       return;
     }
-    const data = await createCollection({
+    await createCollection({
       CollectionName: collectionName,
       email: user?.email,
     });
     showAllCollections();
     setShowSuccess(true);
+    setShow(false);
   };
   useEffect(() => {
     if (user?.email) 

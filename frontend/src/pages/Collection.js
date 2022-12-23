@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useParams,useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { getCollection } from "../api/Index";
-import { Container, Form, Card } from "react-bootstrap";
+import { Container, Card } from "react-bootstrap";
 import { MdArrowBackIos } from "react-icons/md";
 import Button from "react-bootstrap/Button";
 
-const Collection = (props) => {
+const Collection = () => {
   const [allLogos, setallLogos] = useState([]);
   const { user } = UserAuth();
   const navigate = useNavigate();
   const id = useParams();
-  const getAllLogosFromCollection = async (req, res) => {
+  const getAllLogosFromCollection = async () => {
     const data = await getCollection({
       _id: id.id,
       email: user?.email,

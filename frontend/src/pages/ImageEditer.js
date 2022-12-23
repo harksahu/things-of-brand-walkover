@@ -1,4 +1,3 @@
-import react from "react";
 import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import { Button, Dropdown } from "react-bootstrap";
@@ -26,7 +25,7 @@ import {
 import ClipLoader from "react-spinners/ClipLoader";
 
 
-function MyVerticallyCenteredModal(params) {
+function MyVerticallyCenteredModal() {
   const id = useParams();
   const navigate = useNavigate();
   const [mwidth, setWidth] = useState(250);
@@ -36,11 +35,6 @@ function MyVerticallyCenteredModal(params) {
   const [show, setShow] = useState(false);
   const [props, setProps] = useState();
   const [loading, setLoading] = useState(true);
-  function size(img) {
-    setWidth(document.getElementById(img).clientWidth);
-    setHeight(document.getElementById(img).clientHeight);
-  }
-
   const savedata = async (id, n) => {
     setName(n);
     const new_data = {
@@ -317,7 +311,7 @@ function MyVerticallyCenteredModal(params) {
                       variant="outline-secondary"
                       size="sm"
                       onClick={() => {
-                        const canvas = DownloadToSvg(props.url, props.title);
+                         DownloadToSvg(props.url, props.title);
                       }}
                     // onClick={() => saveAs(props.title)}
                     >

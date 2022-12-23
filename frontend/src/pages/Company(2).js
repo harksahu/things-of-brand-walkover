@@ -8,19 +8,19 @@ import {
   Card,
   Button,
   Modal,
-  ListGroup,
+  ListGroup
 } from "react-bootstrap";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../utils/SvgInLine.css";
 import "../scss/brand.scss";
 import { UserAuth } from "../context/AuthContext";
-import CopyToClipboard from "../components/CopyToClipboard.js";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import CopyToClipboard from "../components/CopyToClipboard.js"
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import {
   getProfileDetails,
   sendSearchAPI,
   updateProfileFields,
-  getCollection,
+  getCollection
 } from "../api/Index.js";
 import saveAs from "file-saver";
 import {
@@ -31,12 +31,14 @@ import {
   MdArrowBackIos,
   MdVerified,
   MdShare,
-  MdOutlineModeEdit,
+  MdOutlineModeEdit
 } from "react-icons/md";
-import Addfile from "./Addfile.js";
-import ModalComponent from "../components/ModalComponent.js";
+import Addfile from "./Addfile.js"
+import ModalComponent from "../components/ModalComponent.js"
 
 function Not_found() {
+
+
   return <div className="not-found">Not found</div>;
 }
 
@@ -68,22 +70,17 @@ function Brand() {
   const [modalShow, setModalShow] = useState(false);
   const [collections, setCollections] = useState("");
   const [addImageToCollection, setAddImageToCollection] = useState();
-  const [addedCollection, setAddedCollection] = useState(false);
-  const [variants, setvariants] = useState([]);
-  const [indexToaddToFav, setIndexToaddToFav] = useState();
-
   const handleClosee = () => {
     setIsRepeatingEmail(false);
     setShoww(false);
-
-  };
+  }
 
   const removeSharedEmail = (index) => {
     let temp = sharedEmail;
     temp.splice(index, 1);
     setSharedEmail([...temp]);
     updateLogo();
-  };
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
     setUserEmail(false);
@@ -100,7 +97,7 @@ function Brand() {
     }
     if (event.target.sharingEmail.value && !repeatOrNot) {
       let temp = sharedEmail;
-      let email = event.target.sharingEmail.value;
+      let email = event.target.sharingEmail.value
       if (email != user?.email) {
         temp.push(email);
       }
@@ -113,43 +110,24 @@ function Brand() {
     saveAs(svg, fileName);
   };
 
+
   const title = useParams();
   const getbrandslogo = async () => {
     if (domain) {
       const data = await sendSearchAPI({ domain: id, active: 1 });
+
       setDomainPost(data?.data?.data);
-      if (user) {
-        const collection = await getCollection({
-          email: user.email,
-        });
-        setCollections(collection);
-            setvariants([]);
-            var temp = [];
-        for (var j = 0; j < data?.data?.data?.length; j++) {
-          var flag = true; 
-          for (var i = 0; i < collection?.data?.data?.length; i++) {
-            if (collection?.data?.data[i]?.Logos.includes(data?.data?.data[j]?._id)) {
-              flag = false;
-              break;
-            }
-          }
-          if (flag){
-            temp.push("black");
-          }
-          else
-          {
-            temp.push("red");
-          }
-        }
-        setvariants([...temp]);
-      }
     }
   };
+
   const getbrand = async () => {
+
     const fresult = await getProfileDetails({
       domain: title.title,
       searchfrom: true,
     });
+
+
 
     if (fresult?.data?.data) {
       setCompany(fresult?.data?.data[0]);
@@ -166,17 +144,20 @@ function Brand() {
       setSharedEmail(fresult.data.data[0].sharedEmail);
     } else {
       setLoading(false);
+
     }
     isCompanyShared();
   };
 
   const isCompanyShared = async () => {
+
     for (var i = 0; i < sharedEmail?.length; i++) {
+
       if (user?.email === sharedEmail[i]) {
         setSharedCompany(true);
       }
     }
-  };
+  }
 
   const updateLogo = async (logo_url) => {
     const data = {
@@ -196,6 +177,14 @@ function Brand() {
     await updateProfileFields(data);
   };
 
+  const getCollectionDetails = async () => {
+    const collection = await getCollection({
+      email: user.email
+    })
+    setCollections(collection);
+
+  }
+
   useEffect(() => {
     setLoading(true);
     getbrand();
@@ -203,6 +192,7 @@ function Brand() {
       getbrandslogo();
       setLoading(false);
     }
+    getCollectionDetails();
   }, [domain, title, user]);
   function handleShow() {
     setFullscreen("md-down");
@@ -210,11 +200,7 @@ function Brand() {
   }
   return (
     <>
-      {loading ? (
-        <div className="center-loader">
-          <ClipLoader />
-        </div>
-      ) : (
+      {loading ? <div className="center-loader"><ClipLoader /></div> :
         <Container>
           {domain ? (
             <div className="row mt-4">
@@ -222,6 +208,7 @@ function Brand() {
                 <Container>
                   <Nav className="me-auto">
                     <Navbar.Brand className="me-auto">
+
                       <Button
                         variant="outline-dark"
                         onClick={() => {
@@ -233,16 +220,12 @@ function Brand() {
                     </Navbar.Brand>
                   </Nav>
 
+
                   {user ? (
                     email === user.email || isShared == true ? (
                       <>
                         <Nav className="nav-action">
-                          <Nav.Link
-                            onClick={() => {
-                              handleShoww();
-                              setCopyValue("Copy link");
-                            }}
-                          >
+                          <Nav.Link onClick={() => { handleShoww(); setCopyValue("Copy link") }}>
                             <MdShare />
                           </Nav.Link>
 
@@ -257,28 +240,15 @@ function Brand() {
 
                         <Modal show={showw} onHide={handleClosee}>
                           <Modal.Header closeButton>
-                            <Modal.Title>
-                              Share {name ? name : domain}
-                            </Modal.Title>
+                            <Modal.Title>Share {name ? name : domain}</Modal.Title>
                           </Modal.Header>
 
                           <Form onSubmit={handleSubmit}>
+
                             <Modal.Body>
-                              {userEmail ? (
-                                <Form.Label>
-                                  You cant share your company with you
-                                </Form.Label>
-                              ) : (
-                                ""
-                              )}
+                              {userEmail ? <Form.Label>You cant share your company with you</Form.Label> : ""}
                               <br></br>
-                              {isRepeatingEmail ? (
-                                <Form.Label>
-                                  Repetation value not allowed{" "}
-                                </Form.Label>
-                              ) : (
-                                ""
-                              )}
+                              {isRepeatingEmail ? <Form.Label>Repetation value not allowed </Form.Label> : ""}
                               {isRepeatingEmail ? <br></br> : ""}
                               <Form.Label>Email address</Form.Label>
                               <Form.Control
@@ -292,15 +262,10 @@ function Brand() {
                                 {sharedEmail.map((email, index) => {
                                   return (
                                     <div key={index}>
-                                      <h5>
-                                        {email}
-                                        <Button
-                                          onClick={() => {
-                                            removeSharedEmail(index);
-                                          }}
-                                        >
-                                          <BsFillTrashFill />
-                                        </Button>
+                                      <h5>{email}
+                                        <Button onClick={() => {
+                                          removeSharedEmail(index);
+                                        }}><BsFillTrashFill /></Button>
                                       </h5>
                                     </div>
                                   );
@@ -308,24 +273,14 @@ function Brand() {
                               </ListGroup>
                             </Modal.Body>
                             <Modal.Footer>
-                              <Button
-                                variant="outline-dark"
-                                onClick={() => {
-                                  navigator.clipboard.writeText(
-                                    window.location.href
-                                  );
-                                  setCopyValue("copied!!");
-                                }}
-                              >
-                                {CopyValue}
-                              </Button>
-                              <Button
-                                variant="secondary"
-                                onClick={handleClosee}
-                              >
+                              <Button variant="outline-dark" onClick={() => { navigator.clipboard.writeText(window.location.href); setCopyValue("copied!!") }}>{CopyValue}</Button>
+                              <Button variant="secondary" onClick={handleClosee}>
                                 Close
                               </Button>
-                              <Button type="submit" variant="primary">
+                              <Button
+                                type="submit"
+                                variant="primary"
+                              >
                                 Share
                               </Button>
                             </Modal.Footer>
@@ -338,12 +293,14 @@ function Brand() {
                   ) : (
                     ""
                   )}
+
                 </Container>
               </Navbar>
 
               <div className="col-lg-12 col-md-12">
                 <div>{name ? <h1>{name}</h1> : ""}</div>
                 <div className="align-items-center d-flex">
+
                   <a
                     href={"https://" + domain}
                     target="_blank"
@@ -351,6 +308,8 @@ function Brand() {
                     className="me-2"
                   >
                     {domain}
+
+
                   </a>
                   {user ? (
                     email === user.email ? (
@@ -395,9 +354,11 @@ function Brand() {
                 </div>
 
                 <div className="mt-5">
-                  {DomainPost?.length > 0 ? <h5>Logos</h5> : ""}
+                  {
+                    DomainPost?.length > 0 ? <h5>Logos</h5> : ""
+                  }
                   <div className="grid">
-                    {DomainPost?.map((brand, index) => {
+                    {DomainPost?.map((brand) => {
                       return (
                         <div key={brand._id} className="item">
                           <Card className="box-shadow">
@@ -406,12 +367,13 @@ function Brand() {
                                 style={{ overflow: "auto" }}
                                 className="img_size pattern-square"
                               >
-                                {brand.url !== undefined &&
-                                brand.url !== "null" ? (
-                                  <img src={brand.url} alt="" />
-                                ) : (
-                                  <img src="/assets/picture.svg" alt="" />
-                                )}
+                                {
+
+                                  brand.url !== undefined && brand.url !== "null"
+                                    ? <img src={brand.url} alt="" />
+                                    : <img src="/assets/picture.svg" alt="" />
+
+                                }
                               </div>
                               <Card.Body>
                                 <Card.Title
@@ -445,21 +407,14 @@ function Brand() {
                               >
                                 SVG
                               </Button>
-                              <FavoriteIcon
-                                style={{ color: variants[index] }}
-                                onClick={() => {
-                                  setModalShow(true);
-                                  setAddImageToCollection(brand._id);
-                                  setIndexToaddToFav(index);
-                                }}
-                              />
+                              {user ?
+                                <FavoriteIcon variant="primary" onClick={() => {
+                                  setModalShow(true)
+                                  setAddImageToCollection(brand._id)
 
+                                }} /> : ""}
+                              {console.log("ab", brand?._id)}
                               <ModalComponent
-                                setVariants={setvariants}
-                                variants={variants}
-                                setAddedCollection={setAddedCollection}
-                                index={indexToaddToFav}
-                                value={addedCollection}
                                 id={addImageToCollection}
                                 allcollection={collections}
                                 show={modalShow}
@@ -475,13 +430,11 @@ function Brand() {
                       email === user.email || isShared == true ? (
                         // <Link to="/addfile" className="add-new" state={{ domain: domain }}>
                         <div className="add-new">
-                          <Card className="item" onClick={() => handleShow()}>
+                          <Card className="item" onClick={() => handleShow()} >
                             {/* <Card className="h-100 item-company"> */}
                             <Card.Body className="add-icon align-items-center d-flex justify-content-center">
                               <Card.Title className="text-center">
-                                <BsFillPlusCircleFill
-                                  style={{ fontSize: 40 }}
-                                />
+                                <BsFillPlusCircleFill style={{ fontSize: 40 }} />
                               </Card.Title>
                               <Card.Text></Card.Text>
                             </Card.Body>
@@ -493,8 +446,10 @@ function Brand() {
                                 -
                               </Button>
                             </div>
+
                           </Card>
                         </div>
+
                       ) : (
                         ""
                       )
@@ -505,11 +460,8 @@ function Brand() {
                 </div>
 
                 <div className="mt-5">
-                  {allColor[0]?.colorValue && allColor[0]?.colorValue != "" ? (
-                    <h5>Colors</h5>
-                  ) : (
-                    ""
-                  )}
+                  {allColor[0]?.colorValue && allColor[0]?.colorValue != "" ? <h5>Colors</h5> : ""}
+
 
                   {allColor != "" ? (
                     <div className="d-flex colors-wrp">
@@ -570,22 +522,22 @@ function Brand() {
                   <div dangerouslySetInnerHTML={{ __html: guidlines }}></div>
                 </div>
               </div>
-              <Modal
-                show={show}
-                fullscreen={fullscreen}
-                onHide={() => setShow(false)}
-              >
-                <Modal.Header closeButton></Modal.Header>
-                <Modal.Body>
-                  <Addfile domain={domain} />
-                </Modal.Body>
+              <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
+                <Modal.Header closeButton>
+                </Modal.Header>
+                <Modal.Body><Addfile domain={domain} /></Modal.Body>
               </Modal>
             </div>
           ) : (
             <Not_found />
           )}
+
+
+
+
+
         </Container>
-      )}
+      }
     </>
   );
 }

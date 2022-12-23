@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../scss/style.scss"
-import { async } from "@firebase/util";
 
 const SvgInline = (props) => {
   const [svg, setSvg] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+
   const [isErrored, setIsErrored] = useState(false);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -39,8 +38,7 @@ const SvgInline = (props) => {
 
       ) : (
         <div
-          className={`pattern-square svgInline svgInline--${isLoaded ? "loaded" : "loading"
-            } ${isErrored ? "svgInline--errored" : ""}`}
+          className={`pattern-square svgInline svgInline--loaded ${isErrored ? "svgInline--errored" : ""}`}
           dangerouslySetInnerHTML={{ __html: svg }}
           offset="30%"
           id="largeImage"

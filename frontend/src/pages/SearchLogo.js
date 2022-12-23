@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import "../utils/SvgInLine.css";
 import { connect } from "react-redux";
 import { searchBrand } from "../store/actions/Search-Brands.js";
 import Figure from "react-bootstrap/Figure";
-import SvgInline from "../utils/SvgInLine.js";
 
 function Not_found() {
   return (

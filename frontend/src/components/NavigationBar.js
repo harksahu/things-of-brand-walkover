@@ -1,5 +1,5 @@
-import React, { useEffect,useCallback, useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import React, { useEffect, useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import {
   Container,
@@ -25,7 +25,9 @@ function NavigationBar({ getSearchBrand }) {
   const handleKeyPress = useCallback((event) => {
 
     if (event.ctrlKey === true) {
-      if(event.key ==="k"){
+      // console.log(event);
+      if (event.key === "k") {
+        // console.log("autoFocus")
         document.getElementById("searchbar").focus()
       }
     }
@@ -52,14 +54,14 @@ function NavigationBar({ getSearchBrand }) {
 
 
   const searchbar = async (searchData) => {
-    const C_data = await getProfileDetails({
+    await getProfileDetails({
       email: "",
       domain: searchData,
       name: searchData,
       searchfrom: "false",
     });
 
-    const L_data = await sendSearchAPI({
+     await sendSearchAPI({
       title: searchData,
       email: "",
       active: 1,
@@ -140,7 +142,7 @@ function NavigationBar({ getSearchBrand }) {
             id="logo"
             style={{ cursor: "pointer" }}
           >
-            <img src="tob-icon.svg" /> Things of Brand            
+            <img src="tob-icon.svg" /> Things of Brand
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -269,8 +271,7 @@ function NavigationBar({ getSearchBrand }) {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              
-              !isLoading?(<button
+             !isLoading&&(<button
                 type="button"
                 className="btn btn-outline-primary"
                 onClick={() => {
@@ -278,7 +279,7 @@ function NavigationBar({ getSearchBrand }) {
                 }}
               >
                 Get started
-              </button>):" "
+              </button>)
             )}
           </Navbar.Collapse>
         </Container>

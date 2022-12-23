@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import { getProfileDetails, createProfile } from "../api/Index.js";
-import { Container, Row, Col, Form, Card, CardGroup } from "react-bootstrap";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import SvgInline from "../utils/SvgInLine.js";
+import { Container,Form, Card } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import "../utils/SvgInLine.css";
 import "../scss/company.scss";
 import { BsFillPlusCircleFill } from "react-icons/bs";
@@ -11,7 +10,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import CompanyCard from "../components/CompanyCard.js"
-import InputComponent from "../components/InputComponent.js";
 
 
 
@@ -20,15 +18,15 @@ function MyCompany() {
   const [company, setCompany] = useState();
   const [allData, setAllData] = useState();
   const [domain, setDomain] = useState();
-  const [showSharedCompanies, setShowSharedCompanies] = useState(false);
   const { user } = UserAuth();
   const navigate = useNavigate();
-  const location = useLocation();
   const [loading, setLoading] = useState(false);
 
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    
+    setShow(false);}
   const handleShow = () => setShow(true);
   useEffect(() => {
     setLoading(true);
@@ -58,7 +56,7 @@ function MyCompany() {
     return domainName;
   }
 
-  const storeProfileValue = async (req, res) => {
+  const storeProfileValue = async () => {
     if (user) {
       if (user?.email) {
         try {
@@ -103,13 +101,13 @@ function MyCompany() {
 
     }
   };
-  const findSharedEmail = async (req, res) => {
+  const findSharedEmail = async () => {
     var shareddEmail = await getProfileDetails({});
 
     setAllData(shareddEmail.data.data);
 
   };
-  const profileDetails = async (req, res) => {
+  const profileDetails = async () => {
     fresult = await getProfileDetails({ email: user.email });
     setCompany(fresult.data.data);
 
@@ -194,7 +192,6 @@ function MyCompany() {
           <Container>
             <div className="separator center my-5">
               <span className="sep-txt">Shared Companies</span>
-              {showSharedCompanies ? "" : "No shared Companies with you"}
             </div>
             <div className="grid">
               {allData?.map((Company) => {

@@ -5,7 +5,6 @@ import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 
 function Pagination({ postsPerPage, totalPosts, paginate }) {
   const [index, setIndex] = useState(0);
-  const [temp, setTemp] = useState(1);
 
   const pageNumbers = [];
   useEffect(() => {}, [index]);
@@ -41,7 +40,7 @@ function Pagination({ postsPerPage, totalPosts, paginate }) {
         <div className="m-auto d-flex">
           <div
             id="previous"
-            style={{ display: "flex", marginRight: 7, display: "none" }}
+            style={{ display: "flex", marginRight: 7 }}
             onClick={() => handlePrevious()}
           >
             <Button variant="outline-dark">

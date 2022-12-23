@@ -125,11 +125,10 @@ const Addfile = (props) => {
               url: imageUrl,
               title,
               description: tags,
+              collections: tags,
               email: user?.email,
               domain: result.data.data[0]._id,
             });
-
-            var logo;
             var i;
             for (i = 0; i < ffresult.length; i++) {
               if (domain === ffresult[i]._id) {
@@ -190,13 +189,11 @@ const Addfile = (props) => {
         <Container className="wrpr">
           <Row>
             <nav className="navbar bg-light">
-              {/* <div className="container-fluid"> */}
                 <a
                   className="navbar-brand"
                 >
                   Add a file to <strong>{domainToSelect}</strong>
                 </a>
-              {/* </div> */}
             </nav>
             <Col md={9} lg={10} className="mt-4">
               <Card style={{ width: "28rem" }}>
@@ -275,7 +272,6 @@ const Addfile = (props) => {
                       </ul>
                     </FormGroup>
                   </Stack>
-                  {/* </Card.Text> */}
                   <Button variant="primary" onClick={onSubmitClick}>
                     Submit
                   </Button>

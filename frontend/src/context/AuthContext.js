@@ -1,3 +1,4 @@
+import React from "react";
 import { useContext, createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -13,7 +14,7 @@ const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
-  const[isLoading,setIsLoading] = useState(true);
+  const [isLoading,setIsLoading] = useState(true)
   const navigate = useNavigate();
 
   const googleSignIn = async () => {
@@ -31,7 +32,6 @@ export const AuthContextProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setIsLoading(false)
-
     });
     return () => {
       unsubscribe();
@@ -39,7 +39,7 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ googleSignIn, logOut, user, isLoading }}>
+    <AuthContext.Provider value={{ googleSignIn, logOut, user,isLoading }}>
       {children}
     </AuthContext.Provider>
   );

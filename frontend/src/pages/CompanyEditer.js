@@ -10,57 +10,46 @@ import {
   Stack,
 } from "react-bootstrap";
 import colors from "../api/colors.json";
-import { Autocomplete } from "@mui/material";
-import { TextField, Box } from "@mui/material";
+import { Autocomplete ,TextField} from "@mui/material";
 import Addfile from "./Addfile.js"
 import { UserAuth } from "../context/AuthContext";
 import {
   getProfileDetails,
   updateProfileFields,
-  getCompanyDetails,
   getFontList,
-  createProfile,
   deleteMyStuffAPI,
   restoreMyStuffAPI,
-  saveMyStuffAPI,
+  // saveMyStuffAPI,
   sendSearchAPI,
 } from "../api/Index.js";
 import CloseIcon from "@mui/icons-material/Close";
-import { BsFillPlusCircleFill, BsThreeDotsVertical } from "react-icons/bs";
+import { BsFillPlusCircleFill } from "react-icons/bs";
 import RichtextEditor from "./JoditEditor.js";
-import { BsFillTrashFill, BsChevronLeft } from "react-icons/bs";
+import { BsFillTrashFill } from "react-icons/bs";
 import { MdArrowBackIos } from "react-icons/md";
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import SideBar from "../components/SideBar";
 import { Hint } from "react-autocomplete-hint";
-import Select from "react-select";
-
 import ClipLoader from "react-spinners/ClipLoader";
 import InputComponent from "../components/InputComponent.js";
 
-function Profile(props) {
-  const [inputValue, setInputValue] = React.useState("");
+function Profile() {
+  // const [inputValue, setInputValue] = React.useState("");
   const [DomainPost, setDomainPost] = useState();
   const [jsonLabel, setJsonLabel] = useState([]);
   const [jsonValue, setJsonValue] = useState([]);
   const [name, setName] = useState("");
-  const [defaultLogo, setDefaultLogo] = useState("");
   const [aboutus, setAboutus] = useState("");
   const [domain, setDomain] = useState("");
   const [guidlines, setGuidlines] = useState("");
-  const [fontSize, setFontSize] = useState([]);
+
   const [PrimaryColors, setPrimaryColors] = useState("");
   const [secondaryColors, setSecondaryColors] = useState("");
   const [backgroundColors, setBackgroundColors] = useState("");
   const { user } = UserAuth();
   const [links, setLinks] = React.useState([]);
-  const [company, setCompany] = useState("");
-  const [profiledata, setProfile] = useState("");
   const [fullscreen, setFullscreen] = useState(true);
-  const [check, setCheck] = useState(true);
   const [id, setId] = useState("");
   const [logo, setLogo] = useState();
-  const [verify, setVerify] = useState("false");
   const [show, setShow] = useState(false);
   const [color, setcount] = useState([
     { colorName: "", colorValue: "#FFFFFF" },
@@ -75,12 +64,11 @@ function Profile(props) {
   const [sharedEmail, setSharedEmail] = useState();
   const [loading, setLoading] = useState(false);
   const [allData, setAllData] = useState();
-  const [locationData, setLocationData] = useState();
 
   const location = useLocation();
   let countTemp = countTracker;
   let countTemp2 = linkCount;
-  var fresult;
+
   const navigate = useNavigate();
 
   const getAllData = async () => {
@@ -95,7 +83,7 @@ function Profile(props) {
     }
   };
   const setJsonLabelAndValue = async () => {
-    colors.map((colors, index) => {
+    colors.map((colors) => {
       var temp = jsonLabel;
       temp.push(colors.label);
       setJsonLabel(temp);
@@ -128,13 +116,13 @@ function Profile(props) {
       event.target.value = "";
     }
   };
-  const savedata = async (id, n) => {
-    const new_data = {
-      _id: id,
-      title: n,
-    };
-    await saveMyStuffAPI(new_data);
-  };
+  // const savedata = async (id, n) => {
+  //   const new_data = {
+  //     _id: id,
+  //     title: n,
+  //   };
+  //   await saveMyStuffAPI(new_data);
+  // };
   const removeLinks = (index) => {
     setLinks([...links.filter((link) => links.indexOf(link) !== index)]);
   };
@@ -156,7 +144,6 @@ function Profile(props) {
   }, [user]);
 
   useEffect(() => {
-    setLocationData(location?.state?.data);
     fontlist();
     if (domain) {
       getbrandslogo();
@@ -165,7 +152,7 @@ function Profile(props) {
       navigate("/my-companies");
     }
   }, [domain]);
-  const updateProfileValue = async (req, res) => {
+  const updateProfileValue = async () => {
     var checkTemp = 0;
 
     if (domain != location?.state?.data?.domain) {
@@ -199,7 +186,7 @@ function Profile(props) {
               email: user?.email,
               color: color,
             };
-            const id1 = await updateProfileFields(data);
+           await updateProfileFields(data);
 
             navigate(-1);
           } else {
@@ -215,8 +202,8 @@ function Profile(props) {
       alert("Enter proper domain");
     }
   };
-  const profileDetails = async (req, res) => {
-    fresult = await getProfileDetails({
+  const profileDetails = async () => {
+     await getProfileDetails({
       domain: location?.state?.data?.domain,
     });
     setLoading(false);
@@ -226,7 +213,7 @@ function Profile(props) {
       setAboutus(location?.state?.data?.aboutus);
       setLinks(location?.state?.data?.links);
       setGuidlines(location?.state?.data?.guidlines);
-      setFontSize(location?.state?.data?.fontSize);
+
       setPrimaryColors(location?.state?.data?.PrimaryColors);
       setSecondaryColors(location?.state?.data?.secondaryColors);
       setBackgroundColors(location?.state?.data?.backgroundColors);
@@ -256,18 +243,7 @@ function Profile(props) {
   const config = {
     buttons: ["bold", "italic"],
   };
-  const checkDomain = (datta) => {
-    for (let i = 0; i < profiledata?.data?.data?.length; i++) {
-      if (datta == profiledata?.data?.data[i].domain) {
-        const domainId = document.getElementById("domain");
-        domainId.innerHTML = "**this domain already resister**";
-        setCheck(false);
-      } else {
-        const domainId = document.getElementById("domain");
-        setCheck(true);
-      }
-    }
-  };
+
   let addFormFields = () => {
     setcount([...color, { colorName: "", colorValue: "#000000" }]);
     setCountTracker(countTemp + 1);
@@ -519,7 +495,6 @@ function Profile(props) {
                                   </div>
                                 </Card>
                               </div>
-                              // </Link>
                             ) : (
                               ""
                             )}
@@ -633,7 +608,7 @@ function Profile(props) {
                                   freeSolo
                                   // inputValue={inputValue}
                                   onInputChange={(event, newInputValue) => {
-                                    setInputValue(newInputValue);
+                                    // setInputValue(newInputValue);
                                     if (newInputValue.includes("#")) {
                                       // console.log("value", newInputValue);
                                       let tempCount1 = value;

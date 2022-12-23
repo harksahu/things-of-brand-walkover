@@ -18,6 +18,9 @@ const StuffSchema = new mongoose.Schema({
     description : {
         type: [String]
     },
+    collections : {
+        type: [String]
+    },
     active: {
         type: Boolean,
         default: 1

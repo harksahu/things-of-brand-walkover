@@ -5,7 +5,7 @@ import {
 
 } from "react-bootstrap";
 function InputComponent({ label, setValue, valuee, placeholderr }) {
-  return (
+    return (
     <>
       <Form.Group className="mb-3 " id="name">
         <Form.Label>{label}</Form.Label>

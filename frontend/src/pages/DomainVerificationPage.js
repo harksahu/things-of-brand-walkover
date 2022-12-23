@@ -8,18 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import Toast from 'react-bootstrap/Toast';
 function DomainVerificationPage() {
-  const [id, setId] = useState();
-  const [name, setName] = useState();
-  const [aboutus, setAboutus] = useState();
   const [domain, setDomain] = useState();
-  const [logo, setlogo] = useState();
-  const [links, setLinks] = React.useState([]);
-  const [allColor, setAllColor] = useState();
-  const [guidlines, setGuidlines] = useState();
-  const [email, setEmail] = useState();
-  const [sharedEmail, setSharedEmail] = useState([]);
-  const [fontLink, setFontLink] = useState([]);
-  const [company, setCompany] = useState([]);
   const [verify, setVerify] = useState();
   const [show, setShow] = useState(false);
   const location = useLocation();
@@ -85,20 +74,8 @@ function DomainVerificationPage() {
   };
 
   const Fetchdata = async () => {
-    setId(location?.state?.data?._id);
-    setName(location?.state?.data?.name);
-    setAboutus(location?.state?.data?.aboutus);
-    setLinks(location?.state?.data?.links);
     setDomain(location?.state?.data?.domain);
-    setGuidlines(location?.state?.data?.guidlines);
-
-    setFontLink(location?.state?.data?.fontLink);
-
-    setAllColor(location?.state?.data?.color);
-    setlogo(location?.state?.data?.logo);
-    setEmail(location?.state?.data?.email);
     setVerify(location?.state?.data?.verify);
-    setSharedEmail(location?.state?.data?.sharedEmail);
   };
 
   useEffect(() => {

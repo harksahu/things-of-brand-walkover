@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
-import { Card, Container, Row, Col, Button } from "react-bootstrap";
+import { Card, Container, Row, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import SvgInline from "../utils/SvgInLine.js";
 import "../utils/SvgInLine.css";
 import { sendSearchAPI } from "../api/Index.js";
-import { AiFillPlusCircle } from "react-icons/ai";
-import SideBar from "../components/SideBar";
 import ClipLoader from "react-spinners/ClipLoader";
 
 
