@@ -4,7 +4,7 @@ import {
   Form,
 
 } from "react-bootstrap";
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 function InputComponent({ label, setValue, valuee, placeholderr }) {
   return (
@@ -25,12 +25,16 @@ function InputComponent({ label, setValue, valuee, placeholderr }) {
   );
 }
 
+
+
+InputComponent.propTypes = {
+  label: PropTypes.string,
+  setValue: PropTypes.string,
+  valuee: PropTypes.string,
+  placeholderr: PropTypes.string
+}
+
+
+
 export default InputComponent;
 
-
-// InputComponent.prototype = {
-//   label: PropTypes.string,
-//   setValue: PropTypes.string,
-//   valuee: PropTypes.string,
-//   placeholderr: PropTypes.string
-// }

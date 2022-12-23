@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import  PropTypes from "prop-types"
+
 import { createBrandAPI } from "../api/Index.js";
 import { UserAuth } from "../context/AuthContext";
 import Home from "./Home";
@@ -51,6 +53,7 @@ const Addfile = (props) => {
   const [domainToSelect, setDomainToSelect] = useState("");
   const [ffresult, setResult] = useState();
   const [loading, setLoading] = useState(true);
+  console.log(props);
 
 
   const [shareEmailDomainOption, setShareEmailDomainOption] = useState("");
@@ -284,3 +287,8 @@ const Addfile = (props) => {
 };
 
 export default Addfile;
+
+Addfile.propTypes = {
+  domain : PropTypes.string
+
+}

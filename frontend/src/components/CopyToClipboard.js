@@ -31,10 +31,6 @@ function CopyToClipboard({ color }) {
 export default CopyToClipboard;
 
 
-
-
-
-
 CopyToClipboard.propTypes = {
   color: PropTypes.string
 };
