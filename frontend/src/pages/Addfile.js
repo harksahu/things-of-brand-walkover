@@ -131,7 +131,7 @@ const Addfile = (props) => {
               email: user?.email,
               domain: result.data.data[0]._id,
             });
-            var i;
+            // var i;
             // for (i = 0; i < ffresult.length; i++) {
             //   if (domain === ffresult[i]._id) {
             //     logo = ffresult[i]?.logo;

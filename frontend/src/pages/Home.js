@@ -85,7 +85,6 @@ function Home() {
           </Col>
         </Row>
       </Container>
-      <div className="flex-fill"></div>        
     </>
   );
 }
