@@ -11,7 +11,7 @@ import { createCollection, getCollection,deleteCollections } from "../api/Index.
 import { Link} from "react-router-dom";
 
 const MyCollection = () => {
-  const [allCollection, setAllCollection] = useState([]);
+  const [allCollection, setAllCollection] = useState([]);           
   const [show, setShow] = useState(false);
   const [collectionName, setCollectionName] = useState();
   const [showSuccess, setShowSuccess] = useState(false);
@@ -61,7 +61,7 @@ const MyCollection = () => {
           <Modal.Title>Create Your collection</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/* <Form.Group className="mb-3">
+          <Form.Group className="mb-3">
             {showSuccess&&<Form.Label>Collection Created</Form.Label>}
             <Form.Control
               type="domain"
@@ -76,6 +76,7 @@ const MyCollection = () => {
             />
             <br></br>
             <Button
+            type="submit"
               variant="primary"
               onClick={() => {
                 createNewCollection();
@@ -83,7 +84,7 @@ const MyCollection = () => {
             >
               Next
             </Button>
-          </Form.Group> */}
+          </Form.Group>
         </Modal.Body>
       </Modal>
       <Container>
@@ -98,7 +99,6 @@ const MyCollection = () => {
                   >
                     <Link to={"/collection/" +collection._id}>
                       <Card className="item-company">
-                    <DeleteIcon onClick={()=>{deleteCollection(collection._id)}}/>
                         
                       <div
                           style={{ overflow: "auto" }}
@@ -116,7 +116,9 @@ const MyCollection = () => {
                             style={{ textDecoration: "none" }}
                             className="text-center"
                           >{collection.CollectionName}
+                            <DeleteIcon onClick={()=>{deleteCollection(collection._id)}}/>
                           </Card.Title>
+
                         </Card.Body>
                       </Card>
                     </Link>

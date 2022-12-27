@@ -19,7 +19,6 @@ function ModalComponent(props) {
 
   useEffect(() => {
     setShowComponent(false);
-    
     setCollection(props?.allcollection?.data?.data);
     setId(props?.id);
     setLogos(props?.allcollection?.data?.data);

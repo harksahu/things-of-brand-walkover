@@ -4,7 +4,7 @@ import {
   Form,
 
 } from "react-bootstrap";
-function InputComponent({ label, setValue, valuee, placeholderr }) {
+function InputComponent({ label, setValue, valuee, placeholderr,onSubmitFunction }) {
     return (
     <>
       <Form.Group className="mb-3 " id="name">
@@ -17,6 +17,13 @@ function InputComponent({ label, setValue, valuee, placeholderr }) {
             setValue(e.target.value);
           }}
           value={valuee}
+          onKeyDown={(e) => {
+            if (e.code === "Enter") {
+              e.preventDefault();
+              console.log("Enter");
+              onSubmitFunction();
+            }
+          }}
         />
       </Form.Group>
     </>
