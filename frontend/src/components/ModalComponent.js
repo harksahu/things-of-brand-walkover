@@ -18,7 +18,6 @@ function ModalComponent(props) {
   const { user } = UserAuth();
 
   useEffect(() => {
-    console.log(props?.allcollection?.data?.data);
     setShowComponent(false);
     
     setCollection(props?.allcollection?.data?.data);
@@ -73,7 +72,6 @@ function ModalComponent(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      {console.log("show component " + showComponent)}
 
       <Modal.Header closeButton>
         {/* <Link to="/collection"> */}

@@ -4,9 +4,10 @@ import Modal from "react-bootstrap/Modal";
 import { Container, Form, Card } from "react-bootstrap";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
+import DeleteIcon from '@mui/icons-material/Delete';
 import "../scss/company.scss";
 import "../utils/SvgInLine.css";
-import { createCollection, getCollection } from "../api/Index.js";
+import { createCollection, getCollection,deleteCollections } from "../api/Index.js";
 import { Link} from "react-router-dom";
 
 const MyCollection = () => {
@@ -26,6 +27,14 @@ const MyCollection = () => {
     });
     setAllCollection(data.data.data);
   };
+
+  const deleteCollection = async (id) => {
+      const daata = await deleteCollections(id)
+      if(daata)
+      {
+        alert("Collection deleted successfully")
+      }
+  }
   const createNewCollection = async () => {
     var temp = collectionName;
     temp = temp.trim();
@@ -84,12 +93,13 @@ const MyCollection = () => {
             allCollection.map((collection) => {
               return (
                 <div key={collection._id}>
-                    
                   <div
                     className="d-flex justify-content-center item "
                   >
                     <Link to={"/collection/" +collection._id}>
                       <Card className="item-company">
+                    <DeleteIcon onClick={()=>{deleteCollection(collection._id)}}/>
+                        
                       <div
                           style={{ overflow: "auto" }}
                           className="img_size  pattern-square"
