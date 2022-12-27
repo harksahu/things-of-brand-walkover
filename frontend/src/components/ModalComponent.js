@@ -19,7 +19,7 @@ function ModalComponent(props) {
   useEffect(() => {
 
     setShowComponent(false);
-    
+
     setCollection(props?.allcollection?.data?.data);
     setId(props?.id);
     setLogos(props?.allcollection?.data?.data);
@@ -27,7 +27,7 @@ function ModalComponent(props) {
 
   useEffect(() => {
     setDuplicateError(false);
-  },[]);
+  }, []);
 
   const createCollections = async (collectionName) => {
 
@@ -79,7 +79,7 @@ function ModalComponent(props) {
       <Modal.Header closeButton>
         {/* <Link to="/collection"> */}
         {showComponent ? (
-          <div style={{marginRight: "250px"}}>
+          <div style={{ marginRight: "250px" }}>
             <InputComponent
               // label={"Collection Name"}
               setValue={setCollectionName}
@@ -133,7 +133,7 @@ function ModalComponent(props) {
         ) : (
           ""
         )}
-        <div className="d-flex item m-3" style={{overflow : "scroll"}}>
+        <div className="d-flex item m-3" style={{ overflow: "scroll" }}>
           {collection &&
             collection.map((collection) => {
               return (
@@ -149,17 +149,17 @@ function ModalComponent(props) {
                     >
 
                       {collection?.logo[0]?.url !== undefined &&
-                      collection?.logo[0]?.url !== "null" ? (
-                        <img style={{height: "4rem" ,  width:"5rem" }} src={collection?.logo[0]?.url} alt="" />
+                        collection?.logo[0]?.url !== "null" ? (
+                        <img style={{ height: "4rem", width: "5rem" }} src={collection?.logo[0]?.url} alt="" />
                       ) : (
-                        <img style={{height: "4rem" ,  width:"5rem" }} src="/assets/picture.svg" alt="" />
+                        <img style={{ height: "4rem", width: "5rem" }} src="/assets/picture.svg" alt="" />
                       )}
-                    </div>
-                    <div style={{textalign:"center" , paddingLeft:"18%"}}>
+                  {/* </div> */}
+                  <div style={{ textalign: "center", paddingLeft: "18%" }}>
 
-                          {collection.CollectionName}
-                    </div>
-                    {/* <Card.Body>
+                    {collection.CollectionName}
+                  </div>
+                  {/* <Card.Body>
 
                       <Card.Title 
                         style={{ textDecoration: "none" , paddingRight:"65%"  }}
@@ -168,19 +168,19 @@ function ModalComponent(props) {
                         {collection.CollectionName}
                       </Card.Title>
                     </Card.Body> */}
-                    </Card>
+                </Card>
                   </div>
-                  {/* </Link> */}
-                </div>
+        {/* </Link> */}
+      </div>
 
-              );
+      );
             })}
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
+    </div>
+      </Modal.Body >
+    <Modal.Footer>
+      <Button onClick={props.onHide}>Close</Button>
+    </Modal.Footer>
+    </Modal >
   );
 }
 export default ModalComponent;

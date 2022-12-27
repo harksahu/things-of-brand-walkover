@@ -105,9 +105,9 @@ const MyCollection = () => {
                   <div
                     className="d-flex justify-content-center item "
                   >
-                    <Link to={"/collection/" +collection._id}>
                       <Card className="item-company">
                     <DeleteIcon onClick={()=>{deleteCollection(collection._id)}}/>
+                    <Link to={"/collection/" +collection._id}>
                         
                       <div
                           style={{ overflow: "auto" }}
@@ -127,8 +127,8 @@ const MyCollection = () => {
                           >{collection.CollectionName}
                           </Card.Title>
                         </Card.Body>
-                      </Card>
                     </Link>
+                      </Card>
                   </div>
                 </div>
               );
