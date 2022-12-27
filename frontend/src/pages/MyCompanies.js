@@ -78,7 +78,8 @@ function MyCompany() {
       }
     }
   };
-  const next = () => {
+  const next = (event) => {
+    event.preventDefault();
     var check = 0;
     for (let i = 0; i < allData?.length; i++) {
 
@@ -158,6 +159,7 @@ function MyCompany() {
                   <div className="visually-hidden" id="WrongdomainError">
                     Please Enter Correct Domain{" "}
                   </div>
+                  <Form onSubmit={next}>
                   <Form.Group className="mb-3">
                     <Form.Label>
                       Domain * <small>(example.com)</small>
@@ -179,8 +181,9 @@ function MyCompany() {
                     <br></br>
 
 
-                    <Button variant="primary" onClick={() => next()}>Next</Button>
+                    <Button variant="primary" type ="submit" >Next</Button>
                   </Form.Group>
+                  </Form>
                 </Modal.Body>
               </Modal>
 

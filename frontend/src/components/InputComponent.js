@@ -4,8 +4,8 @@ import {
   Form,
 
 } from "react-bootstrap";
-function InputComponent({ label, setValue, valuee, placeholderr }) {
-  return (
+function InputComponent({ label, setValue, valuee, placeholderr,onSubmitFunction }) {
+    return (
     <>
       <Form.Group className="mb-3 " id="name">
         <Form.Label>{label}</Form.Label>
@@ -17,6 +17,7 @@ function InputComponent({ label, setValue, valuee, placeholderr }) {
             setValue(e.target.value);
           }}
           value={valuee}
+        
         />
       </Form.Group>
     </>

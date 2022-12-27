@@ -219,8 +219,7 @@ function NavigationBar({ getSearchBrand }) {
                 ""
               )}
             </Nav>
-
-            {user?.displayName ? (
+            { user?.displayName ? (
               <NavDropdown
                 title={user?.displayName}
                 id="collasible-nav-dropdown"

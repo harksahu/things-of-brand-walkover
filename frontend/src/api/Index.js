@@ -174,7 +174,9 @@ const getCollection = async ({ _id= "" , email=""}) => {
 
 };
 
-
+const deleteCollections = async (id) => {
+  return await axios.delete(URL + "/api/Collection/"+ id);
+}
 
 
 export {
@@ -200,5 +202,6 @@ export {
   getProfileandLogoDetails,
   createCollection,
   getCollection,
-  updateCollection
+  updateCollection,
+  deleteCollections
 };

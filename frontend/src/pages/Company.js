@@ -66,7 +66,7 @@ function Brand() {
   const [CopyValue, setCopyValue] = useState("Copy link");
   const [fullscreen, setFullscreen] = useState(true);
   const [modalShow, setModalShow] = useState(false);
-  const [collections, setCollections] = useState("");
+  const [collections, setCollections] = useState([]);
   const [addImageToCollection, setAddImageToCollection] = useState();
   const [addedCollection, setAddedCollection] = useState(false);
   const [variants, setvariants] = useState([]);
@@ -75,6 +75,7 @@ function Brand() {
   const handleClosee = () => {
     setIsRepeatingEmail(false);
     setShoww(false);
+
   };
 
   const removeSharedEmail = (index) => {
@@ -121,34 +122,28 @@ function Brand() {
         const collection = await getCollection({
           email: user.email,
         });
-        console.log(collection.data.data);
-        console.log(data.data.data);
         setCollections(collection);
-            setvariants([]);
-            var temp = [];
+        setvariants([]);
+        var temp = [];
         for (var j = 0; j < data?.data?.data?.length; j++) {
-          var flag = true; 
-          console.log("hello = ", data?.data?.data[j]?._id);
+          var flag = true;
           for (var i = 0; i < collection?.data?.data?.length; i++) {
             if (collection?.data?.data[i]?.Logos.includes(data?.data?.data[j]?._id)) {
               flag = false;
               break;
             }
           }
-          if (flag){
+          if (flag) {
             temp.push("black");
           }
-          else
-          {
+          else {
             temp.push("red");
           }
         }
         setvariants([...temp]);
-        console.log("temp",temp);
       }
     }
   };
-  console.log(variants);
   const getbrand = async () => {
     const fresult = await getProfileDetails({
       domain: title.title,
@@ -207,7 +202,7 @@ function Brand() {
       getbrandslogo();
       setLoading(false);
     }
-  }, [domain, title, user]);
+  }, [domain, title, user,modalShow]);
   function handleShow() {
     setFullscreen("md-down");
     setShow(true);
@@ -296,6 +291,7 @@ function Brand() {
                                 {sharedEmail.map((email, index) => {
                                   return (
                                     <div key={index}>
+                                     {email?.length>4 &&
                                       <h5>
                                         {email}
                                         <Button
@@ -306,6 +302,7 @@ function Brand() {
                                           <BsFillTrashFill />
                                         </Button>
                                       </h5>
+                                       }
                                     </div>
                                   );
                                 })}
@@ -411,7 +408,7 @@ function Brand() {
                                 className="img_size pattern-square"
                               >
                                 {brand.url !== undefined &&
-                                brand.url !== "null" ? (
+                                  brand.url !== "null" ? (
                                   <img src={brand.url} alt="" />
                                 ) : (
                                   <img src="/assets/picture.svg" alt="" />
@@ -449,28 +446,17 @@ function Brand() {
                               >
                                 SVG
                               </Button>
-                                {console.log("temp m,c s= ",variants)}
                               <FavoriteIcon
                                 style={{ color: variants[index] }}
                                 onClick={() => {
+
                                   setModalShow(true);
                                   setAddImageToCollection(brand._id);
                                   setIndexToaddToFav(index);
                                 }}
                               />
 
-                              <ModalComponent
-                                setVariants={setvariants}
-                                variants={variants}
-                                setAddedCollection={setAddedCollection}
-                                index={indexToaddToFav}
-                                value={addedCollection}
-                                id={addImageToCollection}
-                                allcollection={collections}
-                                show={modalShow}
-                                onHide={() => setModalShow(false)}
-                              />
-                              {console.log(addedCollection)}
+
                             </Card.Footer>
                           </Card>
                         </div>
@@ -590,6 +576,22 @@ function Brand() {
           ) : (
             <Not_found />
           )}
+
+
+          {
+            modalShow && <ModalComponent
+              setVariants={setvariants}
+              variants={variants}
+              setAddedCollection={setAddedCollection}
+              index={indexToaddToFav}
+              value={addedCollection}
+              id={addImageToCollection}
+              allcollection={collections}
+              setCollections={setCollections}
+              show={modalShow}
+              onHide={() => setModalShow(false)}
+            />
+          }
         </Container>
       )}
     </>

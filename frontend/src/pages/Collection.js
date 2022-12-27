@@ -1,29 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { useParams,useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
-import { getCollection } from "../api/Index";
+import { getCollection,updateCollection } from "../api/Index";
 import { Container, Card } from "react-bootstrap";
 import { MdArrowBackIos } from "react-icons/md";
 import Button from "react-bootstrap/Button";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Collection = () => {
   const [allLogos, setallLogos] = useState([]);
+  const [logoId,setLogoId] = useState([]);
   const { user } = UserAuth();
   const navigate = useNavigate();
   const id = useParams();
+
   const getAllLogosFromCollection = async () => {
-    const data = await getCollection({
+    var data = await getCollection({
       _id: id.id,
       email: user?.email,
     });
+    setLogoId(data?.data?.data[0]?.Logos)
     setallLogos(data?.data?.data[0]?.logo);
+    console.log(data?.data?.data[0]);
   };
+
+  
   useEffect(() => {
     if (user?.email && id) getAllLogosFromCollection();
   }, [user]);
   return (
     <div>
-       <Container>
+        <Container>
       <Button
         variant="outline-dark"
         onClick={() => {
@@ -33,7 +40,7 @@ const Collection = () => {
         <MdArrowBackIos />
         
       </Button>
-     
+    
         <div className="grid">
           {allLogos?.length
             ? allLogos?.map((collection, index) => {
@@ -41,6 +48,7 @@ const Collection = () => {
                   <div key={index}>
                     <div className="d-flex justify-content-center item ">
                       <Card className="item-company">
+                     
                         <div
                           style={{ overflow: "auto" }}
                           className="img_size  pattern-square"
