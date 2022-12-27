@@ -68,7 +68,7 @@ const MyCollection = () => {
 
         {/* label, setValue, valuee, placeholderr } */}
         <InputComponent value ={collectionName} setValue ={setCollectionName}label ={"Add new collection"}  placeholder={"Enter collection name"}/>
-          {/* <Form.Group className="mb-3"> */}
+          <Form.Group className="mb-3">
             {showSuccess&&<Form.Label>Collection Created</Form.Label>}
 
             <Form.Control
@@ -82,7 +82,6 @@ const MyCollection = () => {
                 setCollectionName(e.target.value);
               }}
             /> 
-            {/* <br></br> */}
             <Button
               variant="primary"
               onClick={() => {
@@ -92,7 +91,7 @@ const MyCollection = () => {
               Next
             </Button>
 
-          </Form.Group> */}
+          </Form.Group> 
 
         </Modal.Body>
       </Modal>
