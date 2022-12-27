@@ -12,7 +12,7 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
-
+import AlertComponent from "../components/AlertComponent"
 import {
   getS3SignUrl,
   getProfileDetails,
@@ -51,6 +51,8 @@ const Addfile = (props) => {
   const [domainToSelect, setDomainToSelect] = useState("");
   const [ffresult, setResult] = useState();
   const [loading, setLoading] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
+  const [message, setMessage] = useState("");
 
 
   const [shareEmailDomainOption, setShareEmailDomainOption] = useState("");
@@ -161,13 +163,20 @@ const Addfile = (props) => {
              //TODO: error message
           }
         } else {
-          alert("Image imput required");
+          setShowAlert(true);
+          setMessage("Image imput required")
+      
+          
         }
       } else {
-        alert("title is required");
+        setShowAlert(true);
+        setMessage("title is required")
+    
       }
     } else {
-      alert("Complete your profile page");
+      setShowAlert(true);
+      setMessage("Complete your profile page")
+      
     }
   };
 
@@ -182,6 +191,7 @@ const Addfile = (props) => {
   }, [user,shareEmailDomainOption]);
   return (
     <>
+    <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert}/>
     {loading?<div className="center-loader"
     ><ClipLoader/></div>:
     <div>

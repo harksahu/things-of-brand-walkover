@@ -54,7 +54,9 @@ const MyCollection = () => {
     var temp = collectionName;
     temp = temp?.trim();
     if (temp == undefined || temp == "") {
-      alert("collection name is required");
+      setShow(false);
+      setMessage("collection name is required" );
+      setShowAlert(true)
       return;
     }
     await createCollection({
