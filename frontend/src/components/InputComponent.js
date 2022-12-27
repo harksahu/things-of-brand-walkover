@@ -4,11 +4,11 @@ import {
   Form,
 
 } from "react-bootstrap";
-function InputComponent({ label, setValue, valuee, placeholderr,onSubmitFunction }) {
+function InputComponent({ label, setValue, valuee, placeholderr,smalll }) {
     return (
     <>
       <Form.Group className="mb-3 " id="name">
-        <Form.Label>{label}</Form.Label>
+        <Form.Label>{label}{<small>{smalll}</small>}</Form.Label>
         <Form.Control
           type="text"
           placeholder={placeholderr}

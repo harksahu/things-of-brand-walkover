@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import InputComponent from "./InputComponent.js";
 import { width } from "@mui/system";
+import AlertComponent from "./AlertComponent.js";
 
 function ModalComponent(props) {
   const [collection, setCollection] = useState("");
@@ -15,6 +16,8 @@ function ModalComponent(props) {
   const [duplicateError, setDuplicateError] = useState(false);
   const [collectionName, setCollectionName] = useState("");
   const [showComponent, setShowComponent] = useState(false);
+  const [message, setMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
   const { user } = UserAuth();
   useEffect(() => {
 
@@ -36,8 +39,9 @@ function ModalComponent(props) {
       Logos: [],
     });
     if (ans) {
-
-      alert("collection created successfully");
+      setShowAlert(true);
+      setMessage("collection created successfully" );
+      
     }
 
 
@@ -68,11 +72,13 @@ function ModalComponent(props) {
 
   return (
     <Modal
+
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
+    <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert}/>
 
 
       <Modal.Header closeButton>

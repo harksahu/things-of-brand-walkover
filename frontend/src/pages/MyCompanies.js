@@ -10,7 +10,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import CompanyCard from "../components/CompanyCard.js"
-
+import AlertComponent from "../components/AlertComponent";
 
 
 
@@ -21,6 +21,8 @@ function MyCompany() {
   const { user } = UserAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const[message, setMessage] = useState("")
 
   const [show, setShow] = useState(false);
 
@@ -68,13 +70,16 @@ function MyCompany() {
             email: user?.email,
           });
 
-          alert("successfully saved domain " + d);
-
+         
+          setShowAlert(true);
+          setMessage("successfully saved domain")
           navigate("/editprofile", { state: { data: data.data.data } })
 
         } catch (err) {
           // console.log(err);
-          alert("Profile is not created");
+          setShowAlert(true);
+          setMessage("Profile is not created")
+         
         }
       }
     }
@@ -119,6 +124,7 @@ function MyCompany() {
 
   return (
     <>
+    <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert}/>
       {loading ? (
         <div className="center-loader"><ClipLoader /></div>
       ) : (
