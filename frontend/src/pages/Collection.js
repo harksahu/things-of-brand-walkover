@@ -23,6 +23,7 @@ const Collection = () => {
   }, [user]);
   return (
     <div>
+       <Container>
       <Button
         variant="outline-dark"
         onClick={() => {
@@ -30,8 +31,9 @@ const Collection = () => {
         }}
       >
         <MdArrowBackIos />
+        
       </Button>
-      <Container>
+     
         <div className="grid">
           {allLogos?.length
             ? allLogos?.map((collection, index) => {

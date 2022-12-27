@@ -132,7 +132,7 @@ const Addfile = (props) => {
             var i;
             for (i = 0; i < ffresult.length; i++) {
               if (domain === ffresult[i]._id) {
-                logo = ffresult[i]?.logo;
+                // logo = ffresult[i]?.logo;
 
                 break;
               }
