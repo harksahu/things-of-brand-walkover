@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import { getProfileDetails, createProfile } from "../api/Index.js";
-import { Container,Form, Card } from "react-bootstrap";
+import { Container, Form, Card } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../utils/SvgInLine.css";
 import "../scss/company.scss";
@@ -25,8 +25,9 @@ function MyCompany() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
-    
-    setShow(false);}
+
+    setShow(false);
+  }
   const handleShow = () => setShow(true);
   useEffect(() => {
     setLoading(true);
@@ -79,11 +80,13 @@ function MyCompany() {
     }
   };
   const next = (event) => {
+    const d = extractDomain(domain);
+    setDomain(d);
     event.preventDefault();
     var check = 0;
     for (let i = 0; i < allData?.length; i++) {
 
-      if (allData[i].domain === domain) {
+      if (allData[i].domain === d) {
         check = 1;
         document.getElementById("domainError").classList.remove("visually-hidden");
         break;
@@ -124,9 +127,9 @@ function MyCompany() {
             <div className="grid">
               {company?.map((Company) => {
                 return (
-                 <div key={Company._id}>
-                   <CompanyCard props={Company} />
-                 </div>
+                  <div key={Company._id}>
+                    <CompanyCard props={Company} />
+                  </div>
                 );
               })}
               {/* <Link to="/editprofile" className="add-new"> */}
@@ -160,29 +163,29 @@ function MyCompany() {
                     Please Enter Correct Domain{" "}
                   </div>
                   <Form onSubmit={next}>
-                  <Form.Group className="mb-3">
-                    <Form.Label>
-                      Domain * <small>(example.com)</small>
-                    </Form.Label>
-                    <Form.Control
-                      type="domain"
-                      placeholder="Enter domain name"
-                      list="doaminBrowsers"
-                      autoComplete="off"
-                      name="myBrowser"
-                      id="domain"
-                      onChange={(e) => {
+                    <Form.Group className="mb-3">
+                      <Form.Label>
+                        Domain * <small>(example.com)</small>
+                      </Form.Label>
+                      <Form.Control
+                        type="domain"
+                        placeholder="Enter domain name"
+                        list="doaminBrowsers"
+                        autoComplete="off"
+                        name="myBrowser"
+                        id="domain"
+                        onChange={(e) => {
 
-                        setDomain(e.target.value);
+                          setDomain(e.target.value);
 
-                      }}
+                        }}
 
-                    />
-                    <br></br>
+                      />
+                      <br></br>
 
 
-                    <Button variant="primary" type ="submit" >Next</Button>
-                  </Form.Group>
+                      <Button variant="primary" type="submit" >Next</Button>
+                    </Form.Group>
                   </Form>
                 </Modal.Body>
               </Modal>
@@ -201,8 +204,8 @@ function MyCompany() {
                 if (Company?.sharedEmail?.includes(user.email)) {
                   return (
                     <div key={Company._id}>
-                    <CompanyCard props={Company} />
-                  </div>
+                      <CompanyCard props={Company} />
+                    </div>
 
                   );
                 }
