@@ -17,13 +17,7 @@ function InputComponent({ label, setValue, valuee, placeholderr,onSubmitFunction
             setValue(e.target.value);
           }}
           value={valuee}
-          onKeyDown={(e) => {
-            if (e.code === "Enter") {
-              e.preventDefault();
-              console.log("Enter");
-              onSubmitFunction();
-            }
-          }}
+        
         />
       </Form.Group>
     </>

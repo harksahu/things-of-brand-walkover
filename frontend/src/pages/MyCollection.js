@@ -4,22 +4,28 @@ import Modal from "react-bootstrap/Modal";
 import { Container, Form, Card } from "react-bootstrap";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 import "../scss/company.scss";
 import "../utils/SvgInLine.css";
-import { createCollection, getCollection,deleteCollections } from "../api/Index.js";
-import { Link} from "react-router-dom";
-
+import {
+  createCollection,
+  getCollection,
+  deleteCollections,
+} from "../api/Index.js";
+import { Link } from "react-router-dom";
+import InputComponent from "../components/InputComponent";
+import Toast from 'react-bootstrap/Toast';
 const MyCollection = () => {
-  const [allCollection, setAllCollection] = useState([]);           
+  const [allCollection, setAllCollection] = useState([]);
   const [show, setShow] = useState(false);
   const [collectionName, setCollectionName] = useState();
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [message, setMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  
   const { user } = UserAuth();
   const handleClose = () => {
     setShow(false);
-    setShowSuccess(false);
-}
+  };
   const handleShow = () => setShow(true);
   const showAllCollections = async () => {
     const data = await getCollection({
@@ -27,17 +33,25 @@ const MyCollection = () => {
     });
     setAllCollection(data.data.data);
   };
-
-  const deleteCollection = async (id) => {
-      const daata = await deleteCollections(id)
-      if(daata)
-      {
-        alert("Collection deleted successfully")
-      }
-  }
-  const createNewCollection = async () => {
+  const deleteCollection = async (collection) => {
+      setShowAlert(true)
+      // setShowAlert(true);
+    var index = allCollection.indexOf(collection);
+    if (index > -1) {
+      allCollection.splice(index, 1);
+      setAllCollection([...allCollection]);
+    }
+    const daata = await deleteCollections(collection._id);
+    if (daata) {
+      setMessage("delete collection " );
+      // <Alert>Hello</Alert>
+    }
+  };
+  const createNewCollection = async (event) => {
+    console.log("collectionName",collectionName);
+    event.preventDefault();
     var temp = collectionName;
-    temp = temp.trim();
+    temp = temp?.trim();
     if (temp == undefined || temp == "") {
       alert("collection name is required");
       return;
@@ -47,60 +61,58 @@ const MyCollection = () => {
       email: user?.email,
     });
     showAllCollections();
-    setShowSuccess(true);
+    // setShowSuccess(true);
     setShow(false);
+    setCollectionName();
   };
+
   useEffect(() => {
-    if (user?.email) 
-    showAllCollections();
+    
+    if (user?.email) showAllCollections();
   }, [user]);
+  
   return (
     <div>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Create Your collection</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group className="mb-3">
-            {showSuccess&&<Form.Label>Collection Created</Form.Label>}
-            <Form.Control
-              type="domain"
-              placeholder="Enter collection name"
-              list="doaminBrowsers"
-              autoComplete="off"
-              name="myBrowser"
-              id="domain"
-              onChange={(e) => {
-                setCollectionName(e.target.value);
-              }}
-            />
-            <br></br>
-            <Button
-            type="submit"
-              variant="primary"
-              onClick={() => {
-                createNewCollection();
-              }}
-            >
-              Next
-            </Button>
-          </Form.Group>
-        </Modal.Body>
-      </Modal>
       <Container>
-            <h1>All Collections</h1><br></br>
+      <Toast
+  
+          onClose={() => setShowAlert(false)}
+          show={showAlert}
+          delay={3000}
+          autohide
+        >
+          <Toast.Header>{message}</Toast.Header>
+        </Toast>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Create Your collection</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={createNewCollection}>
+              <InputComponent
+                value={collectionName}
+                setValue={setCollectionName}
+                label={"Add new collection"}
+                placeholderr={"Enter collection name"}
+              />
+              <Button type="submit " variant="primary">
+                Add
+              </Button>
+            </Form>
+          </Modal.Body>
+        </Modal>
+
+        <h1>All Collections</h1>
+        <br></br>
         <div className="grid">
           {allCollection &&
             allCollection.map((collection) => {
               return (
                 <div key={collection._id}>
-                  <div
-                    className="d-flex justify-content-center item "
-                  >
-                    <Link to={"/collection/" +collection._id}>
-                      <Card className="item-company">
-                        
-                      <div
+                  <div className="d-flex justify-content-center item ">
+                    <Card className="item-company">
+                      <Link to={"/collection/" + collection._id}>
+                        <div
                           style={{ overflow: "auto" }}
                           className="img_size  pattern-square"
                         >
@@ -111,17 +123,22 @@ const MyCollection = () => {
                             <img src="/assets/picture.svg" alt="" />
                           )}
                         </div>
-                        <Card.Body>
-                          <Card.Title
-                            style={{ textDecoration: "none" }}
-                            className="text-center"
-                          >{collection.CollectionName}
-                            <DeleteIcon onClick={()=>{deleteCollection(collection._id)}}/>
-                          </Card.Title>
-
-                        </Card.Body>
-                      </Card>
-                    </Link>
+                      </Link>
+                      <Card.Body>
+                        <Card.Title
+                          style={{ textDecoration: "none"}}
+                          className="text-center"
+                        >
+                          {collection.CollectionName}<DeleteIcon
+                            onClick={() => {
+                              deleteCollection(collection);
+                            }}
+                          />
+                          
+                        </Card.Title>
+                        
+                      </Card.Body>
+                    </Card>
                   </div>
                 </div>
               );
