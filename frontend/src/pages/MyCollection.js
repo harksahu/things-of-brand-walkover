@@ -14,7 +14,8 @@ import {
 } from "../api/Index.js";
 import { Link } from "react-router-dom";
 import InputComponent from "../components/InputComponent";
-import Toast from 'react-bootstrap/Toast';
+import AlertComponent from "../components/AlertComponent";
+
 const MyCollection = () => {
   const [allCollection, setAllCollection] = useState([]);
   const [show, setShow] = useState(false);
@@ -34,8 +35,7 @@ const MyCollection = () => {
     setAllCollection(data.data.data);
   };
   const deleteCollection = async (collection) => {
-      setShowAlert(true)
-      // setShowAlert(true);
+    // setShowAlert(true);
     var index = allCollection.indexOf(collection);
     if (index > -1) {
       allCollection.splice(index, 1);
@@ -44,6 +44,7 @@ const MyCollection = () => {
     const daata = await deleteCollections(collection._id);
     if (daata) {
       setMessage("delete collection " );
+      setShowAlert(true)
       // <Alert>Hello</Alert>
     }
   };
@@ -70,19 +71,15 @@ const MyCollection = () => {
     
     if (user?.email) showAllCollections();
   }, [user]);
+  useEffect(() => {
+  //  if(showAlert==true)
+  //  setShowAlert(false);
+  }, [showAlert]);
   
   return (
     <div>
       <Container>
-      <Toast
-  
-          onClose={() => setShowAlert(false)}
-          show={showAlert}
-          delay={3000}
-          autohide
-        >
-          <Toast.Header>{message}</Toast.Header>
-        </Toast>
+        <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert}/>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Create Your collection</Modal.Title>
