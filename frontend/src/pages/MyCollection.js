@@ -4,11 +4,16 @@ import Modal from "react-bootstrap/Modal";
 import { Container, Form, Card } from "react-bootstrap";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
+import DeleteIcon from '@mui/icons-material/Delete';
 import "../scss/company.scss";
 import "../utils/SvgInLine.css";
-import { createCollection, getCollection } from "../api/Index.js";
+import { createCollection, getCollection,deleteCollections } from "../api/Index.js";
 import { Link} from "react-router-dom";
+
+
+
 import InputComponent from "../components/InputComponent";
+
 const MyCollection = () => {
   const [allCollection, setAllCollection] = useState([]);
   const [show, setShow] = useState(false);
@@ -26,6 +31,14 @@ const MyCollection = () => {
     });
     setAllCollection(data.data.data);
   };
+
+  const deleteCollection = async (id) => {
+      const daata = await deleteCollections(id)
+      if(daata)
+      {
+        alert("Collection deleted successfully")
+      }
+  }
   const createNewCollection = async () => {
     var temp = collectionName;
     temp = temp.trim();
@@ -52,10 +65,12 @@ const MyCollection = () => {
           <Modal.Title>Create Your collection</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+
         {/* label, setValue, valuee, placeholderr } */}
         <InputComponent value ={collectionName} setValue ={setCollectionName}label ={"Add new collection"}  placeholder={"Enter collection name"}/>
           {/* <Form.Group className="mb-3"> */}
-            {/* {showSuccess&&<Form.Label>Collection Created</Form.Label>}
+            {showSuccess&&<Form.Label>Collection Created</Form.Label>}
+
             <Form.Control
               type="domain"
               placeholder="Enter collection name"
@@ -66,7 +81,7 @@ const MyCollection = () => {
               onChange={(e) => {
                 setCollectionName(e.target.value);
               }}
-            /> */}
+            /> 
             {/* <br></br> */}
             <Button
               variant="primary"
@@ -76,7 +91,9 @@ const MyCollection = () => {
             >
               Next
             </Button>
-          {/* </Form.Group> */}
+
+          </Form.Group> */}
+
         </Modal.Body>
       </Modal>
       <Container>
@@ -86,12 +103,13 @@ const MyCollection = () => {
             allCollection.map((collection) => {
               return (
                 <div key={collection._id}>
-                    
                   <div
                     className="d-flex justify-content-center item "
                   >
                     <Link to={"/collection/" +collection._id}>
                       <Card className="item-company">
+                    <DeleteIcon onClick={()=>{deleteCollection(collection._id)}}/>
+                        
                       <div
                           style={{ overflow: "auto" }}
                           className="img_size  pattern-square"

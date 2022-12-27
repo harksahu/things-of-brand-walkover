@@ -17,15 +17,17 @@ function ModalComponent(props) {
   const [showComponent, setShowComponent] = useState(false);
   const { user } = UserAuth();
   useEffect(() => {
-    setDuplicateError(false);
-  }, []);
-  useEffect(() => {
 
     setShowComponent(false);
-    setCollection(props?.allcollection?.data?.data || collectionName);
+    
+    setCollection(props?.allcollection?.data?.data);
     setId(props?.id);
     setLogos(props?.allcollection?.data?.data);
   }, [props]);
+
+  useEffect(() => {
+    setDuplicateError(false);
+  },[]);
 
   const createCollections = async (collectionName) => {
 
@@ -77,7 +79,7 @@ function ModalComponent(props) {
       <Modal.Header closeButton>
         {/* <Link to="/collection"> */}
         {showComponent ? (
-          <>
+          <div style={{marginRight: "250px"}}>
             <InputComponent
               // label={"Collection Name"}
               setValue={setCollectionName}
@@ -92,14 +94,14 @@ function ModalComponent(props) {
             >
               Submit
             </Button>
-          </>
+          </div>
         ) : (
           <h4 style={{ width: "500%" }}> {duplicateError}</h4>
         )}
         {props?.allcollection?.data?.data?.length ? (
           <BsFillPlusCircleFill
-            size="150px"
-            style={{ margin: "-150px 5px" }}
+            size="50px"
+            // style={{ margin: "-150px 5px" }}
             onClick={() => {
               setShowComponent(true);
             }}
@@ -145,22 +147,20 @@ function ModalComponent(props) {
                         createNewCollection(collection, id);
                       }}
                     >
-                      <div
 
-                        className="img_size  pattern-square"
-                      >
-                        {collection?.logo[0]?.url !== undefined &&
-                          collection?.logo[0]?.url !== "null" ? (
-                          <img style={{ height: "4rem", width: "5rem" }} src={collection?.logo[0]?.url} alt="" />
-                        ) : (
-                          <img style={{ height: "5rem", width: "5rem" }} src="/assets/picture.svg" alt="" />
-                        )}
-                      </div>
-                      <div style={{ textalign: "center", paddingLeft: "18%" }}>
+                      {collection?.logo[0]?.url !== undefined &&
+                      collection?.logo[0]?.url !== "null" ? (
+                        <img style={{height: "4rem" ,  width:"5rem" }} src={collection?.logo[0]?.url} alt="" />
+                      ) : (
+                        <img style={{height: "4rem" ,  width:"5rem" }} src="/assets/picture.svg" alt="" />
+                      )}
+                    </div>
+                    <div style={{textalign:"center" , paddingLeft:"18%"}}>
 
-                        {collection.CollectionName}
-                      </div>
-                      {/* <Card.Body>
+                          {collection.CollectionName}
+                    </div>
+                    {/* <Card.Body>
+
                       <Card.Title 
                         style={{ textDecoration: "none" , paddingRight:"65%"  }}
                         className="text-center"

@@ -309,7 +309,7 @@ function Profile() {
             </nav>
             <Col md={12} lg={12}>
               <Card style={{ width: "35rem" }} className="bdr-none box-shadow">
-                <Card.Body>
+                <Card.Body> 
                   <Stack gap={3}>
                     <Form>
                       <InputComponent label={"Name"} setValue={setName} valuee={name} />
