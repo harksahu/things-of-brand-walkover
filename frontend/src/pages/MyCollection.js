@@ -10,6 +10,10 @@ import "../utils/SvgInLine.css";
 import { createCollection, getCollection,deleteCollections } from "../api/Index.js";
 import { Link} from "react-router-dom";
 
+
+
+import InputComponent from "../components/InputComponent";
+
 const MyCollection = () => {
   const [allCollection, setAllCollection] = useState([]);
   const [show, setShow] = useState(false);
@@ -61,8 +65,12 @@ const MyCollection = () => {
           <Modal.Title>Create Your collection</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/* <Form.Group className="mb-3">
+
+        {/* label, setValue, valuee, placeholderr } */}
+        <InputComponent value ={collectionName} setValue ={setCollectionName}label ={"Add new collection"}  placeholder={"Enter collection name"}/>
+          {/* <Form.Group className="mb-3"> */}
             {showSuccess&&<Form.Label>Collection Created</Form.Label>}
+
             <Form.Control
               type="domain"
               placeholder="Enter collection name"
@@ -73,8 +81,8 @@ const MyCollection = () => {
               onChange={(e) => {
                 setCollectionName(e.target.value);
               }}
-            />
-            <br></br>
+            /> 
+            {/* <br></br> */}
             <Button
               variant="primary"
               onClick={() => {
@@ -83,7 +91,9 @@ const MyCollection = () => {
             >
               Next
             </Button>
+
           </Form.Group> */}
+
         </Modal.Body>
       </Modal>
       <Container>

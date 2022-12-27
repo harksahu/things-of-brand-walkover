@@ -16,8 +16,8 @@ function ModalComponent(props) {
   const [collectionName, setCollectionName] = useState("");
   const [showComponent, setShowComponent] = useState(false);
   const { user } = UserAuth();
-
   useEffect(() => {
+
     setShowComponent(false);
     
     setCollection(props?.allcollection?.data?.data);
@@ -30,16 +30,18 @@ function ModalComponent(props) {
   },[]);
 
   const createCollections = async (collectionName) => {
-    console.log(collectionName);
+
     const ans = await createCollection({
       CollectionName: collectionName,
       email: user.email,
       Logos: [],
     });
     if (ans) {
+
       alert("collection created successfully");
     }
-    // console.log("ans",ans)
+
+
   };
 
   const createNewCollection = async (collection, logo_id) => {
@@ -51,8 +53,7 @@ function ModalComponent(props) {
       allLogos.push(logo_id);
       var temp = props.variants;
       temp[props.index] = "red";
-      console.log(props.index);
-      console.log(temp);
+
       props.setVariants([...temp]);
     }
     const data = await updateCollection({
@@ -65,6 +66,7 @@ function ModalComponent(props) {
       props.setAddedCollection(true);
     }
   };
+
   return (
     <Modal
       {...props}
@@ -72,6 +74,7 @@ function ModalComponent(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
+
 
       <Modal.Header closeButton>
         {/* <Link to="/collection"> */}
@@ -110,13 +113,13 @@ function ModalComponent(props) {
       </Modal.Header>
       <Modal.Body>
         {!props?.allcollection?.data?.data?.length ? (
-          <Card 
+          <Card
             onClick={() => {
               setShowComponent(true);
             }}
-            className="h-100 item-company add-new"
+            className="h-100 item-company add-new d-flex"
           >
-            <Card.Body className="add-icon align-items-center d-flex justify-content-center">
+            <Card.Body className="add-icon align-items-center justify-content-center">
               <Card.Title className="text-center">
                 <BsFillPlusCircleFill style={{ fontSize: 40 }} />
               </Card.Title>
@@ -130,24 +133,21 @@ function ModalComponent(props) {
         ) : (
           ""
         )}
+        <div className="d-flex item m-3" style={{overflow : "scroll"}}>
+          {collection &&
+            collection.map((collection) => {
+              return (
+                <div key={collection._id} className="m-3">
+                  <div >
+                    {/* <Link to={"/collection/" +collection._id}> */}
 
-        {collection &&
-          collection.map((collection) => {
-            return (
-              <div key={collection._id}>
-                <div className="d-flex justify-content-center item ">
-                  {/* <Link to={"/collection/" +collection._id}> */}
-                 
-                  <Card style={{height: "7.5rem" ,  width:"8rem"}}
-                    className="item-company"
-                    onClick={() => {
-                      createNewCollection(collection, id);
-                    }}
-                  >
-                    <div
-                      
-                      className="img_size  pattern-square"
+                    <Card style={{ height: "7.5rem", width: "8rem" }}
+                      className="item-company"
+                      onClick={() => {
+                        createNewCollection(collection, id);
+                      }}
                     >
+
                       {collection?.logo[0]?.url !== undefined &&
                       collection?.logo[0]?.url !== "null" ? (
                         <img style={{height: "4rem" ,  width:"5rem" }} src={collection?.logo[0]?.url} alt="" />
@@ -160,6 +160,7 @@ function ModalComponent(props) {
                           {collection.CollectionName}
                     </div>
                     {/* <Card.Body>
+
                       <Card.Title 
                         style={{ textDecoration: "none" , paddingRight:"65%"  }}
                         className="text-center"
@@ -167,13 +168,14 @@ function ModalComponent(props) {
                         {collection.CollectionName}
                       </Card.Title>
                     </Card.Body> */}
-                  </Card>
+                    </Card>
                   </div>
                   {/* </Link> */}
                 </div>
-         
-            );
-          })}
+
+              );
+            })}
+        </div>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>

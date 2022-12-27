@@ -130,13 +130,13 @@ const Addfile = (props) => {
               domain: result.data.data[0]._id,
             });
             var i;
-            for (i = 0; i < ffresult.length; i++) {
-              if (domain === ffresult[i]._id) {
-                logo = ffresult[i]?.logo;
+            // for (i = 0; i < ffresult.length; i++) {
+            //   if (domain === ffresult[i]._id) {
+            //     logo = ffresult[i]?.logo;
 
-                break;
-              }
-            }
+            //     break;
+            //   }
+            // }
 
 
             if (result.data.data[0]?.logo == undefined) {
