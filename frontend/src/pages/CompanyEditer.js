@@ -13,6 +13,7 @@ import colors from "../api/colors.json";
 import { Autocomplete ,TextField} from "@mui/material";
 import Addfile from "./Addfile.js"
 import { UserAuth } from "../context/AuthContext";
+import AlertComponent from "../components/AlertComponent";
 import {
   getProfileDetails,
   updateProfileFields,
@@ -64,6 +65,8 @@ function Profile() {
   const [sharedEmail, setSharedEmail] = useState();
   const [loading, setLoading] = useState(false);
   const [allData, setAllData] = useState();
+  const [showAlert, setShowAlert] = useState(false);
+  const[message, setMessage] = useState("")
 
   const location = useLocation();
   let countTemp = countTracker;
@@ -190,16 +193,24 @@ function Profile() {
 
             navigate(-1);
           } else {
-            alert("About us field is compulsory");
+            setShowAlert(true);
+            setMessage("About us field is compulsory")
+            
           }
         } else {
-          alert("Name field is compulsory");
+          setShowAlert(true);
+          setMessage("Name field is compulsory")
+        
         }
       } else {
-        alert("Domain should be unique");
+        setShowAlert(true);
+        setMessage("Domain should be unique")
+        
       }
     } else {
-      alert("Enter proper domain");
+      setShowAlert(true);
+      setMessage("Enter proper domain")
+      
     }
   };
   const profileDetails = async () => {
@@ -229,7 +240,6 @@ function Profile() {
           value: colorDataTemp?.colorValue,
         });
       });
-
       setValue(colorData);
     }
     if (location.state?.data) {
@@ -284,7 +294,10 @@ function Profile() {
   }
 
   return (
+
     <div className="bg-gray h-100">
+    <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert}/>
+
       {loading ? (
         <div className="center-loader">
           <ClipLoader />
@@ -309,7 +322,7 @@ function Profile() {
             </nav>
             <Col md={12} lg={12}>
               <Card style={{ width: "35rem" }} className="bdr-none box-shadow">
-                <Card.Body>
+                <Card.Body> 
                   <Stack gap={3}>
                     <Form>
                       <InputComponent label={"Name"} setValue={setName} valuee={name} />
@@ -531,7 +544,8 @@ function Profile() {
 
                       <InputComponent
                         placeholderr={"Enter domain"}
-                        label={"Domain * <small>(example.com)</small>"}
+                        label={"Domain * "}
+                        smalll={"(example.com)"}
                         setValue={setDomain}
                         valuee={domain}
                       />

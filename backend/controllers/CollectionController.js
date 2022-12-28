@@ -111,9 +111,24 @@ const getCollectionJson = async (_id) => {
         return error
     }
 }
+
+
+const deleteCollection = async (req, res) => {
+    let data;
+    try {
+      data = await CollectionModel.deleteOne({_id:req.params.id});
+    } catch (err) {
+      console.log(err);
+    }
+    if (!data) {
+      return res.status(500).json({ message: "Unable To Delete" });
+    }
+    return res.status(200).json({ message: "Successfully Delete" });
+  };
 export {
     createCollection,
     getCollectionDetails,
     updateCollection,
-    getCollectionJson
+    getCollectionJson,
+    deleteCollection
 }

@@ -22,7 +22,6 @@ export const AuthContextProvider = ({ children }) => {
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider)
     navigate("/my-companies")
-
     // signInWithRedirect(auth, provider)
   };
 

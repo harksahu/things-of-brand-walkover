@@ -14,7 +14,7 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
-
+import AlertComponent from "../components/AlertComponent"
 import {
   getS3SignUrl,
   getProfileDetails,
@@ -53,7 +53,10 @@ const Addfile = (props) => {
   const [domainToSelect, setDomainToSelect] = useState("");
   const [ffresult, setResult] = useState();
   const [loading, setLoading] = useState(true);
-  console.log(props);
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [message, setMessage] = useState("");
+
 
 
   const [shareEmailDomainOption, setShareEmailDomainOption] = useState("");
@@ -108,6 +111,7 @@ const Addfile = (props) => {
   };
 
   const onSubmitClick = async () => {
+
     if (!domain) {
       alert("Complete your profile page");
       return
@@ -163,6 +167,7 @@ const Addfile = (props) => {
       }
     } catch (error) {
       //TODO: error message
+
     }
   };
 
@@ -177,55 +182,90 @@ const Addfile = (props) => {
   }, [user, shareEmailDomainOption]);
   return (
     <>
-      {loading ? <div className="center-loader"
-      ><ClipLoader /></div> :
-        <div>
-          {user ?
-            <Container className="wrpr">
-              <Row>
-                <nav className="navbar bg-light">
-                  <a
-                    className="navbar-brand"
-                  >
-                    Add a file to <strong>{domainToSelect}</strong>
-                  </a>
-                </nav>
-                <Col md={9} lg={10} className="mt-4">
-                  <Card style={{ width: "28rem" }}>
-                    <Card.Body>
-                      <Stack gap={3}>
-                        <FormGroup>
-                          <Form.Label>Choose a domain *</Form.Label>
-                          <Form.Control
-                            aria-label="Default select example"
-                            onChange={(e) => {
-                              setDomain(e.target.value);
-                              setDomainToSelect(e.target.value)
-                            }}
-                            as="select"
-                            value={domainToSelect}
-                          >
 
-                            {ffresult &&
-                              ffresult.map((domainName, index) => (
-                                <option key={index} value={domainName.domain}>
-                                  {domainName.domain}
-                                </option>
-                              ))}
-                            {shareEmailDomainOption ? <option value={shareEmailDomainOption} selected>
-                              {shareEmailDomainOption}
-                            </option> : ""}
+    <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert}/>
+    {loading?<div className="center-loader"
+    ><ClipLoader/></div>:
+    <div>
+      {user ?
+        <Container className="wrpr">
+          <Row>
+            <nav className="navbar bg-light">
+                <a
+                  className="navbar-brand"
+                >
+                  Add a file to <strong>{domainToSelect}</strong>
+                </a>
+            </nav>
+            <Col md={9} lg={10} className="mt-4">
+              <Card style={{ width: "28rem" }}>
+                <Card.Body>
+                  <Stack gap={3}>
+                    <FormGroup>
+                      <Form.Label>Choose a domain *</Form.Label>
+                      <Form.Control
+                        aria-label="Default select example"
+                        onChange={(e) => {
+                          setDomain(e.target.value);
+                          setDomainToSelect(e.target.value)
+                        }}
+                        as="select"
+                        value={domainToSelect}
+                      >
+
+                        {ffresult &&
+                          ffresult.map((domainName, index) => (
+                            <option key={index} value={domainName.domain}>
+                              {domainName.domain}
+                            </option>
+                          ))}
+                        {shareEmailDomainOption ? <option value={shareEmailDomainOption} selected>
+                          {shareEmailDomainOption}
+                        </option> : ""}
 
 
-                          </Form.Control>
-                        </FormGroup>
+                      </Form.Control>
+                    </FormGroup>
 
-                        <FormGroup>
-                          <Form.Label>
-                            Select SVG file * <small>(Logo, Icon etc)</small>{" "}
-                            <a
-                              href="https://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
-                              target="_new"
+                    <FormGroup>
+                      <Form.Label>
+                        Select SVG file * <small>(Logo, Icon etc)</small>{" "}
+                        <a
+                          href="https://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
+                          target="_new"
+                        >
+                          <BsInfoCircle />
+                        </a>
+                      </Form.Label>
+                      <Form.Control
+                        type="file"
+                        size="m"
+                        onChange={(e) => {
+                          setFile(e.target.files[0]);
+                          setTitle(e.target.files[0].name.replace(".svg", ""));
+                        }}
+                        accept=".svg"
+                      />
+                    </FormGroup>
+
+                    <InputComponent label={"Give a name to file *"} setValue={setTitle} valuee={title} placeholderr={"Enter file name"}/>
+
+                    <FormGroup>
+                      <Form.Label>Add tags(Optional)</Form.Label>
+                      <Form.Control
+                        type="text"
+                        onKeyUp={(event) => addTags(event)}
+                      />
+                      <Form.Text className="text-muted">
+                        Press enter
+                      </Form.Text>
+                      <ul className="tags my-3">
+                        {tags.map((tag, index) => (
+                          <li key={index} className="tag-item">
+                            <span>{tag}</span>
+                            <i
+                              className="tag-icon"
+                              onClick={() => removeTags(index)}
                             >
                               <BsInfoCircle />
                             </a>

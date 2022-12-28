@@ -142,7 +142,7 @@ function NavigationBar({ getSearchBrand }) {
             id="logo"
             style={{ cursor: "pointer" }}
           >
-            <img src="tob-icon.svg" /> Things of Brand
+            <img src="tob-logo.svg" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -219,8 +219,7 @@ function NavigationBar({ getSearchBrand }) {
                 ""
               )}
             </Nav>
-
-            {user?.displayName ? (
+            { user?.displayName ? (
               <NavDropdown
                 title={user?.displayName}
                 id="collasible-nav-dropdown"

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import { getProfileDetails, createProfile } from "../api/Index.js";
-import { Container,Form, Card } from "react-bootstrap";
+import { Container, Form, Card } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../utils/SvgInLine.css";
 import "../scss/company.scss";
@@ -10,7 +10,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import CompanyCard from "../components/CompanyCard.js"
-
+import AlertComponent from "../components/AlertComponent";
 
 
 
@@ -21,12 +21,15 @@ function MyCompany() {
   const { user } = UserAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const[message, setMessage] = useState("")
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
-    
-    setShow(false);}
+
+    setShow(false);
+  }
   const handleShow = () => setShow(true);
   useEffect(() => {
     setLoading(true);
@@ -67,22 +70,28 @@ function MyCompany() {
             email: user?.email,
           });
 
-          alert("successfully saved domain " + d);
-
+         
+          setShowAlert(true);
+          setMessage("successfully saved domain")
           navigate("/editprofile", { state: { data: data.data.data } })
 
         } catch (err) {
           // console.log(err);
-          alert("Profile is not created");
+          setShowAlert(true);
+          setMessage("Profile is not created")
+         
         }
       }
     }
   };
-  const next = () => {
+  const next = (event) => {
+    const d = extractDomain(domain);
+    setDomain(d);
+    event.preventDefault();
     var check = 0;
     for (let i = 0; i < allData?.length; i++) {
 
-      if (allData[i].domain === domain) {
+      if (allData[i].domain === d) {
         check = 1;
         document.getElementById("domainError").classList.remove("visually-hidden");
         break;
@@ -115,6 +124,7 @@ function MyCompany() {
 
   return (
     <>
+    <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert}/>
       {loading ? (
         <div className="center-loader"><ClipLoader /></div>
       ) : (
@@ -123,9 +133,9 @@ function MyCompany() {
             <div className="grid">
               {company?.map((Company) => {
                 return (
-                 <div key={Company._id}>
-                   <CompanyCard props={Company} />
-                 </div>
+                  <div key={Company._id}>
+                    <CompanyCard props={Company} />
+                  </div>
                 );
               })}
               {/* <Link to="/editprofile" className="add-new"> */}
@@ -158,29 +168,31 @@ function MyCompany() {
                   <div className="visually-hidden" id="WrongdomainError">
                     Please Enter Correct Domain{" "}
                   </div>
-                  <Form.Group className="mb-3">
-                    <Form.Label>
-                      Domain * <small>(example.com)</small>
-                    </Form.Label>
-                    <Form.Control
-                      type="domain"
-                      placeholder="Enter domain name"
-                      list="doaminBrowsers"
-                      autoComplete="off"
-                      name="myBrowser"
-                      id="domain"
-                      onChange={(e) => {
+                  <Form onSubmit={next}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>
+                        Domain * <small>(example.com)</small>
+                      </Form.Label>
+                      <Form.Control
+                        type="domain"
+                        placeholder="Enter domain name"
+                        list="doaminBrowsers"
+                        autoComplete="off"
+                        name="myBrowser"
+                        id="domain"
+                        onChange={(e) => {
 
-                        setDomain(e.target.value);
+                          setDomain(e.target.value);
 
-                      }}
+                        }}
 
-                    />
-                    <br></br>
+                      />
+                      <br></br>
 
 
-                    <Button variant="primary" onClick={() => next()}>Next</Button>
-                  </Form.Group>
+                      <Button variant="primary" type="submit" >Next</Button>
+                    </Form.Group>
+                  </Form>
                 </Modal.Body>
               </Modal>
 
@@ -198,14 +210,14 @@ function MyCompany() {
                 if (Company?.sharedEmail?.includes(user.email)) {
                   return (
                     <div key={Company._id}>
-                    <CompanyCard props={Company} />
-                  </div>
+                      <CompanyCard props={Company} />
+                    </div>
 
                   );
                 }
               })}
             </div>
-          </Container>
+          </Container>          
         </div>
       )}
     </>
