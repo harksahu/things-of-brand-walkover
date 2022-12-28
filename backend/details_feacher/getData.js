@@ -1,5 +1,4 @@
 import cheerio from "cheerio";
-import http from "http";
 import axios from "axios";
 const puppy = async (name) => {
   // const browser = await puppeteer.launch();

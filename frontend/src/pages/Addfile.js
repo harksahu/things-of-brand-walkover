@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import  PropTypes from "prop-types"
-
 import { createBrandAPI } from "../api/Index.js";
 import { UserAuth } from "../context/AuthContext";
 import Home from "./Home";
@@ -53,10 +51,8 @@ const Addfile = (props) => {
   const [domainToSelect, setDomainToSelect] = useState("");
   const [ffresult, setResult] = useState();
   const [loading, setLoading] = useState(true);
-
   const [showAlert, setShowAlert] = useState(false);
   const [message, setMessage] = useState("");
-
 
 
   const [shareEmailDomainOption, setShareEmailDomainOption] = useState("");
@@ -80,7 +76,7 @@ const Addfile = (props) => {
     }
     profileDetails();
     setLoading(false);
-
+    
   };
   const removeTags = (index) => {
     setTags([...tags.filter((tag) => tags.indexOf(tag) !== index)]);
@@ -89,7 +85,7 @@ const Addfile = (props) => {
   const profileDetails = async () => {
     let fresult = "";
     if (user.email) {
-
+       
       fresult = await getProfileDetails({ email: user.email });
       setResult(fresult.data.data);
     }
@@ -111,78 +107,90 @@ const Addfile = (props) => {
   };
 
   const onSubmitClick = async () => {
+    if (domain) {
+      if (title) {
+        if (file) {
+          try {
+            const data = await getS3SignUrl(file);
 
-    if (!domain) {
-      alert("Complete your profile page");
-      return
-    }
-    if (!title) {
-      alert("title is required");
-      return
-    }
-    if (!file) {
-      alert("Image imput required");
-      return
-    }
-    try {
-      const data = await getS3SignUrl(file);
+            setModalShow(+true);
+            const imageUrl = data.split("?")[0];
+            tags.push(domain);
 
-      setModalShow(+true);
-      const imageUrl = data.split("?")[0];
-      tags.push(domain);
+            const result = await getProfileDetails({
+              email: user.email,
+              domain: domain,
+              searchfrom: "true"
+            });
 
-      const result = await getProfileDetails({
-        email: user.email,
-        domain: domain,
-        searchfrom: "true"
-      });
+             await createBrandAPI({
+              url: imageUrl,
+              title,
+              description: tags,
+              collections: tags,
+              email: user?.email,
+              domain: result.data.data[0]._id,
+            });
+            // var i;
+            // for (i = 0; i < ffresult.length; i++) {
+            //   if (domain === ffresult[i]._id) {
+            //     logo = ffresult[i]?.logo;
 
-      await createBrandAPI({
-        url: imageUrl,
-        title,
-        description: tags,
-        collections: tags,
-        email: user?.email,
-        domain: result.data.data[0]._id,
-      });
+            //     break;
+            //   }
+            // }
 
 
-      if (result.data.data[0]?.logo == undefined) {
-        const data = {
-          _id: result.data.data[0]._id,
-          name: result.data.data[0]?.name,
-          aboutus: result.data.data[0]?.aboutus,
-          logo: imageUrl,
-          links: result.data.data[0]?.links,
-          domain: result.data.data[0]?.domain,
-          guidlines: result.data.data[0]?.guidlines,
-          color: result.data.data[0]?.allColor,
-          email: result.data.data[0]?.email,
-          verify: result.data.data[0]?.verify,
-        };
+            if (result.data.data[0]?.logo == undefined) {
+              const data = {
+                _id : result.data.data[0]._id,
+                name: result.data.data[0]?.name,
+                aboutus: result.data.data[0]?.aboutus,
+                logo: imageUrl,
+                links: result.data.data[0]?.links,
+                domain: result.data.data[0]?.domain,
+                guidlines: result.data.data[0]?.guidlines,
+                color: result.data.data[0]?.allColor,
+                email: result.data.data[0]?.email,
+                verify: result.data.data[0]?.verify,
+              };
 
 
-        await updateProfileFields(data);
+              await updateProfileFields(data);
 
+            }
+          } catch (error) { 
+             //TODO: error message
+          }
+        } else {
+          setShowAlert(true);
+          setMessage("Image imput required")
+      
+          
+        }
+      } else {
+        setShowAlert(true);
+        setMessage("title is required")
+    
       }
-    } catch (error) {
-      //TODO: error message
-
+    } else {
+      setShowAlert(true);
+      setMessage("Complete your profile page")
+      
     }
   };
 
   useEffect(() => {
     setLoading(true);
-    findSharedEmail();
+    findSharedEmail(); 
     // setLoading(false);
     if (user) {
 
       setDomainToSelect(props.domain);
     }
-  }, [user, shareEmailDomainOption]);
+  }, [user,shareEmailDomainOption]);
   return (
     <>
-
     <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert}/>
     {loading?<div className="center-loader"
     ><ClipLoader/></div>:
@@ -267,57 +275,24 @@ const Addfile = (props) => {
                               className="tag-icon"
                               onClick={() => removeTags(index)}
                             >
-                              <BsInfoCircle />
-                            </a>
-                          </Form.Label>
-                          <Form.Control
-                            type="file"
-                            size="m"
-                            onChange={(e) => {
-                              setFile(e.target.files[0]);
-                              setTitle(e.target.files[0].name.replace(".svg", ""));
-                            }}
-                            accept=".svg"
-                          />
-                        </FormGroup>
-
-                        <InputComponent label={"Give a name to file *"} setValue={setTitle} valuee={title} placeholderr={"Enter file name"} />
-
-                        <FormGroup>
-                          <Form.Label>Add tags(Optional)</Form.Label>
-                          <Form.Control
-                            type="text"
-                            onKeyUp={(event) => addTags(event)}
-                          />
-                          <Form.Text className="text-muted">
-                            Press enter
-                          </Form.Text>
-                          <ul className="tags my-3">
-                            {tags.map((tag, index) => (
-                              <li key={index} className="tag-item">
-                                <span>{tag}</span>
-                                <i
-                                  className="tag-icon"
-                                  onClick={() => removeTags(index)}
-                                >
-                                  <BsX />
-                                </i>
-                              </li>
-                            ))}
-                          </ul>
-                        </FormGroup>
-                      </Stack>
-                      <Button variant="primary" onClick={onSubmitClick}>
-                        Submit
-                      </Button>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Row>
-            </Container> : <Home />
-          }
-        </div>
+                              <BsX />
+                            </i>
+                          </li>
+                        ))}
+                      </ul>
+                    </FormGroup>
+                  </Stack>
+                  <Button variant="primary" onClick={onSubmitClick}>
+                    Submit
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container> : <Home />
       }
+      </div>
+    }
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}
@@ -327,8 +302,3 @@ const Addfile = (props) => {
 };
 
 export default Addfile;
-
-Addfile.propTypes = {
-  domain : PropTypes.string
-
-}

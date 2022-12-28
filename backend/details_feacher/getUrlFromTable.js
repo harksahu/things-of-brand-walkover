@@ -27,17 +27,17 @@ const getConfigTable = async (domainName) => {
     maxRecords: 100,
     view: "Grid view",
   });
- select.eachPage(
+  select.eachPage(
     function page(records, fetchNextPage) {
       // console.log("hi");
-      var i =0;
+      var i = 0;
       records.forEach(function (record) {
-        
+
         // console.log("helllllllll");
-        urlAndData.push({url : "",data : ""});
-        urlAndData[i].url  =record.get('Domain');
+        urlAndData.push({ url: "", data: "" });
+        urlAndData[i].url = record.get('Domain');
         urlAndData[i].data = record.get('data');
-         i++;
+        i++;
 
       });
       fetchNextPage();
@@ -49,15 +49,15 @@ const getConfigTable = async (domainName) => {
       }
     }
   );
-//   getUrlFromTable();
+  //   getUrlFromTable();
 };
-async function setConfigTable ()
-{   getConfigTable();
+async function setConfigTable() {
+  getConfigTable();
 
 }
 
 const getUrlFromTable = async () => {
-    console.log("called");
+  console.log("called");
   var base = new Airtable({ apiKey: "key7TosLDxc4hoh5j" }).base(
     "appbLzWdpNCj4unYq"
   );
@@ -67,47 +67,45 @@ const getUrlFromTable = async () => {
       view: "Grid view",
     })
     .eachPage(
-      async function page(records, fetchNextPage)  {
+      async function page(records, fetchNextPage) {
         // console.log("final ");
         for (var i = 0; i < records.length; i++) {
-            // console.log(records[i].id);
+          // console.log(records[i].id);
           if (records[i].get("URL") != undefined) {
 
-            const domain = extractHostname(records[i].get("URL")) ;
-            var  xpath ="";
+            const domain = extractHostname(records[i].get("URL"));
+            var xpath = "";
             // return;
-            for( let temp of urlAndData )
-            {
+            for (let temp of urlAndData) {
               // console.log(temp.url === domain) ;
               // console.log(domain);
-                if (domain === temp.url)
-                {
-                    xpath = JSON.parse(temp.data) 
-                    // console.log(xpath);
-                    // console.log("temp url ",temp.url);
-                    // console.log("main yrl ",records[i].get("URL"));
-                    try {
-                        const data =  await getUpdatedData(records[i].get("URL"),xpath);
-                        // console.log("final data",data);
-                        let stringToSend = "{";
-                        for (let [key, value] of Object.entries(data)) {
-                            stringToSend =stringToSend +'"' +value.head +'"' +":" +'"' +value.title +'"' +",";
-                        }
-                        const editedText = stringToSend.slice(0, -1)  + "}";
-                        // console.log("edited text ",editedText);
-                        base('Table 1').update([
-                            {
-                              "id": records[i].id ,
-                              "fields" : JSON.parse(editedText)
-                            }
-                        ])
-
-                    } catch (error) {
-                      // console.log("wrong url");
+              if (domain === temp.url) {
+                xpath = JSON.parse(temp.data)
+                // console.log(xpath);
+                // console.log("temp url ",temp.url);
+                // console.log("main yrl ",records[i].get("URL"));
+                try {
+                  const data = await getUpdatedData(records[i].get("URL"), xpath);
+                  // console.log("final data",data);
+                  let stringToSend = "{";
+                  for (let [key, value] of Object.entries(data)) {
+                    stringToSend = stringToSend + '"' + value.head + '"' + ":" + '"' + value.title + '"' + ",";
+                  }
+                  const editedText = stringToSend.slice(0, -1) + "}";
+                  // console.log("edited text ",editedText);
+                  base('Table 1').update([
+                    {
+                      "id": records[i].id,
+                      "fields": JSON.parse(editedText)
                     }
-                    
-                    // return ;
-                }       
+                  ])
+
+                } catch (error) {
+                  // console.log("wrong url");
+                }
+
+                // return ;
+              }
             }
             // return ;
           }
@@ -123,4 +121,4 @@ const getUrlFromTable = async () => {
     );
   //    await  getConfigTable(extractHostname(recordTemp[0].get("URL")));
 };
-export { setConfigTable,getUrlFromTable};
+export { setConfigTable, getUrlFromTable };

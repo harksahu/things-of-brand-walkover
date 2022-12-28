@@ -6,7 +6,7 @@ import {
 } from "react-bootstrap";
 import PropTypes from 'prop-types';
 
-function InputComponent({ label, setValue, valuee, placeholderr }) {
+function InputComponent({ label, setValue, valuee, placeholderr,smalll }) {
   return (
     <>
       <Form.Group className="mb-3 " id="name">
