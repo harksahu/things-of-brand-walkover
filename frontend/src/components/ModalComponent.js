@@ -51,6 +51,7 @@ function ModalComponent(props) {
       return;
     } else {
       allLogos.push(logo_id);
+
       var temp = props.variants;
       temp[props.index] = "red";
 
