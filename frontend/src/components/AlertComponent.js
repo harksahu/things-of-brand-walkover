@@ -1,13 +1,15 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useRef } from "react";
 import Toast from "react-bootstrap/Toast";
+import Child from "./child";
 
 const AlertComponent = ({message,showAlert,setShowAlert}) => {
     const show1 = useRef(false);
-    // const [showAlert, setShowAlert] = useState(false);
-    // useEffect(() =>{
-    //     // setShowAlert(show);
-    //     console.log("value of show : ",show);
-    // },[show])
+    
+    const inputRef = useRef();
+
+    const clearForm = () => {
+      inputRef.current.value = ''
+    }
   return (
     <div>
         <Toast
@@ -20,6 +22,9 @@ const AlertComponent = ({message,showAlert,setShowAlert}) => {
           <Toast.Header>{message}</Toast.Header>
         </Toast>
       
+      <Child ref={inputRef}/>
+      <button onClick={() => inputRef.current.xyzCall()}>x</button>
+        {/* <input ref={inputRef}/> */}
     </div>
   )
 }
