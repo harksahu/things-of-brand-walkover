@@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  console.log(children);
+
   const [user, setUser] = useState({});
   const [isLoading,setIsLoading] = useState(true)
   const navigate = useNavigate();
