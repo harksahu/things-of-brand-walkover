@@ -240,7 +240,7 @@ function Profile() {
           value: colorDataTemp?.colorValue,
         });
       });
-      console.log("colorData", colorData);
+      // console.log("colorData", colorData);
       setValue(colorData);
     }
     if (location.state?.data) {
@@ -599,7 +599,7 @@ function Profile() {
                                       let tempCount1 = value;
                                       tempCount1[index] = newValue;
                                       setValue([...tempCount1]);
-                                      console.log(tempCount1);
+                                      // console.log(tempCount1);
                                     } else if (newValue.includes("#")) {
                                       document.getElementById(
                                         "colorinput" + index
@@ -608,7 +608,7 @@ function Profile() {
                                       tempCount1[index].label = newValue;
                                       tempCount1[index].value = newValue;
                                       setValue([...tempCount1]);
-                                      console.log("else if ", tempCount1);
+                                      // console.log("else if ", tempCount1);
                                     } else {
                                       document.getElementById(
                                         "colorinput" + index
@@ -617,7 +617,7 @@ function Profile() {
                                       tempCount1[index].label = newValue;
                                       tempCount1[index].value = newValue;
                                       setValue([...tempCount1]);
-                                      console.log(tempCount1);
+                                      // console.log(tempCount1);
                                     }
                                   }}
                                   freeSolo

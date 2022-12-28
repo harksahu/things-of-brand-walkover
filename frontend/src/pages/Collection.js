@@ -21,7 +21,7 @@ const Collection = () => {
     });
     setLogoId(data?.data?.data[0]?.Logos)
     setallLogos(data?.data?.data[0]?.logo);
-    console.log(data?.data?.data[0]);
+    // console.log(data?.data?.data[0]);
   };
 
   
