@@ -21,13 +21,9 @@
   },
   "homepage": "https://github.com/harksahu/things-of-brand-walkover#readme",
   "dependencies": {
-    "@react-icons/all-files": "^4.1.0",
     "airtable": "^0.11.5",
     "aws-sdk": "^2.1210.0",
     "axios": "^0.27.2", 
-    "bootscrap": "^0.1.0",
-    "bootstrap": "^5.2.0",
-    "canvg": "^4.0.1",
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
@@ -38,14 +34,12 @@
     "http": "^0.0.1-security",
     "mongoose": "^6.5.2",
     "multer": "^1.4.5-lts.1",
-    "request": "^2.88.2",
     "xmldom": "^0.6.0",
     "xpath": "^0.0.32"
   },
   "devDependencies": {
     "concurrently": "^6.0.0",
-    "nodemon": "^2.0.7",
-    "sass": "^1.56.0"
+    "nodemon": "^2.0.7"
   },
   "description": ""
 }
