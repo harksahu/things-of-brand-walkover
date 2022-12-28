@@ -3,18 +3,13 @@ import { Button, Card } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { updateCollection, createCollection } from "../api/Index.js";
 import { UserAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
-
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import InputComponent from "./InputComponent.js";
-import { width } from "@mui/system";
 import AlertComponent from "./AlertComponent.js";
 
 function ModalComponent(props) {
   const [collection, setCollection] = useState("");
   const [id, setId] = useState("");
-  const [logos, setLogos] = useState([]);
-
   const [duplicateError, setDuplicateError] = useState(false);
   const [collectionName, setCollectionName] = useState("");
   const [showComponent, setShowComponent] = useState(false);
@@ -26,8 +21,6 @@ function ModalComponent(props) {
     setShowComponent(false);
     setCollection(props?.allcollection?.data?.data);
     setId(props?.id);
-
-    setLogos(props?.allcollection?.data?.data);
 
   }, [props]);
 
