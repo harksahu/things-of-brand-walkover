@@ -185,6 +185,7 @@ function MyCompany() {
                           setDomain(e.target.value);
 
                         }}
+                        autoFocus
 
                       />
                       <br></br>

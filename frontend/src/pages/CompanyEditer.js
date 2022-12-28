@@ -10,7 +10,7 @@ import {
   Stack,
 } from "react-bootstrap";
 import colors from "../api/colors.json";
-import { Autocomplete ,TextField} from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 import Addfile from "./Addfile.js"
 import { UserAuth } from "../context/AuthContext";
 import AlertComponent from "../components/AlertComponent";
@@ -66,7 +66,7 @@ function Profile() {
   const [loading, setLoading] = useState(false);
   const [allData, setAllData] = useState();
   const [showAlert, setShowAlert] = useState(false);
-  const[message, setMessage] = useState("")
+  const [message, setMessage] = useState("")
 
   const location = useLocation();
   let countTemp = countTracker;
@@ -95,7 +95,7 @@ function Profile() {
       setJsonValue(temp);
     });
   };
- 
+
   function extractDomain(url) {
     var domainName;
     if (url.indexOf("://") > -1) {
@@ -156,65 +156,71 @@ function Profile() {
     }
   }, [domain]);
   const updateProfileValue = async () => {
-    var checkTemp = 0;
+    // window.scrollTo(0, 0)
 
     if (domain != location?.state?.data?.domain) {
       for (let i = 0; i < allData?.length; i++) {
         if (allData[i].domain === domain) {
-          checkTemp = 1;
-          break;
+          window.scrollTo(0, 0)
+          setShowAlert(true);
+          setMessage("Domain should be unique")
+          return
         }
       }
     }
 
     var domainParts = domain.split(".");
-    if (domainParts.length >= 2 && domainParts[1].length >= 1) {
-      if (checkTemp == 0) {
-        if (name) {
-          if (aboutus) {
-            const domainTemp = extractDomain(domain);
-            const data = {
-              _id: id,
-              logo: logo,
-              name: name,
-              aboutus: aboutus,
-              links: links,
-              domain: domainTemp,
-              guidlines: guidlines,
-              fontLink: fontLink,
-              PrimaryColors: PrimaryColors,
-              secondaryColors: secondaryColors,
-              backgroundColors: backgroundColors,
-              sharedEmail: sharedEmail,
-              email: user?.email,
-              color: color,
-            };
-           await updateProfileFields(data);
-
-            navigate(-1);
-          } else {
-            setShowAlert(true);
-            setMessage("About us field is compulsory")
-            
-          }
-        } else {
-          setShowAlert(true);
-          setMessage("Name field is compulsory")
-        
-        }
-      } else {
-        setShowAlert(true);
-        setMessage("Domain should be unique")
-        
-      }
-    } else {
+    console.log(domainParts.length <= 2 , !domainParts[1] , domainParts[1]?.length <= 1);
+    if (domainParts.length <= 2 && (domainParts[1]?.length <= 1 || !domainParts[1])) {
+      console.log("here");
+      window.scrollTo(0, 0)
       setShowAlert(true);
       setMessage("Enter proper domain")
-      
+      return
     }
+
+    if (!name) {
+      window.scrollTo(0, 0)
+      setShowAlert(true);
+      setMessage("Name field is compulsory")
+      return
+    }
+
+    if (!aboutus) {
+      window.scrollTo(0, 0)
+      setShowAlert(true);
+      setMessage("About us field is compulsory")
+      return
+    }
+
+
+    const domainTemp = extractDomain(domain);
+    const data = {
+      _id: id,
+      logo: logo,
+      name: name,
+      aboutus: aboutus,
+      links: links,
+      domain: domainTemp,
+      guidlines: guidlines,
+      fontLink: fontLink,
+      PrimaryColors: PrimaryColors,
+      secondaryColors: secondaryColors,
+      backgroundColors: backgroundColors,
+      sharedEmail: sharedEmail,
+      email: user?.email,
+      color: color,
+    };
+    await updateProfileFields(data);
+
+    navigate("/" + domain);
+
+
+
+
   };
   const profileDetails = async () => {
-     await getProfileDetails({
+    await getProfileDetails({
       domain: location?.state?.data?.domain,
     });
     setLoading(false);
@@ -249,7 +255,7 @@ function Profile() {
     }
   };
 
-  useEffect(() => {}, [value]);
+  useEffect(() => { }, [value]);
 
   const config = {
     buttons: ["bold", "italic"],
@@ -297,7 +303,7 @@ function Profile() {
   return (
 
     <div className="bg-gray h-100">
-    <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert}/>
+      <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert} />
 
       {loading ? (
         <div className="center-loader">
@@ -323,7 +329,7 @@ function Profile() {
             </nav>
             <Col md={12} lg={12}>
               <Card style={{ width: "35rem" }} className="bdr-none box-shadow">
-                <Card.Body> 
+                <Card.Body>
                   <Stack gap={3}>
                     <Form>
                       <InputComponent label={"Name"} setValue={setName} valuee={name} />
@@ -334,7 +340,7 @@ function Profile() {
                           setGuidlines={setAboutus}
                           config={config}
                           tabIndex={1}
-                          
+
                         />
 
                       </Form.Group>
@@ -384,7 +390,7 @@ function Profile() {
                                           className="img_size  pattern-square"
                                         >
                                           {brand.url !== undefined &&
-                                          brand.url !== "null" ? (
+                                            brand.url !== "null" ? (
                                             <img src={brand.url} alt="" />
                                           ) : (
                                             <img

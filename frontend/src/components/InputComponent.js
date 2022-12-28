@@ -17,6 +17,7 @@ function InputComponent({ label, setValue, valuee, placeholderr,smalll }) {
             setValue(e.target.value);
           }}
           value={valuee}
+
         
         />
       </Form.Group>

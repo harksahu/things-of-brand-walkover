@@ -43,19 +43,18 @@ const MyCollection = () => {
     }
     const daata = await deleteCollections(collection._id);
     if (daata) {
-      setMessage("delete collection " );
+      setMessage("Collection deleted successfully !" );
       setShowAlert(true)
       // <Alert>Hello</Alert>
     }
   };
   const createNewCollection = async (event) => {
-    console.log("collectionName",collectionName);
     event.preventDefault();
     var temp = collectionName;
     temp = temp?.trim();
     if (temp == undefined || temp == "") {
       setShow(false);
-      setMessage("collection name is required" );
+      setMessage("Collection name is required *" );
       setShowAlert(true)
       return;
     }
@@ -64,6 +63,8 @@ const MyCollection = () => {
       email: user?.email,
     });
     showAllCollections();
+    setMessage("Collection created successfully !" );
+      setShowAlert(true)
     // setShowSuccess(true);
     setShow(false);
     setCollectionName();
