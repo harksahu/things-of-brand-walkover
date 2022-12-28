@@ -13,6 +13,7 @@ function DomainVerificationPage() {
   const [show, setShow] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  
   async function makeid() {
     
     var result = "thingsofbrand-domain-verification="+uuidv4();

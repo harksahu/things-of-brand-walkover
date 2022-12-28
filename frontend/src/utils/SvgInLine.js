@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../scss/style.scss"
+// import PropTypes from 'prop-types';
 
 const SvgInline = (props) => {
   const [svg, setSvg] = useState(null);
@@ -49,3 +50,13 @@ const SvgInline = (props) => {
 };
 
 export default SvgInline;
+
+
+
+
+// SvgInline.propTypes = {
+//   props.url:  PropTypes.string
+
+// };
+
+
