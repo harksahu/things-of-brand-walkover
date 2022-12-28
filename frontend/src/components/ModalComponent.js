@@ -81,10 +81,14 @@ function ModalComponent(props) {
 
       <Modal.Header closeButton>
         {/* <Link to="/collection"> */}
-        {showComponent ? (
+        <div style={{
+          width:"100%",
+          display :"flex",
+          justifyContent : 'space-between'
+      }}>
+        {showComponent && (
           <div style={{ marginRight: "250px" }}>
             <InputComponent
-              // label={"Collection Name"}
               setValue={setCollectionName}
               valuee={collectionName}
               placeholderr={"Enter Collection name"}
@@ -98,13 +102,11 @@ function ModalComponent(props) {
               Submit
             </Button>
           </div>
-        ) : (
-          <h4 style={{ width: "500%" }}> {duplicateError}</h4>
-        )}
+        ) }
+        
         {props?.allcollection?.data?.data?.length ? (
           <BsFillPlusCircleFill
             size="50px"
-            // style={{ margin: "-150px 5px" }}
             onClick={() => {
               setShowComponent(true);
             }}
@@ -113,6 +115,7 @@ function ModalComponent(props) {
           ""
         )}
         {/* </Link> */}
+        </div>
       </Modal.Header>
       <Modal.Body>
         {!props?.allcollection?.data?.data?.length ? (
@@ -181,6 +184,9 @@ function ModalComponent(props) {
     </div>
       </Modal.Body >
     <Modal.Footer>
+    {duplicateError && !showComponent &&(
+          <h4 > {duplicateError}</h4>
+        )}
       <Button onClick={props.onHide}>Close</Button>
     </Modal.Footer>
     </Modal >
