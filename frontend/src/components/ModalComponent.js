@@ -93,7 +93,6 @@ function ModalComponent(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-
       <Modal.Header closeButton>
         {/* <Link to="/collection"> */}
         <div
@@ -104,81 +103,92 @@ function ModalComponent(props) {
           }}
         >
           {showComponent && (
-            <div style={{ marginRight: "250px"  }}>
+            <div style={{ marginRight: "250px" }}>
               <InputComponent
                 setValue={setCollectionName}
                 valuee={collectionName}
                 placeholderr={"Enter Collection name"}
               />
               <Button
-
                 onClick={() => {
-                  setShowComponent(true);
+                  props.onHide();
+                  createCollections(collectionName);
                 }}
-              />
-            ) : (
-              ""
-            )}
-            {/* </Link> */}
-          </div>
-        </Modal.Header>
-        <Modal.Body>
-          {!props?.allcollection?.data?.data?.length && (
-
-            <Card
+              >
+                Submit
+              </Button>
+            </div>
+          )}
+          {props?.allcollection?.data?.data?.length ? (
+            <BsFillPlusCircleFill
+              size="50px"
               onClick={() => {
                 setShowComponent(true);
               }}
-              className="h-100 item-company add-new d-flex"
-            >
-              <Card.Body className="add-icon align-items-center justify-content-center">
-                <Card.Title className="text-center">
-                  <BsFillPlusCircleFill style={{ fontSize: 40 }} />
-                </Card.Title>
-              </Card.Body>
-              <Card.Body>
-                <Card.Title className="text-center">
-                  Add New Collection
-                </Card.Title>
-              </Card.Body>
-            </Card>
-          )
-          }
-          <div className="d-flex item m-3" style={{ overflow: "scroll" }}>
-            {collection &&
-              collection.map((collection) => {
-                return (
-                  <div key={collection._id} className="m-3">
-                    <div>
-                      {/* <Link to={"/collection/" +collection._id}> */}
+            />
+          ) : (
+            ""
+          )}
+          {/* </Link> */}
+        </div>
+      </Modal.Header>
+      <Modal.Body>
+        {!props?.allcollection?.data?.data?.length ? (
+          <Card
+            onClick={() => {
+              setShowComponent(true);
+            }}
+            className="h-100 item-company add-new d-flex"
+          >
+            <Card.Body className="add-icon align-items-center justify-content-center">
+              <Card.Title className="text-center">
+                <BsFillPlusCircleFill style={{ fontSize: 40 }} />
+              </Card.Title>
+            </Card.Body>
+            <Card.Body>
+              <Card.Title className="text-center">
+                Add New Collection
+              </Card.Title>
+            </Card.Body>
+          </Card>
+        ) : (
+          ""
+        )}
+        <div className="d-flex item m-3" style={{ overflow: "scroll" }}>
+          {collection &&
+            collection.map((collection) => {
+              return (
+                <div key={collection._id} className="m-3">
+                  <div>
+                    {/* <Link to={"/collection/" +collection._id}> */}
+                    <Card 
+                      style={{ height: "7.5rem", width: "8rem" }}
+                      className={`item-company ${collection?.Logos?.includes(id) && "blur"}`}
 
-                      <Card
-                        style={{ height: "7.5rem", width: "8rem" }}
-                        className={`item-company ${collection?.Logos?.includes(id) && "blur"}`}
-                        onClick={() => {
-                          createNewCollection(collection, id);
-                        }}
-                      >
-                        {collection?.logo[0]?.url !== undefined &&
-                          collection?.logo[0]?.url !== "null" ? (
-                          <img
-                            style={{ height: "4rem", width: "5rem" }}
-                            src={collection?.logo[0]?.url}
-                            alt=""
-                          />
-                        ) : (
-                          <img
-                            style={{ height: "4rem", width: "5rem" }}
-                            src="/assets/picture.svg"
-                            alt=""
-                          />
-                        )}
-                        {/* </div> */}
-                        <div style={{ textalign: "center", paddingLeft: "18%" }}>
-                          {collection.CollectionName}
-                        </div>
-                        {/* <Card.Body>
-
+                      onClick={() => {
+                        createNewCollection(collection, id);
+                        props.onHide();
+                      }}
+                    >
+                      {collection?.logo[0]?.url !== undefined &&
+                      collection?.logo[0]?.url !== "null" ? (
+                        <img
+                          style={{ height: "4rem", width: "5rem" }}
+                          src={collection?.logo[0]?.url}
+                          alt=""
+                        />
+                      ) : (
+                        <img
+                          style={{ height: "4rem", width: "5rem" }}
+                          src="/assets/picture.svg"
+                          alt=""
+                        />
+                      )}
+                      {/* </div> */}
+                      <div style={{ textalign: "center", paddingLeft: "18%" }}>
+                        {collection.CollectionName}
+                      </div>
+                      {/* <Card.Body>
                       <Card.Title 
                         style={{ textDecoration: "none" , paddingRight:"65%"  }}
                         className="text-center"
@@ -186,26 +196,22 @@ function ModalComponent(props) {
                         {collection.CollectionName}
                       </Card.Title>
                     </Card.Body> */}
-                      </Card>
-                    </div>
-                    {/* </Link> */}
+                    </Card>
                   </div>
-
-                );
-              })}
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          {duplicateError && !showComponent && <h4> {duplicateError}</h4>}
-          <Button onClick={props.onHide}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-      <AlertComponent
-        message={message}
-        showAlert={showAlert}
-        setShowAlert={setShowAlert}
-      />
-    </>
+                  {/* </Link> */}
+                </div>
+              );
+            })}
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        {duplicateError && !showComponent && <h4> {duplicateError}</h4>}
+        <Button onClick={props.onHide}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+        
+      }
+  </>
 
   );
 }
