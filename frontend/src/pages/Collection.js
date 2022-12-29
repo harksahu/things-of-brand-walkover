@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams,useNavigate,useLocation } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { getCollection,updateCollection } from "../api/Index";
 import { Container, Card } from "react-bootstrap";
@@ -16,6 +16,8 @@ const Collection = () => {
   const [collectionId,setCollectionId] = useState("");
   const { user } = UserAuth();
   const navigate = useNavigate();
+  const {key} = useLocation();
+
   const id = useParams();
 
   const getAllLogosFromCollection = async () => {
@@ -55,7 +57,11 @@ const Collection = () => {
       <Button
         variant="outline-dark"
         onClick={() => {
-          navigate(-1);
+          if (key === "default") {
+            navigate('/');
+          } else {
+            navigate(-1);
+          }
         }}
       >
         <MdArrowBackIos />
