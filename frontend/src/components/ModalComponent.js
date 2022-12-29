@@ -88,7 +88,7 @@ function ModalComponent(props) {
           }}
         >
           {showComponent && (
-            <div style={{ marginRight: "250px" }}>
+            <div style={{ marginRight: "250px"  }}>
               <InputComponent
                 setValue={setCollectionName}
                 valuee={collectionName}
@@ -119,7 +119,8 @@ function ModalComponent(props) {
         </div>
       </Modal.Header>
       <Modal.Body>
-        {!props?.allcollection?.data?.data?.length ? (
+        {!props?.allcollection?.data?.data?.length && (
+            
           <Card
             onClick={() => {
               setShowComponent(true);
@@ -137,9 +138,8 @@ function ModalComponent(props) {
               </Card.Title>
             </Card.Body>
           </Card>
-        ) : (
-          ""
-        )}
+        ) 
+        }
         <div className="d-flex item m-3" style={{ overflow: "scroll" }}>
           {collection &&
             collection.map((collection) => {
@@ -150,7 +150,7 @@ function ModalComponent(props) {
 
                     <Card
                       style={{ height: "7.5rem", width: "8rem" }}
-                      className="item-company"
+                      className={`item-company ${collection?.Logos?.includes(id) && "blur"}`  }                 
                       onClick={() => {
                         createNewCollection(collection, id);
                       }}
