@@ -685,14 +685,14 @@ function Profile() {
                             </div>
                           ))}
                           <div className="button-section">
-                            <button
+                            <Button
                               className="name noselect m-20 "
                               type="button"
                               id="add_input"
                               onClick={() => addFormFields()}
                             >
                               Add
-                            </button>
+                            </Button>
                           </div>
                         </Form.Group>
                       </div>
