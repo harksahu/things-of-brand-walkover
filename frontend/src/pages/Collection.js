@@ -5,8 +5,8 @@ import { getCollection,updateCollection } from "../api/Index";
 import { Container, Card } from "react-bootstrap";
 import { MdArrowBackIos } from "react-icons/md";
 import Button from "react-bootstrap/Button";
-
 import DeleteIcon from '@mui/icons-material/Delete';
+
 
 const Collection = () => {
   const [allLogos, setallLogos] = useState([]);
