@@ -15,13 +15,15 @@ import {
 import { Link } from "react-router-dom";
 import InputComponent from "../components/InputComponent";
 import AlertComponent from "../components/AlertComponent";
-
+import ClipLoader from "react-spinners/ClipLoader";
 const MyCollection = () => {
   const [allCollection, setAllCollection] = useState([]);
   const [show, setShow] = useState(false);
   const [collectionName, setCollectionName] = useState();
   const [message, setMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   
   const { user } = UserAuth();
   const handleClose = () => {
@@ -33,6 +35,7 @@ const MyCollection = () => {
       email: user?.email,
     });
     setAllCollection(data.data.data);
+    setLoading(false);
   };
   const deleteCollection = async (collection) => {
     // setShowAlert(true);
@@ -81,6 +84,9 @@ const MyCollection = () => {
   
   return (
     <div>
+     { loading ? <div className="center-loader">
+          <ClipLoader />
+        </div>:
       <Container>
         <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert}/>
         <Modal show={show} onHide={handleClose}>
@@ -156,7 +162,7 @@ const MyCollection = () => {
             </Card.Body>
           </Card>
         </div>
-      </Container>
+      </Container>}
     </div>
   );
 };

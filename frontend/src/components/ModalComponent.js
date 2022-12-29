@@ -167,7 +167,7 @@ function ModalComponent(props) {
 
                       onClick={() => {
                         createNewCollection(collection, id);
-                        props.onHide();
+                        
                       }}
                     >
                       {collection?.logo[0]?.url !== undefined &&
