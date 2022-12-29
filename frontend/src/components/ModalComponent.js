@@ -70,7 +70,12 @@ function ModalComponent(props) {
 
   return (
 <>
-    
+    {!user?.email?
+    <AlertComponent
+    message={message}
+    showAlert={showAlert}
+    setShowAlert={setShowAlert}
+  />  :
     <Modal
       {...props}
       size="lg"
@@ -195,12 +200,9 @@ function ModalComponent(props) {
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
-        <AlertComponent
-        message={message}
-        showAlert={showAlert}
-        setShowAlert={setShowAlert}
-      />  
-   </>
+        
+      }
+  </>
   );
 }
 export default ModalComponent;
