@@ -6,10 +6,11 @@ import { Container, Card } from "react-bootstrap";
 import { MdArrowBackIos } from "react-icons/md";
 import Button from "react-bootstrap/Button";
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import ClipLoader from "react-spinners/ClipLoader";
 const Collection = () => {
   const [allLogos, setallLogos] = useState([]);
   const [logoId,setLogoId] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { user } = UserAuth();
   const navigate = useNavigate();
   const id = useParams();
@@ -22,14 +23,19 @@ const Collection = () => {
     setLogoId(data?.data?.data[0]?.Logos)
     setallLogos(data?.data?.data[0]?.logo);
     // console.log(data?.data?.data[0]);
+    setLoading(false);
   };
 
   
   useEffect(() => {
-    if (user?.email && id) getAllLogosFromCollection();
+    if (user?.email && id)
+     getAllLogosFromCollection();
   }, [user]);
   return (
     <div>
+      {loading ? <div className="center-loader">
+          <ClipLoader />
+        </div>:
         <Container>
       <Button
         variant="outline-dark"
@@ -75,7 +81,7 @@ const Collection = () => {
               })
             : "Please add logos to collection"}
         </div>
-      </Container>
+      </Container>}
     </div>
   );
 };
