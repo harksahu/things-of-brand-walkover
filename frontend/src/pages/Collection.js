@@ -6,9 +6,11 @@ import { Container, Card } from "react-bootstrap";
 import { MdArrowBackIos } from "react-icons/md";
 import Button from "react-bootstrap/Button";
 
+// import DeleteIcon from '@mui/icons-material/Delete';
+
 const Collection = () => {
   const [allLogos, setallLogos] = useState([]);
-  const [,setLogoId] = useState([]);
+  // const [logoId,setLogoId] = useState([]);
   const { user } = UserAuth();
   const navigate = useNavigate();
   const id = useParams();
@@ -18,7 +20,7 @@ const Collection = () => {
       _id: id.id,
       email: user?.email,
     });
-    setLogoId(data?.data?.data[0]?.Logos)
+    // setLogoId(data?.data?.data[0]?.Logos)
     setallLogos(data?.data?.data[0]?.logo);
     // console.log(data?.data?.data[0]);
   };

@@ -16,7 +16,7 @@ import "../utils/SvgInLine.css";
 import "../scss/brand.scss";
 import { UserAuth } from "../context/AuthContext";
 import CopyToClipboard from "../components/CopyToClipboard.js";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 import {
   getProfileDetails,
   sendSearchAPI,
@@ -447,15 +447,18 @@ function Brand() {
                               >
                                 SVG
                               </Button>
-                              <FavoriteIcon
-                                style={{ color: variants[index] }}
-                                onClick={() => {
 
+                               
+                                <div>
+                                <BookmarkIcon
+                                style={{ color: variants[index]}}
+                                onClick={() => {
+                                  
                                   setModalShow(true);
                                   setAddImageToCollection(brand._id);
                                   setIndexToaddToFav(index);
                                 }}
-                              />
+                              /></div>
 
 
                             </Card.Footer>
