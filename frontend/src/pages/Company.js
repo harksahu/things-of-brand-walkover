@@ -78,7 +78,6 @@ function Brand() {
     setShoww(false);
 
   };
-
   const removeSharedEmail = (index) => {
     let temp = sharedEmail;
     temp.splice(index, 1);

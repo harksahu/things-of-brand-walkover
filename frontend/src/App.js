@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes,useLocation } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
 import Footer from './components/Footer';
 import Protected from './components/Protected';
@@ -8,7 +8,6 @@ import { AuthContextProvider } from './context/AuthContext';
 import Account from './pages/Account';
 import MyCollection from './pages/MyCollection';
 import Collection from './pages/Collection';
-
 import Home from './pages/Home';
 import Addfile from './pages/Addfile';
 import MyStuff from './pages/MyStuff';
@@ -28,6 +27,7 @@ import PageNotFound from './pages/PageNotFound.js';
 
 function App() {
   const [isUserLoaded, setIsUserLoaded] = useState(false);
+  const location= useLocation()
   useEffect(() => {
     fetchUser()
   }, [])
@@ -45,7 +45,7 @@ function App() {
         >
           <AuthContextProvider>
 
-            {window.location.pathname ? (window.location.pathname.slice(0, 7).toLocaleLowerCase() === '/stuff/' ? "" : <NavigationBar />) : <NavigationBar />}
+            {location?.pathname ? (location?.pathname.slice(0, 7).toLowerCase() === '/stuff/' ? "" : <NavigationBar />) : <NavigationBar />}
             {/* <SearchBar /> */}
             <Routes>
 
