@@ -47,7 +47,11 @@ function ModalComponent(props) {
   const createNewCollection = async (collection, logo_id) => {
     var allLogos = collection?.Logos;
     if (allLogos.includes(logo_id)) {
-      setDuplicateError("Logos is already in the collection");
+      console.log("djhhhfsd");
+
+      setShowAlert(true);
+      setMessage("Logos is already in the collection");
+      // setDuplicateError("Logos is already in the collection");
       return;
     } else {
       allLogos.push(logo_id);
@@ -63,7 +67,10 @@ function ModalComponent(props) {
       email: user?.email,
     });
     if (data) {
-      setDuplicateError("Logo is added to the collection");
+      console.log("dfsd");
+      setShowAlert(true);
+      setMessage("Logo is added to the collection");
+      // setDuplicateError("Logo is added to the collection");
       props.setAddedCollection(true);
     }
   };
@@ -153,11 +160,12 @@ function ModalComponent(props) {
                   <div>
                     {/* <Link to={"/collection/" +collection._id}> */}
 
-                    <Card
+                    <Card 
                       style={{ height: "7.5rem", width: "8rem" }}
                       className="item-company"
                       onClick={() => {
                         createNewCollection(collection, id);
+                        props.onHide();
                       }}
                     >
                       {collection?.logo[0]?.url !== undefined &&
