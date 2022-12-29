@@ -6,7 +6,15 @@
     color: #999;
     text-decoration: none;
     text-align: center;
+    cursor: pointer;
     .add-icon{
         height: 282px;
     }
 }
+
+.item{
+    .dropdown-toggle::after{
+        display: none;
+    }
+}
+    
