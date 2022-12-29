@@ -5,8 +5,8 @@ import { getCollection,updateCollection } from "../api/Index";
 import { Container, Card } from "react-bootstrap";
 import { MdArrowBackIos } from "react-icons/md";
 import Button from "react-bootstrap/Button";
-
 import DeleteIcon from '@mui/icons-material/Delete';
+
 
 const Collection = () => {
   const [allLogos, setallLogos] = useState([]);
@@ -30,7 +30,6 @@ const Collection = () => {
       if (index > -1) { 
         logoId.splice(index, 1);
     }
-    setLogoId[logoIdd]
         const data = await updateCollection({
           _id:_id,
           Logos:logoId

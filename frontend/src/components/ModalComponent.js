@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
-import { updateCollection, createCollection } from "../api/Index.js";
+import { updateCollection, createCollection,getCollection } from "../api/Index.js";
 import { UserAuth } from "../context/AuthContext";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import InputComponent from "./InputComponent.js";
@@ -15,7 +15,7 @@ function ModalComponent(props) {
   const [showComponent, setShowComponent] = useState(false);
   const [message, setMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
- 
+
   const { user } = UserAuth();
   useEffect(() => {
     setShowComponent(false);
@@ -24,8 +24,7 @@ function ModalComponent(props) {
   }, [props]);
 
   useEffect(() => {
-    if(!user?.email)
-    {
+    if (!user?.email) {
       setShowAlert(true);
       setMessage("You have to login first...");
     }
@@ -47,12 +46,11 @@ function ModalComponent(props) {
   const createNewCollection = async (collection, logo_id) => {
     var allLogos = collection?.Logos;
     if (allLogos.includes(logo_id)) {
-      console.log("djhhhfsd");
-
-      setShowAlert(true);
-      setMessage("Logos is already in the collection");
-      // setDuplicateError("Logos is already in the collection");
-      return;
+      const index = allLogos.indexOf(logo_id);
+      if (index > -1) {
+        allLogos.splice(index, 1); 
+      setDuplicateError("Logo is removed to the collection");
+    }
     } else {
       allLogos.push(logo_id);
 
@@ -60,19 +58,25 @@ function ModalComponent(props) {
       temp[props.index] = "red";
 
       props.setVariants([...temp]);
+      setDuplicateError("Logo is added to the collection");
+      props.setAddedCollection(true);
     }
-    const data = await updateCollection({
+     await updateCollection({
       _id: collection?._id,
       Logos: allLogos,
       email: user?.email,
     });
-    if (data) {
-      console.log("dfsd");
-      setShowAlert(true);
-      setMessage("Logo is added to the collection");
-      // setDuplicateError("Logo is added to the collection");
-      props.setAddedCollection(true);
-    }
+
+
+
+    const getCollectiondata = await getCollection({
+      
+      email: user?.email,
+    });
+
+
+
+    setCollection(getCollectiondata?.data?.data);
   };
 
   return (
@@ -89,7 +93,6 @@ function ModalComponent(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-
       <Modal.Header closeButton>
         {/* <Link to="/collection"> */}
         <div
@@ -116,7 +119,6 @@ function ModalComponent(props) {
               </Button>
             </div>
           )}
-
           {props?.allcollection?.data?.data?.length ? (
             <BsFillPlusCircleFill
               size="50px"
@@ -159,13 +161,13 @@ function ModalComponent(props) {
                 <div key={collection._id} className="m-3">
                   <div>
                     {/* <Link to={"/collection/" +collection._id}> */}
-
                     <Card 
                       style={{ height: "7.5rem", width: "8rem" }}
-                      className="item-company"
+                      className={`item-company ${collection?.Logos?.includes(id) && "blur"}`}
+
                       onClick={() => {
                         createNewCollection(collection, id);
-                        props.onHide();
+                        
                       }}
                     >
                       {collection?.logo[0]?.url !== undefined &&
@@ -187,7 +189,6 @@ function ModalComponent(props) {
                         {collection.CollectionName}
                       </div>
                       {/* <Card.Body>
-
                       <Card.Title 
                         style={{ textDecoration: "none" , paddingRight:"65%"  }}
                         className="text-center"
@@ -211,6 +212,7 @@ function ModalComponent(props) {
         
       }
   </>
+
   );
 }
 export default ModalComponent;
