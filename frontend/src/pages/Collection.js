@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams,useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
-import { getCollection,updateCollection } from "../api/Index";
+import { getCollection } from "../api/Index";
 import { Container, Card } from "react-bootstrap";
 import { MdArrowBackIos } from "react-icons/md";
 import Button from "react-bootstrap/Button";
-import DeleteIcon from '@mui/icons-material/Delete';
 
 const Collection = () => {
   const [allLogos, setallLogos] = useState([]);
-  const [logoId,setLogoId] = useState([]);
+  const [,setLogoId] = useState([]);
   const { user } = UserAuth();
   const navigate = useNavigate();
   const id = useParams();

@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, {useRef } from "react";
 import Toast from "react-bootstrap/Toast";
 
 const AlertComponent = ({message,showAlert,setShowAlert}) => {
