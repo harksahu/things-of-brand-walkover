@@ -7,10 +7,13 @@ import { MdArrowBackIos } from "react-icons/md";
 import Button from "react-bootstrap/Button";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClipLoader from "react-spinners/ClipLoader";
+
+
 const Collection = () => {
+  const [loading, setLoading] = useState(true);
   const [allLogos, setallLogos] = useState([]);
   const [logoId,setLogoId] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [collectionId,setCollectionId] = useState("");
   const { user } = UserAuth();
   const navigate = useNavigate();
   const id = useParams();
@@ -22,10 +25,22 @@ const Collection = () => {
     });
     setLogoId(data?.data?.data[0]?.Logos)
     setallLogos(data?.data?.data[0]?.logo);
-    // console.log(data?.data?.data[0]);
     setLoading(false);
+    setCollectionId(data?.data?.data[0]._id);
   };
-
+  const deleteLogo = async (logoIdd,_id)=>{
+    const index = logoId.indexOf(logoIdd);
+      if (index > -1) { 
+        logoId.splice(index, 1);
+    }
+    setLogoId(logoIdd);
+        const data = await updateCollection({
+          _id:_id,
+          Logos:logoId
+        })
+        getAllLogosFromCollection();
+      console.log(data);
+  }
   
   useEffect(() => {
     if (user?.email && id)
@@ -72,6 +87,7 @@ const Collection = () => {
                             className="text-center"
                           >
                             {collection.name}
+                            <DeleteIcon onClick={()=>{deleteLogo(logoId[index],collectionId)}}/>
                           </Card.Title>
                         </Card.Body>
                       </Card>
