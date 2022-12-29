@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useLocation,useParams } from "react-router-dom";
 import {
   Container,
   Form,
@@ -72,13 +72,12 @@ function Brand() {
   const [addedCollection, setAddedCollection] = useState(false);
   const [variants, setvariants] = useState([]);
   const [indexToaddToFav, setIndexToaddToFav] = useState();
-
+const {key} = useLocation()
   const handleClosee = () => {
     setIsRepeatingEmail(false);
     setShoww(false);
 
   };
-
   const removeSharedEmail = (index) => {
     let temp = sharedEmail;
     temp.splice(index, 1);
@@ -225,7 +224,11 @@ function Brand() {
                       <Button
                         variant="outline-dark"
                         onClick={() => {
-                          navigate(-1);
+                          if (key === "default") {
+                            navigate('/');
+                          } else {
+                            navigate(-1);
+                          }
                         }}
                       >
                         <MdArrowBackIos />

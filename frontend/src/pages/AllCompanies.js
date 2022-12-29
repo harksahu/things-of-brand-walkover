@@ -3,7 +3,7 @@ import "../utils/SvgInLine.css";
 import { connect } from "react-redux";
 import { searchBrand } from "../store/actions/Search-Brands.js";
 import Figure from "react-bootstrap/Figure";
-import Pagination from "./Pagination";
+import Pagination from "../components/Pagination";
 import ClipLoader from "react-spinners/ClipLoader";
 import CompanyCard from "../components/CompanyCard.js"
 
@@ -80,11 +80,11 @@ function Home({ searchBrandData = [], getSearchBrand }) {
             )}
           </div>
           <div className="mt-5"></div>
-          {searchBrandData?.data?.length > postsPerPage ? <Pagination
+          {searchBrandData?.data?.length > postsPerPage && <Pagination
             postsPerPage={postsPerPage}
             totalPosts={searchBrandData.data.length}
             paginate={paginate}
-          /> : ""}
+          /> }
         </>
       }
 

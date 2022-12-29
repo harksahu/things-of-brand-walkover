@@ -10,7 +10,7 @@ import Row from "react-bootstrap/Row";
 import "../utils/SvgInLine.css";
 import "../scss/popup.scss";
 import SvgInline from "../utils/SvgInLine.js";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate,useLocation, useParams } from "react-router-dom";
 import Draggable from "react-draggable";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
@@ -28,6 +28,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 function MyVerticallyCenteredModal() {
   const id = useParams();
   const navigate = useNavigate();
+  const {key} = useLocation();
   const [mwidth, setWidth] = useState(250);
   const [name, setName] = useState("");
   const [mheight, setHeight] = useState(250);
@@ -58,7 +59,7 @@ function MyVerticallyCenteredModal() {
     saveAs(svg, fileName);
   };
 
-  const DownloadToPng = async (img, w, h) => {
+  const DownloadToPng = async (img, w, h, fileName) => {
     if (w === undefined) {
       const x = document.getElementById(img).clientWidth;
       setWidth(x);
@@ -89,7 +90,7 @@ function MyVerticallyCenteredModal() {
       width: w,
       height: h,
     }).then((pngUrl) => {
-      saveAs(pngUrl);
+      saveAs(pngUrl, fileName);
     });
   };
 
@@ -137,7 +138,11 @@ function MyVerticallyCenteredModal() {
                 <Button
                   style={{ margin: 10, zIndex: 1 }}
                   onClick={() => {
-                    navigate(-1);
+                    if (key === "default") {
+                      navigate('/');
+                    } else {
+                      navigate(-1);
+                    }
                   }}
                   variant="dark"
                 >
@@ -301,7 +306,7 @@ function MyVerticallyCenteredModal() {
                       variant="outline-secondary"
                       size="sm me-4"
                       onClick={() => {
-                        DownloadToPng(document.getElementById("largeImage").innerHTML, mwidth, mheight);
+                        DownloadToPng(document.getElementById("largeImage").innerHTML, mwidth, mheight, props?.title);
                       }}
                       className=""
                     >

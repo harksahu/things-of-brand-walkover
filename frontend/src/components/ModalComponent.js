@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card ,Form} from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
-import { updateCollection, createCollection,getCollection } from "../api/Index.js";
+import { updateCollection, createCollection, getCollection } from "../api/Index.js";
 import { UserAuth } from "../context/AuthContext";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import InputComponent from "./InputComponent.js";
@@ -18,9 +18,11 @@ function ModalComponent(props) {
 
   const { user } = UserAuth();
   useEffect(() => {
-    setShowComponent(false);
-    setCollection(props?.allcollection?.data?.data);
-    setId(props?.id);
+    if (user?.email) {
+      setShowComponent(false);
+      setCollection(props?.allcollection?.data?.data);
+      setId(props?.id);
+    }
   }, [props]);
 
   useEffect(() => {
@@ -52,20 +54,20 @@ function ModalComponent(props) {
     if (allLogos.includes(logo_id)) {
       const index = allLogos.indexOf(logo_id);
       if (index > -1) {
-        allLogos.splice(index, 1); 
-      setDuplicateError("Logo is removed to the collection");
-    }
+        allLogos.splice(index, 1);
+        setDuplicateError("Logo is removed to the collection");
+      }
     } else {
       allLogos.push(logo_id);
 
       var temp = props.variants;
       temp[props.index] = "red";
 
-      props.setVariants([...temp]);
+      props?.setVariants([...temp]);
       setDuplicateError("Logo is added to the collection");
-      props.setAddedCollection(true);
+      props?.setAddedCollection(true);
     }
-     await updateCollection({
+    await updateCollection({
       _id: collection?._id,
       Logos: allLogos,
       email: user?.email,
@@ -74,7 +76,7 @@ function ModalComponent(props) {
 
 
     const getCollectiondata = await getCollection({
-      
+
       email: user?.email,
     });
 
@@ -219,8 +221,9 @@ function ModalComponent(props) {
       </Modal.Footer>
     </Modal>
         
+
       }
-  </>
+    </>
 
   );
 }
