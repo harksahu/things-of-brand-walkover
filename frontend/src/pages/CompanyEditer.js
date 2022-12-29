@@ -67,6 +67,7 @@ function Profile() {
   const [allData, setAllData] = useState();
   const [showAlert, setShowAlert] = useState(false);
   const [message, setMessage] = useState("")
+  const [showLinkError, setShowLinkError] = useState(false)
 
   const location = useLocation();
   let countTemp = countTracker;
@@ -109,13 +110,20 @@ function Profile() {
     }
     domainName = domainName.split(":")[0];
     domainName = domainName.split("?")[0];
-    return domainName;
+    return domainName
   }
 
   const addLinks = (event) => {
+    setShowLinkError(false);
     if (event.key === "Enter" && event.target.value !== "") {
+     var check = event.target.value.split(".");
+    console.log(!check[1] ,check[1]?.length<2 )
+    if(!check[1] || check[1]?.length<5   )
+    {
+      setShowLinkError(true)
+      return
+    }
       setLinks([...links, event.target.value]);
-      // props.selectedTags([...tags, event.target.value]);
       event.target.value = "";
     }
   };
@@ -192,6 +200,7 @@ function Profile() {
       setMessage("About us field is compulsory")
       return
     }
+   
 
 
     const domainTemp = extractDomain(domain);
@@ -542,10 +551,11 @@ function Profile() {
                           ))}
                         </ul>
                         <Form.Control
-                          type="text"
+                          type="url"
                           onKeyUp={(event) => addLinks(event)}
                           placeholder="Press enter to add tags"
                         />
+                        {showLinkError&&<small style={{color :"red"}}>Enter Correct link </small>}
                       </div>
 
                       <InputComponent
