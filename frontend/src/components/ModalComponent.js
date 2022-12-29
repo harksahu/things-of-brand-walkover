@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card ,Form} from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { updateCollection, createCollection,getCollection } from "../api/Index.js";
 import { UserAuth } from "../context/AuthContext";
@@ -31,7 +31,11 @@ function ModalComponent(props) {
     setDuplicateError(false);
   }, []);
 
-  const createCollections = async (collectionName) => {
+  const createCollections = async (event) => {
+    event.preventDefault();
+    props.onHide();
+    if(collectionName?.trim()=="")
+    return;
     const ans = await createCollection({
       CollectionName: collectionName,
       email: user.email,
@@ -95,39 +99,44 @@ function ModalComponent(props) {
     >
       <Modal.Header closeButton>
         {/* <Link to="/collection"> */}
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
+        <div 
+                  style={{
+                    display: "flex",
+                    flexDirection: "row-reverse"
+                  }}>
           {showComponent && (
-            <div style={{ marginRight: "250px" }}>
+            <div style={{ marginRight: "250px", display:"flex" }}>
+              <Form style={{display:"flex" }} onSubmit={createCollections}>
               <InputComponent
                 setValue={setCollectionName}
                 valuee={collectionName}
                 placeholderr={"Enter Collection name"}
               />
               <Button
-                onClick={() => {
-                  props.onHide();
-                  createCollections(collectionName);
-                }}
+                type="submit"
+                style={{ marginBottom:"auto",marginLeft:"15px" }}
+                // onClick={() => {
+                //  
+                  
+                // }}
               >
                 Submit
               </Button>
+              </Form>
             </div>
           )}
-          {props?.allcollection?.data?.data?.length ? (
-            <BsFillPlusCircleFill
+          {props?.allcollection?.data?.data?.length && (
+            !showComponent && <BsFillPlusCircleFill
               size="50px"
+              style={{ display: 'flex',
+              justifyContent:"flex-end",
+              width:"100%"
+
+              }}
               onClick={() => {
                 setShowComponent(true);
               }}
             />
-          ) : (
-            ""
           )}
           {/* </Link> */}
         </div>
@@ -205,7 +214,7 @@ function ModalComponent(props) {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        {duplicateError && !showComponent && <h4> {duplicateError}</h4>}
+        {duplicateError && !showComponent && <h4 style={{margin:"auto"}}> {duplicateError}</h4>}
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
