@@ -15,21 +15,24 @@ function ModalComponent(props) {
   const [showComponent, setShowComponent] = useState(false);
   const [message, setMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+ 
   const { user } = UserAuth();
   useEffect(() => {
-
     setShowComponent(false);
     setCollection(props?.allcollection?.data?.data);
     setId(props?.id);
-
   }, [props]);
 
   useEffect(() => {
+    if(!user?.email)
+    {
+      setShowAlert(true);
+      setMessage("You have to login first...");
+    }
     setDuplicateError(false);
   }, []);
 
   const createCollections = async (collectionName) => {
-
     const ans = await createCollection({
       CollectionName: collectionName,
       email: user.email,
@@ -37,11 +40,8 @@ function ModalComponent(props) {
     });
     if (ans) {
       setShowAlert(true);
-      setMessage("collection created successfully" );
-      
+      setMessage("collection created successfully");
     }
-
-
   };
 
   const createNewCollection = async (collection, logo_id) => {
@@ -69,52 +69,53 @@ function ModalComponent(props) {
   };
 
   return (
+<>
+    
     <Modal
-
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-    <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert}/>
-
 
       <Modal.Header closeButton>
         {/* <Link to="/collection"> */}
-        <div style={{
-          width:"100%",
-          display :"flex",
-          justifyContent : 'space-between'
-      }}>
-        {showComponent && (
-          <div style={{ marginRight: "250px" }}>
-            <InputComponent
-              setValue={setCollectionName}
-              valuee={collectionName}
-              placeholderr={"Enter Collection name"}
-            />
-            <Button
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          {showComponent && (
+            <div style={{ marginRight: "250px" }}>
+              <InputComponent
+                setValue={setCollectionName}
+                valuee={collectionName}
+                placeholderr={"Enter Collection name"}
+              />
+              <Button
+                onClick={() => {
+                  props.onHide();
+                  createCollections(collectionName);
+                }}
+              >
+                Submit
+              </Button>
+            </div>
+          )}
+
+          {props?.allcollection?.data?.data?.length ? (
+            <BsFillPlusCircleFill
+              size="50px"
               onClick={() => {
-                props.onHide();
-                createCollections(collectionName);
+                setShowComponent(true);
               }}
-            >
-              Submit
-            </Button>
-          </div>
-        ) }
-        
-        {props?.allcollection?.data?.data?.length ? (
-          <BsFillPlusCircleFill
-            size="50px"
-            onClick={() => {
-              setShowComponent(true);
-            }}
-          />
-        ) : (
-          ""
-        )}
-        {/* </Link> */}
+            />
+          ) : (
+            ""
+          )}
+          {/* </Link> */}
         </div>
       </Modal.Header>
       <Modal.Body>
@@ -144,28 +145,35 @@ function ModalComponent(props) {
             collection.map((collection) => {
               return (
                 <div key={collection._id} className="m-3">
-                  <div >
+                  <div>
                     {/* <Link to={"/collection/" +collection._id}> */}
 
-                    <Card style={{ height: "7.5rem", width: "8rem" }}
+                    <Card
+                      style={{ height: "7.5rem", width: "8rem" }}
                       className="item-company"
                       onClick={() => {
                         createNewCollection(collection, id);
                       }}
                     >
-
                       {collection?.logo[0]?.url !== undefined &&
-                        collection?.logo[0]?.url !== "null" ? (
-                        <img style={{ height: "4rem", width: "5rem" }} src={collection?.logo[0]?.url} alt="" />
+                      collection?.logo[0]?.url !== "null" ? (
+                        <img
+                          style={{ height: "4rem", width: "5rem" }}
+                          src={collection?.logo[0]?.url}
+                          alt=""
+                        />
                       ) : (
-                        <img style={{ height: "4rem", width: "5rem" }} src="/assets/picture.svg" alt="" />
+                        <img
+                          style={{ height: "4rem", width: "5rem" }}
+                          src="/assets/picture.svg"
+                          alt=""
+                        />
                       )}
-                  {/* </div> */}
-                  <div style={{ textalign: "center", paddingLeft: "18%" }}>
-
-                    {collection.CollectionName}
-                  </div>
-                  {/* <Card.Body>
+                      {/* </div> */}
+                      <div style={{ textalign: "center", paddingLeft: "18%" }}>
+                        {collection.CollectionName}
+                      </div>
+                      {/* <Card.Body>
 
                       <Card.Title 
                         style={{ textDecoration: "none" , paddingRight:"65%"  }}
@@ -174,22 +182,25 @@ function ModalComponent(props) {
                         {collection.CollectionName}
                       </Card.Title>
                     </Card.Body> */}
-                </Card>
+                    </Card>
                   </div>
-        {/* </Link> */}
-      </div>
-
-      );
+                  {/* </Link> */}
+                </div>
+              );
             })}
-    </div>
-      </Modal.Body >
-    <Modal.Footer>
-    {duplicateError && !showComponent &&(
-          <h4 > {duplicateError}</h4>
-        )}
-      <Button onClick={props.onHide}>Close</Button>
-    </Modal.Footer>
-    </Modal >
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        {duplicateError && !showComponent && <h4> {duplicateError}</h4>}
+        <Button onClick={props.onHide}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+        <AlertComponent
+        message={message}
+        showAlert={showAlert}
+        setShowAlert={setShowAlert}
+      />  
+   </>
   );
 }
 export default ModalComponent;
