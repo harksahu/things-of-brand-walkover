@@ -6,9 +6,11 @@ import { Container, Card } from "react-bootstrap";
 import { MdArrowBackIos } from "react-icons/md";
 import Button from "react-bootstrap/Button";
 import DeleteIcon from '@mui/icons-material/Delete';
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 const Collection = () => {
+  const [loading, setLoading] = useState(true);
   const [allLogos, setallLogos] = useState([]);
   const [logoId,setLogoId] = useState([]);
   const [collectionId,setCollectionId] = useState("");
@@ -23,6 +25,7 @@ const Collection = () => {
     });
     setLogoId(data?.data?.data[0]?.Logos)
     setallLogos(data?.data?.data[0]?.logo);
+    setLoading(false);
     setCollectionId(data?.data?.data[0]._id);
   };
   const deleteLogo = async (logoIdd,_id)=>{
@@ -30,6 +33,7 @@ const Collection = () => {
       if (index > -1) { 
         logoId.splice(index, 1);
     }
+    setLogoId(logoIdd);
         const data = await updateCollection({
           _id:_id,
           Logos:logoId
@@ -39,10 +43,14 @@ const Collection = () => {
   }
   
   useEffect(() => {
-    if (user?.email && id) getAllLogosFromCollection();
+    if (user?.email && id)
+     getAllLogosFromCollection();
   }, [user]);
   return (
     <div>
+      {loading ? <div className="center-loader">
+          <ClipLoader />
+        </div>:
         <Container>
       <Button
         variant="outline-dark"
@@ -89,7 +97,7 @@ const Collection = () => {
               })
             : "Please add logos to collection"}
         </div>
-      </Container>
+      </Container>}
     </div>
   );
 };
