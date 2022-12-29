@@ -80,45 +80,38 @@ function ModalComponent(props) {
   };
 
   return (
-    <>
+<>
+    {!user?.email?
+    <AlertComponent
+    message={message}
+    showAlert={showAlert}
+    setShowAlert={setShowAlert}
+  />  :
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
 
-      <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
+      <Modal.Header closeButton>
+        {/* <Link to="/collection"> */}
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          {showComponent && (
+            <div style={{ marginRight: "250px"  }}>
+              <InputComponent
+                setValue={setCollectionName}
+                valuee={collectionName}
+                placeholderr={"Enter Collection name"}
+              />
+              <Button
 
-        <Modal.Header closeButton>
-          {/* <Link to="/collection"> */}
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            {showComponent && (
-              <div style={{ marginRight: "250px" }}>
-                <InputComponent
-                  setValue={setCollectionName}
-                  valuee={collectionName}
-                  placeholderr={"Enter Collection name"}
-                />
-                <Button
-                  onClick={() => {
-                    props.onHide();
-                    createCollections(collectionName);
-                  }}
-                >
-                  Submit
-                </Button>
-              </div>
-            )}
-
-            {props?.allcollection?.data?.data?.length ? (
-              <BsFillPlusCircleFill
-                size="50px"
                 onClick={() => {
                   setShowComponent(true);
                 }}
@@ -197,6 +190,7 @@ function ModalComponent(props) {
                     </div>
                     {/* </Link> */}
                   </div>
+
                 );
               })}
           </div>
@@ -212,6 +206,7 @@ function ModalComponent(props) {
         setShowAlert={setShowAlert}
       />
     </>
+
   );
 }
 export default ModalComponent;
