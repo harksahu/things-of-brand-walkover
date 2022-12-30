@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation,useParams } from "react-router-dom";
+import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import {
   Container,
   Form,
@@ -34,7 +34,8 @@ import {
   MdVerified,
   MdShare,
   MdOutlineModeEdit,
-  MdMoreVert
+  MdMoreVert,
+  MdCode
 } from "react-icons/md";
 import Addfile from "./Addfile.js";
 import ModalComponent from "../components/ModalComponent.js";
@@ -74,7 +75,7 @@ function Brand() {
   const [addedCollection, setAddedCollection] = useState(false);
   const [variants, setvariants] = useState([]);
   const [indexToaddToFav, setIndexToaddToFav] = useState();
-const {key} = useLocation()
+  const { key } = useLocation()
   const handleClosee = () => {
     setIsRepeatingEmail(false);
     setShoww(false);
@@ -204,7 +205,7 @@ const {key} = useLocation()
       getbrandslogo();
       setLoading(false);
     }
-  }, [domain, title, user,modalShow]);
+  }, [domain, title, user, modalShow]);
   function handleShow() {
     setFullscreen("md-down");
     setShow(true);
@@ -297,18 +298,18 @@ const {key} = useLocation()
                                 {sharedEmail.map((email, index) => {
                                   return (
                                     <div key={index}>
-                                     {email?.length>4 &&
-                                      <h5>
-                                        {email}
-                                        <Button
-                                          onClick={() => {
-                                            removeSharedEmail(index);
-                                          }}
-                                        >
-                                          <BsFillTrashFill />
-                                        </Button>
-                                      </h5>
-                                       }
+                                      {email?.length > 4 &&
+                                        <h5>
+                                          {email}
+                                          <Button
+                                            onClick={() => {
+                                              removeSharedEmail(index);
+                                            }}
+                                          >
+                                            <BsFillTrashFill />
+                                          </Button>
+                                        </h5>
+                                      }
                                     </div>
                                   );
                                 })}
@@ -345,6 +346,18 @@ const {key} = useLocation()
                   ) : (
                     ""
                   )}
+                  {
+                    user && (<Nav className="nav-action">
+                      <Nav.Link
+                        onClick={() => {
+                          navigate("json")
+                        }}
+                      >
+                        <MdCode />
+                      </Nav.Link>
+                    </Nav>
+                    )
+                  }
                 </Container>
               </Navbar>
 
@@ -421,13 +434,13 @@ const {key} = useLocation()
                                 )}
                               </div>
                             </Link>
-                              <Card.Body className="d-flex">
-                                <Card.Title
-                                  style={{ textDecoration: "none" }}                                  
-                                >
-                                  {brand.title}
-                                </Card.Title>
-                                <Button
+                            <Card.Body className="d-flex">
+                              <Card.Title
+                                style={{ textDecoration: "none" }}
+                              >
+                                {brand.title}
+                              </Card.Title>
+                              <Button
                                 variant="outline-secondary"
                                 size="sm"
                                 className="me-1"
@@ -450,27 +463,27 @@ const {key} = useLocation()
                               >
                                 SVG
                               </Button>
-                                                               
+
                               <Dropdown>
                                 <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm">
                                   <MdMoreVert />
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu>
-                                  <Dropdown.Item 
+                                  <Dropdown.Item
                                     onClick={() => {
                                       setModalShow(true);
                                       setAddImageToCollection(brand._id);
                                       setIndexToaddToFav(index);
                                     }}>
                                     <BookmarkIcon
-                                    style={{ color: variants[index]}}                                    
+                                      style={{ color: variants[index] }}
                                     />
                                     Save to collection
-                                  </Dropdown.Item>                                  
+                                  </Dropdown.Item>
                                 </Dropdown.Menu>
                               </Dropdown>
-                              </Card.Body>                                                        
+                            </Card.Body>
                           </Card>
                         </div>
                       );
@@ -492,7 +505,7 @@ const {key} = useLocation()
                             </Card.Body>
                             <Card.Body>
                               <Card.Title>Add New</Card.Title>
-                            </Card.Body>                            
+                            </Card.Body>
                           </Card>
                         </div>
                       ) : (

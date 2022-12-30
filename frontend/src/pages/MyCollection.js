@@ -147,14 +147,12 @@ const MyCollection = () => {
 
                         </Card.Body>
                       </Card> */}
-                      <Card className=" p-3">
-
-                        <Card.Body className="d-flex justify-content-between">
-                          <Link to={"/collection/" + collection._id}>
+                      <Card className="p-3">
+                        <Card.Body style={{display:"grid",gridTemplateColumns:"95% 5%" }}>
+                          <Link to={"/collection/" + collection._id} style={{textDecoration: "none" ,color:"black"}}>
+                          <div className="d-flex justify-content-between">
                             <Card.Title className="bold">{collection?.CollectionName} </Card.Title>
-                          </Link>
-                          <div className="d-flex">
-                            
+                            <div className="d-flex">
                             {collection?.logo &&
                               collection?.logo?.map((logo, index) => {
                                 return (
@@ -168,7 +166,11 @@ const MyCollection = () => {
                             {
                               collection?.logo?.lenght ?((collection?.logo?.length - 5+"+")):""
                             }
-                            <Dropdown>
+                            </div>
+                          </div>
+                          </Link>
+
+                          <Dropdown>
                               <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm">
                                 <MdMoreVert />
                               </Dropdown.Toggle>
@@ -183,7 +185,6 @@ const MyCollection = () => {
                                 </Dropdown.Item>
                               </Dropdown.Menu>
                             </Dropdown>
-                          </div>
                         </Card.Body>
                       </Card>
                     </div>
