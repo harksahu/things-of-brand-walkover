@@ -173,6 +173,7 @@ const MyCollection = () => {
                                 <MdMoreVert />
                               </Dropdown.Toggle>
 
+
                               <Dropdown.Menu>
                                 <Dropdown.Item onClick={() => {
                                   deleteCollection(collection);
