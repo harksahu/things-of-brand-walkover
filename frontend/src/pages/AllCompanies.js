@@ -61,7 +61,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="p-3 flex bg-light">
+    <div className="py-4 flex bg-light flex-fill">
       {loading ?
         <div className="center-loader"
         ><ClipLoader /> </div> :
@@ -87,8 +87,6 @@ function Home({ searchBrandData = [], getSearchBrand }) {
           /> }
         </>
       }
-
-
     </div>
   );
 }

@@ -48,31 +48,33 @@ const Collection = () => {
       getAllLogosFromCollection();
   }, [user]);
   return (
-    <div>
+    <div className="py-4 bg-light flex-fill">
       {loading ? <div className="center-loader">
         <ClipLoader />
       </div> :
 
         <Container>
-          <div className="row mt-4">
+          <div className="row">
             <Navbar>
-            <Nav className="me-auto">
-                    <Navbar.Brand className="me-auto">
-              <Button
-                variant="outline-dark"
-                onClick={() => {
-                  if (key === "default") {
-                    navigate('/');
-                  } else {
-                    navigate(-1);
-                  }
-                }}
-              >
-                <MdArrowBackIos />
-
-              </Button>
-              </Navbar.Brand>
-                  </Nav>
+              <Nav className="me-auto">
+                <Navbar.Brand className="me-auto">
+                  <Button
+                    variant="outline-dark"
+                    onClick={() => {
+                      if (key === "default") {
+                        navigate('/');
+                      } else {
+                        navigate(-1);
+                      }
+                    }}
+                  >
+                    <MdArrowBackIos />
+                  </Button>
+                </Navbar.Brand>
+                <Navbar.Text>
+                  Collection name
+                </Navbar.Text>
+              </Nav>
               {
                 user && (<Nav className="nav-action">
                   <Nav.Link

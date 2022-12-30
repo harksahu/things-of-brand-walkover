@@ -84,7 +84,7 @@ const MyCollection = () => {
   }, [showAlert]);
 
   return (
-    <div>
+    <div className="py-4 bg-light flex-fill">
       {loading ? <div className="center-loader">
         <ClipLoader />
       </div> :
@@ -109,8 +109,6 @@ const MyCollection = () => {
             </Modal.Body>
           </Modal>
 
-          <h1>All Collections</h1>
-          <br></br>
           <div className="grid-small ">
             {allCollection &&
               allCollection.map((collection) => {

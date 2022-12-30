@@ -217,6 +217,7 @@ function Brand() {
           <ClipLoader />
         </div>
       ) : (
+      <div className="bg-light flex-fill">
         <Container>
           {domain ? (
             <div className="row mt-4">
@@ -616,6 +617,7 @@ function Brand() {
             />
           }
         </Container>
+      </div>
       )}
     </>
   );
