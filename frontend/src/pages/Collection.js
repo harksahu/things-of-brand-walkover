@@ -7,7 +7,7 @@ import { MdArrowBackIos } from "react-icons/md";
 import Button from "react-bootstrap/Button";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClipLoader from "react-spinners/ClipLoader";
-
+import {  Link} from "react-router-dom";
 
 const Collection = () => {
   const [loading, setLoading] = useState(true);
@@ -68,32 +68,44 @@ const Collection = () => {
         
       </Button>
     
-        <div className="grid">
+        <div className="d-flex item " style ={{flexWrap: "wrap"}}>
           {allLogos?.length
             ? allLogos?.map((collection, index) => {
                 return (
                   <div key={index}>
-                    <div className="d-flex justify-content-center item ">
-                      <Card className="item-company">
-                     
+                    
+                    <div   className="m-4"  style={{  width: "10rem" }} >
+                      <Card 
+                      className="item-company">
+                     <Link to={"/stuff/"+collection?.logo_id}>
                         <div
-                          style={{ overflow: "auto" }}
+                          // style={{ overflow: "auto" }}
                           className="img_size  pattern-square"
                         >
                           {collection?.url !== undefined &&
                           collection?.url !== "null" ? (
-                            <img src={collection?.url} alt="" />
+                            <img  style={{ height: "8rem", width: "6rem" }} 
+                            src={collection?.url} alt="" />
                           ) : (
-                            <img src="/assets/picture.svg" alt="" />
+                            <img  style={{ height: "8em", width: "6rem" }} 
+                            src="/assets/picture.svg" alt="" />
                           )}
                         </div>
-                        <Card.Body>
+                        </Link>
+                        <Card.Body style={{ }}>
                           <Card.Title
-                            style={{ textDecoration: "none" }}
+                            style={{width:"auto" ,display :"flex" ,fontSize:"0.8rem",textDecoration: "none", justifyContent :"center",textalign: "center",alignItems:"center" }}
                             className="text-center"
                           >
+                            <p style={{textOverflow: "ellipsis",
+                          margin:"0px",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          }} >
                             {collection.name}
+                            </p>
                             <DeleteIcon onClick={()=>{deleteLogo(logoId[index],collectionId)}}/>
+                            
                           </Card.Title>
                         </Card.Body>
                       </Card>
@@ -101,7 +113,7 @@ const Collection = () => {
                   </div>
                 );
               })
-            : "Please add logos to collection"}
+            : <div  ><h4>Please add logos to collection</h4></div>}
         </div>
       </Container>}
     </div>

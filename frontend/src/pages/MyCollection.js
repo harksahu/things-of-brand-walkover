@@ -116,10 +116,11 @@ const MyCollection = () => {
               return (
                 <div key={collection._id}>
                   <div className="d-flex justify-content-center item ">
-                    <Card className="item-company">
+                    <Card 
+                    className="item-company ">
                       <Link to={"/collection/" + collection._id}>
                         <div
-                          style={{ overflow: "auto" }}
+                          style={{ overflow: "auto"  }}
                           className="img_size  pattern-square"
                         >
                           {collection?.logo[0]?.url !== undefined &&
