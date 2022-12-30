@@ -198,13 +198,7 @@ const Addfile = (props) => {
       {user ?
         <Container className="wrpr">
           <Row>
-            <nav className="navbar bg-light">
-                <a
-                  className="navbar-brand"
-                >
-                  Add a file to <strong>{domainToSelect}</strong>
-                </a>
-            </nav>
+            
             <Col md={9} lg={10} className="mt-4">
               <Card style={{ width: "28rem" }}>
                 <Card.Body>

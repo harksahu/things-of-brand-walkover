@@ -10,6 +10,7 @@ import {
   Button,
   Modal,
   ListGroup,
+  Dropdown
 } from "react-bootstrap";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../utils/SvgInLine.css";
@@ -33,6 +34,7 @@ import {
   MdVerified,
   MdShare,
   MdOutlineModeEdit,
+  MdMoreVert
 } from "react-icons/md";
 import Addfile from "./Addfile.js";
 import ModalComponent from "../components/ModalComponent.js";
@@ -418,20 +420,17 @@ const {key} = useLocation()
                                   <img src="/assets/picture.svg" alt="" />
                                 )}
                               </div>
-                              <Card.Body>
+                            </Link>
+                              <Card.Body className="d-flex">
                                 <Card.Title
-                                  style={{ textDecoration: "none" }}
-                                  className="text-center"
+                                  style={{ textDecoration: "none" }}                                  
                                 >
                                   {brand.title}
                                 </Card.Title>
-                              </Card.Body>
-                            </Link>
-                            <Card.Footer className="text-muted d-flex justify-content-center">
-                              <Button
+                                <Button
                                 variant="outline-secondary"
                                 size="sm"
-                                className="me-4"
+                                className="me-1"
                                 onClick={() => {
                                   navigate("/stuff/" + brand._id);
                                 }}
@@ -441,6 +440,7 @@ const {key} = useLocation()
                               <Button
                                 variant="outline-secondary"
                                 size="sm"
+                                className="me-1"
                                 onClick={() => {
                                   DownloadToSvg(
                                     brand.url,
@@ -450,21 +450,27 @@ const {key} = useLocation()
                               >
                                 SVG
                               </Button>
+                                                               
+                              <Dropdown>
+                                <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm">
+                                  <MdMoreVert />
+                                </Dropdown.Toggle>
 
-                               
-                                <div>
-                                <BookmarkIcon
-                                style={{ color: variants[index]}}
-                                onClick={() => {
-                                  
-                                  setModalShow(true);
-                                  setAddImageToCollection(brand._id);
-                                  setIndexToaddToFav(index);
-                                }}
-                              /></div>
-
-
-                            </Card.Footer>
+                                <Dropdown.Menu>
+                                  <Dropdown.Item 
+                                    onClick={() => {
+                                      setModalShow(true);
+                                      setAddImageToCollection(brand._id);
+                                      setIndexToaddToFav(index);
+                                    }}>
+                                    <BookmarkIcon
+                                    style={{ color: variants[index]}}                                    
+                                    />
+                                    Save to collection
+                                  </Dropdown.Item>                                  
+                                </Dropdown.Menu>
+                              </Dropdown>
+                              </Card.Body>                                                        
                           </Card>
                         </div>
                       );
@@ -485,13 +491,8 @@ const {key} = useLocation()
                               <Card.Text></Card.Text>
                             </Card.Body>
                             <Card.Body>
-                              <Card.Title>Add New File</Card.Title>
-                            </Card.Body>
-                            <div className="card-footer">
-                              <Button variant="outline-light" size="sm">
-                                -
-                              </Button>
-                            </div>
+                              <Card.Title>Add New</Card.Title>
+                            </Card.Body>                            
                           </Card>
                         </div>
                       ) : (
@@ -574,7 +575,9 @@ const {key} = useLocation()
                 fullscreen={fullscreen}
                 onHide={() => setShow(false)}
               >
-                <Modal.Header closeButton></Modal.Header>
+                <Modal.Header closeButton>
+                  Add logo to <strong className="ms-2">{domain}</strong>
+                </Modal.Header>
                 <Modal.Body>
                   <Addfile domain={domain} />
                 </Modal.Body>
