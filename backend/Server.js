@@ -18,6 +18,7 @@ import dotenv from 'dotenv'
 import {getCompanyJson} from "./controllers/CompanyController.js";
 import {getCollectionJson} from "./controllers/CollectionController.js";
 import dns from "dns";
+import { checkAuthorizedKey } from "./controllers/AuthKeyControllers.js";
 dotenv.config({path:'../.env'})
 
 
@@ -57,25 +58,40 @@ app.get('/s3url',async(req,res)=>{
 
 
 app.get('/:domain/json',async(req,res)=>{
-
-  // console.log("req");
-  // console.log(req?.params?.domain);
+  if(!(req.headers.host === "thingsofbrand.com"))
+  {
+     const data = await checkAuthorizedKey(req);
+     if(!(data[0]?.authKey))
+     {
+      return res.send({
+        "error":"Invalid authorization"
+      });
+    }
+    
+  }
   const data = await getCompanyJson(req?.params?.domain)
   console.log("data");
   console.log(data);
   res.send({data});
-  // return data
+  
 })
 
 app.get('/collection/:id/json',async(req,res)=>{
 
-  console.log("req");
-  console.log(req?.params?.id);
+  if(!(req.headers.host === "thingsofbrand.com"))
+  {
+     const data = await checkAuthorizedKey(req);
+     if(!(data[0]?.authKey))
+     {
+      return res.send({
+        "error":"Invalid authorization"
+      });
+    }
+    
+  }
   const data = await getCollectionJson(req?.params?.id)
-  // console.log("data");
-  // console.log(data);
+  
   res.send({data});
-  // return data
 })
 
 

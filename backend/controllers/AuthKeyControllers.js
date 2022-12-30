@@ -59,10 +59,22 @@ const getAuthorizedKey = async (req,res)=>{
         }).status(400);
     }
 }
+const checkAuthorizedKey = async (req,res)=>{
+
+    try {
+        const data = await AuthKeyModel.find({
+            authKey: req.headers.authorization
+        });
+       return data;
+        } catch (error) {
+       return error;
+    }
+}
 
 
 export {
     storeAuthKey,
     deleteAuthKey,
-    getAuthorizedKey
+    getAuthorizedKey,
+    checkAuthorizedKey
 }
