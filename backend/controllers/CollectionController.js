@@ -1,6 +1,7 @@
 import CollectionModel from "../models/CollectionModel.js";
 import StuffModel from "../models/StuffModel.js";
 import CompanyModel from "../models/CompanyModel.js";
+import { boolean } from "webidl-conversions";
 const createCollection = async (req, res) => {
   try {
     const data = await CollectionModel.create({
@@ -109,6 +110,8 @@ const getCollectionJson = async (_id) => {
     var data = await CollectionModel.find({
       _id: _id,
     });
+//    const ans = delete data[0].Logos;
+//    console.log(data[0].Logos[0]);
     const logo_array = data[0]?.Logos;
     var logo = [];
     for (let i = 0; i < logo_array?.length; i++) {
@@ -121,19 +124,20 @@ const getCollectionJson = async (_id) => {
       logodata["url"] = logos[0]?.url;
       logodata["logo_id"] = logos[0]?._id;
       var id = logos[0]?.domain;
-      // console.log("id",id)
-      // const domain_id = await C
+      
       logo.push(logodata);
 
       const domain = await CompanyModel.find({
         _id: id,
       });
-      // console.log("dsgsg",domain[0]?.domain)
       logodata["domain"] = domain[0]?.domain;
       logodata["domain_TOB"] = "https://thingsofbrand.com/" + domain[0]?.domain;
     }
 
-    //yaha hatana h logos ko data json se 
+   
+    delete data[0]?._doc["Logos"]
+    delete data[0]?._doc["email"]
+    
     return [{ logo, ...data[0]._doc }];
   } catch (error) {
     return error;
