@@ -8,7 +8,7 @@ import {
   Button,
   Modal,
   Stack,
-  Container,
+  // Container,
   Col,
   Row,
 } from "react-bootstrap";
@@ -196,11 +196,11 @@ const Addfile = (props) => {
     ><ClipLoader/></div>:
     <div>
       {user ?
-        <Container className="wrpr">
+        // <Container className="wrpr">
           <Row>
             
-            <Col md={9} lg={10} className="mt-4">
-              <Card style={{ width: "28rem" }}>
+            <Col md={9} lg={10}>
+              <Card style={{ width: "29rem",margin:"auto" }}>
                 <Card.Body>
                   <Stack gap={3}>
                     <FormGroup>
@@ -283,7 +283,8 @@ const Addfile = (props) => {
               </Card>
             </Col>
           </Row>
-        </Container> : <Home />
+          //  </Container>
+        : <Home />
       }
       </div>
     }

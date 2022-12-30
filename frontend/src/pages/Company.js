@@ -570,9 +570,9 @@ function Brand() {
                   {fontLink?.map((link, index) => {
                     return (
                       <div key={index}>
-                        <a href={link} target="_blank" rel="noreferrer">
+                        {/* <a href={link} target="_blank" rel="noreferrer"> */}
                           {link}
-                        </a>
+                        {/* </a> */}
                       </div>
                     );
                   })}
