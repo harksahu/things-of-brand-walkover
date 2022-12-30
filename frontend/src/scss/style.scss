@@ -81,6 +81,20 @@
         }
     }
 }
+.grid-small{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 2fr));
+    justify-content: center;
+    // grid-template-columns: ;
+    grid-column-gap: 30px;
+    grid-row-gap: 30px;
+    justify-items: stretch;
+    .item{        
+        .card{
+            border: none;            
+        }
+    }
+}
 
 .pattern-polka{
     background-color: #e5e5f7;    
