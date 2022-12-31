@@ -128,7 +128,7 @@ function MyCompany() {
       {loading ? (
         <div className="center-loader"><ClipLoader /></div>
       ) : (
-        <div>
+        <div className="py-4 bg-light flex-fill">
           <Container>
             <div className="grid">
               {company?.map((Company) => {

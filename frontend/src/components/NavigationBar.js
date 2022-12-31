@@ -12,6 +12,8 @@ import { useLocation } from "react-router-dom";
 import { searchBrand, clearSearchBrand } from "../store/actions/Search-Brands.js";
 import { connect } from "react-redux";
 import { getProfileDetails, sendSearchAPI } from "../api/Index.js";
+import "../scss/style.scss";
+import "../scss/navbar.scss";
 
 function NavigationBar({ getSearchBrand }) {
   const { logOut } = UserAuth();
@@ -142,7 +144,7 @@ function NavigationBar({ getSearchBrand }) {
             id="logo"
             style={{ cursor: "pointer" }}
           >
-            <img src="tob-logo.svg" />
+            <img src="./tob-logo.svg" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -171,105 +173,46 @@ function NavigationBar({ getSearchBrand }) {
                     value={searchItem || ""}
                     list="browsers"
                     name="myBrowser"
-                  />
-                  {/* {document.getElementById("searchbar")?.value === "" ? "" : <div >
-                      <Card style={{fontWeight : "bold"}} >
-                        Company:-
-                      </Card>
-                      {CompanyData && CompanyData?.map((brandData) => (
-                        <div id="myBrowser" key={brandData._id}>
-                          {document.getElementById("searchbar")?.value === "" ? "" :
-                            (
-                              <Link to={"/" + brandData.domain}>
-                                <div style={{color: "black" , textDecoration:"none" , backgroundColor:"white"}}>
-                                  {brandData.name}
-                                  <BsArrowReturnRight style={{float:"right"}}/>
-                                </div>
-                              </Link>
-                            )
-                          }
-                        </div>
-                      ))}
-                      <Card style={{fontWeight : "bold"}} >
-                        Logos:-
-                      </Card>
-
-                      {LogoData && LogoData?.map((brandData) => (
-                        <div id="myBrowser" key={brandData._id}>
-                          {document.getElementById("searchbar")?.value === "" ? "" :
-                            (
-                              <Link to={"/stuff/" + brandData._id}>
-                                <div style={{color: "black" , textDecoration:"none" , backgroundColor:"white"}}>
-                                  {brandData.title}
-                                  <BsArrowReturnRight style={{float:"right"}}/>
-
-                                </div>
-                              </Link>
-
-                            )
-                          }
-
-
-                        </div>
-                      ))}
-                    </div>
-                    } */}
+                  />                  
                 </Form>
               ) : (
                 ""
               )}
             </Nav>
             { user?.displayName ? (
-              <NavDropdown
-                title={user?.displayName}
-                id="collasible-nav-dropdown"
-                align="end"
-              >
-                <NavDropdown.Item
-                  onClick={() => {
-                    navigate("/my-companies");
-                  }}
+              <Nav className="tob-navbar">
+                <Nav.Link href="#" onClick={() => {navigate("/my-companies");}}>My Brands</Nav.Link>
+                <Nav.Link href="#" onClick={() => {navigate("/collection");}}>Collections</Nav.Link>
+                <Nav.Link href="#" onClick={() => {navigate("/all-companies");}}>Explore</Nav.Link>
+                <NavDropdown
+                  title={user?.displayName}
+                  id="collasible-nav-dropdown"
+                  align="end"
                 >
-                  My Brands
-                </NavDropdown.Item>
+                  <NavDropdown.Item
+                    onClick={() => {
+                      navigate("/account");
+                    }}
+                  >
+                    User Profile
+                  </NavDropdown.Item>
 
-                <NavDropdown.Item
-                  onClick={() => {
-                    navigate("/all-companies");
-                  }}
-                >
-                  Explore other brands
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  onClick={() => {
-                    navigate("/collection");
-                  }}
-                >
-                  My Collection
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  onClick={() => {
-                    navigate("/account");
-                  }}
-                >
-                  User Profile
-                </NavDropdown.Item>
+                  <NavDropdown.Divider />
 
-                <NavDropdown.Divider />
+                  <NavDropdown.Item
+                    href="https://thingsofbrand.canny.io/feature-requests"
+                    target="_blank"
+                  >
+                    Feature Requests
+                  </NavDropdown.Item>
 
-                <NavDropdown.Item
-                  href="https://thingsofbrand.canny.io/feature-requests"
-                  target="_blank"
-                >
-                  Feature Requests
-                </NavDropdown.Item>
+                  <NavDropdown.Divider />
 
-                <NavDropdown.Divider />
-
-                <NavDropdown.Item onClick={handleSignOut}>
-                  logout
-                </NavDropdown.Item>
-              </NavDropdown>
+                  <NavDropdown.Item onClick={handleSignOut}>
+                    logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
             ) : (
              !isLoading&&(<button
                 type="button"

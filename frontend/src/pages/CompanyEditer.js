@@ -139,6 +139,7 @@ function Profile() {
   };
   const fontlist = async () => {
     const data = await getFontList();
+    
     var result = [];
     for (var i in data?.data?.items) result.push(data?.data?.items[i]?.family);
     setFontFamily(result);

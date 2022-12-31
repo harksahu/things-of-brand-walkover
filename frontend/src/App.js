@@ -65,8 +65,7 @@ function App() {
               <Route path='/collection' element={<Protected> <MyCollection /> </Protected>} />
               <Route path='/collection/:id' element={<Protected> <Collection /> </Protected>} />
               <Route path='*' element={<PageNotFound />} />
-            </Routes>
-            <div className="flex-fill"></div>
+            </Routes>            
             {window.location.pathname ? (window.location.pathname.slice(0, 7).toLocaleLowerCase() === '/stuff/' ? "" : <Footer />) : <Footer />}
           </AuthContextProvider>
         </ThemeProvider>
