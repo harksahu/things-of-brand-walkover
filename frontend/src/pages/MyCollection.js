@@ -155,14 +155,14 @@ const MyCollection = () => {
                               collection?.logo?.map((logo, index) => {
                                 return (
                                   index < 5 && (
-                                    <img src={logo?.url} key={index} width="30px" />
+                                    <img src={logo?.url} key={index} width="20px" style={{marginRight: "5px"}}/>
 
                                   )
                                 )
                               })
                             }
                             {
-                              collection?.logo?.lenght ?((collection?.logo?.length - 5+"+")):""
+                              collection?.logo?.length &&((collection?.logo?.length - 5+"+"))
                             }
                             </div>
                           </div>

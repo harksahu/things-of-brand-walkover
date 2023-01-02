@@ -29,7 +29,7 @@ import RichtextEditor from "./JoditEditor.js";
 import { BsFillTrashFill } from "react-icons/bs";
 import { MdArrowBackIos } from "react-icons/md";
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import { Hint } from "react-autocomplete-hint";
+// import { Hint } from "react-autocomplete-hint";
 import ClipLoader from "react-spinners/ClipLoader";
 import InputComponent from "../components/InputComponent.js";
 
@@ -116,12 +116,12 @@ function Profile() {
   const addLinks = (event) => {
     setShowLinkError(false);
     if (event.key === "Enter" && event.target.value !== "") {
-      var check = event.target.value.split(".");
-      console.log(!check[1], check[1]?.length < 2);
-      if (!check[1] || check[1]?.length < 5) {
-        setShowLinkError(true);
-        return;
-      }
+     var check = event.target.value.split(".");
+    if(!check[1] || check[1]?.length<5   )
+    {
+      setShowLinkError(true)
+      return
+    }
       setLinks([...links, event.target.value]);
       event.target.value = "";
     }
@@ -178,17 +178,8 @@ function Profile() {
     }
 
     var domainParts = domain.split(".");
-    console.log(
-      domainParts.length <= 2,
-      !domainParts[1],
-      domainParts[1]?.length <= 1
-    );
-    if (
-      domainParts.length <= 2 &&
-      (domainParts[1]?.length <= 1 || !domainParts[1])
-    ) {
-      console.log("here");
-      window.scrollTo(0, 0);
+    if (domainParts.length <= 2 && (domainParts[1]?.length <= 1 || !domainParts[1])) {
+      window.scrollTo(0, 0)
       setShowAlert(true);
       setMessage("Enter proper domain");
       return;
@@ -269,7 +260,8 @@ function Profile() {
     }
   };
 
-  useEffect(() => {}, [value]);
+  useEffect(() => { }, [value]);
+  // useEffect(() => { }, [fontLink]);
 
   const config = {
     buttons: ["bold", "italic"],
@@ -537,7 +529,7 @@ function Profile() {
                                     <Button variant="outline-light" size="sm">
                                       -
                                     </Button>
-                                  </div>
+                                    </div>
                                 </Card>
                               </div>
                             ) : (
@@ -616,15 +608,11 @@ function Profile() {
                                   }}
                                   className="contact-form-area"
                                 />
-
-                                {/* {console.log("value of index", value)}
-                                {console.log("value of color", color)} */}
                                 <Autocomplete
                                   value={value[index]}
                                   onChange={(e, newValue) => {
                                     if (newValue.value != undefined) {
                                       // setValue(newValue)
-                                      // console.log("value", newValue);
                                       document.getElementById(
                                         "colorinput" + index
                                       ).value = newValue.value;
@@ -658,7 +646,6 @@ function Profile() {
                                   onInputChange={(event, newInputValue) => {
                                     // setInputValue(newInputValue);
                                     if (newInputValue.includes("#")) {
-                                      // console.log("value", newInputValue);
                                       let tempCount1 = value;
                                       tempCount1[index].label = newInputValue;
                                       tempCount1[index].value = newInputValue;
@@ -732,7 +719,27 @@ function Profile() {
                         <div id="list" className="hide formbold-chatbox-form">
                           {fontLink?.map((element, index) => (
                             <div id="fetch" key={index}>
-                              <Hint options={fontFamily}>
+                             
+                              <Autocomplete
+
+                                  getOptionLabel={(option) => option}
+                                  value={fontLink[index]}
+                                  placeholder="Enter font name"
+                                  
+                                  id={"id" + index}
+                                  options={fontFamily}
+                                  onChange={ (e: any, newValue: string | null) => {
+                                    let tempCount = fontLink;
+                                    tempCount[index] = newValue;
+                                    setFontLink([...tempCount]);
+                                  }}
+                                  // getOptionSelected
+                                  sx={{ width: 300 }}
+                                  renderInput={(params) => (
+                                    <TextField {...params} label="Fonts" />
+                                  )}
+                                />
+                              {/* <Hint options={fontFamily}>
                                 <input
                                   type="url"
                                   id={"id" + index}
@@ -747,7 +754,7 @@ function Profile() {
                                   className="contact-form-area form-control"
                                   name="myBrowser"
                                 />
-                              </Hint>
+                              </Hint> */}
                               {index ? (
                                 <button
                                   type="button"

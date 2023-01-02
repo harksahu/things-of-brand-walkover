@@ -17,22 +17,20 @@ import "../scss/navbar.scss";
 
 function NavigationBar({ getSearchBrand }) {
   const { logOut } = UserAuth();
-  const { googleSignIn, user , isLoading} = UserAuth();
+  const { googleSignIn, user, isLoading } = UserAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
 
 
-
   const handleKeyPress = useCallback((event) => {
-console.log(event);
-    if (event.ctrlKey === true) {
-      // console.log(event);
-      if (event.key === "k") {
-        // console.log("autoFocus")
-        document.getElementById("searchbar").focus()
+    // console.log(event);
+    // if (window.navigator.platform === "MacIntel") {
+      if (event.ctrlKey === true) {
+        if (event.key === "k") {
+          document.getElementById("searchbar").focus()
+        }
       }
-    }
   }, []);
 
   useEffect(() => {
@@ -63,7 +61,7 @@ console.log(event);
       searchfrom: "false",
     });
 
-     await sendSearchAPI({
+    await sendSearchAPI({
       title: searchData,
       email: "",
       active: 1,
@@ -154,36 +152,36 @@ console.log(event);
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              {location.pathname === "/all-companies" ? (
-                <Form className="justify-content-center">
-                  <Form.Control
-                    type="search"
-                    placeholder="Search"
-                    className="me-2"
-                    id="searchbar"
-                    autoComplete="off"
-                    aria-label="Search"
-                    // show={true}
-                    onChange={(e) => {
-                      {
-                        sendData(e.target.value);
-                        searchbar(e.target.value);
-                      }
-                    }}
-                    value={searchItem || ""}
-                    list="browsers"
-                    name="myBrowser"
-                  />                  
-                </Form>
-              ) : (
-                ""
-              )}
+
             </Nav>
-            { user?.displayName ? (
+            {user?.displayName ? (
               <Nav className="tob-navbar">
-                <Nav.Link href="#" onClick={() => {navigate("/my-companies");}}>My Brands</Nav.Link>
-                <Nav.Link href="#" onClick={() => {navigate("/collection");}}>Collections</Nav.Link>
-                <Nav.Link href="#" onClick={() => {navigate("/all-companies");}}>Explore</Nav.Link>
+                {location.pathname === "/all-companies" && (
+                  <Form className="justify-content-center">
+                    <Form.Control
+                      type="search"
+                      placeholder="Search"
+                      className="me-2"
+                      id="searchbar"
+                      autoComplete="off"
+                      aria-label="Search"
+                      // show={true}
+                      onChange={(e) => {
+                        {
+                          sendData(e.target.value);
+                          searchbar(e.target.value);
+                        }
+                      }}
+                      value={searchItem || ""}
+                      list="browsers"
+                      name="myBrowser"
+                    />
+                  </Form>
+                )
+                }
+                <Nav.Link href="#" onClick={() => { navigate("/my-companies"); }}>My Brands</Nav.Link>
+                <Nav.Link href="#" onClick={() => { navigate("/collection"); }}>Collections</Nav.Link>
+                <Nav.Link href="#" onClick={() => { navigate("/all-companies"); }}>Explore</Nav.Link>
                 <NavDropdown
                   title={user?.displayName}
                   id="collasible-nav-dropdown"
@@ -214,7 +212,7 @@ console.log(event);
                 </NavDropdown>
               </Nav>
             ) : (
-             !isLoading&&(<button
+              !isLoading && (<button
                 type="button"
                 className="btn btn-outline-primary"
                 onClick={() => {
