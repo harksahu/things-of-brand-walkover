@@ -90,7 +90,6 @@ app.get('/collection/:id/json',async(req,res)=>{
     
   }
   const data = await getCollectionJson(req?.params?.id)
-  
   res.send({data});
 })
 
