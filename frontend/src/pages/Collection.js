@@ -13,6 +13,7 @@ const Collection = () => {
   const [allLogos, setallLogos] = useState([]);
   const [logoId, setLogoId] = useState([]);
   const [collectionId, setCollectionId] = useState("");
+  const [CollectionName, setCollectionName] = useState("");
   const { user } = UserAuth();
   const navigate = useNavigate();
   const { key } = useLocation();
@@ -27,7 +28,8 @@ const Collection = () => {
     setLogoId(data?.data?.data[0]?.Logos)
     setallLogos(data?.data?.data[0]?.logo);
     setLoading(false);
-    setCollectionId(data?.data?.data[0]._id);
+    setCollectionId(data?.data?.data[0]?._id);
+    setCollectionName(data?.data?.data[0]?.CollectionName)
   };
   const deleteLogo = async (logoIdd, _id) => {
     const index = logoId.indexOf(logoIdd);
@@ -72,7 +74,7 @@ const Collection = () => {
                   </Button>
                 </Navbar.Brand>
                 <Navbar.Text>
-                  Collection name
+                  {CollectionName}
                 </Navbar.Text>
               </Nav>
               {
