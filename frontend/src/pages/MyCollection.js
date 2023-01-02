@@ -5,7 +5,7 @@ import { Container, Form, Card, Dropdown } from "react-bootstrap";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import Button from "react-bootstrap/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-import "../scss/company.scss";
+import "../scss/collection.scss";
 import "../utils/SvgInLine.css";
 import {
   createCollection,
@@ -92,14 +92,14 @@ const MyCollection = () => {
           <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert} />
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Create Your collection</Modal.Title>
+              <Modal.Title>Create collection</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form onSubmit={createNewCollection}>
                 <InputComponent
                   value={collectionName}
                   setValue={setCollectionName}
-                  label={"Add new collection"}
+                  label={"Collection name"}
                   placeholderr={"Enter collection name"}
                 />
                 <Button type="submit " variant="primary">
@@ -109,93 +109,55 @@ const MyCollection = () => {
             </Modal.Body>
           </Modal>
 
-          <div className="grid-small ">
+          <div className="grid-small">
             {allCollection &&
               allCollection.map((collection) => {
                 return (
-                  <div key={collection._id}>
-                    <div>
-                      {/* className="d-flex justify-content-center item " */}
-                      {/* <Card className="item-company">
-                        <Link to={"/collection/" + collection._id}>
-                          <div
-                            style={{ overflow: "auto" }}
-                            className="img_size  pattern-square"
-                          >
-                            {collection?.logo[0]?.url !== undefined &&
-                              collection?.logo[0]?.url !== "null" ? (
-                              <img src={collection?.logo[0]?.url} alt="" />
-                            ) : (
-                              <img src="/assets/picture.svg" alt="" />
-                            )}
-                          </div>
-                        </Link>
-                        <Card.Body>
-                          <Card.Title
-                            style={{ textDecoration: "none" }}
-                            className="text-center"
-                          >
-                            {collection.CollectionName}<DeleteIcon
-                              onClick={() => {
-                                deleteCollection(collection);
-                              }}
-                            />
-
-                          </Card.Title>
-
-                        </Card.Body>
-                      </Card> */}
-                      <Card className="p-3">
-                        <Card.Body style={{display:"grid",gridTemplateColumns:"95% 5%" }}>
-                          <Link to={"/collection/" + collection._id} style={{textDecoration: "none" ,color:"black"}}>
-                          <div className="d-flex justify-content-between">
-                            <Card.Title className="bold">{collection?.CollectionName} </Card.Title>
-                            <div className="d-flex">
-                            {collection?.logo &&
-                              collection?.logo?.map((logo, index) => {
-                                return (
-                                  index < 5 && (
-                                    <img src={logo?.url} key={index} width="20px" style={{marginRight: "5px"}}/>
-
-                                  )
+                  <div key={collection._id} className="d-flex box-shadow coll-item">
+                    <Link to={"/collection/" + collection._id} className="align-items-center d-flex flex-fill p-3">
+                        <Card.Title className="bold flex-fill">{collection?.CollectionName} </Card.Title>
+                        <div className="d-flex coll-preview align-items-center">
+                          {collection?.logo &&
+                            collection?.logo?.map((logo, index) => {
+                              return (
+                                index < 5 && (
+                                  <div className="cpi">
+                                    <img src={logo?.url} key={index} width="24px" height="24px" style={{ marginRight: "5px" }} />
+                                  </div>
                                 )
-                              })
-                            }
-                            {
-                              collection?.logo?.length > 5 &&((collection?.logo?.length - 5+"+"))
-                            }
-                            </div>
+                              )
+                            })
+                          }
+                          <div className="count">
+                          {
+                            collection?.logo?.length > 5 && ("+" + (collection?.logo?.length - 5))
+                          }
                           </div>
-                          </Link>
+                        </div>
+                    </Link>
 
-                          <Dropdown>
-                              <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm">
-                                <MdMoreVert />
-                              </Dropdown.Toggle>
+                    <Dropdown className="p-3 d-flex align-items-center">
+                      <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm">
+                        <MdMoreVert />
+                      </Dropdown.Toggle>
 
 
-                              <Dropdown.Menu>
-                                <Dropdown.Item onClick={() => {
-                                  deleteCollection(collection);
-                                }}>
-                                  <DeleteIcon />
-                                  Delete Collection
-                                </Dropdown.Item>
-                              </Dropdown.Menu>
-                            </Dropdown>
-                        </Card.Body>
-                      </Card>
-                    </div>
+                      <Dropdown.Menu>
+                        <Dropdown.Item onClick={() => {
+                          deleteCollection(collection);
+                        }}>
+                          <DeleteIcon />
+                          Delete Collection
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </div>
                 );
               })}
-            <Card className="text-center" style={{
-              color: "#999",
-              textDecoration: "none"
-            }} onClick={handleShow}>
-              <Card.Body className="add-icon ">
-                <Card.Title>Add New Collection</Card.Title>
-                <BsFillPlusCircleFill style={{ fontSize: 40 }} />
+            <Card onClick={handleShow} className="d-flex box-shadow coll-item add-collection border-0">
+              <Card.Body className="add-icon d-flex align-items-center">
+                <Card.Title className="mb-0 flex-fill">Add New Collection</Card.Title>
+                <BsFillPlusCircleFill style={{ fontSize: 32 }} />
               </Card.Body>
             </Card>
           </div>
