@@ -36,7 +36,7 @@ import {
 } from "react-icons/md";
 import Addfile from "./Addfile.js";
 import ModalComponent from "../components/ModalComponent.js";
-
+import { Helmet } from "react-helmet";
 function Not_found() {
   return <div className="not-found">Not found</div>;
 }
@@ -216,7 +216,13 @@ function Brand() {
           <ClipLoader />
         </div>
       ) : (
+
+
         <div className="bg-light flex-fill">
+          <Helmet>
+          <link rel="canonical" href="http://mysite.com/example" />
+          </Helmet>
+
           <Container>
             {domain ? (
               <div className="row mt-4">
@@ -299,6 +305,7 @@ function Brand() {
                                     return (
                                       <div key={index}>
                                         {email?.length > 4 && (
+
                                           <h5>
                                             {email}
                                             <Button
@@ -310,6 +317,7 @@ function Brand() {
                                             </Button>
                                           </h5>
                                         )}
+
                                       </div>
                                     );
                                   })}
@@ -351,12 +359,14 @@ function Brand() {
                         <Nav.Link
                           onClick={() => {
                             navigate("json");
+
                           }}
                         >
                           <MdCode />
                         </Nav.Link>
                       </Nav>
                     )}
+
                   </Container>
                 </Navbar>
 
@@ -427,6 +437,7 @@ function Brand() {
                                 >
                                   {brand.url !== undefined &&
                                   brand.url !== "null" ? (
+
                                     <img src={brand.url} alt="" />
                                   ) : (
                                     <img src="/assets/picture.svg" alt="" />
@@ -435,6 +446,7 @@ function Brand() {
                               </Link>
                               <Card.Body className="d-flex">
                                 <Card.Title style={{ textDecoration: "none" }}>
+
                                   {brand.title}
                                 </Card.Title>
                                 <Button
@@ -453,6 +465,7 @@ function Brand() {
                                   className="me-1"
                                   onClick={() => {
                                     DownloadToSvg(brand.url, brand.title);
+
                                   }}
                                 >
                                   SVG
@@ -464,6 +477,7 @@ function Brand() {
                                     id="dropdown-basic"
                                     size="sm"
                                   >
+
                                     <MdMoreVert />
                                   </Dropdown.Toggle>
 
@@ -473,8 +487,10 @@ function Brand() {
                                         setModalShow(true);
                                         setAddImageToCollection(brand._id);
                                         setIndexToaddToFav(index);
+
                                       }}
                                     >
+
                                       <BookmarkIcon
                                         style={{ color: variants[index] }}
                                       />
@@ -519,11 +535,11 @@ function Brand() {
                   <div className="mt-5">
                     {allColor[0]?.colorValue &&
                     allColor[0]?.colorValue != "" ? (
+
                       <h5>Colors</h5>
                     ) : (
                       ""
                     )}
-
                     {allColor != "" ? (
                       <div className="d-flex colors-wrp">
                         {allColor?.map((color, index) => {
@@ -579,6 +595,7 @@ function Brand() {
                             />
                           </Helmet>
                           {link}
+
                         </div>
                       );
                     })}
@@ -605,9 +622,9 @@ function Brand() {
             ) : (
               <Not_found />
             )}
-
             {modalShow && (
               <ModalComponent
+
                 setVariants={setvariants}
                 variants={variants}
                 setAddedCollection={setAddedCollection}
@@ -620,6 +637,7 @@ function Brand() {
                 onHide={() => setModalShow(false)}
               />
             )}
+
           </Container>
         </div>
       )}

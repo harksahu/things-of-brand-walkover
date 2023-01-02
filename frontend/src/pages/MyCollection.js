@@ -162,7 +162,7 @@ const MyCollection = () => {
                               })
                             }
                             {
-                              collection?.logo?.length &&((collection?.logo?.length - 5+"+"))
+                              collection?.logo?.length > 5 &&((collection?.logo?.length - 5+"+"))
                             }
                             </div>
                           </div>
