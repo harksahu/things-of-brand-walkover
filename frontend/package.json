@@ -23,6 +23,7 @@
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.1.0",
     "react-draggable": "^4.4.5",
+    "react-helmet": "^6.1.0",
     "react-icons": "^4.6.0",
     "react-paginate": "^8.1.4",
     "react-redux": "^8.0.1",
@@ -64,8 +65,7 @@
     "eslint": "^8.30.0",
     "eslint-plugin-react": "^7.31.11",
     "postcss": "^8.4.12",
-    "sass": "^1.56.0",
-    "tailwindcss": "^3.0.24"
+    "sass": "^1.56.0"
   },
   "main": "postcss.config.js",
   "author": "",

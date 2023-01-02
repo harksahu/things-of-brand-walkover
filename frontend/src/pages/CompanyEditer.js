@@ -682,7 +682,7 @@ function Profile() {
                                     setcount([...tempCount]);
                                   }}
                                 />
-                                {index ? (
+                                {index && (
                                   <button
                                     type="button"
                                     className="name noselect"
@@ -691,7 +691,7 @@ function Profile() {
                                   >
                                     <BsFillTrashFill />
                                   </button>
-                                ) : null}
+                                )}
                               </Form.Group>
                             </div>
                           ))}
