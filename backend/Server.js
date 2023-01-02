@@ -72,8 +72,6 @@ app.get('/collection/:id/json',async(req,res)=>{
   console.log("req");
   console.log(req?.params?.id);
   const data = await getCollectionJson(req?.params?.id)
-  // console.log("data");
-  // console.log(data);
   res.send({data});
   // return data
 })

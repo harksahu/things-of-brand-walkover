@@ -25,7 +25,7 @@ function NavigationBar({ getSearchBrand }) {
 
 
   const handleKeyPress = useCallback((event) => {
-
+console.log(event);
     if (event.ctrlKey === true) {
       // console.log(event);
       if (event.key === "k") {
