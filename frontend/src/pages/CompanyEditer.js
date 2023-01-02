@@ -56,7 +56,7 @@ function Profile() {
     { colorName: "", colorValue: "#FFFFFF" },
   ]);
   const [value, setValue] = useState([]);
-  const [fontLink, setFontLink] = useState([""]);
+  const [fontLink, setFontLink] = useState([]);
   const [linkCount, setLinkCount] = useState(1);
   const [countTracker, setCountTracker] = useState(1);
   const [valid, setvalid] = useState([false]);
@@ -707,7 +707,7 @@ function Profile() {
                         </Form.Label>
                         <div id="list" className="hide formbold-chatbox-form">
                           {fontLink?.map((element, index) => (
-                            <div id="fetch" key={index}>
+                            <div className = "m-3" id="fetch" key={index}>
                              
                               <Autocomplete
 
@@ -722,7 +722,8 @@ function Profile() {
                                     tempCount[index] = newValue;
                                     setFontLink([...tempCount]);
                                   }}
-                                  getOptionSelected
+                                  // getOptionSelected
+                                  isOptionEqualToValue={() => true }
                                   sx={{ width: 300 }}
                                   renderInput={(params) => (
                                     <TextField {...params} label="Fonts" />

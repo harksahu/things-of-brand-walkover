@@ -37,7 +37,7 @@ function MyCompany() {
     if (user) {
       if (user?.email) {
         profileDetails();
-        setLoading(false);
+        
       }
     }
     findSharedEmail();
@@ -119,7 +119,7 @@ function MyCompany() {
   const profileDetails = async () => {
     fresult = await getProfileDetails({ email: user.email });
     setCompany(fresult.data.data);
-
+    setLoading(false);
   };
 
   return (
