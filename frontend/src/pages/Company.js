@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import {
@@ -10,14 +9,15 @@ import {
   Button,
   Modal,
   ListGroup,
-  Dropdown
+  Dropdown,
 } from "react-bootstrap";
+import { Helmet } from "react-helmet";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../utils/SvgInLine.css";
 import "../scss/brand.scss";
 import { UserAuth } from "../context/AuthContext";
 import CopyToClipboard from "../components/CopyToClipboard.js";
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import {
   getProfileDetails,
   sendSearchAPI,
@@ -25,17 +25,14 @@ import {
   getCollection,
 } from "../api/Index.js";
 import saveAs from "file-saver";
-import {
-  BsFillPlusCircleFill,
-  BsFillTrashFill,
-} from "react-icons/bs";
+import { BsFillPlusCircleFill, BsFillTrashFill } from "react-icons/bs";
 import {
   MdArrowBackIos,
   MdVerified,
   MdShare,
   MdOutlineModeEdit,
   MdMoreVert,
-  MdCode
+  MdCode,
 } from "react-icons/md";
 import Addfile from "./Addfile.js";
 import ModalComponent from "../components/ModalComponent.js";
@@ -75,11 +72,10 @@ function Brand() {
   const [addedCollection, setAddedCollection] = useState(false);
   const [variants, setvariants] = useState([]);
   const [indexToaddToFav, setIndexToaddToFav] = useState();
-  const { key } = useLocation()
+  const { key } = useLocation();
   const handleClosee = () => {
     setIsRepeatingEmail(false);
     setShoww(false);
-
   };
   const removeSharedEmail = (index) => {
     let temp = sharedEmail;
@@ -131,15 +127,18 @@ function Brand() {
         for (var j = 0; j < data?.data?.data?.length; j++) {
           var flag = true;
           for (var i = 0; i < collection?.data?.data?.length; i++) {
-            if (collection?.data?.data[i]?.Logos.includes(data?.data?.data[j]?._id)) {
+            if (
+              collection?.data?.data[i]?.Logos.includes(
+                data?.data?.data[j]?._id
+              )
+            ) {
               flag = false;
               break;
             }
           }
           if (flag) {
             temp.push("black");
-          }
-          else {
+          } else {
             temp.push("red");
           }
         }
@@ -218,10 +217,12 @@ function Brand() {
         </div>
       ) : (
 
+
         <div className="bg-light flex-fill">
           <Helmet>
           <link rel="canonical" href="http://mysite.com/example" />
           </Helmet>
+
           <Container>
             {domain ? (
               <div className="row mt-4">
@@ -233,7 +234,7 @@ function Brand() {
                           variant="outline-dark"
                           onClick={() => {
                             if (key === "default") {
-                              navigate('/');
+                              navigate("/");
                             } else {
                               navigate(-1);
                             }
@@ -303,7 +304,8 @@ function Brand() {
                                   {sharedEmail.map((email, index) => {
                                     return (
                                       <div key={index}>
-                                        {email?.length > 4 &&
+                                        {email?.length > 4 && (
+
                                           <h5>
                                             {email}
                                             <Button
@@ -314,7 +316,8 @@ function Brand() {
                                               <BsFillTrashFill />
                                             </Button>
                                           </h5>
-                                        }
+                                        )}
+
                                       </div>
                                     );
                                   })}
@@ -351,18 +354,19 @@ function Brand() {
                     ) : (
                       ""
                     )}
-                    {
-                      user && (<Nav className="nav-action">
+                    {user && (
+                      <Nav className="nav-action">
                         <Nav.Link
                           onClick={() => {
-                            navigate("json")
+                            navigate("json");
+
                           }}
                         >
                           <MdCode />
                         </Nav.Link>
                       </Nav>
-                      )
-                    }
+                    )}
+
                   </Container>
                 </Navbar>
 
@@ -432,7 +436,8 @@ function Brand() {
                                   className="img_size pattern-square"
                                 >
                                   {brand.url !== undefined &&
-                                    brand.url !== "null" ? (
+                                  brand.url !== "null" ? (
+
                                     <img src={brand.url} alt="" />
                                   ) : (
                                     <img src="/assets/picture.svg" alt="" />
@@ -440,9 +445,8 @@ function Brand() {
                                 </div>
                               </Link>
                               <Card.Body className="d-flex">
-                                <Card.Title
-                                  style={{ textDecoration: "none" }}
-                                >
+                                <Card.Title style={{ textDecoration: "none" }}>
+
                                   {brand.title}
                                 </Card.Title>
                                 <Button
@@ -460,17 +464,20 @@ function Brand() {
                                   size="sm"
                                   className="me-1"
                                   onClick={() => {
-                                    DownloadToSvg(
-                                      brand.url,
-                                      brand.title
-                                    );
+                                    DownloadToSvg(brand.url, brand.title);
+
                                   }}
                                 >
                                   SVG
                                 </Button>
 
                                 <Dropdown>
-                                  <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm">
+                                  <Dropdown.Toggle
+                                    variant="light"
+                                    id="dropdown-basic"
+                                    size="sm"
+                                  >
+
                                     <MdMoreVert />
                                   </Dropdown.Toggle>
 
@@ -480,7 +487,10 @@ function Brand() {
                                         setModalShow(true);
                                         setAddImageToCollection(brand._id);
                                         setIndexToaddToFav(index);
-                                      }}>
+
+                                      }}
+                                    >
+
                                       <BookmarkIcon
                                         style={{ color: variants[index] }}
                                       />
@@ -523,12 +533,13 @@ function Brand() {
                   </div>
 
                   <div className="mt-5">
-                    {allColor[0]?.colorValue && allColor[0]?.colorValue != "" ? (
+                    {allColor[0]?.colorValue &&
+                    allColor[0]?.colorValue != "" ? (
+
                       <h5>Colors</h5>
                     ) : (
                       ""
                     )}
-
                     {allColor != "" ? (
                       <div className="d-flex colors-wrp">
                         {allColor?.map((color, index) => {
@@ -549,7 +560,9 @@ function Brand() {
                                     <div>{color.colorName}</div>
                                     <div className="d-flex justify-content-between">
                                       {color.colorValue}
-                                      <CopyToClipboard color={color.colorValue} />
+                                      <CopyToClipboard
+                                        color={color.colorValue}
+                                      />
                                     </div>
                                   </div>
                                 </div>
@@ -570,14 +583,19 @@ function Brand() {
                   </div>
 
                   <div className="mt-5">
-                    {fontLink != "" ? <h5>Fonts link</h5> : ""}
+                    {fontLink != "" && <h5>Fonts link</h5> }
 
                     {fontLink?.map((link, index) => {
                       return (
-                        <div key={index}>
-                          {/* <a href={link} target="_blank" rel="noreferrer"> */}
+                        <div key={index} style={{fontFamily: link}} className="card">
+                          <Helmet>
+                            <link
+                              rel="stylesheet"
+                              href={`https://fonts.googleapis.com/css2?family=${link}`}
+                            />
+                          </Helmet>
                           {link}
-                          {/* </a> */}
+
                         </div>
                       );
                     })}
@@ -604,10 +622,9 @@ function Brand() {
             ) : (
               <Not_found />
             )}
+            {modalShow && (
+              <ModalComponent
 
-
-            {
-              modalShow && <ModalComponent
                 setVariants={setvariants}
                 variants={variants}
                 setAddedCollection={setAddedCollection}
@@ -619,7 +636,8 @@ function Brand() {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
               />
-            }
+            )}
+
           </Container>
         </div>
       )}

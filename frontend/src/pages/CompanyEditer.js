@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import colors from "../api/colors.json";
 import { Autocomplete, TextField } from "@mui/material";
-import Addfile from "./Addfile.js"
+import Addfile from "./Addfile.js";
 import { UserAuth } from "../context/AuthContext";
 import AlertComponent from "../components/AlertComponent";
 import {
@@ -29,7 +29,7 @@ import RichtextEditor from "./JoditEditor.js";
 import { BsFillTrashFill } from "react-icons/bs";
 import { MdArrowBackIos } from "react-icons/md";
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import { Hint } from "react-autocomplete-hint";
+// import { Hint } from "react-autocomplete-hint";
 import ClipLoader from "react-spinners/ClipLoader";
 import InputComponent from "../components/InputComponent.js";
 
@@ -66,8 +66,8 @@ function Profile() {
   const [loading, setLoading] = useState(false);
   const [allData, setAllData] = useState();
   const [showAlert, setShowAlert] = useState(false);
-  const [message, setMessage] = useState("")
-  const [showLinkError, setShowLinkError] = useState(false)
+  const [message, setMessage] = useState("");
+  const [showLinkError, setShowLinkError] = useState(false);
 
   const location = useLocation();
   let countTemp = countTracker;
@@ -110,14 +110,13 @@ function Profile() {
     }
     domainName = domainName.split(":")[0];
     domainName = domainName.split("?")[0];
-    return domainName
+    return domainName;
   }
 
   const addLinks = (event) => {
     setShowLinkError(false);
     if (event.key === "Enter" && event.target.value !== "") {
      var check = event.target.value.split(".");
-    console.log(!check[1] ,check[1]?.length<2 )
     if(!check[1] || check[1]?.length<5   )
     {
       setShowLinkError(true)
@@ -139,7 +138,7 @@ function Profile() {
   };
   const fontlist = async () => {
     const data = await getFontList();
-    
+
     var result = [];
     for (var i in data?.data?.items) result.push(data?.data?.items[i]?.family);
     setFontFamily(result);
@@ -170,39 +169,40 @@ function Profile() {
     if (domain != location?.state?.data?.domain) {
       for (let i = 0; i < allData?.length; i++) {
         if (allData[i].domain === domain) {
-          window.scrollTo(0, 0)
+          window.scrollTo(0, 0);
           setShowAlert(true);
-          setMessage("Domain should be unique")
-          return
+          setMessage("Domain should be unique");
+          return;
         }
       }
     }
 
     var domainParts = domain.split(".");
-    console.log(domainParts.length <= 2 , !domainParts[1] , domainParts[1]?.length <= 1);
     if (domainParts.length <= 2 && (domainParts[1]?.length <= 1 || !domainParts[1])) {
-      console.log("here");
       window.scrollTo(0, 0)
       setShowAlert(true);
-      setMessage("Enter proper domain")
-      return
+      setMessage("Enter proper domain");
+      return;
     }
 
     if (!name) {
-      window.scrollTo(0, 0)
+      window.scrollTo(0, 0);
       setShowAlert(true);
-      setMessage("Name field is compulsory")
-      return
+      setMessage("Name field is compulsory");
+      return;
     }
 
     if (!aboutus) {
-      window.scrollTo(0, 0)
+      window.scrollTo(0, 0);
       setShowAlert(true);
-      setMessage("About us field is compulsory")
-      return
+      setMessage("About us field is compulsory");
+      return;
     }
-   
 
+    if(fontFamily.includes(fontLink))
+    {
+        console.log(fontFamily);
+    }
 
     const domainTemp = extractDomain(domain);
     const data = {
@@ -224,10 +224,6 @@ function Profile() {
     await updateProfileFields(data);
 
     navigate("/" + domain);
-
-
-
-
   };
   const profileDetails = async () => {
     await getProfileDetails({
@@ -265,6 +261,7 @@ function Profile() {
   };
 
   useEffect(() => { }, [value]);
+  // useEffect(() => { }, [fontLink]);
 
   const config = {
     buttons: ["bold", "italic"],
@@ -303,16 +300,18 @@ function Profile() {
     setValue(newFormValues1);
   };
 
-
   function handleShow() {
     setFullscreen("md-down");
     setShow(true);
   }
 
   return (
-
     <div className="bg-gray h-100">
-      <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert} />
+      <AlertComponent
+        message={message}
+        showAlert={showAlert}
+        setShowAlert={setShowAlert}
+      />
 
       {loading ? (
         <div className="center-loader">
@@ -341,7 +340,11 @@ function Profile() {
                 <Card.Body>
                   <Stack gap={3}>
                     <Form>
-                      <InputComponent label={"Name"} setValue={setName} valuee={name} />
+                      <InputComponent
+                        label={"Name"}
+                        setValue={setName}
+                        valuee={name}
+                      />
                       <Form.Group className="mb-3 " id="about">
                         <Form.Label>About us</Form.Label>
                         <RichtextEditor
@@ -349,22 +352,22 @@ function Profile() {
                           setGuidlines={setAboutus}
                           config={config}
                           tabIndex={1}
-
                         />
-
                       </Form.Group>
                       {DomainPost ? (
                         <div className="grid">
                           <h6>logos</h6>
-                          <div className="grid d-flex" style={{ overflow: "auto" }}>
+                          <div
+                            className="grid d-flex"
+                            style={{ overflow: "auto" }}
+                          >
                             {DomainPost?.map((brand, index) => {
                               return (
-                                <div key={index} className="d-flex flex-wrap d-flex justify-content-center ">
-
-                                  <div
-                                    key={brand._id}
-                                    className="item "
-                                  >
+                                <div
+                                  key={index}
+                                  className="d-flex flex-wrap d-flex justify-content-center "
+                                >
+                                  <div key={brand._id} className="item ">
                                     <Card className="box-shadow">
                                       {/* <Dropdown className="ms-auto">
                                       <Dropdown.Toggle variant="light" size="sm">
@@ -399,7 +402,7 @@ function Profile() {
                                           className="img_size  pattern-square"
                                         >
                                           {brand.url !== undefined &&
-                                            brand.url !== "null" ? (
+                                          brand.url !== "null" ? (
                                             <img src={brand.url} alt="" />
                                           ) : (
                                             <img
@@ -507,10 +510,15 @@ function Profile() {
                             {user ? (
                               // <Link to="/addfile" className="add-new" state={{ domain: domain }}>
                               <div className="add-new">
-                                <Card className="item" onClick={() => handleShow()} >
+                                <Card
+                                  className="item"
+                                  onClick={() => handleShow()}
+                                >
                                   <Card.Body className="add-icon align-items-center d-flex justify-content-center">
                                     <Card.Title className="text-center">
-                                      <BsFillPlusCircleFill style={{ fontSize: 40 }} />
+                                      <BsFillPlusCircleFill
+                                        style={{ fontSize: 40 }}
+                                      />
                                     </Card.Title>
                                     <Card.Text></Card.Text>
                                   </Card.Body>
@@ -521,7 +529,7 @@ function Profile() {
                                     <Button variant="outline-light" size="sm">
                                       -
                                     </Button>
-                                  </div>
+                                    </div>
                                 </Card>
                               </div>
                             ) : (
@@ -556,7 +564,11 @@ function Profile() {
                           onKeyUp={(event) => addLinks(event)}
                           placeholder="Press enter to add tags"
                         />
-                        {showLinkError&&<small style={{color :"red"}}>Enter Correct link </small>}
+                        {showLinkError && (
+                          <small style={{ color: "red" }}>
+                            Enter Correct link{" "}
+                          </small>
+                        )}
                       </div>
 
                       <InputComponent
@@ -596,15 +608,11 @@ function Profile() {
                                   }}
                                   className="contact-form-area"
                                 />
-
-                                {/* {console.log("value of index", value)}
-                                {console.log("value of color", color)} */}
                                 <Autocomplete
                                   value={value[index]}
                                   onChange={(e, newValue) => {
                                     if (newValue.value != undefined) {
                                       // setValue(newValue)
-                                      // console.log("value", newValue);
                                       document.getElementById(
                                         "colorinput" + index
                                       ).value = newValue.value;
@@ -615,7 +623,6 @@ function Profile() {
                                       let tempCount1 = value;
                                       tempCount1[index] = newValue;
                                       setValue([...tempCount1]);
-
                                     } else if (newValue.includes("#")) {
                                       document.getElementById(
                                         "colorinput" + index
@@ -624,7 +631,6 @@ function Profile() {
                                       tempCount1[index].label = newValue;
                                       tempCount1[index].value = newValue;
                                       setValue([...tempCount1]);
-
                                     } else {
                                       document.getElementById(
                                         "colorinput" + index
@@ -633,7 +639,6 @@ function Profile() {
                                       tempCount1[index].label = newValue;
                                       tempCount1[index].value = newValue;
                                       setValue([...tempCount1]);
-
                                     }
                                   }}
                                   freeSolo
@@ -641,7 +646,6 @@ function Profile() {
                                   onInputChange={(event, newInputValue) => {
                                     // setInputValue(newInputValue);
                                     if (newInputValue.includes("#")) {
-                                      // console.log("value", newInputValue);
                                       let tempCount1 = value;
                                       tempCount1[index].label = newInputValue;
                                       tempCount1[index].value = newInputValue;
@@ -715,7 +719,27 @@ function Profile() {
                         <div id="list" className="hide formbold-chatbox-form">
                           {fontLink?.map((element, index) => (
                             <div id="fetch" key={index}>
-                              <Hint options={fontFamily}>
+                             
+                              <Autocomplete
+
+                                  getOptionLabel={(option) => option}
+                                  value={fontLink[index]}
+                                  placeholder="Enter font name"
+                                  
+                                  id={"id" + index}
+                                  options={fontFamily}
+                                  onChange={ (e: any, newValue: string | null) => {
+                                    let tempCount = fontLink;
+                                    tempCount[index] = newValue;
+                                    setFontLink([...tempCount]);
+                                  }}
+                                  // getOptionSelected
+                                  sx={{ width: 300 }}
+                                  renderInput={(params) => (
+                                    <TextField {...params} label="Fonts" />
+                                  )}
+                                />
+                              {/* <Hint options={fontFamily}>
                                 <input
                                   type="url"
                                   id={"id" + index}
@@ -730,7 +754,7 @@ function Profile() {
                                   className="contact-form-area form-control"
                                   name="myBrowser"
                                 />
-                              </Hint>
+                              </Hint> */}
                               {index ? (
                                 <button
                                   type="button"
@@ -771,14 +795,16 @@ function Profile() {
               </Card>
             </Col>
           </Row>
-          <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
-            <Modal.Header closeButton>
-            </Modal.Header>
-            <Modal.Body><Addfile domain={domain} /></Modal.Body>
+          <Modal
+            show={show}
+            fullscreen={fullscreen}
+            onHide={() => setShow(false)}
+          >
+            <Modal.Header closeButton></Modal.Header>
+            <Modal.Body>
+              <Addfile domain={domain} />
+            </Modal.Body>
           </Modal>
-
-
-
         </Container>
       )}
     </div>
