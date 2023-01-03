@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card ,Form} from "react-bootstrap";
+import { Button, Card, Form } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { updateCollection, createCollection, getCollection } from "../api/Index.js";
 import { UserAuth } from "../context/AuthContext";
@@ -26,7 +26,6 @@ function ModalComponent(props) {
   }, [props]);
 
   useEffect(() => {
-    console.log(props)
     if (!user?.email) {
       setShowAlert(true);
       setMessage("You have to login first...");
@@ -37,8 +36,8 @@ function ModalComponent(props) {
   const createCollections = async (event) => {
     event.preventDefault();
     props.onHide();
-    if(collectionName?.trim()=="")
-    return;
+    if (collectionName?.trim() == "")
+      return;
     const ans = await createCollection({
       CollectionName: collectionName,
       email: user.email,
@@ -103,11 +102,7 @@ function ModalComponent(props) {
     >
       <Modal.Header closeButton>
         {/* <Link to="/collection"> */}
-        <div 
-                  style={{
-                    display: "flex",
-                    flexDirection: "row-reverse"
-                  }}>
+        
           {showComponent && (
             <div style={{ marginRight: "250px", display:"flex" }}>
               <Form style={{display:"flex" }} onSubmit={createCollections}>
@@ -129,100 +124,73 @@ function ModalComponent(props) {
               </Form>
             </div>
           )}
-          {props?.allcollection?.data?.data?.length && (
-            !showComponent && <BsFillPlusCircleFill
-              size="50px"
-              style={{ display: 'flex',
-              justifyContent:"flex-end",
-              width:"100%"
+          </Modal.Header>
+          <Modal.Body>
 
-              }}
-              onClick={() => {
-                setShowComponent(true);
-              }}
-            />
-          )}
-          {/* </Link> */}
-        </div>
-      </Modal.Header>
-      <Modal.Body>
-        {!props?.allcollection?.data?.data?.length ? (
-          <Card
-            onClick={() => {
-              setShowComponent(true);
-            }}
-            className="h-100 item-company add-new d-flex"
-          >
-            <Card.Body className="add-icon align-items-center justify-content-center">
-              <Card.Title className="text-center">
-                <BsFillPlusCircleFill style={{ fontSize: 40 }} />
-              </Card.Title>
-            </Card.Body>
-            <Card.Body>
-              <Card.Title className="text-center">
-                Add New Collection
-              </Card.Title>
-            </Card.Body>
-          </Card>
-        ) : (
-          ""
-        )}
-        <div className="d-flex item m-3" style={{ overflow: "scroll" }}>
-          {collection &&
-            collection.map((collection) => {
-              return (
-                <div key={collection._id} className="m-3">
-                  <div>
-                    {/* <Link to={"/collection/" +collection._id}> */}
-                    <Card 
-                      style={{ height: "7.5rem", width: "8rem" }}
-                      className={`item-company ${collection?.Logos?.includes(id) && "blur"}`}
+            <div className="d-flex"  style={{ overflow: "scroll" }}>
+            <div className="d-flex item m-3">
+              {collection &&
+                collection.map((collection) => {
+                  return (
+                    <div key={collection._id} className="m-3">
+                      <div>
+                        {/* <Link to={"/collection/" +collection._id}> */}
+                        <Card
+                          style={{ height: "7.5rem", width: "8rem" }}
+                          className={`item-company ${collection?.Logos?.includes(id) && "blur"}`}
 
-                      onClick={() => {
-                        createNewCollection(collection, id);
-                        
-                      }}
-                    >
-                      {collection?.logo[0]?.url !== undefined &&
-                      collection?.logo[0]?.url !== "null" ? (
-                        <img
-                          style={{ height: "4rem", width: "5rem" }}
-                          src={collection?.logo[0]?.url}
-                          alt=""
-                        />
-                      ) : (
-                        <img
-                          style={{ height: "4rem", width: "5rem" }}
-                          src="/assets/picture.svg"
-                          alt=""
-                        />
-                      )}
-                      {/* </div> */}
-                      <div style={{ textalign: "center", paddingLeft: "18%" }}>
-                        {collection.CollectionName}
-                      </div>
-                      {/* <Card.Body>
-                      <Card.Title 
-                        style={{ textDecoration: "none" , paddingRight:"65%"  }}
-                        className="text-center"
-                      >
+                          onClick={() => {
+                            createNewCollection(collection, id);
+
+                          }}
+                        >
+                          <Card.Body>
+
+                          {collection?.logo[0]?.url !== undefined &&
+                            collection?.logo[0]?.url !== "null" ? (
+                            <img
+                              style={{ height: "4rem", width: "5rem" }}
+                              src={collection?.logo[0]?.url}
+                              alt=""
+                            />
+                          ) : (
+                            <img
+                              style={{ height: "4rem", width: "5rem" }}
+                              src="/assets/picture.svg"
+                              alt=""
+                            />
+                          )}
+                      <Card.Title>
                         {collection.CollectionName}
                       </Card.Title>
-                    </Card.Body> */}
-                    </Card>
-                  </div>
-                  {/* </Link> */}
-                </div>
-              );
-            })}
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-        {duplicateError && !showComponent && <h4 style={{margin:"auto"}}> {duplicateError}</h4>}
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-        
+                    </Card.Body>
+                        </Card>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+            <div className="add-new">
+            <Card style={{ height: "7.5rem", width: "8rem" ,marginTop:"30px"}} onClick={()=>{
+              setShowComponent(true)
+            }}>
+              <Card.Title  className="m-auto">
+                <Card.Title className="text-center">
+                  <BsFillPlusCircleFill
+
+                  />
+                </Card.Title>
+                Add New</Card.Title>
+            </Card>
+            </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            {duplicateError && !showComponent && <h4 style={{ margin: "auto" }}> {duplicateError}</h4>}
+            <Button onClick={props.onHide}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+
 
       }
     </>
