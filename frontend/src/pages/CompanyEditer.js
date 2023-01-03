@@ -678,7 +678,7 @@ function Profile() {
                                     setcount([...tempCount]);
                                   }}
                                 />
-                                {index ? (
+                                {/* {index ? ( */}
                                   <button
                                     type="button"
                                     className="name noselect"
@@ -687,7 +687,7 @@ function Profile() {
                                   >
                                     <BsFillTrashFill />
                                   </button>
-                                ):""}
+                                {/* ):""} */}
                               </Form.Group>
                             </div>
                           ))}
@@ -730,7 +730,7 @@ function Profile() {
                                     <TextField {...params} label="Fonts" />
                                   )}
                                 />
-                              {index ? (
+                              {/* {index ? ( */}
                                 <button
                                   type="button"
                                   className="name noselect"
@@ -740,7 +740,7 @@ function Profile() {
                                   <BsFillTrashFill />
                                   delete
                                 </button>
-                              ) : ""}
+                              {/* ) : ""} */}
                             </div>
                           ))}
                           <div className="button-section">

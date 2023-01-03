@@ -65,7 +65,7 @@ function Brand() {
   const [isShared, setSharedCompany] = useState(false);
   const handleShoww = () => setShoww(true);
   const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [isRepeatingEmail, setIsRepeatingEmail] = useState(false);
   const [userEmail, setUserEmail] = useState(false);
   const [CopyValue, setCopyValue] = useState("Copy link");
@@ -117,8 +117,7 @@ function Brand() {
   };
 
   const title = useParams();
-  const getbrandslogo = async () => {
-    if (domain) {
+  const getbrandslogo = async (id) => {
       const data = await sendSearchAPI({ domain: id, active: 1 });
       setDomainPost(data?.data?.data);
       if (user) {
@@ -129,34 +128,31 @@ function Brand() {
         setvariants([]);
         var temp = [];
         for (var j = 0; j < data?.data?.data?.length; j++) {
-          var flag = true;
-          for (var i = 0; i < collection?.data?.data?.length; i++) {
-            if (
-              collection?.data?.data[i]?.Logos.includes(
-                data?.data?.data[j]?._id
-              )
-            ) {
-              flag = false;
-              break;
-            }
-          }
-          if (flag) {
+          // var flag = true;
+          const isFind = collection?.data?.data.find(col=>
+            col.Logos.includes(
+              data?.data?.data[j]?._id
+            ))
+          if(isFind )
+          {
             temp.push("black");
           } else {
             temp.push("red");
           }
         }
         setvariants([...temp]);
+        // console.log("hello ");
+        setLoading(false);
       }
-    }
   };
   const getbrand = async () => {
     const fresult = await getProfileDetails({
       domain: title.title,
       searchfrom: true,
     });
+    console.log(fresult)
 
-    if (fresult?.data?.data) {
+    if (fresult?.data?.data?.length>0) {
       setCompany(fresult?.data?.data[0]);
       setId(fresult?.data?.data[0]._id);
       setName(fresult?.data?.data[0].name);
@@ -169,6 +165,10 @@ function Brand() {
       setEmail(fresult?.data?.data[0].email);
       setVerify(fresult?.data?.data[0].verify);
       setSharedEmail(fresult.data.data[0].sharedEmail);
+      if(fresult?.data?.data[0].domain)
+        getbrandslogo(fresult?.data?.data[0]._id);
+      else
+        setLoading(false);
     } else {
       setLoading(false);
     }
@@ -200,34 +200,31 @@ function Brand() {
 
     await updateProfileFields(data);
   };
-
   useEffect(() => {
-    setLoading(true);
-    getbrand();
-    if (domain) {
-      getbrandslogo();
-      setLoading(false);
-    }
+    if(title.title)
+      getbrand();
+  },[title.title])
+  useEffect(() => {
     return () => {
       const fontLINKs = document.getElementsByClassName("fontUrl");
       if (fontLINKs.length > 0) {
         for (var i = 0; i < fontLINKs.length; i++) {
           fontLINKs[i].remove();
-        }
-      }
+        }   
+}
     }
-  }, [domain, title, user, modalShow]);
-  function handleShow() {
-    setFullscreen("md-down");
-    setShow(true);
-  }
-  return (
-    <>
-      {loading ? (
-        <div className="center-loader">
-          <ClipLoader />
-        </div>
-      ) : (
+  }, [user, modalShow]);
+function handleShow() {
+  setFullscreen("md-down");
+  setShow(true);
+}
+return (
+  <>
+    {loading ? (
+      <div className="center-loader">
+        <ClipLoader />
+      </div>
+    ) : (
 
 
         <div className="bg-light flex-fill">
