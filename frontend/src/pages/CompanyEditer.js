@@ -20,7 +20,6 @@ import {
   getFontList,
   deleteMyStuffAPI,
   restoreMyStuffAPI,
-  // saveMyStuffAPI,
   sendSearchAPI,
 } from "../api/Index.js";
 import CloseIcon from "@mui/icons-material/Close";
@@ -29,12 +28,10 @@ import RichtextEditor from "./JoditEditor.js";
 import { BsFillTrashFill } from "react-icons/bs";
 import { MdArrowBackIos } from "react-icons/md";
 import { useLocation, Link, useNavigate } from "react-router-dom";
-// import { Hint } from "react-autocomplete-hint";
 import ClipLoader from "react-spinners/ClipLoader";
 import InputComponent from "../components/InputComponent.js";
 
 function Profile() {
-  // const [inputValue, setInputValue] = React.useState("");
   const [DomainPost, setDomainPost] = useState();
   const [jsonLabel, setJsonLabel] = useState([]);
   const [jsonValue, setJsonValue] = useState([]);
@@ -164,7 +161,6 @@ function Profile() {
     }
   }, [domain]);
   const updateProfileValue = async () => {
-    // window.scrollTo(0, 0)
 
     if (domain != location?.state?.data?.domain) {
       for (let i = 0; i < allData?.length; i++) {
@@ -344,6 +340,7 @@ function Profile() {
                         label={"Name"}
                         setValue={setName}
                         valuee={name}
+                        autoFocus={true}
                       />
                       <Form.Group className="mb-3 " id="about">
                         <Form.Label>About us</Form.Label>
@@ -508,7 +505,6 @@ function Profile() {
                             })}
 
                             {user ? (
-                              // <Link to="/addfile" className="add-new" state={{ domain: domain }}>
                               <div className="add-new">
                                 <Card
                                   className="item"
@@ -686,7 +682,7 @@ function Profile() {
                                     setcount([...tempCount]);
                                   }}
                                 />
-                                {index ? (
+                                {index && (
                                   <button
                                     type="button"
                                     className="name noselect"
@@ -695,7 +691,7 @@ function Profile() {
                                   >
                                     <BsFillTrashFill />
                                   </button>
-                                ) : null}
+                                )}
                               </Form.Group>
                             </div>
                           ))}
@@ -718,10 +714,8 @@ function Profile() {
                         </Form.Label>
                         <div id="list" className="hide formbold-chatbox-form">
                           {fontLink?.map((element, index) => (
-                            <div className = "m-3" id="fetch" key={index}>
-                             
+                            <div id="fetch" className="m-3" key={index}>
                               <Autocomplete
-
                                   getOptionLabel={(option) => option}
                                   value={fontLink[index]}
                                   placeholder="Enter font name"
@@ -740,22 +734,6 @@ function Profile() {
                                     <TextField {...params} label="Fonts" />
                                   )}
                                 />
-                              {/* <Hint options={fontFamily}>
-                                <input
-                                  type="url"
-                                  id={"id" + index}
-                                  autoComplete="off"
-                                  placeholder="Enter font name "
-                                  value={fontLink[index]}
-                                  onChange={(e) => {
-                                    let tempCount = fontLink;
-                                    tempCount[index] = e.target.value;
-                                    setFontLink([...tempCount]);
-                                  }}
-                                  className="contact-form-area form-control"
-                                  name="myBrowser"
-                                />
-                              </Hint> */}
                               {index ? (
                                 <button
                                   type="button"
@@ -782,7 +760,6 @@ function Profile() {
                         </div>
                       </Form.Group>
                       <div id="button" className="">
-                        {/* {location.state?.data ? ( */}
                         <Button
                           variant="primary"
                           onClick={() => updateProfileValue()}

@@ -6,12 +6,14 @@ import {
 } from "react-bootstrap";
 import PropTypes from 'prop-types';
 
-function InputComponent({ label, setValue, valuee, placeholderr,smalll }) {
+function InputComponent({ label, setValue, valuee, placeholderr,smalll,autoFocus }) {
   return (
     <>
       <Form.Group className="mb-3 " id="name">
         {label && <Form.Label>{label}{<small>{smalll}</small>}</Form.Label>}
+        {}
         <Form.Control
+        id ="inputComponentBox"
           type="text"
           placeholder={placeholderr}
           aria-describedby="btnGroupAddon"
@@ -19,8 +21,7 @@ function InputComponent({ label, setValue, valuee, placeholderr,smalll }) {
             setValue(e.target.value);
           }}
           value={valuee}
-
-        
+          autoFocus ={autoFocus}
         />
       </Form.Group>
     </>

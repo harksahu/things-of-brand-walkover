@@ -26,11 +26,11 @@ function NavigationBar({ getSearchBrand }) {
   const handleKeyPress = useCallback((event) => {
     // console.log(event);
     // if (window.navigator.platform === "MacIntel") {
-      if (event.ctrlKey === true) {
-        if (event.key === "k") {
-          document.getElementById("searchbar").focus()
-        }
+    if (event.ctrlKey === true) {
+      if (event.key === "k") {
+        document.getElementById("searchbar").focus()
       }
+    }
   }, []);
 
   useEffect(() => {
@@ -152,7 +152,31 @@ function NavigationBar({ getSearchBrand }) {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
+              {!user && location.pathname === "/all-companies" ? (
+                <Form className="justify-content-center">
+                  <Form.Control
+                    type="search"
+                    placeholder="Search"
+                    className="me-2"
+                    id="searchbar"
+                    autoComplete="off"
+                    aria-label="Search"
+                    // show={true}
+                    onChange={(e) => {
+                      {
+                        sendData(e.target.value);
+                        searchbar(e.target.value);
+                      }
+                    }}
+                    value={searchItem || ""}
+                    list="browsers"
+                    name="myBrowser"
+                  />
 
+                </Form>
+              ) : (
+                ""
+              )}
             </Nav>
             {user?.displayName ? (
               <Nav className="tob-navbar">
