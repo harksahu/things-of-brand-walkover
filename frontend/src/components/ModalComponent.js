@@ -63,7 +63,7 @@ function ModalComponent(props) {
       var temp = props.variants;
       temp[props.index] = "red";
 
-      props?.setVariants([...temp]);
+      props?.setvariants([...temp]);
       setDuplicateError("Logo is added to the collection");
       props?.setAddedCollection(true);
     }
