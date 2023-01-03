@@ -150,7 +150,6 @@ function Brand() {
       domain: title.title,
       searchfrom: true,
     });
-    console.log(fresult)
 
     if (fresult?.data?.data?.length>0) {
       setCompany(fresult?.data?.data[0]);
