@@ -127,7 +127,7 @@ function ModalComponent(props) {
               </Form>
             </div>
           )}
-          {props?.allcollection?.data?.data?.length && (
+          {props?.allcollection?.data?.data?.length ? (
             !showComponent && <BsFillPlusCircleFill
               size="50px"
               style={{ display: 'flex',
@@ -139,8 +139,8 @@ function ModalComponent(props) {
                 setShowComponent(true);
               }}
             />
-          )}
-          {/* </Link> */}
+          ):""}
+
         </div>
       </Modal.Header>
       <Modal.Body>
