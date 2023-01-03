@@ -101,6 +101,7 @@ const MyCollection = () => {
                   setValue={setCollectionName}
                   label={"Collection name"}
                   placeholderr={"Enter collection name"}
+                  autoFocus={true}
                 />
                 <Button type="submit " variant="primary">
                   Add

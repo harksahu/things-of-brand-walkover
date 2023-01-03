@@ -340,6 +340,7 @@ function Profile() {
                         label={"Name"}
                         setValue={setName}
                         valuee={name}
+                        autoFocus={true}
                       />
                       <Form.Group className="mb-3 " id="about">
                         <Form.Label>About us</Form.Label>

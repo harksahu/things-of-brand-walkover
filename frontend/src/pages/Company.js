@@ -205,7 +205,6 @@ function Brand() {
     }
     return () => {
       const fontLINKs = document.getElementsByClassName("fontUrl");
-      console.log(fontLINKs);
       if (fontLINKs.length > 0) {
         for (var i = 0; i < fontLINKs.length ; i++){
           fontLINKs[i].remove();
@@ -303,6 +302,7 @@ return (
                                 id="addEmail"
                                 name="sharingEmail"
                                 placeholder="Enter email"
+                                autoFocus
                               />
 
                               <ListGroup variant="flush">
