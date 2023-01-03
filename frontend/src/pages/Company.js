@@ -71,9 +71,9 @@ function Brand() {
   const [CopyValue, setCopyValue] = useState("Copy link");
   const [fullscreen, setFullscreen] = useState(true);
   const [modalShow, setModalShow] = useState(false);
-  const [collections, setCollections] = useState([]);
+  const [collections, setcollections] = useState([]);
   const [addImageToCollection, setAddImageToCollection] = useState();
-  const [addedCollection, setAddedCollection] = useState(false);
+  const [addedCollection, setaddedcollection] = useState(false);
   const [variants, setvariants] = useState([]);
   const [indexToaddToFav, setIndexToaddToFav] = useState();
   const { key } = useLocation();
@@ -125,7 +125,7 @@ function Brand() {
         const collection = await getCollection({
           email: user.email,
         });
-        setCollections(collection);
+        setcollections(collection);
         setvariants([]);
         var temp = [];
         for (var j = 0; j < data?.data?.data?.length; j++) {
@@ -634,15 +634,14 @@ function Brand() {
             )}
             {modalShow && (
               <ModalComponent
-
                 setvariants={setvariants}
                 variants={variants}
-                setAddedCollection={setAddedCollection}
+                setaddedcollection={setaddedcollection}
                 index={indexToaddToFav}
                 value={addedCollection}
                 id={addImageToCollection}
                 allcollection={collections}
-                setCollections={setCollections}
+                setcollections={setcollections}
                 show={modalShow}
                 onHide={() => setModalShow(false)}
               />

@@ -26,6 +26,7 @@ function ModalComponent(props) {
   }, [props]);
 
   useEffect(() => {
+    console.log(props)
     if (!user?.email) {
       setShowAlert(true);
       setMessage("You have to login first...");
@@ -65,7 +66,7 @@ function ModalComponent(props) {
 
       props?.setvariants([...temp]);
       setDuplicateError("Logo is added to the collection");
-      props?.setAddedCollection(true);
+      props?.setaddedcollection(true);
     }
     await updateCollection({
       _id: collection?._id,
@@ -94,8 +95,9 @@ function ModalComponent(props) {
     setShowAlert={setShowAlert}
   />  :
     <Modal
-      {...props}
-      size="lg"
+    show={props.show}
+    onHide={props.onHide}
+    size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
@@ -112,7 +114,7 @@ function ModalComponent(props) {
               <InputComponent
                 setValue={setCollectionName}
                 valuee={collectionName}
-                placeholderr={"Enter Collection name"}
+                placeholderr={"Enter Collection name"}  
               />
               <Button
                 type="submit"
