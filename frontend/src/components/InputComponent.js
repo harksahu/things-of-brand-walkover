@@ -32,7 +32,7 @@ function InputComponent({ label, setValue, valuee, placeholderr,smalll,autoFocus
 
 InputComponent.propTypes = {
   label: PropTypes.string,
-  setValue: PropTypes.string,
+  setValue: PropTypes.func,
   valuee: PropTypes.string,
   placeholderr: PropTypes.string
 }

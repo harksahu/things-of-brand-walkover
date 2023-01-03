@@ -151,7 +151,7 @@ const MyCollection = () => {
                             collection?.logo?.map((logo, index) => {
                               return (
                                 index < 5 && (
-                                  <div className="cpi">
+                                  <div className="cpi" key={index}>
                                     <img src={logo?.url} key={index} width="24px" height="24px" style={{ marginRight: "5px" }} />
                                   </div>
                                 )

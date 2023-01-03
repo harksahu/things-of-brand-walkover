@@ -37,12 +37,12 @@ const Collection = () => {
       logoId.splice(index, 1);
     }
     setLogoId(logoIdd);
-    const data = await updateCollection({
+     await updateCollection({
       _id: _id,
       Logos: logoId
     })
     getAllLogosFromCollection();
-    console.log(data);
+
   }
 
   useEffect(() => {
