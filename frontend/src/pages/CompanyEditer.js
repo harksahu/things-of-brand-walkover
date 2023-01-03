@@ -195,10 +195,6 @@ function Profile() {
       return;
     }
 
-    if(fontFamily.includes(fontLink))
-    {
-        console.log(fontFamily);
-    }
 
     const domainTemp = extractDomain(domain);
     const data = {
@@ -355,14 +351,14 @@ function Profile() {
                         <div className="grid">
                           <h6>logos</h6>
                           <div
-                            className="grid d-flex"
+                            className=" d-flex"
                             style={{ overflow: "auto" }}
                           >
                             {DomainPost?.map((brand, index) => {
                               return (
                                 <div
                                   key={index}
-                                  className="d-flex flex-wrap d-flex justify-content-center "
+                                  className="d-flex flex-wrap d-flex m-2"
                                 >
                                   <div key={brand._id} className="item ">
                                     <Card className="box-shadow">
@@ -429,9 +425,9 @@ function Profile() {
                                           ) : ( */}
                                             <div
                                               id="showname"
-                                              onClick={() => {
-                                                setShow(true);
-                                              }}
+                                              // onClick={() => {
+                                              //   setShow(true);
+                                              // }}
                                             >
                                               {brand.title}
                                             </div>

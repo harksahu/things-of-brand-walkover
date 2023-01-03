@@ -36,6 +36,11 @@ import {
 } from "react-icons/md";
 import Addfile from "./Addfile.js";
 import ModalComponent from "../components/ModalComponent.js";
+import { SocialIcon } from 'react-social-icons';
+
+
+
+
 function Not_found() {
   return <div className="not-found">Not found</div>;
 }
@@ -416,13 +421,11 @@ return (
                   dangerouslySetInnerHTML={{ __html: aboutus }}
                 ></div>
 
-                <div>
+                <div className="d-flex">
                   {links?.map((link) => {
                     return (
                       <div key={link}>
-                        <a target="_blank" href={link} rel="noreferrer">
-                          {link}
-                        </a>
+                        <SocialIcon url={link} target="_blank"/>
                       </div>
                     );
                   })}
