@@ -18,7 +18,6 @@ import "../scss/brand.scss";
 import { UserAuth } from "../context/AuthContext";
 import CopyToClipboard from "../components/CopyToClipboard.js";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
-import AlertComponent from "../components/AlertComponent.js";
 
 import {
   getProfileDetails,
@@ -78,8 +77,6 @@ function Brand() {
   const [addedCollection, setaddedcollection] = useState(false);
   const [variants, setvariants] = useState([]);
   const [indexToaddToFav, setIndexToaddToFav] = useState();
-  const [message, setMessage] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
   const { key } = useLocation();
   const handleClosee = () => {
     setIsRepeatingEmail(false);
@@ -492,6 +489,8 @@ function Brand() {
                                 >
                                   SVG
                                 </Button>
+{
+                                        (user?.email) ?
 
                                 <Dropdown>
                                   <Dropdown.Toggle
@@ -506,16 +505,9 @@ function Brand() {
                                   <Dropdown.Menu>
                                     <Dropdown.Item
                                       onClick={() => {
-                                        if (user?.email) {
                                           setModalShow(true);
                                           setAddImageToCollection(brand._id);
                                           setIndexToaddToFav(index);
-                                        }
-                                        else {
-                                          setShowAlert(true);
-                                          setMessage("You have to login first...");
-                                        }
-
                                       }}
                                     >
 
@@ -526,6 +518,9 @@ function Brand() {
                                     </Dropdown.Item>
                                   </Dropdown.Menu>
                                 </Dropdown>
+:""
+}
+
                               </Card.Body>
                             </Card>
                           </div>
@@ -668,10 +663,7 @@ function Brand() {
               />
             )}
 
-            <AlertComponent
-              message={message}
-              showAlert={showAlert}
-              setShowAlert={setShowAlert}/>
+            
 
           </Container>
         </div>
