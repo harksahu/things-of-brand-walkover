@@ -375,55 +375,61 @@ return (
                   </Container>
                 </Navbar>
 
-                <div className="col-lg-12 col-md-12">
-                  <div>{name ? <h1>{name}</h1> : ""}</div>
-                  <div className="align-items-center d-flex">
-                    <a
-                      href={"https://" + domain}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="me-2"
-                    >
-                      {domain}
-                    </a>
-                    {user ? (
-                      email === user.email ? (
-                        verify === "true" ? (
-                          <MdVerified />
-                        ) : (
-                          <>
-                            (Not verified)
-                            <div className="flex-fill"></div>
-                            <Link
-                              to="/domainverify"
-                              className="text-sm"
-                              state={{ data: company }}
-                            >
-                              How to verify domain?
-                            </Link>
-                          </>
-                        )
-                      ) : (
-                        ""
-                      )
-                    ) : (
-                      ""
-                    )}
-                  </div>
-
-                  <div
-                    id="aboutus"
-                    dangerouslySetInnerHTML={{ __html: aboutus }}
-                  ></div>
-
-                  <div className="d-flex">
-                    {links?.map((link) => {
-                      return (
-                        <div key={link}>
-                          <SocialIcon url={link} target="_blank" />
+                <div className="col-lg-12 col-md-12">                  
+                  <div className="row">
+                      <div className="col-lg-7 col-md-6 col-sm-12">
+                        <div className="">
+                          <div>{name ? <h1>{name}</h1> : ""}</div>
+                          <div                          
+                            id="aboutus"
+                            dangerouslySetInnerHTML={{ __html: aboutus }}
+                          ></div>
                         </div>
-                      );
-                    })}
+                      </div>
+                      <div className="col-lg-5 col-md-6 col-sm-12">
+                        <div className="align-items-center d-flex mt-3 mb-3">
+                          <a
+                            href={"https://" + domain}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="b-domain me-2"
+                          >
+                            {domain}
+                          </a>
+                          {user ? (
+                            email === user.email ? (
+                              verify === "true" ? (
+                                <MdVerified />
+                              ) : (
+                                <>
+                                  (Not verified)
+                                  <div className="flex-fill"></div>
+                                  <Link
+                                    to="/domainverify"
+                                    className="text-sm"
+                                    state={{ data: company }}
+                                  >
+                                    How to verify domain?
+                                  </Link>
+                                </>
+                              )
+                            ) : (
+                              ""
+                            )
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                        <div className="d-flex">
+                          {links?.map((link) => {
+                            return (
+                              <div key={link} className="social-icons">
+                                <SocialIcon className="icon" url={link} target="_blank" style={{ height: 32, width: 32 }} />
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
                   </div>
 
                   <div className="mt-5">
@@ -511,7 +517,7 @@ return (
                         email === user.email || isShared == true ? (
                           // <Link to="/addfile" className="add-new" state={{ domain: domain }}>
                           <div className="add-new">
-                            <Card className="item" onClick={() => handleShow()}>
+                            <Card className="item border-0 box-shadow" onClick={() => handleShow()}>
                               {/* <Card className="h-100 item-company"> */}
                               <Card.Body className="add-icon align-items-center d-flex justify-content-center">
                                 <Card.Title className="text-center">
@@ -591,7 +597,7 @@ return (
                     <div className="d-flex">
                       {fontLink?.map((link, index) => {
                         return (
-                          <div key={index} style={{ fontFamily: link }} className="card p-2 m-1">
+                          <div key={index} style={{ fontFamily: link, fontSize: '24px' }} className="card p-2 m-1">
                             <Helmet>
                               <link
                                 className="fontUrl"
