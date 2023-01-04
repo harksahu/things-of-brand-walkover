@@ -23,7 +23,7 @@ import {
   saveMyStuffAPI,
 } from "../api/Index.js";
 import ClipLoader from "react-spinners/ClipLoader";
-
+import DeleteComponent from "../components/DeleteComponent"
 
 function MyVerticallyCenteredModal() {
   const id = useParams();
@@ -36,6 +36,8 @@ function MyVerticallyCenteredModal() {
   const [show, setShow] = useState(false);
   const [props, setProps] = useState();
   const [loading, setLoading] = useState(true);
+  const [modalShow, setModalShow] = useState(false);
+  const [idToDelete, setIdToDelete] = useState(false);
   const savedata = async (id, n) => {
     setName(n);
     const new_data = {
@@ -132,6 +134,12 @@ function MyVerticallyCenteredModal() {
     <>
       {loading ? <div className="center-loader"><ClipLoader /></div> :
         <Container fluid>
+          <DeleteComponent
+                          show={modalShow}
+                          setmodalshow={ setModalShow}
+                          onSubmit ={()=>{deleteMyStuffAPI(idToDelete);
+                            navigate(-1);}}
+                           />
           <Row className="h-90">
             <Col className="popup_img">
               <div className="d-flex" style={{ position: "absolute" }}>
@@ -240,10 +248,12 @@ function MyVerticallyCenteredModal() {
                               ) : (
                                 <Dropdown.Item
                                   onClick={async () => {
-                                    await deleteMyStuffAPI(props?._id);
+                                    setModalShow(true);
+                                    setIdToDelete(props?._id);
+                                    // await ;
                                     // alert("Deleted");
                                     // window.location.reload();
-                                    navigate(-1);
+                                    // navigate(-1);
                                   }}
                                   variant="outline-secondary"
                                   size="sm"

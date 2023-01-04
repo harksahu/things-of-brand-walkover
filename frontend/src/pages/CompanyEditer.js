@@ -30,9 +30,11 @@ import { MdArrowBackIos } from "react-icons/md";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import InputComponent from "../components/InputComponent.js";
+import DeleteComponent from "../components/DeleteComponent";
 
 function Profile() {
   const [DomainPost, setDomainPost] = useState();
+  const [modalShow,setModalShow] = useState(false);
   const [jsonLabel, setJsonLabel] = useState([]);
   const [jsonValue, setJsonValue] = useState([]);
   const [name, setName] = useState("");
@@ -65,6 +67,7 @@ function Profile() {
   const [showAlert, setShowAlert] = useState(false);
   const [message, setMessage] = useState("");
   const [showLinkError, setShowLinkError] = useState(false);
+  const [idToDelete, setIdToDelete] = useState(false);
 
   const location = useLocation();
   let countTemp = countTracker;
@@ -304,6 +307,11 @@ function Profile() {
         showAlert={showAlert}
         setShowAlert={setShowAlert}
       />
+      <DeleteComponent
+                          show={modalShow}
+                          setmodalshow={ setModalShow}
+                          onSubmit ={()=>{deleteMyStuffAPI(idToDelete);
+                            navigate(-1);}}/>
 
       {loading ? (
         <div className="center-loader">
@@ -467,11 +475,13 @@ function Profile() {
                                               variant="outline-secondary"
                                               size="sm"
                                               onClick={async () => {
-                                                await deleteMyStuffAPI(
-                                                  brand?._id
-                                                );
+                                                setModalShow(true);
+                                                setIdToDelete( brand?._id)
+                                                // await deleteMyStuffAPI(
+                                                //   brand?._id
+                                                // );
 
-                                                navigate(-1);
+                                                // navigate(-1);
                                               }}
                                             >
                                               Delete

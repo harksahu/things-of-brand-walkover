@@ -8,12 +8,18 @@ import Button from "react-bootstrap/Button";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from "react-router-dom";
+import DeleteComponent from "../components/DeleteComponent";
 const Collection = () => {
   const [loading, setLoading] = useState(true);
   const [allLogos, setallLogos] = useState([]);
   const [logoId, setLogoId] = useState([]);
   const [collectionId, setCollectionId] = useState("");
   const [CollectionName, setCollectionName] = useState("");
+  const [modalShow, setModalShow] = useState(false);
+  const [IndexIdToDelete, setIndexIdToDelete] = useState({
+    index :-1,
+    id :""
+  });
   const { user } = UserAuth();
   const navigate = useNavigate();
   const { key } = useLocation();
@@ -56,6 +62,11 @@ const Collection = () => {
       </div> :
 
         <Container>
+           <DeleteComponent
+                          show={modalShow}
+                          setmodalshow={ setModalShow}
+                          onSubmit ={()=>deleteLogo(IndexIdToDelete?.index,IndexIdToDelete?.id)}
+                           />
           <div className="row">
             <Navbar>
               <Nav className="me-auto">
@@ -129,7 +140,14 @@ const Collection = () => {
                             }} >
                               {collection.name}
                             </p>
-                            <DeleteIcon onClick={() => { deleteLogo(logoId[index], collectionId) }} />
+                            <DeleteIcon onClick={() => {
+                              //  deleteLogo(logoId[index], collectionId)
+                              setIndexIdToDelete({
+                                index:logoId[index],
+                                id:collectionId
+                              })
+                              setModalShow(true);
+                                }} />
 
                           </Card.Title>
                         </Card.Body>
