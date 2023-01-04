@@ -18,6 +18,8 @@ import "../scss/brand.scss";
 import { UserAuth } from "../context/AuthContext";
 import CopyToClipboard from "../components/CopyToClipboard.js";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import AlertComponent from "../components/AlertComponent.js";
+
 import {
   getProfileDetails,
   sendSearchAPI,
@@ -76,6 +78,8 @@ function Brand() {
   const [addedCollection, setaddedcollection] = useState(false);
   const [variants, setvariants] = useState([]);
   const [indexToaddToFav, setIndexToaddToFav] = useState();
+  const [message, setMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
   const { key } = useLocation();
   const handleClosee = () => {
     setIsRepeatingEmail(false);
@@ -117,33 +121,37 @@ function Brand() {
   };
 
   const title = useParams();
-  const getbrandslogo = async (id) => {
-      const data = await sendSearchAPI({ domain: id, active: 1 });
-      setDomainPost(data?.data?.data);
-      if (user) {
-        const collection = await getCollection({
-          email: user.email,
-        });
-        setcollections(collection);
-        setvariants([]);
-        var temp = [];
-        for (var j = 0; j < data?.data?.data?.length; j++) {
-          // var flag = true;
-          const isFind = collection?.data?.data.find(col=>
-            col.Logos.includes(
-              data?.data?.data[j]?._id
-            ))
-          if(isFind )
-          {
-            temp.push("black");
-          } else {
-            temp.push("red");
-          }
-        }
-        setvariants([...temp]);
-        // console.log("hello ");
-        setLoading(false);
+
+  const getCollectionData = async () => {
+    const collection = await getCollection({
+      email: user.email,
+    });
+    setcollections(collection);
+    setvariants([]);
+    var temp = [];
+    for (var j = 0; j < DomainPost?.length; j++) {
+      // var flag = true;
+      const isFind = collection?.data?.data.find(col =>
+        col.Logos.includes(
+          DomainPost[j]?._id
+        ))
+      if (isFind) {
+        temp.push("black");
+      } else {
+        temp.push("red");
       }
+    }
+    setvariants([...temp]);
+    // console.log("hello ");
+    setLoading(false);
+  }
+
+
+  const getbrandslogo = async (id) => {
+    const data = await sendSearchAPI({ domain: id, active: 1 });
+    setDomainPost(data?.data?.data);
+    setLoading(false);
+
   };
   const getbrand = async () => {
     const fresult = await getProfileDetails({
@@ -151,7 +159,7 @@ function Brand() {
       searchfrom: true,
     });
 
-    if (fresult?.data?.data?.length>0) {
+    if (fresult?.data?.data?.length > 0) {
       setCompany(fresult?.data?.data[0]);
       setId(fresult?.data?.data[0]._id);
       setName(fresult?.data?.data[0].name);
@@ -164,7 +172,7 @@ function Brand() {
       setEmail(fresult?.data?.data[0].email);
       setVerify(fresult?.data?.data[0].verify);
       setSharedEmail(fresult.data.data[0].sharedEmail);
-      if(fresult?.data?.data[0].domain)
+      if (fresult?.data?.data[0].domain)
         getbrandslogo(fresult?.data?.data[0]._id);
       else
         setLoading(false);
@@ -200,30 +208,35 @@ function Brand() {
     await updateProfileFields(data);
   };
   useEffect(() => {
-    if(title.title)
+    if (title.title)
       getbrand();
-  },[title.title])
+  }, [title.title])
+  useEffect(() => {
+    if (user?.email) {
+      getCollectionData()
+    }
+  }, [user])
   useEffect(() => {
     return () => {
       const fontLINKs = document.getElementsByClassName("fontUrl");
       if (fontLINKs.length > 0) {
         for (var i = 0; i < fontLINKs.length; i++) {
           fontLINKs[i].remove();
-        }   
-}
+        }
+      }
     }
   }, [user, modalShow]);
-function handleShow() {
-  setFullscreen("md-down");
-  setShow(true);
-}
-return (
-  <>
-    {loading ? (
-      <div className="center-loader">
-        <ClipLoader />
-      </div>
-    ) : (
+  function handleShow() {
+    setFullscreen("md-down");
+    setShow(true);
+  }
+  return (
+    <>
+      {loading ? (
+        <div className="center-loader">
+          <ClipLoader />
+        </div>
+      ) : (
 
 
         <div className="bg-light flex-fill">
@@ -493,9 +506,15 @@ return (
                                   <Dropdown.Menu>
                                     <Dropdown.Item
                                       onClick={() => {
-                                        setModalShow(true);
-                                        setAddImageToCollection(brand._id);
-                                        setIndexToaddToFav(index);
+                                        if (user?.email) {
+                                          setModalShow(true);
+                                          setAddImageToCollection(brand._id);
+                                          setIndexToaddToFav(index);
+                                        }
+                                        else {
+                                          setShowAlert(true);
+                                          setMessage("You have to login first...");
+                                        }
 
                                       }}
                                     >
@@ -648,6 +667,11 @@ return (
                 onHide={() => setModalShow(false)}
               />
             )}
+
+            <AlertComponent
+              message={message}
+              showAlert={showAlert}
+              setShowAlert={setShowAlert}/>
 
           </Container>
         </div>
