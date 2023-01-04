@@ -616,10 +616,11 @@ function Brand() {
                               <link
                                 className="fontUrl"
                                 rel="stylesheet"
-                                href={`https://fonts.googleapis.com/css2?family=${link}`}
+                                href={`https://fonts.googleapis.com/css2?family=${link}`} 
                               />
                             </Helmet>
-                            {link}
+                          <a  href={`https://fonts.google.com/specimen/${link}`} target = "_blank" rel="noreferrer" style={{color:"black" , textDecoration:"none"}}>{link}</a>
+
 
                           </div>
                         );
