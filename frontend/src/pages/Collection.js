@@ -64,6 +64,7 @@ const Collection = () => {
         <Container>
            <DeleteComponent
                           show={modalShow}
+                          msg={"Delete"}
                           setmodalshow={ setModalShow}
                           onSubmit ={()=>deleteLogo(IndexIdToDelete?.index,IndexIdToDelete?.id)}
                            />

@@ -95,6 +95,7 @@ const MyCollection = () => {
         <Container>
           <DeleteComponent
                           show={modalShow}
+                          msg={"Delete"}
                           setmodalshow={ setModalShow}
                           setcollectiontodelete={setcollectiontodelete}
                           onSubmit ={()=>deleteCollection(collectionToDelete)}

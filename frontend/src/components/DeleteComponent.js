@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-function DeleteComponent({show,setmodalshow,...props}) {
+function DeleteComponent({show,setmodalshow,msg,...props}) {
     useEffect(()=>{
         // console.log(props)
     },[])
@@ -15,7 +15,7 @@ function DeleteComponent({show,setmodalshow,...props}) {
     >
       <Modal.Header >
         <Modal.Title id="contained-modal-title-vcenter">
-          Are you surely want to delete
+          Are you surely want to {msg}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -29,7 +29,7 @@ function DeleteComponent({show,setmodalshow,...props}) {
             
             setmodalshow(false);
             props.onSubmit();
-        }}>Delete</Button>
+        }}>{msg}</Button>
          <Button onClick={()=>{
             setmodalshow(false);
 

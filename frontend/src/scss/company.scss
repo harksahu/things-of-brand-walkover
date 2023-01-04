@@ -1,3 +1,13 @@
+.b-domain{
+    font-size: 24px;
+    color: var(--text);
+    text-decoration: none;
+}
+.social-icons{
+    .icon{
+        margin-right: 16px;
+    }
+}
 .coll-item{
     background: #fff;
     border-radius: var(--border-radius);

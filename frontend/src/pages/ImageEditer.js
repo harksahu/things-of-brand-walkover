@@ -136,6 +136,7 @@ function MyVerticallyCenteredModal() {
         <Container fluid>
           <DeleteComponent
                           show={modalShow}
+                          msg={"Delete"}
                           setmodalshow={ setModalShow}
                           onSubmit ={()=>{deleteMyStuffAPI(idToDelete);
                             navigate(-1);}}
