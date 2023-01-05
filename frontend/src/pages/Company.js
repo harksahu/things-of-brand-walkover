@@ -46,7 +46,7 @@ function Not_found() {
   return <div className="not-found">Not found</div>;
 }
 
-function Brand() {
+function Company() {
   const [id, setId] = useState();
   const [name, setName] = useState();
   const [aboutus, setAboutus] = useState();
@@ -682,4 +682,4 @@ function Brand() {
   );
 }
 
-export default Brand;
+export default Company;
