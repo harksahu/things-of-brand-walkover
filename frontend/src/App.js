@@ -17,7 +17,7 @@ import ThemeProvider from 'react-bootstrap/ThemeProvider';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { auth } from './firebase.js';
-import MyVerticallyCenteredModal from './pages/ImageEditer';
+import ImageEditer from './pages/ImageEditer';
 import Brand from './pages/Company.js';
 import SearchLogo from './pages/SearchLogo.js';
 import Profile from './pages/CompanyEditer.js';
@@ -52,7 +52,7 @@ function App() {
               <Route path='/' element={<Home />} />
               <Route path='/all-companies' element={<AllCompanies />} />
               <Route path='/searchlogo' element={<SearchLogo />} />
-              <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />
+              <Route path='/stuff/:id' element={<ImageEditer />} />
               <Route path='/:title' element={<DomainValidate>
                 <Brand />
               </DomainValidate>} />

@@ -214,6 +214,14 @@ function Brand() {
     }
   }, [user])
   useEffect(() => {
+    if (domain && show === false)
+      getbrandslogo(id)
+  }, [show])
+
+
+
+
+  useEffect(() => {
     return () => {
       const fontLINKs = document.getElementsByClassName("fontUrl");
       if (fontLINKs.length > 0) {
@@ -226,6 +234,7 @@ function Brand() {
   function handleShow() {
     setFullscreen("md-down");
     setShow(true);
+    
   }
   return (
     <>
@@ -385,61 +394,61 @@ function Brand() {
                   </Container>
                 </Navbar>
 
-                <div className="col-lg-12 col-md-12">                  
+                <div className="col-lg-12 col-md-12">
                   <div className="row">
-                      <div className="col-lg-7 col-md-6 col-sm-12">
-                        <div className="">
-                          <div>{name ? <h1>{name}</h1> : ""}</div>
-                          <div                          
-                            id="aboutus"
-                            dangerouslySetInnerHTML={{ __html: aboutus }}
-                          ></div>
-                        </div>
+                    <div className="col-lg-7 col-md-6 col-sm-12">
+                      <div className="">
+                        <div>{name ? <h1>{name}</h1> : ""}</div>
+                        <div
+                          id="aboutus"
+                          dangerouslySetInnerHTML={{ __html: aboutus }}
+                        ></div>
                       </div>
-                      <div className="col-lg-5 col-md-6 col-sm-12">
-                        <div className="align-items-center d-flex mt-3 mb-3">
-                          <a
-                            href={"https://" + domain}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="b-domain me-2"
-                          >
-                            {domain}
-                          </a>
-                          {user ? (
-                            email === user.email ? (
-                              verify === "true" ? (
-                                <MdVerified />
-                              ) : (
-                                <>
-                                  (Not verified)
-                                  <div className="flex-fill"></div>
-                                  <Link
-                                    to="/domainverify"
-                                    className="text-sm"
-                                    state={{ data: company }}
-                                  >
-                                    How to verify domain?
-                                  </Link>
-                                </>
-                              )
+                    </div>
+                    <div className="col-lg-5 col-md-6 col-sm-12">
+                      <div className="align-items-center d-flex mt-3 mb-3">
+                        <a
+                          href={"https://" + domain}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="b-domain me-2"
+                        >
+                          {domain}
+                        </a>
+                        {user ? (
+                          email === user.email ? (
+                            verify === "true" ? (
+                              <MdVerified />
                             ) : (
-                              ""
+                              <>
+                                (Not verified)
+                                <div className="flex-fill"></div>
+                                <Link
+                                  to="/domainverify"
+                                  className="text-sm"
+                                  state={{ data: company }}
+                                >
+                                  How to verify domain?
+                                </Link>
+                              </>
                             )
                           ) : (
                             ""
-                          )}
-                        </div>
-                        <div className="d-flex">
-                          {links?.map((link) => {
-                            return (
-                              <div key={link} className="social-icons">
-                                <SocialIcon className="icon" url={link} target="_blank" style={{ height: 32, width: 32 }} />
-                              </div>
-                            );
-                          })}
-                        </div>
+                          )
+                        ) : (
+                          ""
+                        )}
                       </div>
+                      <div className="d-flex">
+                        {links?.map((link) => {
+                          return (
+                            <div key={link} className="social-icons">
+                              <SocialIcon className="icon" url={link} target="_blank" style={{ height: 32, width: 32 }} />
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
 
                   <div className="mt-5">
@@ -489,37 +498,37 @@ function Brand() {
                                 >
                                   SVG
                                 </Button>
-{
-                                        (user?.email) ?
+                                {
+                                  (user?.email) ?
 
-                                <Dropdown>
-                                  <Dropdown.Toggle
-                                    variant="light"
-                                    id="dropdown-basic"
-                                    size="sm"
-                                  >
+                                    <Dropdown>
+                                      <Dropdown.Toggle
+                                        variant="light"
+                                        id="dropdown-basic"
+                                        size="sm"
+                                      >
 
-                                    <MdMoreVert />
-                                  </Dropdown.Toggle>
+                                        <MdMoreVert />
+                                      </Dropdown.Toggle>
 
-                                  <Dropdown.Menu>
-                                    <Dropdown.Item
-                                      onClick={() => {
-                                          setModalShow(true);
-                                          setAddImageToCollection(brand._id);
-                                          setIndexToaddToFav(index);
-                                      }}
-                                    >
+                                      <Dropdown.Menu>
+                                        <Dropdown.Item
+                                          onClick={() => {
+                                            setModalShow(true);
+                                            setAddImageToCollection(brand._id);
+                                            setIndexToaddToFav(index);
+                                          }}
+                                        >
 
-                                      <BookmarkIcon
-                                        style={{ color: variants[index] }}
-                                      />
-                                      Save to collection
-                                    </Dropdown.Item>
-                                  </Dropdown.Menu>
-                                </Dropdown>
-:""
-}
+                                          <BookmarkIcon
+                                            style={{ color: variants[index] }}
+                                          />
+                                          Save to collection
+                                        </Dropdown.Item>
+                                      </Dropdown.Menu>
+                                    </Dropdown>
+                                    : ""
+                                }
 
                               </Card.Body>
                             </Card>
@@ -616,10 +625,10 @@ function Brand() {
                               <link
                                 className="fontUrl"
                                 rel="stylesheet"
-                                href={`https://fonts.googleapis.com/css2?family=${link}`} 
+                                href={`https://fonts.googleapis.com/css2?family=${link}`}
                               />
                             </Helmet>
-                          <a  href={`https://fonts.google.com/specimen/${link}`} target = "_blank" rel="noreferrer" style={{color:"black" , textDecoration:"none"}}>{link}</a>
+                            <a href={`https://fonts.google.com/specimen/${link}`} target="_blank" rel="noreferrer" style={{ color: "black", textDecoration: "none" }}>{link}</a>
 
 
                           </div>
@@ -664,7 +673,7 @@ function Brand() {
               />
             )}
 
-            
+
 
           </Container>
         </div>
