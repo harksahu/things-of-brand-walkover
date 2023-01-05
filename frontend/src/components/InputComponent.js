@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 function InputComponent({ label, setValue, valuee, placeholderr,smalll,autoFocus }) {
   return (
     <>
-      <Form.Group className="mb-3 " id="name">
+      <Form.Group className="mb-3">
         {label && <Form.Label>{label}{<small>{smalll}</small>}</Form.Label>}
         {}
         <Form.Control

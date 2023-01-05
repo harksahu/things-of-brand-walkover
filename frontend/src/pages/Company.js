@@ -233,7 +233,6 @@ return (
                 <Navbar>
                   <Container>
                     <Nav className="me-auto">
-                      <Navbar.Brand className="me-auto">
                         <Button
                           variant="outline-dark"
                           onClick={() => {
@@ -244,31 +243,33 @@ return (
                             }
                           }}
                         >
-                          <MdArrowBackIos />
+                          <MdArrowBackIos /> Back
                         </Button>
-                      </Navbar.Brand>
                     </Nav>
 
                     {user ? (
                       email === user.email || isShared == true ? (
                         <>
-                          <Nav className="nav-action">
-                            <Nav.Link
+                          <Nav className="nav-action">                            
+                            <Button 
+                            className="me-2"
+                            as={Link}
+                            to="/editprofile"
+                            state={{ data: company }}
+                            variant="btn-light">
+                              <MdOutlineModeEdit /> Edit
+                            </Button>
+
+                            <Button 
+                              className="me-2"
+                              variant="btn-light"
                               onClick={() => {
                                 handleShoww();
                                 setCopyValue("Copy link");
                               }}
                             >
-                              <MdShare />
-                            </Nav.Link>
-
-                            <Nav.Link
-                              as={Link}
-                              to="/editprofile"
-                              state={{ data: company }}
-                            >
-                              <MdOutlineModeEdit />
-                            </Nav.Link>
+                              <MdShare /> Share
+                            </Button>                            
                           </Nav>
 
                           <Modal show={showw} onHide={handleClosee}>
@@ -360,15 +361,15 @@ return (
                       ""
                     )}
                     {user && (
-                      <Nav className="nav-action">
-                        <Nav.Link
-                          onClick={() => {
-                            navigate("json");
-
-                          }}
-                        >
-                          <MdCode />
-                        </Nav.Link>
+                      <Nav className="nav-action">                        
+                          <Button 
+                            onClick={() => {
+                              navigate("json");
+                            }}
+                            variant="btn-light"
+                          >
+                            <MdCode /> Code
+                          </Button>                        
                       </Nav>
                     )}
 
@@ -402,15 +403,14 @@ return (
                                 <MdVerified />
                               ) : (
                                 <>
-                                  (Not verified)
-                                  <div className="flex-fill"></div>
+                                  (<span className="me-2">Not verified!</span>
                                   <Link
                                     to="/domainverify"
-                                    className="text-sm"
+                                    className="text-sm "
                                     state={{ data: company }}
                                   >
-                                    How to verify domain?
-                                  </Link>
+                                    How to verify?
+                                  </Link>)
                                 </>
                               )
                             ) : (
