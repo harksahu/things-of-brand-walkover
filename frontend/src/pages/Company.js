@@ -234,7 +234,7 @@ function Company() {
   function handleShow() {
     setFullscreen("md-down");
     setShow(true);
-    
+
   }
   return (
     <>
@@ -252,34 +252,34 @@ function Company() {
                 <Navbar>
                   <Container>
                     <Nav className="me-auto">
-                        <Button
-                          variant="outline-dark"
-                          onClick={() => {
-                            if (key === "default") {
-                              navigate("/");
-                            } else {
-                              navigate(-1);
-                            }
-                          }}
-                        >
-                          <MdArrowBackIos /> Back
-                        </Button>
+                      <Button
+                        variant="outline-dark"
+                        onClick={() => {
+                          if (key === "default") {
+                            navigate("/");
+                          } else {
+                            navigate(-1);
+                          }
+                        }}
+                      >
+                        <MdArrowBackIos /> Back
+                      </Button>
                     </Nav>
 
                     {user ? (
                       email === user.email || isShared == true ? (
                         <>
-                          <Nav className="nav-action">                            
-                            <Button 
-                            className="me-2"
-                            as={Link}
-                            to="/editprofile"
-                            state={{ data: company }}
-                            variant="btn-light">
+                          <Nav className="nav-action">
+                            <Button
+                              className="me-2"
+                              as={Link}
+                              to="/editprofile"
+                              state={{ data: company }}
+                              variant="btn-light">
                               <MdOutlineModeEdit /> Edit
                             </Button>
 
-                            <Button 
+                            <Button
                               className="me-2"
                               variant="btn-light"
                               onClick={() => {
@@ -288,7 +288,7 @@ function Company() {
                               }}
                             >
                               <MdShare /> Share
-                            </Button>                            
+                            </Button>
                           </Nav>
 
                           <Modal show={showw} onHide={handleClosee}>
@@ -300,22 +300,18 @@ function Company() {
 
                             <Form onSubmit={handleSubmit}>
                               <Modal.Body>
-                                {userEmail ? (
+                                {userEmail && (
                                   <Form.Label>
                                     You cant share your company with you
                                   </Form.Label>
-                                ) : (
-                                  ""
                                 )}
                                 <br></br>
-                                {isRepeatingEmail ? (
+                                {isRepeatingEmail && (
                                   <Form.Label>
                                     Repetation value not allowed{" "}
                                   </Form.Label>
-                                ) : (
-                                  ""
                                 )}
-                                {isRepeatingEmail ? <br></br> : ""}
+                                {isRepeatingEmail && <br></br>}
                                 <Form.Label>Email address</Form.Label>
                                 <Form.Control
                                   type="email"
@@ -380,15 +376,15 @@ function Company() {
                       ""
                     )}
                     {user && (
-                      <Nav className="nav-action">                        
-                          <Button 
-                            onClick={() => {
-                              navigate("json");
-                            }}
-                            variant="btn-light"
-                          >
-                            <MdCode /> Code
-                          </Button>                        
+                      <Nav className="nav-action">
+                        <Button
+                          onClick={() => {
+                            navigate("json");
+                          }}
+                          variant="btn-light"
+                        >
+                          <MdCode /> Code
+                        </Button>
                       </Nav>
                     )}
 
@@ -399,7 +395,7 @@ function Company() {
                   <div className="row">
                     <div className="col-lg-7 col-md-6 col-sm-12">
                       <div className="">
-                        <div>{name ? <h1>{name}</h1> : ""}</div>
+                        <div>{name && <h1>{name}</h1>}</div>
                         <div
                           id="aboutus"
                           dangerouslySetInnerHTML={{ __html: aboutus }}
@@ -415,7 +411,7 @@ function Company() {
                           >
                             {domain}
                           </a>
-                          {user ? (
+                          {user && (
                             email === user.email ? (
                               verify === "true" ? (
                                 <MdVerified />
@@ -445,25 +441,20 @@ function Company() {
                                 </Link>
                               </>
                             )
-                          ) : (
-                            ""
-                          )
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                      <div className="d-flex">
-                        {links?.map((link) => {
-                          return (
-                            <div key={link} className="social-icons">
-                              <SocialIcon className="icon" url={link} target="_blank" style={{ height: 32, width: 32 }} />
-                            </div>
-                          );
-                        })}
+                          )}
+                        </div>
+                        <div className="d-flex">
+                          {links?.map((link) => {
+                            return (
+                              <div key={link} className="social-icons">
+                                <SocialIcon className="icon" url={link} target="_blank" style={{ height: 32, width: 32 }} />
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
                   </div>
-
                   <div className="mt-5">
                     {DomainPost?.length > 0 ? <h5>Logos</h5> : ""}
                     <div className="grid">
@@ -549,8 +540,8 @@ function Company() {
                         );
                       })}
 
-                      {user ? (
-                        email === user.email || isShared == true ? (
+                      {user && (
+                        (email === user.email || isShared == true) && (
                           // <Link to="/addfile" className="add-new" state={{ domain: domain }}>
                           <div className="add-new">
                             <Card className="item border-0 box-shadow" onClick={() => handleShow()}>
@@ -568,29 +559,26 @@ function Company() {
                               </Card.Body>
                             </Card>
                           </div>
-                        ) : (
-                          ""
                         )
-                      ) : (
-                        ""
                       )}
                     </div>
                   </div>
 
                   <div className="mt-5">
-                    {allColor[0]?.colorValue &&
-                      allColor[0]?.colorValue != "" ? (
+                    {(allColor[0]?.colorValue &&
+                      allColor[0]?.colorValue != "") && (
 
-                      <h5>Colors</h5>
-                    ) : (
-                      ""
-                    )}
-                    {allColor != "" ? (
+                        <h5>Colors</h5>
+                      )}
+
+
+
+                    {allColor != "" && (
                       <div className="d-flex colors-wrp">
                         {allColor?.map((color, index) => {
                           return (
                             <div className="color-item box-shadow" key={index}>
-                              {color.colorValue != "" ? (
+                              {color.colorValue != "" && (
                                 <div>
                                   <div
                                     id="background"
@@ -611,15 +599,11 @@ function Company() {
                                     </div>
                                   </div>
                                 </div>
-                              ) : (
-                                ""
                               )}
                             </div>
                           );
                         })}
                       </div>
-                    ) : (
-                      ""
                     )}
                   </div>
 
@@ -668,9 +652,9 @@ function Company() {
                   </Modal.Body>
                 </Modal>
               </div>
-            ) : (
-              <Not_found />
-            )}
+                ): (
+                <Not_found />
+              )}
             {modalShow && (
               <ModalComponent
                 setvariants={setvariants}
