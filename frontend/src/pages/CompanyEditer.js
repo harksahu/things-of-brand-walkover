@@ -7,6 +7,9 @@ import {
   Button,
   Modal,
   Stack,
+  ListGroup,
+  OverlayTrigger,
+  Tooltip
 } from "react-bootstrap";
 import colors from "../api/colors.json";
 import { Autocomplete, TextField } from "@mui/material";
@@ -21,11 +24,9 @@ import {
   restoreMyStuffAPI,
   sendSearchAPI,
 } from "../api/Index.js";
-import CloseIcon from "@mui/icons-material/Close";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import RichtextEditor from "./JoditEditor.js";
-import { BsFillTrashFill } from "react-icons/bs";
-import { MdArrowBackIos } from "react-icons/md";
+import { MdArrowBackIos, MdDelete, MdRestoreFromTrash, MdDone } from "react-icons/md";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import InputComponent from "../components/InputComponent.js";
@@ -333,45 +334,89 @@ function Profile() {
                     navigate(-1);
                   }}
                 >
-                  <button type="button" className="btn btn-light me-3">
+                  <button type="button" className="btn btn-outline-dark me-3">
                     <MdArrowBackIos />
+                    Back
                   </button>
-                  Add new brand
                 </a>
               </div>
             </nav>
             <Stack gap={3}>
               <Form>
-                <InputComponent
-                  label={"Name"}
-                  setValue={setName}
-                  valuee={name}
-                  autoFocus={true}
-                />
-                <Form.Group className="mb-3 " id="about">
-                  <Form.Label>About us</Form.Label>
-                  <RichtextEditor
-                    guidlines={aboutus}
-                    setGuidlines={setAboutus}
-                    config={config}
-                    tabIndex={1}
+                <div className="col-lg-6 col-md-7 col-sm-12">
+                  <InputComponent
+                    placeholderr={"Enter domain"}
+                    label={"Domain * "}
+                    smalll={"(example.com)"}
+                    setValue={setDomain}
+                    valuee={domain}
+                    className="mb-3"
                   />
-                </Form.Group>
+                  <InputComponent
+                    label={"Name"}
+                    setValue={setName}
+                    valuee={name}
+                    autoFocus={true}
+                  />
+                  <Form.Group className="mb-3 " id="about">
+                    <Form.Label>About us</Form.Label>
+                    <RichtextEditor
+                      guidlines={aboutus}
+                      setGuidlines={setAboutus}
+                      config={config}
+                      tabIndex={1}
+                    />
+                  </Form.Group>
+                  <div
+                    className="tags-input mb-3 "
+                    id="socialLinks"
+                    style={{ margin: "auto" }}
+                  >
+                    <h6>Social Links</h6>
+                    <ListGroup>
+                      {links?.map((link, index) => (
+                        <ListGroup.Item
+                          className="d-flex align-items-center"
+                          key={index}
+                        >
+                          <div className="flex-fill">{link}</div>
+                          <Button
+                            onClick={() => removeLinks(index)}
+                            variant="light"
+                          >
+                            <MdDelete />
+                          </Button>
+                        </ListGroup.Item>
+                      ))}
+                      <ListGroup.Item>
+                        <Form.Control
+                          type="url"
+                          onKeyUp={(event) => addLinks(event)}
+                          placeholder="Enter URL"
+                        />
+                        <Form.Text id="passwordHelpBlock" muted>
+                          Press enter to add link
+                        </Form.Text>
+                      </ListGroup.Item>
+                    </ListGroup>
+
+                    {showLinkError && (
+                      <small style={{ color: "red" }}>
+                        Enter Correct link{" "}
+                      </small>
+                    )}
+                  </div>
+                </div>
+
                 {DomainPost ? (
-                  <div className="grid">
+                  <div>
                     <h6>logos</h6>
-                    <div
-                      className=" d-flex"
-                      style={{ overflow: "auto" }}
-                    >
+                    <div className="grid mb-3" style={{ overflow: "auto" }}>
                       {DomainPost?.map((brand, index) => {
                         return (
-                          <div
-                            key={index}
-                            className="d-flex flex-wrap d-flex m-2"
-                          >
+                          <div key={index}>
                             <div key={brand._id} className="item ">
-                              <Card className="box-shadow">
+                              <Card className="box-shadow border-0">
                                 {/* <Dropdown className="ms-auto">
                                 <Dropdown.Toggle variant="light" size="sm">
                                   <BsThreeDotsVertical />
@@ -408,20 +453,13 @@ function Profile() {
                                     brand.url !== "null" ? (
                                       <img src={brand.url} alt="" />
                                     ) : (
-                                      <img
-                                        src="/assets/picture.svg"
-                                        alt=""
-                                      />
+                                      <img src="/assets/picture.svg" alt="" />
                                     )}
                                   </div>
                                 </Link>
-                                <Card.Body>
-                                  <Card.Title
-                                    style={{ textDecoration: "none" }}
-                                    className="text-center"
-                                  >
-                                    <div>
-                                      {/* {
+                                <Card.Body className="d-flex align-items-center">
+                                  <div className="flex-fill">
+                                    {/* {
                                     show ? (
                                       <input
                                         id="userInputBox"
@@ -433,61 +471,78 @@ function Profile() {
                                         autoFocus
                                       />
                                     ) : ( */}
-                                      <div
-                                        id="showname"
-                                        // onClick={() => {
-                                        //   setShow(true);
-                                        // }}
-                                      >
-                                        {brand.title}
-                                      </div>
-                                      {/* )} */}
+                                    <div
+                                      id="showname"
+                                      // onClick={() => {
+                                      //   setShow(true);
+                                      // }}
+                                    >
+                                      {brand.title}
                                     </div>
-                                  </Card.Title>
-                                  <Card.Footer>
-                                    {user ? (
-                                      user.email === user.email ? (
-                                        logo === brand.url ? (
-                                          <Button
-                                            variant="outline-secondary"
-                                            size="sm"
-                                            disabled
-                                          >
-                                            Default logo
-                                          </Button>
-                                        ) : (
-                                          <Button
-                                            variant="outline-secondary"
-                                            size="sm"
+                                    {/* )} */}
+                                  </div>
+                                  {user ? (
+                                    user.email === user.email ? (
+                                      logo === brand.url ? (
+                                        <button className="btn-icon" disabled>
+                                          <MdDone />
+                                        </button>
+                                      ) : (
+                                        <OverlayTrigger
+                                          key={`tip-${index}`}
+                                          overlay={
+                                            <Tooltip id={`tip-${index}`}>
+                                              Set as default
+                                            </Tooltip>
+                                          }
+                                        >
+                                          <button
+                                            className="btn-icon"
                                             onClick={() => {
                                               setLogo(brand.url);
                                             }}
                                           >
-                                            Make default
-                                          </Button>
-                                        )
-                                      ) : (
-                                        ""
+                                            <MdDone />
+                                          </button>
+                                        </OverlayTrigger>
                                       )
                                     ) : (
                                       ""
-                                    )}
-                                    {brand.active ? (
-                                      <Button
-                                        variant="outline-secondary"
-                                        size="sm"
+                                    )
+                                  ) : (
+                                    ""
+                                  )}
+                                  {brand.active ? (
+                                    <OverlayTrigger
+                                      key={`tip-${index}`}
+                                      overlay={
+                                        <Tooltip id={`tip-${index}`}>
+                                          Delete
+                                        </Tooltip>
+                                      }
+                                    >
+                                      <button
+                                        className="btn-icon"
                                         onClick={async () => {
-                                          setModalShow(true);
-                                          setIdToDelete( brand?._id)
-                                          setMsgForAlert("Delete")
+                                          await deleteMyStuffAPI(brand?._id);
+
+                                          // navigate(-1);
                                         }}
                                       >
-                                        Delete
-                                      </Button>
-                                    ) : (
-                                      <Button
-                                        variant="outline-secondary"
-                                        size="sm"
+                                        <MdDelete />
+                                      </button>
+                                    </OverlayTrigger>
+                                  ) : (
+                                    <OverlayTrigger
+                                      key={`tip-${index}`}
+                                      overlay={
+                                        <Tooltip id={`tip-${index}`}>
+                                          Restore
+                                        </Tooltip>
+                                      }
+                                    >
+                                      <button
+                                        className="btn-icon"
                                         onClick={async () => {
                                           setModalShow(true);
                                           setIdToDelete( brand?._id)
@@ -499,14 +554,13 @@ function Profile() {
                                           // navigate(-1);
                                         }}
                                       >
-                                        Restore
-                                      </Button>
-                                    )}
-                                  </Card.Footer>
+                                        <MdRestoreFromTrash />
+                                      </button>
+                                    </OverlayTrigger>
+                                  )}
                                 </Card.Body>
                               </Card>
                             </div>
-                            <div></div>
                           </div>
                         );
                       })}
@@ -514,7 +568,7 @@ function Profile() {
                       {user ? (
                         <div className="add-new">
                           <Card
-                            className="item"
+                            className="item box-shadow border-0"
                             onClick={() => handleShow()}
                           >
                             <Card.Body className="add-icon align-items-center d-flex justify-content-center">
@@ -528,11 +582,6 @@ function Profile() {
                             <Card.Body>
                               <Card.Title>Add New File</Card.Title>
                             </Card.Body>
-                            <div className="card-footer">
-                              <Button variant="outline-light" size="sm">
-                                -
-                              </Button>
-                              </div>
                           </Card>
                         </div>
                       ) : (
@@ -543,240 +592,196 @@ function Profile() {
                 ) : (
                   ""
                 )}
-                <div
-                  className="tags-input mb-3 "
-                  id="socialLinks"
-                  style={{ margin: "auto" }}
-                >
-                  <h6>Social Links</h6>
-                  <ul>
-                    {links?.map((link, index) => (
-                      <li key={index}>
-                        <span>{link}</span>
-                        <i
-                          className="material-icons"
-                          onClick={() => removeLinks(index)}
-                        >
-                          <CloseIcon />
-                        </i>
-                      </li>
-                    ))}
-                  </ul>
-                  <Form.Control
-                    type="url"
-                    onKeyUp={(event) => addLinks(event)}
-                    placeholder="Press enter to add tags"
-                  />
-                  {showLinkError && (
-                    <small style={{ color: "red" }}>
-                      Enter Correct link{" "}
-                    </small>
-                  )}
-                </div>
 
-                <InputComponent
-                  placeholderr={"Enter domain"}
-                  label={"Domain * "}
-                  smalll={"(example.com)"}
-                  setValue={setDomain}
-                  valuee={domain}
-                />
-
-                <Form.Group className="mb-3" id="Guidlines">
-                  <Form.Label>Guidlines</Form.Label>
-                  <RichtextEditor
-                    guidlines={guidlines}
-                    setGuidlines={setGuidlines}
-                    tabIndex={1}
-                  />
-                </Form.Group>
-                <div className="hide formbold-chatbox-form" id="list">
-                  <Form.Group className="mb-3">
-                    <Form.Label>
-                      Color<small>(hex code in #123456 format)</small>{" "}
-                    </Form.Label>
-                    {color?.map((element, index) => (
-                      <div id="fetch" key={index}>
-                        <Form.Group className="mb-3 d-flex">
-                          <Form.Control
-                            type="text"
-                            name="user_table_input"
-                            id={index}
-                            placeholder="Enter color name"
-                            value={color[index].colorName}
-                            onChange={(e) => {
-                              let tempCount = color;
-                              tempCount[index].colorName = e.target.value;
-                              setcount([...tempCount]);
-                            }}
-                            className="contact-form-area"
-                          />
-                          <Autocomplete
-                            value={value[index]}
-                            onChange={(e, newValue) => {
-                              if (newValue.value != undefined) {
-                                // setValue(newValue)
-                                document.getElementById(
-                                  "colorinput" + index
-                                ).value = newValue.value;
+                <div className="col-lg-6 col-md-7 col-sm-12">
+                  <Form.Group className="mb-3" id="Guidlines">
+                    <Form.Label>Guidlines</Form.Label>
+                    <RichtextEditor
+                      guidlines={guidlines}
+                      setGuidlines={setGuidlines}
+                      tabIndex={1}
+                    />
+                  </Form.Group>
+                  <div className="hide formbold-chatbox-form" id="list">
+                    <Form.Group className="mb-3">
+                      <Form.Label>
+                        Color{" "}
+                        <small className="text-muted">
+                          (hex code, eg. #000000)
+                        </small>{" "}
+                      </Form.Label>
+                      {color?.map((element, index) => (
+                        <div id="fetch" key={index}>
+                          <Form.Group className="mb-3 d-flex">
+                            <Form.Control
+                              type="text"
+                              name="user_table_input"
+                              id={index}
+                              placeholder="Enter color name"
+                              value={color[index].colorName}
+                              onChange={(e) => {
                                 let tempCount = color;
-                                tempCount[index].colorValue =
-                                  newValue.value;
+                                tempCount[index].colorName = e.target.value;
                                 setcount([...tempCount]);
-                                let tempCount1 = value;
-                                tempCount1[index] = newValue;
-                                setValue([...tempCount1]);
-                              } else if (newValue.includes("#")) {
-                                document.getElementById(
-                                  "colorinput" + index
-                                ).value = newValue;
-                                let tempCount1 = value;
-                                tempCount1[index].label = newValue;
-                                tempCount1[index].value = newValue;
-                                setValue([...tempCount1]);
-                              } else {
-                                document.getElementById(
-                                  "colorinput" + index
-                                ).value = newValue;
-                                let tempCount1 = value;
-                                tempCount1[index].label = newValue;
-                                tempCount1[index].value = newValue;
-                                setValue([...tempCount1]);
-                              }
-                            }}
-                            freeSolo
-                            // inputValue={inputValue}
-                            onInputChange={(event, newInputValue) => {
-                              // setInputValue(newInputValue);
-                              if (newInputValue.includes("#")) {
-                                let tempCount1 = value;
-                                tempCount1[index].label = newInputValue;
-                                tempCount1[index].value = newInputValue;
-                                setValue([...tempCount1]);
-                                document.getElementById(
-                                  "colorinput" + index
-                                ).value = newInputValue;
+                              }}
+                              className="contact-form-area me-1"
+                            />
+                            <div className="color-picker-wrp me-1">
+                            <Autocomplete
+                              value={value[index]}
+                              onChange={(e, newValue) => {
+                                if (newValue.value != undefined) {
+                                  // setValue(newValue)
+                                  document.getElementById(
+                                    "colorinput" + index
+                                  ).value = newValue.value;
+                                  let tempCount = color;
+                                  tempCount[index].colorValue = newValue.value;
+                                  setcount([...tempCount]);
+                                  let tempCount1 = value;
+                                  tempCount1[index] = newValue;
+                                  setValue([...tempCount1]);
+                                } else if (newValue.includes("#")) {
+                                  document.getElementById(
+                                    "colorinput" + index
+                                  ).value = newValue;
+                                  let tempCount1 = value;
+                                  tempCount1[index].label = newValue;
+                                  tempCount1[index].value = newValue;
+                                  setValue([...tempCount1]);
+                                } else {
+                                  document.getElementById(
+                                    "colorinput" + index
+                                  ).value = newValue;
+                                  let tempCount1 = value;
+                                  tempCount1[index].label = newValue;
+                                  tempCount1[index].value = newValue;
+                                  setValue([...tempCount1]);
+                                }
+                              }}
+                              freeSolo
+                              // inputValue={inputValue}
+                              onInputChange={(event, newInputValue) => {
+                                // setInputValue(newInputValue);
+                                if (newInputValue.includes("#")) {
+                                  let tempCount1 = value;
+                                  tempCount1[index].label = newInputValue;
+                                  tempCount1[index].value = newInputValue;
+                                  setValue([...tempCount1]);
+                                  document.getElementById(
+                                    "colorinput" + index
+                                  ).value = newInputValue;
+                                  let tempCount = color;
+                                  tempCount[index].colorValue = newInputValue;
+                                  setcount([...tempCount]);
+                                }
+                              }}
+                              getOptionLabel={(option) => option.label}
+                              id={`controllable-states-demo${index}`}
+                              options={colors}
+                              sx={{ width: 300 }}
+                              renderInput={(params) => (
+                                <TextField {...params} label="Colors" />
+                              )}
+                            />
+                            <Form.Control
+                              type="color"
+                              name="user_input"
+                              id={`colorinput${index}`}
+                              value={color[index].colorValue}
+                              className="user_input hide formbold-form-input color-picker"
+                              onChange={(e) => {
+                                value[index] = {
+                                  label: e.target.value,
+                                  value: e.target.value,
+                                };
+                                setValue([...value]);
                                 let tempCount = color;
-                                tempCount[index].colorValue =
-                                  newInputValue;
+                                tempCount[index].colorValue = e.target.value;
                                 setcount([...tempCount]);
-                              }
-                            }}
-                            getOptionLabel={(option) => option.label}
-                            id={`controllable-states-demo${index}`}
-                            options={colors}
-                            sx={{ width: 300 }}
-                            renderInput={(params) => (
-                              <TextField {...params} label="Colors" />
-                            )}
-                          />
-                          <Form.Control
-                            type="color"
-                            name="user_input"
-                            style={{ width: "20%" }}
-                            id={`colorinput${index}`}
-                            value={color[index].colorValue}
-                            className="user_input hide formbold-form-input"
-                            onChange={(e) => {
-                              value[index] = {
-                                label: e.target.value,
-                                value: e.target.value,
-                              };
-                              setValue([...value]);
-                              let tempCount = color;
-                              tempCount[index].colorValue =
-                                e.target.value;
-                              setcount([...tempCount]);
-                            }}
-                          />
-                          {/* {index ? ( */}
+                              }}
+                            />
+                            </div>
+                            
                             <button
                               type="button"
-                              className="name noselect"
+                              className="name noselect btn"
                               onClick={() => removeFormFields(index)}
-                              style={{ border: "1px solid #C43434" }}
                             >
-                              <BsFillTrashFill />
+                              <MdDelete />
                             </button>
-                          {/* ):""} */}
-                        </Form.Group>
-                      </div>
-                    ))}
-                    <div className="button-section">
-                      <Button
-                        className="name noselect m-20 "
-                        type="button"
-                        id="add_input"
+
+                          </Form.Group>
+                        </div>
+                      ))}
+                      
+                      <div className="button-section">
+                        <Link
                         onClick={() => addFormFields()}
-                      >
-                        Add
-                      </Button>
-                    </div>
-                  </Form.Group>
-                </div>
-                <Form.Group className="mb-3 my-3" id="fontLink">
-                  <Form.Label>
-                    Font links{" "}
-                    <small>(with respect there google font name)</small>
-                  </Form.Label>
-                  <div id="list" className="hide formbold-chatbox-form">
-                    {fontLink?.map((element, index) => (
-                      <div id="fetch" className="m-3" key={index}>
-                        <Autocomplete
+                        >
+                          Add new color
+                        </Link>                        
+                      </div>
+                    </Form.Group>
+                  </div>
+                  <Form.Group className="mb-3 my-3" id="fontLink">
+                    <Form.Label>
+                      Font links
+                      <small>(by <a href="https://fonts.google.com/" className="text-muted">https://fonts.google.com/</a>)</small>
+                    </Form.Label>
+                    <div className="">
+                      {fontLink?.map((element, index) => (
+                        <div className="d-flex mb-3" key={index}>
+                          <Autocomplete
+                            className="me-1"
                             getOptionLabel={(option) => option}
                             value={fontLink[index]}
                             placeholder="Enter font name"
-                            
                             id={"id" + index}
                             options={fontFamily}
-                            onChange={ (e: any, newValue: string | null) => {
+                            onChange={(e: any, newValue: string | null) => {
                               let tempCount = fontLink;
                               tempCount[index] = newValue;
                               setFontLink([...tempCount]);
                             }}
                             // getOptionSelected
-                            isOptionEqualToValue={() => true }
+                            isOptionEqualToValue={() => true}
                             sx={{ width: 300 }}
                             renderInput={(params) => (
                               <TextField {...params} label="Fonts" />
                             )}
                           />
-                        {/* {index ? ( */}
                           <button
                             type="button"
-                            className="name noselect"
-                            onClick={() => removeFontFields(index)}
-                            style={{ border: "1px solid #C43434" }}
+                            className="btn"
+                            onClick={() => removeFontFields(index)}                            
                           >
-                            <BsFillTrashFill />
-                            delete
+                            <MdDelete />                            
                           </button>
-                        {/* ) : ""} */}
+                        </div>
+                      ))}
+                      <div className="button-section">
+                        <Link 
+                        onClick={() => addFontFields()}>
+                          Add new font
+                        </Link>
                       </div>
-                    ))}
-                    <div className="button-section">
-                      <Button
-                        className="name noselect m-20 "
-                        type="button"
-                        id="add_input"
-                        onClick={() => addFontFields()}
-                      >
-                        Add
-                      </Button>
                     </div>
-                  </div>
-                </Form.Group>
-                <div id="button" className="">
-                  <Button
-                    variant="primary"
-                    onClick={() => updateProfileValue()}
-                  >
-                    Update
-                  </Button>
+                  </Form.Group>                  
                 </div>
               </Form>
             </Stack>
           </Row>
+          
+          <div className="edit-brand-footer bg-light">
+            <Button
+              variant="primary"
+              onClick={() => updateProfileValue()}
+            >
+              Update
+            </Button>
+          </div>
+
           <Modal
             show={show}
             fullscreen={fullscreen}
