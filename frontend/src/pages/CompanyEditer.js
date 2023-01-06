@@ -30,7 +30,7 @@ import { MdArrowBackIos, MdDelete, MdRestoreFromTrash, MdDone } from "react-icon
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import InputComponent from "../components/InputComponent.js";
-import DeleteComponent from "../components/DeleteComponent";
+import DeleteComponent from "../components/DeleteComponent.js";
 
 function Profile() {
   const [DomainPost, setDomainPost] = useState();
@@ -154,12 +154,18 @@ function Profile() {
     }
   }, [user]);
 
+
+  useEffect(() => {
+    if (domain && show === false)
+      getbrandslogo(id)
+  }, [show])
+
   useEffect(() => {
     fontlist();
     if (domain) {
       getbrandslogo();
     }
-    if (!location?.state?.data?.domain) {
+    if (!location?.state?.data?.domain ) {
       navigate("/my-companies");
     }
   }, [domain]);
@@ -489,9 +495,9 @@ function Profile() {
                                       </button>
                                     ) : (
                                       <OverlayTrigger
-                                        key={`tip-${index}`}
+                                        key={`tip-def-${index}`}
                                         overlay={
-                                          <Tooltip id={`tip-${index}`}>
+                                          <Tooltip id={`tip-def-${index}`}>
                                             Set as default
                                           </Tooltip>
                                         }
@@ -515,7 +521,7 @@ function Profile() {
                                     <OverlayTrigger
                                       key={`tip-${index}`}
                                       overlay={
-                                        <Tooltip id={`tip-${index}`}>
+                                        <Tooltip id={`tip-del-${index}`}>
                                           Delete
                                         </Tooltip>
                                       }
@@ -535,9 +541,9 @@ function Profile() {
                                     </OverlayTrigger>
                                   ) : (
                                     <OverlayTrigger
-                                      key={`tip-${index}`}
+                                      key={`tip-res-${index}`}
                                       overlay={
-                                        <Tooltip id={`tip-${index}`}>
+                                        <Tooltip id={`tip-res-${index}`}>
                                           Restore
                                         </Tooltip>
                                       }
@@ -714,11 +720,11 @@ function Profile() {
                       ))}
 
                       <div className="button-section">
-                        <Link
+                      <Button variant="link"
                           onClick={() => addFormFields()}
                         >
                           Add new color
-                        </Link>
+                        </Button>
                       </div>
                     </Form.Group>
                   </div>
@@ -759,10 +765,11 @@ function Profile() {
                         </div>
                       ))}
                       <div className="button-section">
-                        <Link
+                      <Button variant="link"
+                        
                           onClick={() => addFontFields()}>
                           Add new font
-                        </Link>
+                        </Button>
                       </div>
                     </div>
                   </Form.Group>
