@@ -184,7 +184,7 @@ const Collection = () => {
               <Modal.Title>{id?.id} </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <JsonModel data={CompanyData} id={id?.id} show={"Company"}
+              <JsonModel data={CompanyData} id={id?.id} show={"Collection"}
 
 
               />
