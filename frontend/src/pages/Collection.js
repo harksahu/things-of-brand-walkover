@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
-import { getCollection, updateCollection } from "../api/Index";
-import { Container, Card, Nav, Navbar } from "react-bootstrap";
+import { getCollection, updateCollection,getCollectionDetailsInJson } from "../api/Index";
+import { Container, Card, Nav, Navbar, Modal } from "react-bootstrap";
 import { MdArrowBackIos, MdCode } from "react-icons/md";
 import Button from "react-bootstrap/Button";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClipLoader from "react-spinners/ClipLoader";
 import { Link } from "react-router-dom";
 import DeleteComponent from "../components/DeleteComponent";
+import JsonModel from "../components/JsonModel.js"
+
 const Collection = () => {
   const [loading, setLoading] = useState(true);
   const [allLogos, setallLogos] = useState([]);
@@ -17,9 +19,14 @@ const Collection = () => {
   const [CollectionName, setCollectionName] = useState("");
   const [modalShow, setModalShow] = useState(false);
   const [IndexIdToDelete, setIndexIdToDelete] = useState({
-    index :-1,
-    id :""
+    index: -1,
+    id: ""
   });
+  const [CompanyData, setCompanyData] = useState();
+  const [showJson, setShowJson] = useState(false);
+
+  const handleCloseJson = () => setShowJson(false);
+  const handleShowJson = () => setShowJson(true);
   const { user } = UserAuth();
   const navigate = useNavigate();
   const { key } = useLocation();
@@ -37,13 +44,23 @@ const Collection = () => {
     setCollectionId(data?.data?.data[0]?._id);
     setCollectionName(data?.data?.data[0]?.CollectionName)
   };
+
+
+
+  const GetCollectionDetail = async () => {
+    const data = await getCollectionDetailsInJson({ id: id.id })
+    setCompanyData(data?.data?.data[0])
+    handleShowJson()
+  }
+
+
   const deleteLogo = async (logoIdd, _id) => {
     const index = logoId.indexOf(logoIdd);
     if (index > -1) {
       logoId.splice(index, 1);
     }
     setLogoId(logoIdd);
-     await updateCollection({
+    await updateCollection({
       _id: _id,
       Logos: logoId
     })
@@ -62,12 +79,12 @@ const Collection = () => {
       </div> :
 
         <Container>
-           <DeleteComponent
-                          show={modalShow}
-                          msg={"Delete"}
-                          setmodalshow={ setModalShow}
-                          onSubmit ={()=>deleteLogo(IndexIdToDelete?.index,IndexIdToDelete?.id)}
-                           />
+          <DeleteComponent
+            show={modalShow}
+            msg={"Delete"}
+            setmodalshow={setModalShow}
+            onSubmit={() => deleteLogo(IndexIdToDelete?.index, IndexIdToDelete?.id)}
+          />
           <div className="row">
             <Navbar>
               <Nav className="me-auto">
@@ -93,7 +110,7 @@ const Collection = () => {
                 user && (<Nav className="nav-action">
                   <Nav.Link
                     onClick={() => {
-                      navigate("json")
+                      GetCollectionDetail()
                     }}
                   >
                     <MdCode />
@@ -144,11 +161,11 @@ const Collection = () => {
                             <DeleteIcon onClick={() => {
                               //  deleteLogo(logoId[index], collectionId)
                               setIndexIdToDelete({
-                                index:logoId[index],
-                                id:collectionId
+                                index: logoId[index],
+                                id: collectionId
                               })
                               setModalShow(true);
-                                }} />
+                            }} />
 
                           </Card.Title>
                         </Card.Body>
@@ -159,6 +176,25 @@ const Collection = () => {
               })
               : <div  ><h4>Please add logos to collection</h4></div>}
           </div>
+
+          <Modal fullscreen={true}
+            aria-labelledby="contained-modal-title-vcenter"
+            centered show={showJson} onHide={handleCloseJson}>
+            <Modal.Header closeButton>
+              <Modal.Title>{id?.id} </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <JsonModel data={CompanyData} id={id?.id} show={"Company"}
+
+
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseJson}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </Container>}
     </div >
   );

@@ -21,11 +21,9 @@ function Not_found() {
   );
 }
 
-function Home({ searchBrandData = [], getSearchBrand }) {
-  const [loading, setLoading] = useState(true);
+function Home({ searchBrandData = [], getSearchBrand ,loading}) {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(16);
-  // const [loading,setLoading] = useState(false);
 
   // function Home() {
   // const [searchBrandData,setSearchBrandData] = useState()
@@ -39,14 +37,10 @@ function Home({ searchBrandData = [], getSearchBrand }) {
 
 
   };
-  const loadingFalse = () => {
-    setLoading(false);
-  }
+  
   useEffect(() => {
-    setLoading(true);
     const fetchPosts1 = () => {
       fetchPosts();
-      loadingFalse();
     }
     fetchPosts1();
 
@@ -92,7 +86,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
 }
 
 const mapStateToProp = (state, ownProps) => {
-  return { ...ownProps, searchBrandData: state.searchBrandReducer };
+  return { ...ownProps, searchBrandData: state.searchBrandReducer,loading:state.searchBrandReducer.isLoading };
 };
 
 const mapDispatchToProp = (dispatch) => {

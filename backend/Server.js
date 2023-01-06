@@ -58,17 +58,17 @@ app.get('/s3url',async(req,res)=>{
 
 
 app.get('/:domain/json',async(req,res)=>{
-  if(!(req.headers.host === "thingsofbrand.com"))
-  {
-     const data = await checkAuthorizedKey(req);
-     if(!(data[0]?.authKey))
-     {
-      return res.send({
-        "error":"Invalid authorization"
-      });
-    }
+  // if(!(req.headers.host === "thingsofbrand.com"))
+  // {
+  //    const data = await checkAuthorizedKey(req);
+  //    if(!(data[0]?.authKey))
+  //    {
+  //     return res.send({
+  //       "error":"Invalid authorization"
+  //     });
+  //   }
     
-  }
+  // }
   const data = await getCompanyJson(req?.params?.domain)
   console.log("data");
   console.log(data);
@@ -78,17 +78,17 @@ app.get('/:domain/json',async(req,res)=>{
 
 app.get('/collection/:id/json',async(req,res)=>{
 
-  if(!(req.headers.host === "thingsofbrand.com"))
-  {
-     const data = await checkAuthorizedKey(req);
-     if(!(data[0]?.authKey))
-     {
-      return res.send({
-        "error":"Invalid authorization"
-      });
-    }
+  // if(!(req.headers.host === "thingsofbrand.com"))
+  // {
+  //    const data = await checkAuthorizedKey(req);
+  //    if(!(data[0]?.authKey))
+  //    {
+  //     return res.send({
+  //       "error":"Invalid authorization"
+  //     });
+  //   }
     
-  }
+  // }
   const data = await getCollectionJson(req?.params?.id)
   res.send({data});
 })

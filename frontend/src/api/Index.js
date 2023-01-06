@@ -21,6 +21,18 @@ const getProfileDetails = async ({ email = "", domain = "", name = "", searchfro
   var data = await axios.get(URL + "/api/companies?email=" + email + "&domain=" + domain + "&name=" + name + "&searchfrom=" + searchfrom + "&_id=" + _id);
   return data
 }
+
+
+const getProfileDetailsInJson = async ({ domain = ""}) => {
+  var data = await axios.get(URL+"/"+domain+"/json");
+  return data
+}
+const getCollectionDetailsInJson = async ({ id = ""}) => {
+  var data = await axios.get(URL+"/collection/"+id+"/json");
+  return data
+}
+
+
 const getProfileandLogoDetails = async ({ email = "", domain = "", name = "", searchfrom = "false", _id = "" }) => {
   const title = "";
   const active = "1";
@@ -203,5 +215,7 @@ export {
   createCollection,
   getCollection,
   updateCollection,
-  deleteCollections
+  deleteCollections,
+  getProfileDetailsInJson,
+  getCollectionDetailsInJson
 };

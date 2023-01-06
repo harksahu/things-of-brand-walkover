@@ -138,7 +138,7 @@ const getCollectionJson = async (_id) => {
     delete data[0]?._doc["Logos"]
     delete data[0]?._doc["email"]
     
-    return [{ logo, ...data[0]._doc }];
+    return [{  ...data[0]._doc ,logo}];
   } catch (error) {
     return error;
   }

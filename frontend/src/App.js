@@ -9,7 +9,6 @@ import Account from './pages/Account';
 import MyCollection from './pages/MyCollection';
 import Collection from './pages/Collection';
 import Home from './pages/Home';
-
 import MyStuff from './pages/MyStuff';
 import AllCompanies from "./pages/AllCompanies";
 import MyCompany from "./pages/MyCompanies";

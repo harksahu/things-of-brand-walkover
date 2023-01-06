@@ -24,6 +24,7 @@ import {
   sendSearchAPI,
   updateProfileFields,
   getCollection,
+  getProfileDetailsInJson
 } from "../api/Index.js";
 import saveAs from "file-saver";
 import { BsFillPlusCircleFill, BsFillTrashFill } from "react-icons/bs";
@@ -38,7 +39,7 @@ import {
 import Addfile from "./Addfile.js";
 import ModalComponent from "../components/ModalComponent.js";
 import { SocialIcon } from 'react-social-icons';
-
+import JsonModel from "../components/JsonModel.js"
 
 
 
@@ -77,6 +78,11 @@ function Company() {
   const [addedCollection, setaddedcollection] = useState(false);
   const [variants, setvariants] = useState([]);
   const [indexToaddToFav, setIndexToaddToFav] = useState();
+  const [CompanyData, setCompanyData] = useState();
+  const [showJson, setShowJson] = useState(false);
+
+  const handleCloseJson = () => setShowJson(false);
+  const handleShowJson = () => setShowJson(true);
   const { key } = useLocation();
   const handleClosee = () => {
     setIsRepeatingEmail(false);
@@ -112,6 +118,19 @@ function Company() {
       updateLogo();
     }
   };
+
+
+
+  const GetCompanyDetail = async () => {
+    const data = await getProfileDetailsInJson({ domain: title.title })
+    setCompanyData(data?.data?.data[0])
+    handleShowJson()
+  }
+
+
+
+
+
 
   const DownloadToSvg = async (svg, fileName) => {
     saveAs(svg, fileName);
@@ -176,20 +195,20 @@ function Company() {
     } else {
       setLoading(false);
     }
-    isCompanyShared(fresult?.data?.data[0].email,fresult.data.data[0].sharedEmail);
+    isCompanyShared(fresult?.data?.data[0].email, fresult.data.data[0].sharedEmail);
   };
 
-  const isCompanyShared = async (myEmail,Shared) => {
-   if(user?.email=== myEmail){
-    setSharedCompany(true);
-   }
-   else{
-    for (var i = 0; i < Shared?.length; i++) {
-      if (user?.email === Shared[i]) {
-        setSharedCompany(true);
+  const isCompanyShared = async (myEmail, Shared) => {
+    if (user?.email === myEmail) {
+      setSharedCompany(true);
+    }
+    else {
+      for (var i = 0; i < Shared?.length; i++) {
+        if (user?.email === Shared[i]) {
+          setSharedCompany(true);
+        }
       }
     }
-   }
   };
 
   const updateLogo = async (logo_url) => {
@@ -216,7 +235,7 @@ function Company() {
   useEffect(() => {
     if (user?.email) {
       getCollectionData()
-      isCompanyShared(email,sharedEmail)
+      isCompanyShared(email, sharedEmail)
     }
   }, [user])
   useEffect(() => {
@@ -272,114 +291,114 @@ function Company() {
                       </Button>
                     </Nav>
 
-                    { isShared  && (
-                        <>
-                          <Nav className="nav-action">
-                            <Button
-                              className="me-2"
-                              as={Link}
-                              to="/editprofile"
-                              state={{ data: company }}
-                              variant="btn-light">
-                              <MdOutlineModeEdit /> Edit
-                            </Button>
+                    {isShared && (
+                      <>
+                        <Nav className="nav-action">
+                          <Button
+                            className="me-2"
+                            as={Link}
+                            to="/editprofile"
+                            state={{ data: company }}
+                            variant="btn-light">
+                            <MdOutlineModeEdit /> Edit
+                          </Button>
 
-                            <Button
-                              className="me-2"
-                              variant="btn-light"
-                              onClick={() => {
-                                handleShoww();
-                                setCopyValue("Copy link");
-                              }}
-                            >
-                              <MdShare /> Share
-                            </Button>
-                          </Nav>
+                          <Button
+                            className="me-2"
+                            variant="btn-light"
+                            onClick={() => {
+                              handleShoww();
+                              setCopyValue("Copy link");
+                            }}
+                          >
+                            <MdShare /> Share
+                          </Button>
+                        </Nav>
 
-                          <Modal show={showw} onHide={handleClosee}>
-                            <Modal.Header closeButton>
-                              <Modal.Title>
-                                Share {name ? name : domain}
-                              </Modal.Title>
-                            </Modal.Header>
+                        <Modal show={showw} onHide={handleClosee}>
+                          <Modal.Header closeButton>
+                            <Modal.Title>
+                              Share {name ? name : domain}
+                            </Modal.Title>
+                          </Modal.Header>
 
-                            <Form onSubmit={handleSubmit}>
-                              <Modal.Body>
-                                {userEmail && (
-                                  <Form.Label>
-                                    You cant share your company with you
-                                  </Form.Label>
-                                )}
-                                <br></br>
-                                {isRepeatingEmail && (
-                                  <Form.Label>
-                                    Repetation value not allowed{" "}
-                                  </Form.Label>
-                                )}
-                                {isRepeatingEmail && <br></br>}
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control
-                                  type="email"
-                                  id="addEmail"
-                                  name="sharingEmail"
-                                  placeholder="Enter email"
-                                  autoFocus
-                                />
+                          <Form onSubmit={handleSubmit}>
+                            <Modal.Body>
+                              {userEmail && (
+                                <Form.Label>
+                                  You cant share your company with you
+                                </Form.Label>
+                              )}
+                              <br></br>
+                              {isRepeatingEmail && (
+                                <Form.Label>
+                                  Repetation value not allowed{" "}
+                                </Form.Label>
+                              )}
+                              {isRepeatingEmail && <br></br>}
+                              <Form.Label>Email address</Form.Label>
+                              <Form.Control
+                                type="email"
+                                id="addEmail"
+                                name="sharingEmail"
+                                placeholder="Enter email"
+                                autoFocus
+                              />
 
-                                <ListGroup variant="flush">
-                                  {sharedEmail.map((email, index) => {
-                                    return (
-                                      <div key={index}>
-                                        {email?.length > 4 && (
+                              <ListGroup variant="flush">
+                                {sharedEmail.map((email, index) => {
+                                  return (
+                                    <div key={index}>
+                                      {email?.length > 4 && (
 
-                                          <h5>
-                                            {email}
-                                            <Button
-                                              onClick={() => {
-                                                removeSharedEmail(index);
-                                              }}
-                                            >
-                                              <BsFillTrashFill />
-                                            </Button>
-                                          </h5>
-                                        )}
+                                        <h5>
+                                          {email}
+                                          <Button
+                                            onClick={() => {
+                                              removeSharedEmail(index);
+                                            }}
+                                          >
+                                            <BsFillTrashFill />
+                                          </Button>
+                                        </h5>
+                                      )}
 
-                                      </div>
-                                    );
-                                  })}
-                                </ListGroup>
-                              </Modal.Body>
-                              <Modal.Footer>
-                                <Button
-                                  variant="outline-dark"
-                                  onClick={() => {
-                                    navigator.clipboard.writeText(
-                                      window.location.href
-                                    );
-                                    setCopyValue("copied!!");
-                                  }}
-                                >
-                                  {CopyValue}
-                                </Button>
-                                <Button
-                                  variant="secondary"
-                                  onClick={handleClosee}
-                                >
-                                  Close
-                                </Button>
-                                <Button type="submit" variant="primary">
-                                  Share
-                                </Button>
-                              </Modal.Footer>
-                            </Form>
-                          </Modal>
-                        </>
-                    ) }
+                                    </div>
+                                  );
+                                })}
+                              </ListGroup>
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button
+                                variant="outline-dark"
+                                onClick={() => {
+                                  navigator.clipboard.writeText(
+                                    window.location.href
+                                  );
+                                  setCopyValue("copied!!");
+                                }}
+                              >
+                                {CopyValue}
+                              </Button>
+                              <Button
+                                variant="secondary"
+                                onClick={handleClosee}
+                              >
+                                Close
+                              </Button>
+                              <Button type="submit" variant="primary">
+                                Share
+                              </Button>
+                            </Modal.Footer>
+                          </Form>
+                        </Modal>
+                      </>
+                    )}
                     {user && (
                       <Nav className="nav-action">
                         <Button
                           onClick={() => {
-                            navigate("json");
+                            GetCompanyDetail()
                           }}
                           variant="btn-light"
                         >
@@ -652,9 +671,9 @@ function Company() {
                   </Modal.Body>
                 </Modal>
               </div>
-                ): (
-                <Not_found />
-              )}
+            ) : (
+              <Not_found />
+            )}
             {modalShow && (
               <ModalComponent
                 setvariants={setvariants}
@@ -670,7 +689,24 @@ function Company() {
               />
             )}
 
+            <Modal fullscreen={fullscreen}
+              aria-labelledby="contained-modal-title-vcenter"
+              centered show={showJson} onHide={handleCloseJson}>
+              <Modal.Header closeButton>
+                <Modal.Title>{title?.title} </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <JsonModel data={CompanyData} id={title?.title} show={"Company"}
 
+
+                />
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseJson}>
+                  Close
+                </Button>
+              </Modal.Footer>
+            </Modal>
 
           </Container>
         </div>
