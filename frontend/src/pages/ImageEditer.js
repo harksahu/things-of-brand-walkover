@@ -23,7 +23,7 @@ import {
   saveMyStuffAPI,
 } from "../api/Index.js";
 import ClipLoader from "react-spinners/ClipLoader";
-
+import DeleteComponent from "../components/DeleteComponent"
 
 function ImageEditer() {
   const id = useParams();
@@ -160,6 +160,7 @@ console.log(ratio);
     <>
       {loading ? <div className="center-loader"><ClipLoader /></div> :
         <Container fluid>
+         
           <Row className="h-90">
             <Col className="popup_img">
               <div className="d-flex" style={{ position: "absolute" }}>

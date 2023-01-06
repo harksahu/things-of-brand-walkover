@@ -10,15 +10,15 @@ import "../utils/SvgInLine.css";
 import {
   createCollection,
   getCollection,
-  deleteCollections,
+  deleteCollections
 } from "../api/Index.js";
 import { MdMoreVert } from "react-icons/md"
 import { Link } from "react-router-dom";
 import InputComponent from "../components/InputComponent";
 import AlertComponent from "../components/AlertComponent";
+import DeleteComponent from "../components/DeleteComponent";
 import ClipLoader from "react-spinners/ClipLoader";
 import Col from 'react-bootstrap/Col';
-import Toast from 'react-bootstrap/Toast';
 const MyCollection = () => {
   const [allCollection, setAllCollection] = useState([]);
   const [show, setShow] = useState(false);
@@ -26,9 +26,8 @@ const MyCollection = () => {
   const [message, setMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [showB, setShowB] = useState(false);
-  const [collectionToDelete, setCollectionToDelete] = useState(null);
-  const toggleShowB = () => setShowB(!showB);
+  const [modalShow, setModalShow] = useState(false);
+  const [collectionToDelete, setcollectiontodelete] = useState(false);
 
   const { user } = UserAuth();
   const handleClose = () => {
@@ -42,13 +41,9 @@ const MyCollection = () => {
     setAllCollection(data.data.data);
     setLoading(false);
   };
-  const deleteCollectionAlert = async (collection) => {
-    setCollectionToDelete(collection);
-    
-  }
+ 
   const deleteCollection = async (collection) => {
     // setShowAlert(true);
-    setCollectionToDelete(null);
     var index = allCollection.indexOf(collection);
     if (index > -1) {
       allCollection.splice(index, 1);
@@ -98,25 +93,15 @@ const MyCollection = () => {
         <ClipLoader />
       </div> :
         <Container>
+          <DeleteComponent
+                          show={modalShow}
+                          msg={"Delete"}
+                          setmodalshow={ setModalShow}
+                          setcollectiontodelete={setcollectiontodelete}
+                          onSubmit ={()=>deleteCollection(collectionToDelete)}
+                           />
           <Col md={6} className="mb-2">
-       
-        <Toast onClose={toggleShowB} show={showB} animation={false}>
-          <Toast.Header>
-            <strong className="me-auto">Are you sure want to delete the collection</strong>
-          </Toast.Header>
-          <Toast.Body>
-          <Button style={{marginLeft :"45px"}}onClick={toggleShowB} className="mb-2 ">
-          Close
-        </Button>
-        <Button style={{marginLeft :"55px"}}
-        onClick={()=>{
-          deleteCollection(collectionToDelete);
-          toggleShowB();
-        }} className="mb-2 ">
-         delete
-        </Button>
-          </Toast.Body>
-        </Toast>
+
       </Col>
           <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert} />
           <Modal show={show} onHide={handleClose}>
@@ -170,12 +155,11 @@ const MyCollection = () => {
                       <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm">
                         <MdMoreVert />
                       </Dropdown.Toggle>
-
-
+                  
                       <Dropdown.Menu>
                         <Dropdown.Item onClick={() => {
-                          toggleShowB();
-                          deleteCollectionAlert(collection);
+                          setModalShow(true);
+                          setcollectiontodelete(collection)
                         }}>
                           <DeleteIcon />
                           Delete Collection
