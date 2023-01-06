@@ -272,8 +272,9 @@ function Profile() {
     setLinkCount(countTemp2 + 1);
   };
   let removeFontFields = (i) => {
+    console.log("sdf");
     setLinkCount(countTemp2 - 1);
-    document.getElementById("add_input").classList.remove("hide");
+    // document.getElementById("add_input").classList.remove("hide");
     let newFormValues = [...fontLink];
     newFormValues.splice(i, 1);
     setFontLink(newFormValues);
@@ -283,7 +284,7 @@ function Profile() {
   };
   let removeFormFields = (i) => {
     setCountTracker(countTemp - 1);
-    document.getElementById("add_input").classList.remove("hide");
+    // document.getElementById("add_input").classList.remove("hide");
     let newFormValues = [...color];
     newFormValues.splice(i, 1);
     setcount(newFormValues);
@@ -315,7 +316,7 @@ function Profile() {
           msgForAlert == "Delete" ?
             deleteMyStuffAPI(idToDelete)
             : restoreMyStuffAPI(idToDelete);
-            navigate(-1)
+          // navigate(-1)
         }} />
 
       {loading ? (
@@ -496,6 +497,7 @@ function Profile() {
                                         }
                                       >
                                         <button
+                                         type="button"
                                           className="btn-icon"
                                           onClick={() => {
                                             setLogo(brand.url);
@@ -519,13 +521,14 @@ function Profile() {
                                       }
                                     >
                                       <button
+                                       type="button"
                                         className="btn-icon"
-                                      onClick={async () => {
-                                        setModalShow(true);
-                                        setIdToDelete(brand?._id)
-                                        setMsgForAlert("Delete")
+                                        onClick={async () => {
+                                          setModalShow(true);
+                                          setIdToDelete(brand?._id)
+                                          setMsgForAlert("Delete")
 
-                                      }}
+                                        }}
                                       >
                                         <MdDelete />
                                       </button>
@@ -540,12 +543,13 @@ function Profile() {
                                       }
                                     >
                                       <button
+                                       type="button"
                                         className="btn-icon"
                                         onClick={async () => {
                                           setModalShow(true);
                                           setIdToDelete(brand?._id)
                                           setMsgForAlert("Restore")
-  
+
                                         }}
                                       >
                                         <MdRestoreFromTrash />
