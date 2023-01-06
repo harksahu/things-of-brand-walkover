@@ -35,6 +35,7 @@ import {
   MdOutlineModeEdit,
   MdMoreVert,
   MdCode,
+  MdOutlineFileDownload
 } from "react-icons/md";
 import Addfile from "./Addfile.js";
 import ModalComponent from "../components/ModalComponent.js";
@@ -420,7 +421,6 @@ function Company() {
                           dangerouslySetInnerHTML={{ __html: aboutus }}
                         ></div>
                       </div>
-                      <div className="col-lg-5 col-md-6 col-sm-12">
                         <div className="align-items-center d-flex mt-3 mb-3">
                           <a
                             href={"https://" + domain}
@@ -439,7 +439,7 @@ function Company() {
                                   (<span className="me-2">Not verified!</span>
                                   <Link
                                     to="/domainverify"
-                                    className="text-sm "
+                                    className="text-sm how-to"
                                     state={{ data: company }}
                                   >
                                     How to verify?
@@ -471,7 +471,6 @@ function Company() {
                             );
                           })}
                         </div>
-                      </div>
                     </div>
                   </div>
                   <div className="mt-5">
@@ -495,62 +494,39 @@ function Company() {
                                   )}
                                 </div>
                               </Link>
-                              <Card.Body className="d-flex">
+                              <Card.Body className="d-flex align-items-center">
                                 <Card.Title style={{ textDecoration: "none" }}>
-
                                   {brand.title}
-                                </Card.Title>
-                                <Button
-                                  variant="outline-secondary"
-                                  size="sm"
-                                  className="me-1"
-                                  onClick={() => {
-                                    navigate("/stuff/" + brand._id);
-                                  }}
-                                >
-                                  PNG
-                                </Button>
-                                <Button
-                                  variant="outline-secondary"
-                                  size="sm"
-                                  className="me-1"
-                                  onClick={() => {
-                                    DownloadToSvg(brand.url, brand.title);
+                                </Card.Title>                                
+                                <Dropdown>
+                                  <Dropdown.Toggle variant="icon">
+                                    <MdOutlineFileDownload/>
+                                  </Dropdown.Toggle>
 
-                                  }}
-                                >
-                                  SVG
-                                </Button>
+                                  <Dropdown.Menu>
+                                    <Dropdown.Item href="#" 
+                                    onClick={() => {
+                                      navigate("/stuff/" + brand._id);
+                                    }}>PNG</Dropdown.Item>
+                                    <Dropdown.Item href="#"
+                                    onClick={() => {
+                                      DownloadToSvg(brand.url, brand.title);
+                                    }}
+                                    >SVG</Dropdown.Item>
+                                  </Dropdown.Menu>
+                                </Dropdown>                                                                
                                 {
                                   (user?.email) ?
-
-                                    <Dropdown>
-                                      <Dropdown.Toggle
-                                        variant="light"
-                                        id="dropdown-basic"
-                                        size="sm"
-                                      >
-
-                                        <MdMoreVert />
-                                      </Dropdown.Toggle>
-
-                                      <Dropdown.Menu>
-                                        <Dropdown.Item
-                                          onClick={() => {
-                                            setModalShow(true);
-                                            setAddImageToCollection(brand._id);
-                                            setIndexToaddToFav(index);
-                                          }}
-                                        >
-
-                                          <BookmarkIcon
-                                            style={{ color: variants[index] }}
-                                          />
-                                          Save to collection
-                                        </Dropdown.Item>
-                                      </Dropdown.Menu>
-                                    </Dropdown>
-                                    : ""
+                                    <button type="button" className="btn-icon">
+                                      <BookmarkIcon
+                                        onClick={() => {
+                                          setModalShow(true);
+                                          setAddImageToCollection(brand._id);
+                                          setIndexToaddToFav(index);
+                                        }}                                      
+                                      />
+                                    </button>
+                                  : ""
                                 }
 
                               </Card.Body>
