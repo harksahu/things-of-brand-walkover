@@ -6,6 +6,7 @@ import { UserAuth } from "../context/AuthContext";
 
 function JsonModel({ data, id, show }) {
     const [AuthKey,SetKey] = useState("YOUR_API_KEY")
+    const [AuthBut,SetBut] = useState("Show AuthKey")
     const {user} = UserAuth()
     return (
 
@@ -23,13 +24,22 @@ function JsonModel({ data, id, show }) {
                     {`-H "Authorization:  ${AuthKey}"`}</p>)
             }
             <button onClick={async()=>{
-                const key =  await setAuthKey(user.email);
-                if(key?.data?.data[0]?.authKey)
-                    SetKey(key?.data?.data[0]?.authKey);
-                else
-                SetKey("key is not Created");
+                if(AuthKey === "YOUR_API_KEY"){
+                    const key =  await setAuthKey(user.email);
+                    if(key?.data?.data[0]?.authKey)
+                        SetKey(key?.data?.data[0]?.authKey);
+                    else
+                    SetKey("key is not Created");
+                    SetBut("hide AuthKey")
+                
+                }
+                else{
+                    SetKey("YOUR_API_KEY")
+                    SetBut("Show AuthKey")
+                }
+                
 
-            }}>Show AuthKey</button>
+            }}>{AuthBut}</button>
             <JSONPretty
                 mainStyle='line-height:1.3;color:#66d9ef;background:#272822;overflow:auto;'
                 errorStyle='line-height:1.3;color:#66d9ef;background:#272822;overflow:auto;'

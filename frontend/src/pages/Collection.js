@@ -181,7 +181,7 @@ const Collection = () => {
             aria-labelledby="contained-modal-title-vcenter"
             centered show={showJson} onHide={handleCloseJson}>
             <Modal.Header closeButton>
-              <Modal.Title>{id?.id} </Modal.Title>
+              <Modal.Title>{CollectionName} </Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <JsonModel data={CompanyData} id={id?.id} show={"Collection"}
