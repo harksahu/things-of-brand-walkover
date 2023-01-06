@@ -252,7 +252,6 @@ function Company() {
                 <Navbar>
                   <Container>
                     <Nav className="me-auto">
-                      <Navbar.Brand className="me-auto">
                         <Button
                           variant="outline-dark"
                           onClick={() => {
@@ -263,31 +262,33 @@ function Company() {
                             }
                           }}
                         >
-                          <MdArrowBackIos />
+                          <MdArrowBackIos /> Back
                         </Button>
-                      </Navbar.Brand>
                     </Nav>
 
                     {user ? (
                       email === user.email || isShared == true ? (
                         <>
-                          <Nav className="nav-action">
-                            <Nav.Link
+                          <Nav className="nav-action">                            
+                            <Button 
+                            className="me-2"
+                            as={Link}
+                            to="/editprofile"
+                            state={{ data: company }}
+                            variant="btn-light">
+                              <MdOutlineModeEdit /> Edit
+                            </Button>
+
+                            <Button 
+                              className="me-2"
+                              variant="btn-light"
                               onClick={() => {
                                 handleShoww();
                                 setCopyValue("Copy link");
                               }}
                             >
-                              <MdShare />
-                            </Nav.Link>
-
-                            <Nav.Link
-                              as={Link}
-                              to="/editprofile"
-                              state={{ data: company }}
-                            >
-                              <MdOutlineModeEdit />
-                            </Nav.Link>
+                              <MdShare /> Share
+                            </Button>                            
                           </Nav>
 
                           <Modal show={showw} onHide={handleClosee}>
@@ -379,15 +380,15 @@ function Company() {
                       ""
                     )}
                     {user && (
-                      <Nav className="nav-action">
-                        <Nav.Link
-                          onClick={() => {
-                            navigate("json");
-
-                          }}
-                        >
-                          <MdCode />
-                        </Nav.Link>
+                      <Nav className="nav-action">                        
+                          <Button 
+                            onClick={() => {
+                              navigate("json");
+                            }}
+                            variant="btn-light"
+                          >
+                            <MdCode /> Code
+                          </Button>                        
                       </Nav>
                     )}
 
@@ -404,21 +405,33 @@ function Company() {
                           dangerouslySetInnerHTML={{ __html: aboutus }}
                         ></div>
                       </div>
-                    </div>
-                    <div className="col-lg-5 col-md-6 col-sm-12">
-                      <div className="align-items-center d-flex mt-3 mb-3">
-                        <a
-                          href={"https://" + domain}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="b-domain me-2"
-                        >
-                          {domain}
-                        </a>
-                        {user ? (
-                          email === user.email ? (
-                            verify === "true" ? (
-                              <MdVerified />
+                      <div className="col-lg-5 col-md-6 col-sm-12">
+                        <div className="align-items-center d-flex mt-3 mb-3">
+                          <a
+                            href={"https://" + domain}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="b-domain me-2"
+                          >
+                            {domain}
+                          </a>
+                          {user ? (
+                            email === user.email ? (
+                              verify === "true" ? (
+                                <MdVerified />
+                              ) : (
+                                <>
+                                  (<span className="me-2">Not verified!</span>
+                                  <Link
+                                    to="/domainverify"
+                                    className="text-sm "
+                                    state={{ data: company }}
+                                  >
+                                    How to verify?
+                                  </Link>)
+                                </>
+                              )
+
                             ) : (
                               <>
                                 (Not verified)

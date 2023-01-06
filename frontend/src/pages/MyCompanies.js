@@ -156,7 +156,7 @@ function MyCompany() {
 
               <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Create Your Brand</Modal.Title>
+                  <Modal.Title>Add New Brand</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <div className="visually-hidden" id="domainError">
