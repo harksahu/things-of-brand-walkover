@@ -88,71 +88,71 @@ const Addfile = (props) => {
   };
 
   const onSubmitClick = async () => {
-    if (domain) {
-      if (title) {
-        if (file) {
-          try {
-            const data = await getS3SignUrl(file);
+    if (!domain) {
 
-            // setModalShow(+true);
-            setShowAlert(true);
-            setMessage("successfully Uploaded")
-            const imageUrl = data.split("?")[0];
-            tags.push(domain);
-
-            const result = await getProfileDetails({
-              email: user.email,
-              domain: domain,
-              searchfrom: "true"
-            });
-
-            await createBrandAPI({
-              url: imageUrl,
-              title,
-              description: tags,
-              collections: tags,
-              email: user?.email,
-              domain: result.data.data[0]._id,
-            });
-
-
-            if (result.data.data[0]?.logo == undefined) {
-              const data = {
-                _id: result.data.data[0]._id,
-                name: result.data.data[0]?.name,
-                aboutus: result.data.data[0]?.aboutus,
-                logo: imageUrl,
-                links: result.data.data[0]?.links,
-                domain: result.data.data[0]?.domain,
-                guidlines: result.data.data[0]?.guidlines,
-                color: result.data.data[0]?.allColor,
-                email: result.data.data[0]?.email,
-                verify: result.data.data[0]?.verify,
-              };
-
-
-              await updateProfileFields(data);
-
-            }
-          } catch (error) {
-            //TODO: error message
-          }
-        } else {
-          setShowAlert(true);
-          setMessage("Image imput required")
-
-
-        }
-      } else {
-        setShowAlert(true);
-        setMessage("File Name is required")
-
-      }
-    } else {
       setShowAlert(true);
       setMessage("Complete your profile page")
-
+      return
     }
+
+    if (!title) {
+      setShowAlert(true);
+      setMessage("File Name is required")
+      return
+    }
+    if (!file) {
+      setShowAlert(true);
+      setMessage("Image imput required")
+      return
+    }
+    try {
+      const data = await getS3SignUrl(file);
+
+      // setModalShow(+true);
+      setShowAlert(true);
+      setMessage("successfully Uploaded")
+      const imageUrl = data.split("?")[0];
+      tags.push(domain);
+
+      const result = await getProfileDetails({
+        email: user.email,
+        domain: domain,
+        searchfrom: "true"
+      });
+
+      await createBrandAPI({
+        url: imageUrl,
+        title,
+        description: tags,
+        collections: tags,
+        email: user?.email,
+        domain: result.data.data[0]._id,
+      });
+
+
+      if (result.data.data[0]?.logo == undefined) {
+        const data = {
+          _id: result.data.data[0]._id,
+          name: result.data.data[0]?.name,
+          aboutus: result.data.data[0]?.aboutus,
+          logo: imageUrl,
+          links: result.data.data[0]?.links,
+          domain: result.data.data[0]?.domain,
+          guidlines: result.data.data[0]?.guidlines,
+          color: result.data.data[0]?.allColor,
+          email: result.data.data[0]?.email,
+          verify: result.data.data[0]?.verify,
+        };
+
+
+        await updateProfileFields(data);
+
+      }
+    } catch (error) {
+      //TODO: error message
+    }
+    setTags([])
+
   };
 
   useEffect(() => {
