@@ -18,6 +18,7 @@ import "../scss/brand.scss";
 import { UserAuth } from "../context/AuthContext";
 import CopyToClipboard from "../components/CopyToClipboard.js";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+
 import {
   getProfileDetails,
   sendSearchAPI,
@@ -45,7 +46,7 @@ function Not_found() {
   return <div className="not-found">Not found</div>;
 }
 
-function Brand() {
+function Company() {
   const [id, setId] = useState();
   const [name, setName] = useState();
   const [aboutus, setAboutus] = useState();
@@ -117,33 +118,37 @@ function Brand() {
   };
 
   const title = useParams();
-  const getbrandslogo = async (id) => {
-      const data = await sendSearchAPI({ domain: id, active: 1 });
-      setDomainPost(data?.data?.data);
-      if (user) {
-        const collection = await getCollection({
-          email: user.email,
-        });
-        setcollections(collection);
-        setvariants([]);
-        var temp = [];
-        for (var j = 0; j < data?.data?.data?.length; j++) {
-          // var flag = true;
-          const isFind = collection?.data?.data.find(col=>
-            col.Logos.includes(
-              data?.data?.data[j]?._id
-            ))
-          if(isFind )
-          {
-            temp.push("black");
-          } else {
-            temp.push("red");
-          }
-        }
-        setvariants([...temp]);
-        // console.log("hello ");
-        setLoading(false);
+
+  const getCollectionData = async () => {
+    const collection = await getCollection({
+      email: user.email,
+    });
+    setcollections(collection);
+    setvariants([]);
+    var temp = [];
+    for (var j = 0; j < DomainPost?.length; j++) {
+      // var flag = true;
+      const isFind = collection?.data?.data.find(col =>
+        col.Logos.includes(
+          DomainPost[j]?._id
+        ))
+      if (isFind) {
+        temp.push("black");
+      } else {
+        temp.push("red");
       }
+    }
+    setvariants([...temp]);
+    // console.log("hello ");
+    setLoading(false);
+  }
+
+
+  const getbrandslogo = async (id) => {
+    const data = await sendSearchAPI({ domain: id, active: 1 });
+    setDomainPost(data?.data?.data);
+    setLoading(false);
+
   };
   const getbrand = async () => {
     const fresult = await getProfileDetails({
@@ -151,7 +156,7 @@ function Brand() {
       searchfrom: true,
     });
 
-    if (fresult?.data?.data?.length>0) {
+    if (fresult?.data?.data?.length > 0) {
       setCompany(fresult?.data?.data[0]);
       setId(fresult?.data?.data[0]._id);
       setName(fresult?.data?.data[0].name);
@@ -164,7 +169,7 @@ function Brand() {
       setEmail(fresult?.data?.data[0].email);
       setVerify(fresult?.data?.data[0].verify);
       setSharedEmail(fresult.data.data[0].sharedEmail);
-      if(fresult?.data?.data[0].domain)
+      if (fresult?.data?.data[0].domain)
         getbrandslogo(fresult?.data?.data[0]._id);
       else
         setLoading(false);
@@ -200,30 +205,44 @@ function Brand() {
     await updateProfileFields(data);
   };
   useEffect(() => {
-    if(title.title)
+    if (title.title)
       getbrand();
-  },[title.title])
+  }, [title.title])
+  useEffect(() => {
+    if (user?.email) {
+      getCollectionData()
+    }
+  }, [user])
+  useEffect(() => {
+    if (domain && show === false)
+      getbrandslogo(id)
+  }, [show])
+
+
+
+
   useEffect(() => {
     return () => {
       const fontLINKs = document.getElementsByClassName("fontUrl");
       if (fontLINKs.length > 0) {
         for (var i = 0; i < fontLINKs.length; i++) {
           fontLINKs[i].remove();
-        }   
-}
+        }
+      }
     }
   }, [user, modalShow]);
-function handleShow() {
-  setFullscreen("md-down");
-  setShow(true);
-}
-return (
-  <>
-    {loading ? (
-      <div className="center-loader">
-        <ClipLoader />
-      </div>
-    ) : (
+  function handleShow() {
+    setFullscreen("md-down");
+    setShow(true);
+    
+  }
+  return (
+    <>
+      {loading ? (
+        <div className="center-loader">
+          <ClipLoader />
+        </div>
+      ) : (
 
 
         <div className="bg-light flex-fill">
@@ -376,16 +395,15 @@ return (
                   </Container>
                 </Navbar>
 
-                <div className="col-lg-12 col-md-12">                  
+                <div className="col-lg-12 col-md-12">
                   <div className="row">
-                      <div className="col-lg-7 col-md-6 col-sm-12">
-                        <div className="">
-                          <div>{name ? <h1>{name}</h1> : ""}</div>
-                          <div                          
-                            id="aboutus"
-                            dangerouslySetInnerHTML={{ __html: aboutus }}
-                          ></div>
-                        </div>
+                    <div className="col-lg-7 col-md-6 col-sm-12">
+                      <div className="">
+                        <div>{name ? <h1>{name}</h1> : ""}</div>
+                        <div
+                          id="aboutus"
+                          dangerouslySetInnerHTML={{ __html: aboutus }}
+                        ></div>
                       </div>
                       <div className="col-lg-5 col-md-6 col-sm-12">
                         <div className="align-items-center d-flex mt-3 mb-3">
@@ -413,23 +431,37 @@ return (
                                   </Link>)
                                 </>
                               )
+
                             ) : (
-                              ""
+                              <>
+                                (Not verified)
+                                <div className="flex-fill"></div>
+                                <Link
+                                  to="/domainverify"
+                                  className="text-sm"
+                                  state={{ data: company }}
+                                >
+                                  How to verify domain?
+                                </Link>
+                              </>
                             )
                           ) : (
                             ""
-                          )}
-                        </div>
-                        <div className="d-flex">
-                          {links?.map((link) => {
-                            return (
-                              <div key={link} className="social-icons">
-                                <SocialIcon className="icon" url={link} target="_blank" style={{ height: 32, width: 32 }} />
-                              </div>
-                            );
-                          })}
-                        </div>
+                          )
+                        ) : (
+                          ""
+                        )}
                       </div>
+                      <div className="d-flex">
+                        {links?.map((link) => {
+                          return (
+                            <div key={link} className="social-icons">
+                              <SocialIcon className="icon" url={link} target="_blank" style={{ height: 32, width: 32 }} />
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
 
                   <div className="mt-5">
@@ -479,34 +511,38 @@ return (
                                 >
                                   SVG
                                 </Button>
+                                {
+                                  (user?.email) ?
 
-                                <Dropdown>
-                                  <Dropdown.Toggle
-                                    variant="light"
-                                    id="dropdown-basic"
-                                    size="sm"
-                                  >
+                                    <Dropdown>
+                                      <Dropdown.Toggle
+                                        variant="light"
+                                        id="dropdown-basic"
+                                        size="sm"
+                                      >
 
-                                    <MdMoreVert />
-                                  </Dropdown.Toggle>
+                                        <MdMoreVert />
+                                      </Dropdown.Toggle>
 
-                                  <Dropdown.Menu>
-                                    <Dropdown.Item
-                                      onClick={() => {
-                                        setModalShow(true);
-                                        setAddImageToCollection(brand._id);
-                                        setIndexToaddToFav(index);
+                                      <Dropdown.Menu>
+                                        <Dropdown.Item
+                                          onClick={() => {
+                                            setModalShow(true);
+                                            setAddImageToCollection(brand._id);
+                                            setIndexToaddToFav(index);
+                                          }}
+                                        >
 
-                                      }}
-                                    >
+                                          <BookmarkIcon
+                                            style={{ color: variants[index] }}
+                                          />
+                                          Save to collection
+                                        </Dropdown.Item>
+                                      </Dropdown.Menu>
+                                    </Dropdown>
+                                    : ""
+                                }
 
-                                      <BookmarkIcon
-                                        style={{ color: variants[index] }}
-                                      />
-                                      Save to collection
-                                    </Dropdown.Item>
-                                  </Dropdown.Menu>
-                                </Dropdown>
                               </Card.Body>
                             </Card>
                           </div>
@@ -605,7 +641,8 @@ return (
                                 href={`https://fonts.googleapis.com/css2?family=${link}`}
                               />
                             </Helmet>
-                            {link}
+                            <a href={`https://fonts.google.com/specimen/${link}`} target="_blank" rel="noreferrer" style={{ color: "black", textDecoration: "none" }}>{link}</a>
+
 
                           </div>
                         );
@@ -649,6 +686,8 @@ return (
               />
             )}
 
+
+
           </Container>
         </div>
       )}
@@ -656,4 +695,4 @@ return (
   );
 }
 
-export default Brand;
+export default Company;

@@ -5,7 +5,6 @@ import { updateCollection, createCollection, getCollection } from "../api/Index.
 import { UserAuth } from "../context/AuthContext";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import InputComponent from "./InputComponent.js";
-import AlertComponent from "./AlertComponent.js";
 
 function ModalComponent(props) {
   const [collection, setCollection] = useState("");
@@ -13,8 +12,7 @@ function ModalComponent(props) {
   const [duplicateError, setDuplicateError] = useState(false);
   const [collectionName, setCollectionName] = useState("");
   const [showComponent, setShowComponent] = useState(false);
-  const [message, setMessage] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
+
 
   const { user } = UserAuth();
   useEffect(() => {
@@ -26,10 +24,7 @@ function ModalComponent(props) {
   }, [props]);
 
   useEffect(() => {
-    if (!user?.email) {
-      setShowAlert(true);
-      setMessage("You have to login first...");
-    }
+    
     setDuplicateError(false);
   }, []);
 
@@ -38,15 +33,12 @@ function ModalComponent(props) {
     props.onHide();
     if (collectionName?.trim() == "")
       return;
-    const ans = await createCollection({
+     await createCollection({
       CollectionName: collectionName,
       email: user.email,
       Logos: [],
     });
-    if (ans) {
-      setShowAlert(true);
-      setMessage("collection created successfully");
-    }
+   
   };
 
   const createNewCollection = async (collection, logo_id) => {
@@ -87,12 +79,7 @@ function ModalComponent(props) {
 
   return (
 <>
-    {!user?.email?
-    <AlertComponent
-    message={message}
-    showAlert={showAlert}
-    setShowAlert={setShowAlert}
-  />  :
+
     <Modal
     show={props.show}
     onHide={props.onHide}
@@ -192,7 +179,6 @@ function ModalComponent(props) {
         </Modal>
 
 
-      }
     </>
 
   );
