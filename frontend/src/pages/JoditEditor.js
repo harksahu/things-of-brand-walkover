@@ -3,7 +3,10 @@ import JoditEditor from "jodit-react";
 
 const config = {
   buttons: ["bold", "italic"],
-  "toolbar": false
+  "toolbar": false,
+  "showCharsCounter": false,
+  "showWordsCounter": false,
+  "showXPathInStatusbar": false
 };
 
 const RichTextEditor = ({ guidlines ,setGuidlines }) => {
