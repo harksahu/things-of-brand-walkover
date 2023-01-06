@@ -149,11 +149,9 @@ function ImageEditer() {
   }, [id]);
 
 
-  console.log(ratio);
 
   useEffect(() => {
     if (ViewBox?.width) {
-      console.log(ViewBox);
       setRatio(reduce(ViewBox?.width, ViewBox?.height))
       setWidth(ViewBox?.width)
       setHeight(ViewBox?.height)
