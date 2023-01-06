@@ -9,7 +9,7 @@ import Account from './pages/Account';
 import MyCollection from './pages/MyCollection';
 import Collection from './pages/Collection';
 import Home from './pages/Home';
-import Addfile from './pages/Addfile';
+
 import MyStuff from './pages/MyStuff';
 import AllCompanies from "./pages/AllCompanies";
 import MyCompany from "./pages/MyCompanies";
@@ -56,7 +56,6 @@ function App() {
               <Route path='/:title' element={<DomainValidate>
                 <Company />
               </DomainValidate>} />
-              <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
               <Route path='/domainverify' element={<DomainVerificationPage />} />
               <Route path='/editprofile' element={<Profile />} />
               <Route path="/my-stuff" element={<Protected> <MyStuff /> </Protected>} />
