@@ -176,15 +176,20 @@ function Company() {
     } else {
       setLoading(false);
     }
-    isCompanyShared();
+    isCompanyShared(fresult?.data?.data[0].email,fresult.data.data[0].sharedEmail);
   };
 
-  const isCompanyShared = async () => {
-    for (var i = 0; i < sharedEmail?.length; i++) {
-      if (user?.email === sharedEmail[i]) {
+  const isCompanyShared = async (myEmail,Shared) => {
+   if(user?.email=== myEmail){
+    setSharedCompany(true);
+   }
+   else{
+    for (var i = 0; i < Shared?.length; i++) {
+      if (user?.email === Shared[i]) {
         setSharedCompany(true);
       }
     }
+   }
   };
 
   const updateLogo = async (logo_url) => {
@@ -211,6 +216,7 @@ function Company() {
   useEffect(() => {
     if (user?.email) {
       getCollectionData()
+      isCompanyShared(email,sharedEmail)
     }
   }, [user])
   useEffect(() => {
@@ -266,8 +272,7 @@ function Company() {
                       </Button>
                     </Nav>
 
-                    {user ? (
-                      email === user.email || isShared == true ? (
+                    { isShared  && (
                         <>
                           <Nav className="nav-action">
                             <Button
@@ -369,12 +374,7 @@ function Company() {
                             </Form>
                           </Modal>
                         </>
-                      ) : (
-                        ""
-                      )
-                    ) : (
-                      ""
-                    )}
+                    ) }
                     {user && (
                       <Nav className="nav-action">
                         <Button

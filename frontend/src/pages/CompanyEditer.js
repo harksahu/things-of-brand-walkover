@@ -524,10 +524,16 @@ function Profile() {
                                       <button
                                         className="btn-icon"
                                         onClick={async () => {
+<<<<<<< HEAD
+                                          await deleteMyStuffAPI(brand?._id);
+
+                                          // navigate(-1);
+=======
                                           setModalShow(true);
                                           setIdToDelete( brand?._id)
                                           setMsgForAlert("Delete")
 
+>>>>>>> 29367648b1860ef0900643b48e3b853e69a091f0
                                         }}
                                       >
                                         <MdDelete />
@@ -545,11 +551,18 @@ function Profile() {
                                       <button
                                         className="btn-icon"
                                         onClick={async () => {
+<<<<<<< HEAD
+=======
 
+>>>>>>> 29367648b1860ef0900643b48e3b853e69a091f0
                                           setModalShow(true);
                                           setIdToDelete( brand?._id)
                                           setMsgForAlert("Restore")
 
+<<<<<<< HEAD
+                                          // navigate(-1);
+=======
+>>>>>>> 29367648b1860ef0900643b48e3b853e69a091f0
                                         }}
                                       >
                                         <MdRestoreFromTrash />
