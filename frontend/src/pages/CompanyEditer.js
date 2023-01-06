@@ -165,7 +165,7 @@ function Profile() {
     if (domain) {
       getbrandslogo();
     }
-    if (!location?.state?.data?.domain ) {
+    if (!location?.state?.data?.domain) {
       navigate("/my-companies");
     }
   }, [domain]);
@@ -322,7 +322,7 @@ function Profile() {
           msgForAlert == "Delete" ?
             deleteMyStuffAPI(idToDelete)
             : restoreMyStuffAPI(idToDelete);
-          // navigate(-1)
+          navigate(-1)
         }} />
 
       {loading ? (
@@ -503,7 +503,7 @@ function Profile() {
                                         }
                                       >
                                         <button
-                                         type="button"
+                                          type="button"
                                           className="btn-icon"
                                           onClick={() => {
                                             setLogo(brand.url);
@@ -527,7 +527,7 @@ function Profile() {
                                       }
                                     >
                                       <button
-                                       type="button"
+                                        type="button"
                                         className="btn-icon"
                                         onClick={async () => {
                                           setModalShow(true);
@@ -549,7 +549,7 @@ function Profile() {
                                       }
                                     >
                                       <button
-                                       type="button"
+                                        type="button"
                                         className="btn-icon"
                                         onClick={async () => {
                                           setModalShow(true);
@@ -720,7 +720,7 @@ function Profile() {
                       ))}
 
                       <div className="button-section">
-                      <Button variant="link"
+                        <Button variant="link"
                           onClick={() => addFormFields()}
                         >
                           Add new color
@@ -765,8 +765,8 @@ function Profile() {
                         </div>
                       ))}
                       <div className="button-section">
-                      <Button variant="link"
-                        
+                        <Button variant="link"
+
                           onClick={() => addFontFields()}>
                           Add new font
                         </Button>
