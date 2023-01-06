@@ -317,7 +317,7 @@ function Profile() {
                             deleteMyStuffAPI(idToDelete)
                             :restoreMyStuffAPI(idToDelete);  
                             navigate(-1);
-                            }}/>
+                            }}/>  
 
       {loading ? (
         <div className="center-loader">

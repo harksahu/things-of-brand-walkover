@@ -26,8 +26,7 @@ function DeleteComponent({show,setmodalshow,msg,...props}) {
       <Modal.Footer>
         <Button onClick={()=>{
             // setDelete(true);
-            
-            // setmodalshow(false);
+            setmodalshow(false);
             props.onSubmit();
         }}>{msg}</Button>
          <Button onClick={()=>{

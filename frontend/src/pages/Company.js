@@ -307,10 +307,10 @@ function Company() {
                               <Modal.Body>
                                 {userEmail && (
                                   <Form.Label>
-                                    You cant share your company with you
+                                    You cant share your company with you 
                                   </Form.Label>
                                 )}
-                                <br></br>
+                                {/* <br></br> */}
                                 {isRepeatingEmail && (
                                   <Form.Label>
                                     Repetation value not allowed{" "}
