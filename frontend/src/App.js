@@ -9,7 +9,7 @@ import Account from './pages/Account';
 import MyCollection from './pages/MyCollection';
 import Collection from './pages/Collection';
 import Home from './pages/Home';
-import Addfile from './pages/Addfile';
+
 import MyStuff from './pages/MyStuff';
 import AllCompanies from "./pages/AllCompanies";
 import MyCompany from "./pages/MyCompanies";
@@ -17,8 +17,8 @@ import ThemeProvider from 'react-bootstrap/ThemeProvider';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { auth } from './firebase.js';
-import MyVerticallyCenteredModal from './pages/ImageEditer';
-import Brand from './pages/Company.js';
+import ImageEditer from './pages/ImageEditer';
+import Company from './pages/Company.js';
 import SearchLogo from './pages/SearchLogo.js';
 import Profile from './pages/CompanyEditer.js';
 import DomainVerificationPage from './pages/DomainVerificationPage';
@@ -52,11 +52,10 @@ function App() {
               <Route path='/' element={<Home />} />
               <Route path='/all-companies' element={<AllCompanies />} />
               <Route path='/searchlogo' element={<SearchLogo />} />
-              <Route path='/stuff/:id' element={<MyVerticallyCenteredModal />} />
+              <Route path='/stuff/:id' element={<ImageEditer />} />
               <Route path='/:title' element={<DomainValidate>
-                <Brand />
+                <Company />
               </DomainValidate>} />
-              <Route path="/addfile" element={<Protected> <Addfile /> </Protected>} />
               <Route path='/domainverify' element={<DomainVerificationPage />} />
               <Route path='/editprofile' element={<Profile />} />
               <Route path="/my-stuff" element={<Protected> <MyStuff /> </Protected>} />
