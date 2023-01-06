@@ -70,8 +70,7 @@ app.get('/:domain/json',async(req,res)=>{
     
   // }
   const data = await getCompanyJson(req?.params?.domain)
-  console.log("data");
-  console.log(data);
+
   res.send({data});
   
 })
@@ -178,12 +177,11 @@ app.post("/getUpdatedData", async (req, res) => {
 
  app.post("/getDomainTXT", async (req, res) => {
   const url = req.body.link
-  console.log(req.body);
+
   const xpath = req.body.xpath;
   try {
     dns.resolveTxt(url, ( error,record)=>{
       if (error) {
-        console.log(error);
         res.send({
           error: error,
         });

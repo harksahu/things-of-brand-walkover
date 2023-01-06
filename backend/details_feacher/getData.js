@@ -31,7 +31,6 @@ const puppy = async (name) => {
 
   try {
     return axios(url).then((response) => {
-      console.log(url);
       const html_data = response.data;
       const $ = cheerio.load(html_data);
       // console.log("helllo",cheerio.load(html_data).html());

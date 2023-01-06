@@ -1,10 +1,12 @@
-import React from "react";
+import React,{useState} from "react";
 import JSONPretty from 'react-json-pretty';
-
+import {setAuthKey} from '../api/Index.js'
+import { UserAuth } from "../context/AuthContext";
 
 
 function JsonModel({ data, id, show }) {
-    console.log(data);
+    const [AuthKey,SetKey] = useState("YOUR_API_KEY")
+    const {user} = UserAuth()
     return (
 
 
@@ -14,12 +16,20 @@ function JsonModel({ data, id, show }) {
                     <p style={{ color: "#fd971f" }}>{`curl "https://thingsofbrand.com/collection/${id}/json" \
                     `}
                         <br />
-                        {`-H "Authorization: Bearer YOUR_API_KEY"`}</p>
+                        {`-H "Authorization: ${AuthKey}"`}</p>
                 ) : (<p style={{ color: "#fd971f" }}>{`curl "https://thingsofbrand.com/${id}/json" \
                 `}
                     <br />
-                    {`-H "Authorization: Bearer YOUR_API_KEY"`}</p>)
+                    {`-H "Authorization:  ${AuthKey}"`}</p>)
             }
+            <button onClick={async()=>{
+                const key =  await setAuthKey(user.email);
+                if(key?.data?.data[0]?.authKey)
+                    SetKey(key?.data?.data[0]?.authKey);
+                else
+                SetKey("key is not Created");
+
+            }}>Show AuthKey</button>
             <JSONPretty
                 mainStyle='line-height:1.3;color:#66d9ef;background:#272822;overflow:auto;'
                 errorStyle='line-height:1.3;color:#66d9ef;background:#272822;overflow:auto;'
