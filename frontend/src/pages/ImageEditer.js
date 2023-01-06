@@ -38,6 +38,10 @@ function ImageEditer() {
   const [loading, setLoading] = useState(true);
   const [ViewBox, setViewBox] = useState();
   const [ratio, setRatio] = useState();
+  const [msgForAlert, setMsgForAlert] = useState(false);
+  const [idToDelete, setIdToDelete] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
+
   const savedata = async (id, n) => {
     setName(n);
     const new_data = {
@@ -47,8 +51,8 @@ function ImageEditer() {
     await saveMyStuffAPI(new_data);
   };
 
-  function changeHW(w,h) {
-    console.log(w,h);
+  function changeHW(w, h) {
+    console.log(w, h);
 
     document.getElementById(props.url).style.width = w + "px";
     document.getElementById(props.url).style.height = h + "px";
@@ -129,12 +133,12 @@ function ImageEditer() {
 
 
 
-  function reduce(numerator,denominator){
-    var gcd = function gcd(a,b){
-      return b ? gcd(b, a%b) : a;
+  function reduce(numerator, denominator) {
+    var gcd = function gcd(a, b) {
+      return b ? gcd(b, a % b) : a;
     };
-    gcd = gcd(numerator,denominator);
-    return [numerator/gcd, denominator/gcd];
+    gcd = gcd(numerator, denominator);
+    return [numerator / gcd, denominator / gcd];
   }
 
 
@@ -145,12 +149,12 @@ function ImageEditer() {
   }, [id]);
 
 
-console.log(ratio);
+  console.log(ratio);
 
   useEffect(() => {
     if (ViewBox?.width) {
       console.log(ViewBox);
-      setRatio(reduce(ViewBox?.width,ViewBox?.height))
+      setRatio(reduce(ViewBox?.width, ViewBox?.height))
       setWidth(ViewBox?.width)
       setHeight(ViewBox?.height)
     }
@@ -160,7 +164,16 @@ console.log(ratio);
     <>
       {loading ? <div className="center-loader"><ClipLoader /></div> :
         <Container fluid>
-         
+          <DeleteComponent
+            show={modalShow}
+            msg={msgForAlert}
+            setmodalshow={setModalShow}
+            onSubmit={() => {
+              msgForAlert == "Delete" ?
+                deleteMyStuffAPI(idToDelete)
+                : restoreMyStuffAPI(idToDelete);
+              navigate(-1)
+            }} />
           <Row className="h-90">
             <Col className="popup_img">
               <div className="d-flex" style={{ position: "absolute" }}>
@@ -257,9 +270,9 @@ console.log(ratio);
                                 {props.active === false ? (
                                   <Dropdown.Item
                                     onClick={async () => {
-                                      await restoreMyStuffAPI(props?._id);
-                                      // alert("restore")
-                                      navigate(-1);
+                                      setModalShow(true);
+                                      setIdToDelete(props?._id)
+                                      setMsgForAlert("Restore")
                                     }}
                                     variant="outline-secondary"
                                     size="sm"
@@ -269,10 +282,9 @@ console.log(ratio);
                                 ) : (
                                   <Dropdown.Item
                                     onClick={async () => {
-                                      await deleteMyStuffAPI(props?._id);
-                                      // alert("Deleted");
-                                      // window.location.reload();
-                                      navigate(-1);
+                                      setModalShow(true);
+                                      setIdToDelete(props?._id)
+                                      setMsgForAlert("Delete")
                                     }}
                                     variant="outline-secondary"
                                     size="sm"
@@ -299,8 +311,8 @@ console.log(ratio);
                           <Form.Control
                             onChange={(e) => (
                               setWidth(e.target.value),
-                              setHeight(Number((ratio[1]/ratio[0]) * e.target.value).toFixed(2)),
-                              changeHW(e.target.value, (ratio[1]/ratio[0]) * e.target.value)
+                              setHeight(Number((ratio[1] / ratio[0]) * e.target.value).toFixed(2)),
+                              changeHW(e.target.value, (ratio[1] / ratio[0]) * e.target.value)
                             )}
                             value={mwidth}
                             size="sm"
@@ -317,8 +329,8 @@ console.log(ratio);
                           <Form.Control
                             onChange={(e) => (
                               setHeight(e.target.value),
-                              setWidth(Number((ratio[0]/ratio[1]) * e.target.value).toFixed(2)),
-                              changeHW((ratio[0]/ratio[1]) * e.target.value,e.target.value)
+                              setWidth(Number((ratio[0] / ratio[1]) * e.target.value).toFixed(2)),
+                              changeHW((ratio[0] / ratio[1]) * e.target.value, e.target.value)
                             )}
                             value={mheight}
                             size="sm"
