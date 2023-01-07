@@ -9,7 +9,7 @@ const config = {
   "showXPathInStatusbar": false
 };
 
-const RichTextEditor = ({ guidlines ,setGuidlines }) => {
+const RichTextEditor = ({ guidlines ,setGuidlines,tabIndex }) => {
   const editor = useRef(null);
 
   return (
@@ -17,7 +17,7 @@ const RichTextEditor = ({ guidlines ,setGuidlines }) => {
       ref={editor}
       value={guidlines}
       config={config}
-      tabIndex={1}
+      tabIndex={tabIndex}
       onChange={(newContent) => setGuidlines(newContent)}
     />
   );
