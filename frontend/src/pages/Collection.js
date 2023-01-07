@@ -85,7 +85,6 @@ const Collection = () => {
             setmodalshow={setModalShow}
             onSubmit={() => deleteLogo(IndexIdToDelete?.index, IndexIdToDelete?.id)}
           />
-          <div className="row">
             <Navbar>
               <Nav className="me-auto">
                 <Navbar.Brand className="me-auto">
@@ -100,94 +99,83 @@ const Collection = () => {
                     }}
                   >
                     <MdArrowBackIos />
-                  </Button>
+                  </Button>                  
+                  <Navbar.Text className="ms-2">
+                    {CollectionName}
+                  </Navbar.Text>
                 </Navbar.Brand>
-                <Navbar.Text>
-                  {CollectionName}
-                </Navbar.Text>
               </Nav>
               {
                 user && (<Nav className="nav-action">
-                  <Nav.Link
+                  <Button
+                    variant="btn"
                     onClick={() => {
                       GetCollectionDetail()
                     }}
                   >
-                    <MdCode />
-                  </Nav.Link>
+                    <MdCode /> Code
+                  </Button>
                 </Nav>
                 )
               }
             </Navbar>
-          </div>
 
-          <div className="d-flex item " style={{ flexWrap: "wrap" }}>
+          <div className="d-flex item grid collection" style={{ flexWrap: "wrap" }}>
             {allLogos?.length
               ? allLogos?.map((collection, index) => {
                 return (
-                  <div key={index}>
-
-                    <div className="m-4" style={{ width: "10rem" }} >
-                      <Card
-                        className="item-company">
-                        <Link to={"/stuff/" + collection?.logo_id}>
-                          <div
-                            // style={{ overflow: "auto" }}
-                            className="img_size  pattern-square"
-                          >
-                            {collection?.url !== undefined &&
-                              collection?.url !== "null" ? (
-                              <img style={{ height: "8rem", width: "6rem" }}
-                                src={collection?.url} alt="" />
-                            ) : (
-                              <img style={{ height: "8em", width: "6rem" }}
-                                src="/assets/picture.svg" alt="" />
-                            )}
-                          </div>
-                        </Link>
-                        <Card.Body style={{}}>
-                          <Card.Title
-                            style={{ width: "auto", display: "flex", fontSize: "0.8rem", textDecoration: "none", justifyContent: "center", textalign: "center", alignItems: "center" }}
-                            className="text-center"
-                          >
-                            <p style={{
-                              textOverflow: "ellipsis",
-                              margin: "0px",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                            }} >
-                              {collection.name}
-                            </p>
-                            <DeleteIcon onClick={() => {
-                              //  deleteLogo(logoId[index], collectionId)
-                              setIndexIdToDelete({
-                                index: logoId[index],
-                                id: collectionId
-                              })
-                              setModalShow(true);
-                            }} />
-
-                          </Card.Title>
-                        </Card.Body>
-                      </Card>
-                    </div>
-                  </div>
+                  <Card
+                    key={index}
+                    className="item-company">
+                    <Link to={"/stuff/" + collection?.logo_id}>
+                      <div
+                        // style={{ overflow: "auto" }}
+                        className="img-size  pattern-square"
+                      >
+                        {collection?.url !== undefined &&
+                          collection?.url !== "null" ? (
+                          <img src={collection?.url} alt="" />
+                        ) : (
+                          <img src="/assets/picture.svg" alt="" />
+                        )}
+                      </div>
+                    </Link>
+                    <Card.Body>
+                      <Card.Title>
+                        <label className="ellipsis">
+                          {collection.name}
+                        </label>
+                        <button type="button" className="btn-icon icon-sm"
+                          onClick={() => {                          
+                            setIndexIdToDelete({
+                              index: logoId[index],
+                              id: collectionId
+                            })
+                            setModalShow(true);
+                          }}
+                        >
+                          <DeleteIcon />
+                        </button>
+                      </Card.Title>
+                    </Card.Body>
+                  </Card>
                 );
               })
               : <div  ><h4>Please add logos to collection</h4></div>}
           </div>
 
-          <Modal fullscreen={true}
+          <Modal
             aria-labelledby="contained-modal-title-vcenter"
+            size="xl"
             centered show={showJson} onHide={handleCloseJson}>
             <Modal.Header closeButton>
               <Modal.Title>{CollectionName} </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <JsonModel data={CompanyData} id={id?.id} show={"Collection"}
-
-
-              />
+              <div className="mb-4">
+                A <strong>GET</strong> request to fetch the collection <strong>{CollectionName}</strong>.
+              </div>
+              <JsonModel data={CompanyData} id={id?.id} show={"Collection"}/>
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleCloseJson}>

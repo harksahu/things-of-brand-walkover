@@ -453,7 +453,7 @@ function Profile() {
                                 <Link to={"/stuff/" + brand._id}>
                                   <div
                                     style={{ overflow: "auto" }}
-                                    className="img_size  pattern-square"
+                                    className="img-size  pattern-square"
                                   >
                                     {brand.url !== undefined &&
                                       brand.url !== "null" ? (

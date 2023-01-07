@@ -60,15 +60,13 @@ function Home({ searchBrandData = [], getSearchBrand ,loading}) {
         <div className="center-loader"
         ><ClipLoader /> </div> :
         <>
-          <div className="d-flex flex-wrap grid container">
+          <div className="grid container explore">
             {currentPosts?.data?.length === 0 ? (
               <Not_found />
             ) : (
               currentPosts?.map((Company) => {
                 return (
-                  <div key={Company._id}>
-                    <CompanyCard props={Company} />
-                  </div>
+                    <CompanyCard key={Company._id} props={Company} />
                 );
               })
             )}

@@ -298,15 +298,16 @@ function Company() {
                           <Button
                             className="me-2"
                             as={Link}
+                            variant="btn"
                             to="/editprofile"
                             state={{ data: company }}
-                            variant="btn-light">
+                            >
                             <MdOutlineModeEdit /> Edit
                           </Button>
 
                           <Button
                             className="me-2"
-                            variant="btn-light"
+                            variant="btn"
                             onClick={() => {
                               handleShoww();
                               setCopyValue("Copy link");
@@ -324,19 +325,7 @@ function Company() {
                           </Modal.Header>
 
                           <Form onSubmit={handleSubmit}>
-                            <Modal.Body>
-                              {userEmail && (
-                                <Form.Label>
-                                  You cant share your company with you
-                                </Form.Label>
-                              )}
-                              <br></br>
-                              {isRepeatingEmail && (
-                                <Form.Label>
-                                  Repetation value not allowed{" "}
-                                </Form.Label>
-                              )}
-                              {isRepeatingEmail && <br></br>}
+                            <Modal.Body>                              
                               <Form.Label>Email address</Form.Label>
                               <Form.Control
                                 type="email"
@@ -345,26 +334,35 @@ function Company() {
                                 placeholder="Enter email"
                                 autoFocus
                               />
-
+                              {userEmail && (
+                                <Form.Label className="text-danger small ps-2">
+                                  Already shared with this email.
+                                </Form.Label>
+                              )}
+                              {isRepeatingEmail && (
+                                <Form.Label className="text-danger small ps-2">
+                                  Already shared with this email.
+                                </Form.Label>
+                              )}
+                              
                               <ListGroup variant="flush">
                                 {sharedEmail.map((email, index) => {
                                   return (
-                                    <div key={index}>
+                                    <ListGroup.Item key={index} className="d-flex align-items-center">
                                       {email?.length > 4 && (
-
-                                        <h5>
-                                          {email}
-                                          <Button
+                                        <>
+                                          <span className="me-auto">{email}</span>
+                                          <button
+                                            className="btn-sm btn"
                                             onClick={() => {
                                               removeSharedEmail(index);
                                             }}
                                           >
                                             <BsFillTrashFill />
-                                          </Button>
-                                        </h5>
+                                          </button>
+                                        </>
                                       )}
-
-                                    </div>
+                                    </ListGroup.Item>                                    
                                   );
                                 })}
                               </ListGroup>
@@ -372,6 +370,7 @@ function Company() {
                             <Modal.Footer>
                               <Button
                                 variant="outline-dark"
+                                className="me-auto"
                                 onClick={() => {
                                   navigator.clipboard.writeText(
                                     window.location.href
@@ -398,10 +397,10 @@ function Company() {
                     {user && (
                       <Nav className="nav-action">
                         <Button
+                          variant="btn"
                           onClick={() => {
                             GetCompanyDetail()
-                          }}
-                          variant="btn-light"
+                          }}                          
                         >
                           <MdCode /> Code
                         </Button>
@@ -449,16 +448,15 @@ function Company() {
 
                             ) : (
                               <>
-                                (Not verified)
-                                <div className="flex-fill"></div>
-                                <Link
-                                  to="/domainverify"
-                                  className="text-sm"
-                                  state={{ data: company }}
-                                >
-                                  How to verify domain?
-                                </Link>
-                              </>
+                                  (<span className="me-2">Not verified!</span>
+                                  <Link
+                                    to="/domainverify"
+                                    className="text-sm how-to"
+                                    state={{ data: company }}
+                                  >
+                                    How to verify?
+                                  </Link>)
+                                </>
                             )
                           )}
                         </div>
@@ -480,10 +478,9 @@ function Company() {
                         return (
                           <div key={brand._id} className="item">
                             <Card className="box-shadow">
-                              <Link to={"/stuff/" + brand._id}>
-                                <div
-                                  style={{ overflow: "auto" }}
-                                  className="img_size pattern-square"
+                              <Link className="h-100" to={"/stuff/" + brand._id}>
+                                <div                                  
+                                  className="img-size pattern-square h-100"
                                 >
                                   {brand.url !== undefined &&
                                     brand.url !== "null" ? (
@@ -494,11 +491,9 @@ function Company() {
                                   )}
                                 </div>
                               </Link>
-                              <Card.Body className="d-flex align-items-center">
-                                <Card.Title style={{ textDecoration: "none" }}>
-                                  {brand.title}
-                                </Card.Title>                                
-                                <Dropdown>
+                              <div className="item-footer d-flex">
+                                  <div className="flex-fill">{brand.title}</div>
+                                  <Dropdown>
                                   <Dropdown.Toggle variant="icon">
                                     <MdOutlineFileDownload/>
                                   </Dropdown.Toggle>
@@ -517,19 +512,18 @@ function Company() {
                                 </Dropdown>                                                                
                                 {
                                   (user?.email) ?
-                                    <button type="button" className="btn-icon">
-                                      <BookmarkIcon
-                                        onClick={() => {
-                                          setModalShow(true);
-                                          setAddImageToCollection(brand._id);
-                                          setIndexToaddToFav(index);
-                                        }}                                      
-                                      />
+                                    <button type="button" className="btn-icon"
+                                    onClick={() => {
+                                      setModalShow(true);
+                                      setAddImageToCollection(brand._id);
+                                      setIndexToaddToFav(index);
+                                    }}
+                                    >
+                                      <BookmarkIcon />
                                     </button>
                                   : ""
-                                }
-
-                              </Card.Body>
+                                }  
+                              </div>                              
                             </Card>
                           </div>
                         );
@@ -665,7 +659,8 @@ function Company() {
               />
             )}
 
-            <Modal fullscreen={fullscreen}
+            <Modal 
+              size="xl"
               aria-labelledby="contained-modal-title-vcenter"
               centered show={showJson} onHide={handleCloseJson}>
               <Modal.Header closeButton>

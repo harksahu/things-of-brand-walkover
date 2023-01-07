@@ -133,9 +133,7 @@ function MyCompany() {
             <div className="grid">
               {company?.map((Company) => {
                 return (
-                  <div key={Company._id}>
-                    <CompanyCard props={Company} />
-                  </div>
+                  <CompanyCard key={Company._id} props={Company} />
                 );
               })}
               {/* <Link to="/editprofile" className="add-new"> */}
@@ -149,7 +147,6 @@ function MyCompany() {
                 <Card.Body>
                   <Card.Title className="text-center">Add New Brand</Card.Title>
                 </Card.Body>
-
               </Card>
               {/* </Link> */}
 
@@ -210,10 +207,7 @@ function MyCompany() {
               {allData?.map((Company) => {
                 if (Company?.sharedEmail?.includes(user.email)) {
                   return (
-                    <div key={Company._id}>
-                      <CompanyCard props={Company} />
-                    </div>
-
+                    <CompanyCard key={Company._id} props={Company} />
                   );
                 }
               })}

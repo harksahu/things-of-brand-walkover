@@ -133,7 +133,7 @@ function NavigationBar({ getSearchBrand }) {
             id="logo"
             style={{ cursor: "pointer" }}
           >
-            <img src="./tob-logo.svg" />
+            <img src="/tob-logo.svg" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
