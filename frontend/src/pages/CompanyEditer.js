@@ -370,7 +370,7 @@ function Profile() {
                       guidlines={aboutus}
                       setGuidlines={setAboutus}
                       config={config}
-                      tabIndex={1}
+                      tabIndex={'0'}
                     />
                   </Form.Group>
                   <div
@@ -603,7 +603,7 @@ function Profile() {
                     <RichtextEditor
                       guidlines={guidlines}
                       setGuidlines={setGuidlines}
-                      tabIndex={1}
+                      tabIndex={'0'}
                     />
                   </Form.Group>
                   <div className="hide formbold-chatbox-form" id="list">
@@ -743,7 +743,7 @@ function Profile() {
                             placeholder="Enter font name"
                             id={"id" + index}
                             options={fontFamily}
-                            onChange={(e: any, newValue: string | null) => {
+                            onChange={(e ,newValue) => {
                               let tempCount = fontLink;
                               tempCount[index] = newValue;
                               setFontLink([...tempCount]);
