@@ -33,7 +33,7 @@ function NavigationBar({ getSearchBrand }) {
     }
   }, []);
 
-  useEffect(() => {    
+  useEffect(() => {
     // attach the event listener
     document.addEventListener('keydown', handleKeyPress);
 
@@ -124,7 +124,7 @@ function NavigationBar({ getSearchBrand }) {
   
   return (
     <>
-      <Navbar expand="lg" sticky="top" className="bg-white">
+      <Navbar expand="lg" sticky="top" className="bg-light">
         <Container>
           <Navbar.Brand
             onClick={() => {
@@ -194,8 +194,10 @@ function NavigationBar({ getSearchBrand }) {
                     />
                   </Form>
                 )
-                }
-                <Nav.Link eventKey="link-1" href="#" className={location.pathname === "/"  ? "active" : ""}  onClick={() => { navigate("/"); }}>Home</Nav.Link>                
+                }                
+                {(location.pathname === "/") ? ("") : (
+                  <Nav.Link eventKey="link-1" href="#" className={location.pathname === "/"  ? "active" : ""}  onClick={() => { navigate("/"); }}>Home</Nav.Link>
+                )}
                 <Nav.Link eventKey="link-2" href="#" className={location.pathname.includes("/my-companies") ? "active":""} onClick={() => { navigate("/my-companies"); }}>My Brands</Nav.Link>
                 <Nav.Link eventKey="link-3" href="#" className={location.pathname.includes("/collection") ? "active":""} onClick={() => { navigate("/collection"); }}>Collections</Nav.Link>
                 <Nav.Link eventKey="link-4" href="#" className={location.pathname.includes("/all-companies") ? "active":""} onClick={() => { navigate("/all-companies"); }}>Explore</Nav.Link>
@@ -231,7 +233,9 @@ function NavigationBar({ getSearchBrand }) {
             ) : (
               !isLoading && (
               <>
-                <Nav.Link eventKey="link-1" className={`me-4 ${location.pathname === "/" ? "active" : ""} ` } href="#" onClick={() => { navigate("/"); }}>Home</Nav.Link>
+                {(location.pathname === "/") ? ("") : (
+                  <Nav.Link eventKey="link-1" href="#" className={location.pathname === "/"  ? "active" : ""}  onClick={() => { navigate("/"); }}>Home</Nav.Link>
+                )}
                 <button
                   type="button"
                   className="btn btn-outline-primary"

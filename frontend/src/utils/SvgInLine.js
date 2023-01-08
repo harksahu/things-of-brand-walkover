@@ -51,7 +51,7 @@ const SvgInline = (props) => {
 
       ) : (
         <div
-          className={`pattern-square svgInline svgInline--loaded ${isErrored ? "svgInline--errored" : ""}`}
+          className={`d-flex align-items-center pattern-square svgInline svgInline--loaded ${isErrored ? "svgInline--errored" : ""}`}
           dangerouslySetInnerHTML={{ __html: svg }}
           offset="30%"
           id="largeImage"

@@ -623,10 +623,10 @@ function Company() {
                     </div>
                   </div>
 
-                  <div className="mt-5">
+                  {/* <div className="mt-5">
                     {guidlines?.length > 12 ? <h5>Guidelines</h5> : ""}
                     <div dangerouslySetInnerHTML={{ __html: guidlines }}></div>
-                  </div>
+                  </div> */}
                 </div>
                 <Modal
                   show={show}
@@ -668,8 +668,6 @@ function Company() {
               </Modal.Header>
               <Modal.Body>
                 <JsonModel data={CompanyData} id={title?.title} show={"Company"}
-
-
                 />
               </Modal.Body>
               <Modal.Footer>
@@ -678,7 +676,7 @@ function Company() {
                 </Button>
               </Modal.Footer>
             </Modal>
-
+          <div className="mb-5"></div>
           </Container>
         </div>
       )}

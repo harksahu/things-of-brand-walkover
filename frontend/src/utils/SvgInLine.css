@@ -31,7 +31,7 @@
 }
 .popup_img .svgInline{    
     height: 100vh;
-    overflow: auto;
+    overflow: auto;    
 }
 .popup_img .svgInline svg{
     width: 600px;

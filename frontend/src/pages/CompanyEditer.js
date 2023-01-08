@@ -420,152 +420,122 @@ function Profile() {
                     <div className="grid mb-3" style={{ overflow: "auto" }}>
                       {DomainPost?.map((brand, index) => {
                         return (
-                          <div key={index}>
-                            <div key={brand._id} className="item ">
-                              <Card className="box-shadow border-0">
-                                {/* <Dropdown className="ms-auto">
-                                <Dropdown.Toggle variant="light" size="sm">
-                                  <BsThreeDotsVertical />
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu>
-                                  <Dropdown.Item
-                                    onClick={() => {
-                                      setShow(true);
+                          <Card key={brand._id} className="box-shadow border-0">
+                            {}
+                            <Link className="h-100" to={"/stuff/" + brand._id}>
+                              <div
+                                style={{ overflow: "auto" }}
+                                className="img-size  pattern-square h-100"
+                              >
+                                {brand.url !== undefined &&
+                                  brand.url !== "null" ? (
+                                  <img src={brand.url} alt="" />
+                                ) : (
+                                  <img src="/assets/picture.svg" alt="" />
+                                )}
+                              </div>
+                            </Link>
+                            <Card.Body className="d-flex align-items-center">
+                              <div className="flex-fill">
+                                {/* {
+                                show ? (
+                                  <input
+                                    id="userInputBox"
+                                    onChange={(e) => {
+                                      savedata(brand.title, e.target.value);
                                     }}
+                                    value={brand.title}
+                                    className="form-control form-control-sm"
+                                    autoFocus
+                                  />
+                                ) : ( */}
+                                <div
+                                  id="showname"
+                                // onClick={() => {
+                                //   setShow(true);
+                                // }}
+                                >
+                                  {brand.title}
+                                </div>
+                                {/* )} */}
+                              </div>
+                              {(user &&
+                                user.email === user.email) ? (
+                                logo === brand.url ? (
+                                  <button className="btn-icon" disabled>
+                                    <MdDone />
+                                  </button>
+                                ) : (
+                                  <OverlayTrigger
+                                    key={`tip-def-${index}`}
+                                    overlay={
+                                      <Tooltip id={`tip-def-${index}`}>
+                                        Set as default
+                                      </Tooltip>
+                                    }
                                   >
-                                    Rename
-                                  </Dropdown.Item>
-                                  <Dropdown.Item
+                                    <button
+                                      type="button"
+                                      className="btn-icon"
+                                      onClick={() => {
+                                        setLogo(brand.url);
+                                      }}
+                                    >
+                                      <MdDone />
+                                    </button>
+                                  </OverlayTrigger>
+                                )
+
+                              ) : (
+                                ""
+                              )}
+                              {brand.active ? (
+                                <OverlayTrigger
+                                  key={`tip-${index}`}
+                                  overlay={
+                                    <Tooltip id={`tip-del-${index}`}>
+                                      Delete
+                                    </Tooltip>
+                                  }
+                                >
+                                  <button
+                                    type="button"
+                                    className="btn-icon"
                                     onClick={async () => {
-                                      await deleteMyStuffAPI(brand?._id);
-                                      // alert("Deleted");
-                                      // window.location.reload();
-                                      navigate(-1);
+                                      setModalShow(true);
+                                      setIdToDelete(brand?._id)
+                                      setMsgForAlert("Delete")
+
                                     }}
-                                    variant="outline-secondary"
-                                    size="sm"
                                   >
-                                    Delete
-                                  </Dropdown.Item>
-                                </Dropdown.Menu>
-                              </Dropdown> */}
-                                <Link to={"/stuff/" + brand._id}>
-                                  <div
-                                    style={{ overflow: "auto" }}
-                                    className="img-size  pattern-square"
+                                    <MdDelete />
+                                  </button>
+                                </OverlayTrigger>
+                              ) : (
+                                <OverlayTrigger
+                                  key={`tip-res-${index}`}
+                                  overlay={
+                                    <Tooltip id={`tip-res-${index}`}>
+                                      Restore
+                                    </Tooltip>
+                                  }
+                                >
+                                  <button
+                                    type="button"
+                                    className="btn-icon"
+                                    onClick={async () => {
+                                      setModalShow(true);
+                                      setIdToDelete(brand?._id)
+                                      setMsgForAlert("Restore")
+
+                                    }}
                                   >
-                                    {brand.url !== undefined &&
-                                      brand.url !== "null" ? (
-                                      <img src={brand.url} alt="" />
-                                    ) : (
-                                      <img src="/assets/picture.svg" alt="" />
-                                    )}
-                                  </div>
-                                </Link>
-                                <Card.Body className="d-flex align-items-center">
-                                  <div className="flex-fill">
-                                    {/* {
-                                    show ? (
-                                      <input
-                                        id="userInputBox"
-                                        onChange={(e) => {
-                                          savedata(brand.title, e.target.value);
-                                        }}
-                                        value={brand.title}
-                                        className="form-control form-control-sm"
-                                        autoFocus
-                                      />
-                                    ) : ( */}
-                                    <div
-                                      id="showname"
-                                    // onClick={() => {
-                                    //   setShow(true);
-                                    // }}
-                                    >
-                                      {brand.title}
-                                    </div>
-                                    {/* )} */}
-                                  </div>
-                                  {(user &&
-                                    user.email === user.email) ? (
-                                    logo === brand.url ? (
-                                      <button className="btn-icon" disabled>
-                                        <MdDone />
-                                      </button>
-                                    ) : (
-                                      <OverlayTrigger
-                                        key={`tip-def-${index}`}
-                                        overlay={
-                                          <Tooltip id={`tip-def-${index}`}>
-                                            Set as default
-                                          </Tooltip>
-                                        }
-                                      >
-                                        <button
-                                          type="button"
-                                          className="btn-icon"
-                                          onClick={() => {
-                                            setLogo(brand.url);
-                                          }}
-                                        >
-                                          <MdDone />
-                                        </button>
-                                      </OverlayTrigger>
-                                    )
-
-                                  ) : (
-                                    ""
-                                  )}
-                                  {brand.active ? (
-                                    <OverlayTrigger
-                                      key={`tip-${index}`}
-                                      overlay={
-                                        <Tooltip id={`tip-del-${index}`}>
-                                          Delete
-                                        </Tooltip>
-                                      }
-                                    >
-                                      <button
-                                        type="button"
-                                        className="btn-icon"
-                                        onClick={async () => {
-                                          setModalShow(true);
-                                          setIdToDelete(brand?._id)
-                                          setMsgForAlert("Delete")
-
-                                        }}
-                                      >
-                                        <MdDelete />
-                                      </button>
-                                    </OverlayTrigger>
-                                  ) : (
-                                    <OverlayTrigger
-                                      key={`tip-res-${index}`}
-                                      overlay={
-                                        <Tooltip id={`tip-res-${index}`}>
-                                          Restore
-                                        </Tooltip>
-                                      }
-                                    >
-                                      <button
-                                        type="button"
-                                        className="btn-icon"
-                                        onClick={async () => {
-                                          setModalShow(true);
-                                          setIdToDelete(brand?._id)
-                                          setMsgForAlert("Restore")
-
-                                        }}
-                                      >
-                                        <MdRestoreFromTrash />
-                                      </button>
-                                    </OverlayTrigger>
-                                  )}
-                                </Card.Body>
-                              </Card>
-                            </div>
-                          </div>
+                                    <MdRestoreFromTrash />
+                                  </button>
+                                </OverlayTrigger>
+                              )}
+                            </Card.Body>
+                          </Card>
                         );
                       })}
 
@@ -598,14 +568,14 @@ function Profile() {
                 )}
 
                 <div className="col-lg-6 col-md-7 col-sm-12">
-                  <Form.Group className="mb-3" id="Guidlines">
+                  {/* <Form.Group className="mb-3" id="Guidlines">
                     <Form.Label>Guidlines</Form.Label>
                     <RichtextEditor
                       guidlines={guidlines}
                       setGuidlines={setGuidlines}
                       tabIndex={'0'}
                     />
-                  </Form.Group>
+                  </Form.Group> */}
                   <div className="hide formbold-chatbox-form" id="list">
                     <Form.Group className="mb-3">
                       <Form.Label>

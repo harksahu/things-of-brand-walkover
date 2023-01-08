@@ -5,7 +5,7 @@ import {
 
 function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer bg-light">
       <Container className="d-flex small justify-content-between">
         <div>
           <img src="/tob-icon.svg" id="footer-icon" className="me-2" /> 

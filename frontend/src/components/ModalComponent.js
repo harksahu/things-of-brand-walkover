@@ -83,94 +83,84 @@ function ModalComponent(props) {
     <Modal
     show={props.show}
     onHide={props.onHide}
-    size="lg"
+    size="xl"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <Modal.Header closeButton>
-        {/* <Link to="/collection"> */}
-        
-          {showComponent && (
-            <div style={{ marginRight: "250px", display:"flex" }}>
-              <Form style={{display:"flex" }} onSubmit={createCollections}>
-              <InputComponent
-                setValue={setCollectionName}
-                valuee={collectionName}
-                placeholderr={"Enter Collection name"}  
-              />
-              <Button
-                type="submit"
-                style={{ marginBottom:"auto",marginLeft:"15px" }}
-                // onClick={() => {
-                //  
-                  
-                // }}
-              >
-                Submit
-              </Button>
-              </Form>
-            </div>
-          )}
+        {/* <Link to="/collection"> */}          
+          Choose collection to add 
           </Modal.Header>
           <Modal.Body>
+            <div className="d-flex">
+              <div className="d-flex item">
+                {collection &&
+                  collection.map((collection) => {
+                    return (
+                      <div key={collection._id} className="m-3">
+                        <div>
+                          {/* <Link to={"/collection/" +collection._id}> */}
+                          <Card
+                            className={`item-company ${collection?.Logos?.includes(id) && "selected"}`}
 
-            <div className="d-flex"  style={{ overflow: "scroll" }}>
-            <div className="d-flex item m-3">
-              {collection &&
-                collection.map((collection) => {
-                  return (
-                    <div key={collection._id} className="m-3">
-                      <div>
-                        {/* <Link to={"/collection/" +collection._id}> */}
-                        <Card
-                          style={{ height: "7.5rem", width: "8rem" }}
-                          className={`item-company ${collection?.Logos?.includes(id) && "blur"}`}
+                            onClick={() => {
+                              createNewCollection(collection, id);
 
-                          onClick={() => {
-                            createNewCollection(collection, id);
+                            }}
+                          >
+                            <Card.Body>
 
-                          }}
-                        >
-                          <Card.Body>
-
-                          {collection?.logo[0]?.url !== undefined &&
-                            collection?.logo[0]?.url !== "null" ? (
-                            <img
-                              style={{ height: "4rem", width: "5rem" }}
-                              src={collection?.logo[0]?.url}
-                              alt=""
-                            />
-                          ) : (
-                            <img
-                              style={{ height: "4rem", width: "5rem" }}
-                              src="/assets/picture.svg"
-                              alt=""
-                            />
-                          )}
-                      <Card.Title>
-                        {collection.CollectionName}
-                      </Card.Title>
-                    </Card.Body>
-                        </Card>
+                            {collection?.logo[0]?.url !== undefined &&
+                              collection?.logo[0]?.url !== "null" ? (
+                              <img
+                                style={{ height: "4rem", width: "5rem" }}
+                                src={collection?.logo[0]?.url}
+                                alt=""
+                              />
+                            ) : (
+                              <img
+                                style={{ height: "4rem", width: "5rem" }}
+                                src="/assets/picture.svg"
+                                alt=""
+                              />
+                            )}
+                        <Card.Title>
+                          {collection.CollectionName}
+                        </Card.Title>
+                      </Card.Body>
+                          </Card>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+              </div>                            
             </div>
             <div className="add-new">
-            <Card style={{ height: "7.5rem", width: "8rem" ,marginTop:"30px"}} onClick={()=>{
-              setShowComponent(true)
-            }}>
-              <Card.Title  className="m-auto">
-                <Card.Title className="text-center">
-                  <BsFillPlusCircleFill
-
-                  />
-                </Card.Title>
-                Add New</Card.Title>
-            </Card>
+                <Button 
+                variant="link"
+                onClick={()=>{
+                  setShowComponent(true)
+                }}>
+                  Add new collection
+                </Button>
             </div>
-            </div>
+            {showComponent && (
+              <div className="ms-2">
+                <Form style={{display:"flex" }} onSubmit={createCollections}>
+                <InputComponent
+                  setValue={setCollectionName}
+                  valuee={collectionName}
+                  placeholderr={"Enter Collection name"}  
+                />
+                <Button
+                  type="submit"
+                  style={{ marginBottom:"auto",marginLeft:"15px" }}                
+                >
+                  Add
+                </Button>
+                </Form>
+              </div>
+            )}
           </Modal.Body>
           <Modal.Footer>
             {duplicateError && !showComponent && <h4 style={{ margin: "auto" }}> {duplicateError}</h4>}

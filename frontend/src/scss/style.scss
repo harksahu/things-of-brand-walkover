@@ -125,10 +125,8 @@
 }
 
 
-.blur{
-    opacity: 0.8;
-    transform: scale(0.9);
-    box-shadow: -2px 2px 2px 2px;
+.selected{
+    border: 1px solid #000 !important;
 }
 
 .jodit-react-container{
