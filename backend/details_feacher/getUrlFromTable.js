@@ -44,7 +44,7 @@ const getConfigTable = async (domainName) => {
     },
     function done(err) {
       if (err) {
-        console.error(err);
+
         return;
       }
     }
@@ -57,7 +57,7 @@ async function setConfigTable() {
 }
 
 const getUrlFromTable = async () => {
-  console.log("called");
+
   var base = new Airtable({ apiKey: "key7TosLDxc4hoh5j" }).base(
     "appbLzWdpNCj4unYq"
   );

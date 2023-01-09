@@ -26,7 +26,19 @@ const SvgInline = (props) => {
   }, [props.url]);
 
 
-  useEffect(() => { }, [svg]);
+  useEffect(() => {
+    var svg = document?.querySelector('svg');
+    var box = svg?.getAttribute('viewBox');
+    box?.split(/\s+|,/);
+    box = svg?.viewBox?.baseVal;
+    if (box) {
+
+      props?.setViewBox({
+        width: Math.round(box?.width),
+        height: Math.round(box?.height)
+      })
+    }
+  }, [svg]);
 
   return (
     <>
@@ -39,7 +51,7 @@ const SvgInline = (props) => {
 
       ) : (
         <div
-          className={`pattern-square svgInline svgInline--loaded ${isErrored ? "svgInline--errored" : ""}`}
+          className={`d-flex align-items-center pattern-square svgInline svgInline--loaded ${isErrored ? "svgInline--errored" : ""}`}
           dangerouslySetInnerHTML={{ __html: svg }}
           offset="30%"
           id="largeImage"

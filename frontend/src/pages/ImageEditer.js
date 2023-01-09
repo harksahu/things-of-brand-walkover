@@ -10,7 +10,7 @@ import Row from "react-bootstrap/Row";
 import "../utils/SvgInLine.css";
 import "../scss/popup.scss";
 import SvgInline from "../utils/SvgInLine.js";
-import { useNavigate,useLocation, useParams } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import Draggable from "react-draggable";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
@@ -23,12 +23,12 @@ import {
   saveMyStuffAPI,
 } from "../api/Index.js";
 import ClipLoader from "react-spinners/ClipLoader";
+import DeleteComponent from "../components/DeleteComponent"
 
-
-function MyVerticallyCenteredModal() {
+function ImageEditer() {
   const id = useParams();
   const navigate = useNavigate();
-  const {key} = useLocation();
+  const { key } = useLocation();
   const [mwidth, setWidth] = useState(250);
   const [name, setName] = useState("");
   const [mheight, setHeight] = useState(250);
@@ -36,6 +36,12 @@ function MyVerticallyCenteredModal() {
   const [show, setShow] = useState(false);
   const [props, setProps] = useState();
   const [loading, setLoading] = useState(true);
+  const [ViewBox, setViewBox] = useState();
+  const [ratio, setRatio] = useState();
+  const [msgForAlert, setMsgForAlert] = useState(false);
+  const [idToDelete, setIdToDelete] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
+
   const savedata = async (id, n) => {
     setName(n);
     const new_data = {
@@ -46,6 +52,8 @@ function MyVerticallyCenteredModal() {
   };
 
   function changeHW(w, h) {
+    console.log(w, h);
+
     document.getElementById(props.url).style.width = w + "px";
     document.getElementById(props.url).style.height = h + "px";
   }
@@ -98,7 +106,6 @@ function MyVerticallyCenteredModal() {
     const data = await searchBrandApi(id.id);
     setProps(data?.data?.data[0]);
     setName(data?.data?.data[0]?.title);
-
   };
 
   const renderTooltip = (props) => (
@@ -122,16 +129,49 @@ function MyVerticallyCenteredModal() {
     const moveTo = "/" + forwardTo?.data?.data[0]?.domain
     navigate(moveTo);
   };
+
+
+
+
+  function reduce(numerator, denominator) {
+    var gcd = function gcd(a, b) {
+      return b ? gcd(b, a % b) : a;
+    };
+    gcd = gcd(numerator, denominator);
+    return [numerator / gcd, denominator / gcd];
+  }
+
+
   useEffect(() => {
     setLoading(true);
     getData();
     setLoading(false);
   }, [id]);
 
+
+
+  useEffect(() => {
+    if (ViewBox?.width) {
+      setRatio(reduce(ViewBox?.width, ViewBox?.height))
+      setWidth(ViewBox?.width)
+      setHeight(ViewBox?.height)
+    }
+  }, [ViewBox]);
+
   return (
     <>
       {loading ? <div className="center-loader"><ClipLoader /></div> :
         <Container fluid>
+          <DeleteComponent
+            show={modalShow}
+            msg={msgForAlert}
+            setmodalshow={setModalShow}
+            onSubmit={() => {
+              msgForAlert == "Delete" ?
+                deleteMyStuffAPI(idToDelete)
+                : restoreMyStuffAPI(idToDelete);
+              navigate(-1)
+            }} />
           <Row className="h-90">
             <Col className="popup_img">
               <div className="d-flex" style={{ position: "absolute" }}>
@@ -165,7 +205,7 @@ function MyVerticallyCenteredModal() {
                 </OverlayTrigger>
               </div>
 
-              <SvgInline {...props} />
+              <SvgInline {...props} ViewBox={ViewBox} setViewBox={setViewBox} />
 
             </Col>
 
@@ -209,57 +249,53 @@ function MyVerticallyCenteredModal() {
                     {user !== null &&
                       user !== undefined &&
                       user &&
-                      Object.keys(user).length > 0 ? (
-                      user?.email === props?.email ? (
-                        <>
-                          <Dropdown className="ms-auto">
-                            <Dropdown.Toggle variant="light" size="sm">
-                              <BsThreeDotsVertical />
-                            </Dropdown.Toggle>
+                      Object.keys(user).length > 0 && (
+                        user?.email === props?.email && (
+                          <>
+                            <Dropdown className="ms-auto">
+                              <Dropdown.Toggle variant="light" size="sm">
+                                <BsThreeDotsVertical />
+                              </Dropdown.Toggle>
 
-                            <Dropdown.Menu>
-                              <Dropdown.Item
-                                onClick={() => {
-                                  setShow(true);
-                                }}
-                              >
-                                Rename
-                              </Dropdown.Item>
-                              {props.active === false ? (
+                              <Dropdown.Menu>
                                 <Dropdown.Item
-                                  onClick={async () => {
-                                    await restoreMyStuffAPI(props?._id);
-                                    // alert("restore")
-                                    navigate(-1);
+                                  onClick={() => {
+                                    setShow(true);
                                   }}
-                                  variant="outline-secondary"
-                                  size="sm"
                                 >
-                                  Restore
+                                  Rename
                                 </Dropdown.Item>
-                              ) : (
-                                <Dropdown.Item
-                                  onClick={async () => {
-                                    await deleteMyStuffAPI(props?._id);
-                                    // alert("Deleted");
-                                    // window.location.reload();
-                                    navigate(-1);
-                                  }}
-                                  variant="outline-secondary"
-                                  size="sm"
-                                >
-                                  Delete
-                                </Dropdown.Item>
-                              )}
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </>
-                      ) : (
-                        ""
+                                {props.active === false ? (
+                                  <Dropdown.Item
+                                    onClick={async () => {
+                                      setModalShow(true);
+                                      setIdToDelete(props?._id)
+                                      setMsgForAlert("Restore")
+                                    }}
+                                    variant="outline-secondary"
+                                    size="sm"
+                                  >
+                                    Restore
+                                  </Dropdown.Item>
+                                ) : (
+                                  <Dropdown.Item
+                                    onClick={async () => {
+                                      setModalShow(true);
+                                      setIdToDelete(props?._id)
+                                      setMsgForAlert("Delete")
+                                    }}
+                                    variant="outline-secondary"
+                                    size="sm"
+                                  >
+                                    Delete
+                                  </Dropdown.Item>
+                                )}
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </>
+                        )
                       )
-                    ) : (
-                      ""
-                    )}
+                    }
                   </div>
                   <div className="card-body">
                     <label className="small fw-bold mb-1">Size</label>
@@ -273,7 +309,8 @@ function MyVerticallyCenteredModal() {
                           <Form.Control
                             onChange={(e) => (
                               setWidth(e.target.value),
-                              changeHW(e.target.value, mheight)
+                              setHeight(Number((ratio[1] / ratio[0]) * e.target.value).toFixed(2)),
+                              changeHW(e.target.value, (ratio[1] / ratio[0]) * e.target.value)
                             )}
                             value={mwidth}
                             size="sm"
@@ -290,7 +327,8 @@ function MyVerticallyCenteredModal() {
                           <Form.Control
                             onChange={(e) => (
                               setHeight(e.target.value),
-                              changeHW(mwidth, e.target.value)
+                              setWidth(Number((ratio[0] / ratio[1]) * e.target.value).toFixed(2)),
+                              changeHW((ratio[0] / ratio[1]) * e.target.value, e.target.value)
                             )}
                             value={mheight}
                             size="sm"
@@ -316,7 +354,7 @@ function MyVerticallyCenteredModal() {
                       variant="outline-secondary"
                       size="sm"
                       onClick={() => {
-                         DownloadToSvg(props.url, props.title);
+                        DownloadToSvg(props.url, props.title);
                       }}
                     // onClick={() => saveAs(props.title)}
                     >
@@ -339,4 +377,4 @@ function MyVerticallyCenteredModal() {
   );
 }
 
-export default MyVerticallyCenteredModal;
+export default ImageEditer;

@@ -1,3 +1,13 @@
+.b-domain{
+    font-size: 24px;
+    color: var(--text);
+    text-decoration: none;
+}
+.social-icons{
+    .icon{
+        margin-right: 16px;
+    }
+}
 .coll-item{
     background: #fff;
     border-radius: var(--border-radius);
@@ -34,4 +44,32 @@
     &:hover{
         color: var(--bs-link-hover-color);
     }
+}
+
+.color-picker-wrp .MuiAutocomplete-hasPopupIcon.css-gcwvw8-MuiAutocomplete-root .MuiOutlinedInput-root,
+.color-picker-wrp .MuiAutocomplete-hasClearIcon.css-gcwvw8-MuiAutocomplete-root .MuiOutlinedInput-root {
+    padding-left: 38px;
+}
+.color-picker-wrp{
+    position: relative;
+    .color-picker{
+        position: absolute;
+        padding: 0;
+        border: none;
+        border-radius: 0;
+        width: 26px;
+        height: 26px;
+        top: 14px;
+        left: 12px;
+    }
+}
+
+.edit-brand-footer{
+    position: sticky;
+    bottom: 0;
+    padding: 16px;
+    margin: 0 -16px;
+}
+.how-to{
+    color: var(--bs-body-color)
 }

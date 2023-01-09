@@ -44,15 +44,6 @@ function NavigationBar({ getSearchBrand }) {
   }, [handleKeyPress]);
 
 
-
-
-
-
-
-
-
-
-
   const searchbar = async (searchData) => {
     await getProfileDetails({
       email: "",
@@ -130,10 +121,10 @@ function NavigationBar({ getSearchBrand }) {
       // console.log(error);
     }
   };
-
+  
   return (
     <>
-      <Navbar expand="lg" sticky="top" className="bg-white">
+      <Navbar expand="lg" sticky="top" className="bg-light">
         <Container>
           <Navbar.Brand
             onClick={() => {
@@ -142,7 +133,7 @@ function NavigationBar({ getSearchBrand }) {
             id="logo"
             style={{ cursor: "pointer" }}
           >
-            <img src="./tob-logo.svg" />
+            <img src="/tob-logo.svg" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -150,7 +141,7 @@ function NavigationBar({ getSearchBrand }) {
               className="m-auto my-2"
               id="search-box"
               style={{ maxHeight: "100px" }}
-              navbarScroll
+              navbarScroll              
             >
               {!user && location.pathname === "/all-companies" ? (
                 <Form className="justify-content-center">
@@ -177,9 +168,10 @@ function NavigationBar({ getSearchBrand }) {
               ) : (
                 ""
               )}
-            </Nav>
+            </Nav>            
+
             {user?.displayName ? (
-              <Nav className="tob-navbar">
+              <Nav className="tob-navbar" defaultActiveKey="/">
                 {location.pathname === "/all-companies" && (
                   <Form className="justify-content-center">
                     <Form.Control
@@ -202,10 +194,13 @@ function NavigationBar({ getSearchBrand }) {
                     />
                   </Form>
                 )
-                }
-                <Nav.Link href="#" onClick={() => { navigate("/my-companies"); }}>My Brands</Nav.Link>
-                <Nav.Link href="#" onClick={() => { navigate("/collection"); }}>Collections</Nav.Link>
-                <Nav.Link href="#" onClick={() => { navigate("/all-companies"); }}>Explore</Nav.Link>
+                }                
+                {(location.pathname === "/") ? ("") : (
+                  <Nav.Link eventKey="link-1" href="#" className={location.pathname === "/"  ? "active" : ""}  onClick={() => { navigate("/"); }}>Home</Nav.Link>
+                )}
+                <Nav.Link eventKey="link-2" href="#" className={location.pathname.includes("/my-companies") ? "active":""} onClick={() => { navigate("/my-companies"); }}>My Brands</Nav.Link>
+                <Nav.Link eventKey="link-3" href="#" className={location.pathname.includes("/collection") ? "active":""} onClick={() => { navigate("/collection"); }}>Collections</Nav.Link>
+                <Nav.Link eventKey="link-4" href="#" className={location.pathname.includes("/all-companies") ? "active":""} onClick={() => { navigate("/all-companies"); }}>Explore</Nav.Link>
                 <NavDropdown
                   title={user?.displayName}
                   id="collasible-nav-dropdown"
@@ -236,15 +231,22 @@ function NavigationBar({ getSearchBrand }) {
                 </NavDropdown>
               </Nav>
             ) : (
-              !isLoading && (<button
-                type="button"
-                className="btn btn-outline-primary"
-                onClick={() => {
-                  loginAndForward();
-                }}
-              >
-                Get started
-              </button>)
+              !isLoading && (
+              <>
+                {(location.pathname === "/") ? ("") : (
+                  <Nav.Link eventKey="link-1" href="#" className={location.pathname === "/"  ? "active" : ""}  onClick={() => { navigate("/"); }}>Home</Nav.Link>
+                )}
+                <button
+                  type="button"
+                  className="btn btn-outline-primary"
+                  onClick={() => {
+                    loginAndForward();
+                  }}
+                >
+                  Get started
+                </button>
+              </>
+              )
             )}
           </Navbar.Collapse>
         </Container>

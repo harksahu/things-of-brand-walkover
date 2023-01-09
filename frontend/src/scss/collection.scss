@@ -5,8 +5,10 @@
 .add-new{
     color: #999;
     text-decoration: none;
-    text-align: center;
-    cursor: pointer;
+    button:focus{
+        outline: none !important;
+        box-shadow: none !important;
+    }
     .add-icon{
         height: 282px;
     }
@@ -18,3 +20,14 @@
     }
 }
     
+.collection{
+    .img-size{
+        display: flex;
+        width: 150px;
+        height: 150px;
+    }
+    label{
+        width: 88px;
+        font-size: 13px;
+    }
+}

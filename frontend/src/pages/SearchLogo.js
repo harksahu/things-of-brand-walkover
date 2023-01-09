@@ -38,7 +38,7 @@ function HomeLogo({ searchBrandData = [], getSearchBrand }) {
               >
                 <Link to={"/Stuff/" + brand._id}>
                   <Card>
-                    <div style={{ overflow: "auto" }} className="img_size">
+                    <div style={{ overflow: "auto" }} className="img-size">
                       {
 
                         brand.url !== undefined && brand.url !== "null"

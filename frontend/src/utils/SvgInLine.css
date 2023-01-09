@@ -8,28 +8,22 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 250px;
     color: var(--bs-gray-700);
+    margin-bottom: 0 !important;
 }
-.img_size{
+.img-size{
     padding: 16px;    
     text-align: center;
 }
-.img_size img{
-    width: 60%;
-    /* opacity: .1; */
-}
-.img_size .svgInline{    
+
+.img-size .svgInline{    
     border-radius: var(--bs-card-border-radius);
 }
-.img_size img{
-    width: 250px;
-    height: 250px;    
+.img-size img{
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
 }
-.img_size .svgInline svg{
-    width: 250px;
-    height: 250px;    
-}
+
 .popup_img{
     padding: 0 !important;
     min-width: 200px;
@@ -37,7 +31,7 @@
 }
 .popup_img .svgInline{    
     height: 100vh;
-    overflow: auto;
+    overflow: auto;    
 }
 .popup_img .svgInline svg{
     width: 600px;

@@ -21,11 +21,9 @@ function Not_found() {
   );
 }
 
-function Home({ searchBrandData = [], getSearchBrand }) {
-  const [loading, setLoading] = useState(true);
+function Home({ searchBrandData = [], getSearchBrand ,loading}) {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(16);
-  // const [loading,setLoading] = useState(false);
 
   // function Home() {
   // const [searchBrandData,setSearchBrandData] = useState()
@@ -39,14 +37,10 @@ function Home({ searchBrandData = [], getSearchBrand }) {
 
 
   };
-  const loadingFalse = () => {
-    setLoading(false);
-  }
+  
   useEffect(() => {
-    setLoading(true);
     const fetchPosts1 = () => {
       fetchPosts();
-      loadingFalse();
     }
     fetchPosts1();
 
@@ -66,15 +60,13 @@ function Home({ searchBrandData = [], getSearchBrand }) {
         <div className="center-loader"
         ><ClipLoader /> </div> :
         <>
-          <div className="d-flex flex-wrap grid container">
+          <div className="grid container explore">
             {currentPosts?.data?.length === 0 ? (
               <Not_found />
             ) : (
               currentPosts?.map((Company) => {
                 return (
-                  <div key={Company._id}>
-                    <CompanyCard props={Company} />
-                  </div>
+                    <CompanyCard key={Company._id} props={Company} />
                 );
               })
             )}
@@ -92,7 +84,7 @@ function Home({ searchBrandData = [], getSearchBrand }) {
 }
 
 const mapStateToProp = (state, ownProps) => {
-  return { ...ownProps, searchBrandData: state.searchBrandReducer };
+  return { ...ownProps, searchBrandData: state.searchBrandReducer,loading:state.searchBrandReducer.isLoading };
 };
 
 const mapDispatchToProp = (dispatch) => {

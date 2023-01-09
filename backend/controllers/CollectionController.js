@@ -14,7 +14,6 @@ const createCollection = async (req, res) => {
       })
       .status(200);
   } catch (error) {
-    console.log(error);
     res
       .send({
         message: "Some Error on Server",
@@ -34,7 +33,7 @@ const getCollectionDetails = async (req, res) => {
     : {
         email: email,
       };
-  console.log(search);
+
   try {
     var data = await CollectionModel.find(search);
     const details = data;
@@ -58,7 +57,7 @@ const getCollectionDetails = async (req, res) => {
         logo,
       };
     }
-    console.log(logo);
+
     res
       .json({
         message: "Related Data is Successfully Find",
@@ -66,7 +65,7 @@ const getCollectionDetails = async (req, res) => {
       })
       .status(200);
   } catch (error) {
-    console.log(error);
+
     res
       .send({
         message: "Some Error on Server11",
@@ -138,7 +137,7 @@ const getCollectionJson = async (_id) => {
     delete data[0]?._doc["Logos"]
     delete data[0]?._doc["email"]
     
-    return [{ logo, ...data[0]._doc }];
+    return [{  ...data[0]._doc ,logo}];
   } catch (error) {
     return error;
   }
@@ -149,7 +148,7 @@ const deleteCollection = async (req, res) => {
   try {
     data = await CollectionModel.deleteOne({ _id: req.params.id });
   } catch (err) {
-    console.log(err);
+
   }
   if (!data) {
     return res.status(500).json({ message: "Unable To Delete" });

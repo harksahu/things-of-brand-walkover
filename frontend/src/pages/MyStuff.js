@@ -80,7 +80,7 @@ function Home() {
                           <Card>
                             <div
                               style={{ overflow: "auto" }}
-                              className="img_size"
+                              className="img-size"
                             >
                               {
 
@@ -126,7 +126,7 @@ function Home() {
                           <Card>
                             <div
                               style={{ overflow: "auto" }}
-                              className="img_size"
+                              className="img-size"
                             >
                               {
 

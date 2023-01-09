@@ -12,7 +12,7 @@ const createCompany = async (req, res) => {
             "data": data
         }).status(200);
     } catch (error) {
-        console.log(error);
+
         res.send({
             message: "Some Error on Server",
             error
@@ -45,7 +45,7 @@ const getCompanyDetails = async (req, res) => {
 
         }).status(200);
     } catch (error) {
-        console.log(error);
+
 
         res.send({
             message: "Some Error on Server11",
@@ -68,7 +68,6 @@ const updateCompany = async (req, res) => {
     let link = req.body.links;
     let id = req.body._id;
     let sharedEmail = req.body.sharedEmail ? req.body.sharedEmail : "";
-    console.log("shared email", id)
     try {
         const data = await CompanyModel.updateMany(
             {

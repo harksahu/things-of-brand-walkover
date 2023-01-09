@@ -3,11 +3,13 @@ import {
   Card,
   Container,
   Row,
-  Col,
   Form,
   Button,
   Modal,
   Stack,
+  ListGroup,
+  OverlayTrigger,
+  Tooltip
 } from "react-bootstrap";
 import colors from "../api/colors.json";
 import { Autocomplete, TextField } from "@mui/material";
@@ -22,17 +24,17 @@ import {
   restoreMyStuffAPI,
   sendSearchAPI,
 } from "../api/Index.js";
-import CloseIcon from "@mui/icons-material/Close";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import RichtextEditor from "./JoditEditor.js";
-import { BsFillTrashFill } from "react-icons/bs";
-import { MdArrowBackIos } from "react-icons/md";
+import { MdArrowBackIos, MdDelete, MdRestoreFromTrash, MdDone } from "react-icons/md";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import InputComponent from "../components/InputComponent.js";
+import DeleteComponent from "../components/DeleteComponent.js";
 
 function Profile() {
   const [DomainPost, setDomainPost] = useState();
+  const [modalShow, setModalShow] = useState(false);
   const [jsonLabel, setJsonLabel] = useState([]);
   const [jsonValue, setJsonValue] = useState([]);
   const [name, setName] = useState("");
@@ -49,6 +51,7 @@ function Profile() {
   const [id, setId] = useState("");
   const [logo, setLogo] = useState();
   const [show, setShow] = useState(false);
+  const [msgForAlert, setMsgForAlert] = useState(false);
   const [color, setcount] = useState([
     { colorName: "", colorValue: "#FFFFFF" },
   ]);
@@ -65,6 +68,7 @@ function Profile() {
   const [showAlert, setShowAlert] = useState(false);
   const [message, setMessage] = useState("");
   const [showLinkError, setShowLinkError] = useState(false);
+  const [idToDelete, setIdToDelete] = useState(false);
 
   const location = useLocation();
   let countTemp = countTracker;
@@ -113,12 +117,11 @@ function Profile() {
   const addLinks = (event) => {
     setShowLinkError(false);
     if (event.key === "Enter" && event.target.value !== "") {
-     var check = event.target.value.split(".");
-    if(!check[1] || check[1]?.length<5   )
-    {
-      setShowLinkError(true)
-      return
-    }
+      var check = event.target.value.split(".");
+      if (!check[1] || check[1]?.length < 5) {
+        setShowLinkError(true)
+        return
+      }
       setLinks([...links, event.target.value]);
       event.target.value = "";
     }
@@ -150,6 +153,12 @@ function Profile() {
       }
     }
   }, [user]);
+
+
+  useEffect(() => {
+    if (domain && show === false)
+      getbrandslogo(id)
+  }, [show])
 
   useEffect(() => {
     fontlist();
@@ -269,8 +278,9 @@ function Profile() {
     setLinkCount(countTemp2 + 1);
   };
   let removeFontFields = (i) => {
+    console.log("sdf");
     setLinkCount(countTemp2 - 1);
-    document.getElementById("add_input").classList.remove("hide");
+    // document.getElementById("add_input").classList.remove("hide");
     let newFormValues = [...fontLink];
     newFormValues.splice(i, 1);
     setFontLink(newFormValues);
@@ -280,7 +290,7 @@ function Profile() {
   };
   let removeFormFields = (i) => {
     setCountTracker(countTemp - 1);
-    document.getElementById("add_input").classList.remove("hide");
+    // document.getElementById("add_input").classList.remove("hide");
     let newFormValues = [...color];
     newFormValues.splice(i, 1);
     setcount(newFormValues);
@@ -298,12 +308,22 @@ function Profile() {
   }
 
   return (
-    <div className="bg-gray h-100">
+    <div className="bg-light flex-fill">
       <AlertComponent
         message={message}
         showAlert={showAlert}
         setShowAlert={setShowAlert}
       />
+      <DeleteComponent
+        show={modalShow}
+        msg={msgForAlert}
+        setmodalshow={setModalShow}
+        onSubmit={() => {
+          msgForAlert == "Delete" ?
+            deleteMyStuffAPI(idToDelete)
+            : restoreMyStuffAPI(idToDelete);
+          navigate(-1)
+        }} />
 
       {loading ? (
         <div className="center-loader">
@@ -320,455 +340,423 @@ function Profile() {
                     navigate(-1);
                   }}
                 >
-                  <button type="button" className="btn btn-light me-3">
+                  <button type="button" className="btn btn-outline-dark me-3">
                     <MdArrowBackIos />
+                    Back
                   </button>
-                  Add new brand
                 </a>
               </div>
             </nav>
-            <Col md={12} lg={12}>
-              <Card style={{ width: "35rem" }} className="bdr-none box-shadow">
-                <Card.Body>
-                  <Stack gap={3}>
-                    <Form>
-                      <InputComponent
-                        label={"Name"}
-                        setValue={setName}
-                        valuee={name}
-                        autoFocus={true}
-                      />
-                      <Form.Group className="mb-3 " id="about">
-                        <Form.Label>About us</Form.Label>
-                        <RichtextEditor
-                          guidlines={aboutus}
-                          setGuidlines={setAboutus}
-                          config={config}
-                          tabIndex={1}
-                        />
-                      </Form.Group>
-                      {DomainPost ? (
-                        <div className="grid">
-                          <h6>logos</h6>
-                          <div
-                            className=" d-flex"
-                            style={{ overflow: "auto" }}
+            <Stack gap={3}>
+              <Form>
+                <div className="col-lg-6 col-md-7 col-sm-12">
+                  <InputComponent
+                    placeholderr={"Enter domain"}
+                    label={"Domain * "}
+                    smalll={"(example.com)"}
+                    setValue={setDomain}
+                    valuee={domain}
+                    className="mb-3"
+                  />
+                  <InputComponent
+                    label={"Name"}
+                    setValue={setName}
+                    valuee={name}
+                    autoFocus={true}
+                  />
+                  <Form.Group className="mb-3 " id="about">
+                    <Form.Label>About us</Form.Label>
+                    <RichtextEditor
+                      guidlines={aboutus}
+                      setGuidlines={setAboutus}
+                      config={config}
+                      tabIndex={'0'}
+                    />
+                  </Form.Group>
+                  <div
+                    className="tags-input mb-3 "
+                    id="socialLinks"
+                    style={{ margin: "auto" }}
+                  >
+                    <h6>Social Links</h6>
+                    <ListGroup>
+                      {links?.map((link, index) => (
+                        <ListGroup.Item
+                          className="d-flex align-items-center"
+                          key={index}
+                        >
+                          <div className="flex-fill">{link}</div>
+                          <Button
+                            onClick={() => removeLinks(index)}
+                            variant="light"
                           >
-                            {DomainPost?.map((brand, index) => {
-                              return (
-                                <div
-                                  key={index}
-                                  className="d-flex flex-wrap d-flex m-2"
-                                >
-                                  <div key={brand._id} className="item ">
-                                    <Card className="box-shadow">
-                                      {/* <Dropdown className="ms-auto">
-                                      <Dropdown.Toggle variant="light" size="sm">
-                                        <BsThreeDotsVertical />
-                                      </Dropdown.Toggle>
+                            <MdDelete />
+                          </Button>
+                        </ListGroup.Item>
+                      ))}
+                      <ListGroup.Item>
+                        <Form.Control
+                          type="url"
+                          onKeyUp={(event) => addLinks(event)}
+                          placeholder="Enter URL"
+                        />
+                        <Form.Text id="passwordHelpBlock" muted>
+                          Press enter to add link
+                        </Form.Text>
+                      </ListGroup.Item>
+                    </ListGroup>
 
-                                      <Dropdown.Menu>
-                                        <Dropdown.Item
-                                          onClick={() => {
-                                            setShow(true);
-                                          }}
-                                        >
-                                          Rename
-                                        </Dropdown.Item>
-                                        <Dropdown.Item
-                                          onClick={async () => {
-                                            await deleteMyStuffAPI(brand?._id);
-                                            // alert("Deleted");
-                                            // window.location.reload();
-                                            navigate(-1);
-                                          }}
-                                          variant="outline-secondary"
-                                          size="sm"
-                                        >
-                                          Delete
-                                        </Dropdown.Item>
-                                      </Dropdown.Menu>
-                                    </Dropdown> */}
-                                      <Link to={"/stuff/" + brand._id}>
-                                        <div
-                                          style={{ overflow: "auto" }}
-                                          className="img_size  pattern-square"
-                                        >
-                                          {brand.url !== undefined &&
-                                          brand.url !== "null" ? (
-                                            <img src={brand.url} alt="" />
-                                          ) : (
-                                            <img
-                                              src="/assets/picture.svg"
-                                              alt=""
-                                            />
-                                          )}
-                                        </div>
-                                      </Link>
-                                      <Card.Body>
-                                        <Card.Title
-                                          style={{ textDecoration: "none" }}
-                                          className="text-center"
-                                        >
-                                          <div>
-                                            {/* {
-                                          show ? (
-                                            <input
-                                              id="userInputBox"
-                                              onChange={(e) => {
-                                                savedata(brand.title, e.target.value);
-                                              }}
-                                              value={brand.title}
-                                              className="form-control form-control-sm"
-                                              autoFocus
-                                            />
-                                          ) : ( */}
-                                            <div
-                                              id="showname"
-                                              // onClick={() => {
-                                              //   setShow(true);
-                                              // }}
-                                            >
-                                              {brand.title}
-                                            </div>
-                                            {/* )} */}
-                                          </div>
-                                        </Card.Title>
-                                        <Card.Footer>
-                                          {user ? (
-                                            user.email === user.email ? (
-                                              logo === brand.url ? (
-                                                <Button
-                                                  variant="outline-secondary"
-                                                  size="sm"
-                                                  disabled
-                                                >
-                                                  Default logo
-                                                </Button>
-                                              ) : (
-                                                <Button
-                                                  variant="outline-secondary"
-                                                  size="sm"
-                                                  onClick={() => {
-                                                    setLogo(brand.url);
-                                                  }}
-                                                >
-                                                  Make default
-                                                </Button>
-                                              )
-                                            ) : (
-                                              ""
-                                            )
-                                          ) : (
-                                            ""
-                                          )}
-                                          {brand.active ? (
-                                            <Button
-                                              variant="outline-secondary"
-                                              size="sm"
-                                              onClick={async () => {
-                                                await deleteMyStuffAPI(
-                                                  brand?._id
-                                                );
+                    {showLinkError && (
+                      <small style={{ color: "red" }}>
+                        Enter Correct link{" "}
+                      </small>
+                    )}
+                  </div>
+                </div>
 
-                                                navigate(-1);
-                                              }}
-                                            >
-                                              Delete
-                                            </Button>
-                                          ) : (
-                                            <Button
-                                              variant="outline-secondary"
-                                              size="sm"
-                                              onClick={async () => {
-                                                await restoreMyStuffAPI(
-                                                  brand?._id
-                                                );
-
-                                                navigate(-1);
-                                              }}
-                                            >
-                                              Restore
-                                            </Button>
-                                          )}
-                                        </Card.Footer>
-                                      </Card.Body>
-                                    </Card>
-                                  </div>
-                                  <div></div>
-                                </div>
-                              );
-                            })}
-
-                            {user ? (
-                              <div className="add-new">
-                                <Card
-                                  className="item"
-                                  onClick={() => handleShow()}
-                                >
-                                  <Card.Body className="add-icon align-items-center d-flex justify-content-center">
-                                    <Card.Title className="text-center">
-                                      <BsFillPlusCircleFill
-                                        style={{ fontSize: 40 }}
-                                      />
-                                    </Card.Title>
-                                    <Card.Text></Card.Text>
-                                  </Card.Body>
-                                  <Card.Body>
-                                    <Card.Title>Add New File</Card.Title>
-                                  </Card.Body>
-                                  <div className="card-footer">
-                                    <Button variant="outline-light" size="sm">
-                                      -
-                                    </Button>
-                                    </div>
-                                </Card>
+                {DomainPost ? (
+                  <div>
+                    <h6>logos</h6>
+                    <div className="grid mb-3" style={{ overflow: "auto" }}>
+                      {DomainPost?.map((brand, index) => {
+                        return (
+                          <Card key={brand._id} className="box-shadow border-0">
+                            {}
+                            <Link className="h-100" to={"/stuff/" + brand._id}>
+                              <div
+                                style={{ overflow: "auto" }}
+                                className="img-size  pattern-square h-100"
+                              >
+                                {brand.url !== undefined &&
+                                  brand.url !== "null" ? (
+                                  <img src={brand.url} alt="" />
+                                ) : (
+                                  <img src="/assets/picture.svg" alt="" />
+                                )}
                               </div>
-                            ) : (
-                              ""
-                            )}
-                          </div>
+                            </Link>
+                            <Card.Body className="d-flex align-items-center">
+                              <div className="flex-fill">
+                                {/* {
+                                show ? (
+                                  <input
+                                    id="userInputBox"
+                                    onChange={(e) => {
+                                      savedata(brand.title, e.target.value);
+                                    }}
+                                    value={brand.title}
+                                    className="form-control form-control-sm"
+                                    autoFocus
+                                  />
+                                ) : ( */}
+                                <div
+                                  id="showname"
+                                // onClick={() => {
+                                //   setShow(true);
+                                // }}
+                                >
+                                  {brand.title}
+                                </div>
+                                {/* )} */}
+                              </div>
+                              {(user &&
+                                user.email === user.email) ? (
+                                logo === brand.url ? (
+                                  <button className="btn-icon" disabled>
+                                    <MdDone />
+                                  </button>
+                                ) : (
+                                  <OverlayTrigger
+                                    key={`tip-def-${index}`}
+                                    overlay={
+                                      <Tooltip id={`tip-def-${index}`}>
+                                        Set as default
+                                      </Tooltip>
+                                    }
+                                  >
+                                    <button
+                                      type="button"
+                                      className="btn-icon"
+                                      onClick={() => {
+                                        setLogo(brand.url);
+                                      }}
+                                    >
+                                      <MdDone />
+                                    </button>
+                                  </OverlayTrigger>
+                                )
+
+                              ) : (
+                                ""
+                              )}
+                              {brand.active ? (
+                                <OverlayTrigger
+                                  key={`tip-${index}`}
+                                  overlay={
+                                    <Tooltip id={`tip-del-${index}`}>
+                                      Delete
+                                    </Tooltip>
+                                  }
+                                >
+                                  <button
+                                    type="button"
+                                    className="btn-icon"
+                                    onClick={async () => {
+                                      setModalShow(true);
+                                      setIdToDelete(brand?._id)
+                                      setMsgForAlert("Delete")
+
+                                    }}
+                                  >
+                                    <MdDelete />
+                                  </button>
+                                </OverlayTrigger>
+                              ) : (
+                                <OverlayTrigger
+                                  key={`tip-res-${index}`}
+                                  overlay={
+                                    <Tooltip id={`tip-res-${index}`}>
+                                      Restore
+                                    </Tooltip>
+                                  }
+                                >
+                                  <button
+                                    type="button"
+                                    className="btn-icon"
+                                    onClick={async () => {
+                                      setModalShow(true);
+                                      setIdToDelete(brand?._id)
+                                      setMsgForAlert("Restore")
+
+                                    }}
+                                  >
+                                    <MdRestoreFromTrash />
+                                  </button>
+                                </OverlayTrigger>
+                              )}
+                            </Card.Body>
+                          </Card>
+                        );
+                      })}
+
+                      {user ? (
+                        <div className="add-new">
+                          <Card
+                            className="item box-shadow border-0"
+                            onClick={() => handleShow()}
+                          >
+                            <Card.Body className="add-icon align-items-center d-flex justify-content-center">
+                              <Card.Title className="text-center">
+                                <BsFillPlusCircleFill
+                                  style={{ fontSize: 40 }}
+                                />
+                              </Card.Title>
+                              <Card.Text></Card.Text>
+                            </Card.Body>
+                            <Card.Body>
+                              <Card.Title>Add New File</Card.Title>
+                            </Card.Body>
+                          </Card>
                         </div>
                       ) : (
                         ""
                       )}
-                      <div
-                        className="tags-input mb-3 "
-                        id="socialLinks"
-                        style={{ margin: "auto" }}
-                      >
-                        <h6>Social Links</h6>
-                        <ul>
-                          {links?.map((link, index) => (
-                            <li key={index}>
-                              <span>{link}</span>
-                              <i
-                                className="material-icons"
-                                onClick={() => removeLinks(index)}
-                              >
-                                <CloseIcon />
-                              </i>
-                            </li>
-                          ))}
-                        </ul>
-                        <Form.Control
-                          type="url"
-                          onKeyUp={(event) => addLinks(event)}
-                          placeholder="Press enter to add tags"
-                        />
-                        {showLinkError && (
-                          <small style={{ color: "red" }}>
-                            Enter Correct link{" "}
-                          </small>
-                        )}
-                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
 
-                      <InputComponent
-                        placeholderr={"Enter domain"}
-                        label={"Domain * "}
-                        smalll={"(example.com)"}
-                        setValue={setDomain}
-                        valuee={domain}
-                      />
-
-                      <Form.Group className="mb-3" id="Guidlines">
-                        <Form.Label>Guidlines</Form.Label>
-                        <RichtextEditor
-                          guidlines={guidlines}
-                          setGuidlines={setGuidlines}
-                          tabIndex={1}
-                        />
-                      </Form.Group>
-                      <div className="hide formbold-chatbox-form" id="list">
-                        <Form.Group className="mb-3">
-                          <Form.Label>
-                            Color<small>(hex code in #123456 format)</small>{" "}
-                          </Form.Label>
-                          {color?.map((element, index) => (
-                            <div id="fetch" key={index}>
-                              <Form.Group className="mb-3 d-flex">
-                                <Form.Control
-                                  type="text"
-                                  name="user_table_input"
-                                  id={index}
-                                  placeholder="Enter color name"
-                                  value={color[index].colorName}
-                                  onChange={(e) => {
-                                    let tempCount = color;
-                                    tempCount[index].colorName = e.target.value;
-                                    setcount([...tempCount]);
-                                  }}
-                                  className="contact-form-area"
-                                />
-                                <Autocomplete
-                                  value={value[index]}
-                                  onChange={(e, newValue) => {
-                                    if (newValue.value != undefined) {
-                                      // setValue(newValue)
-                                      document.getElementById(
-                                        "colorinput" + index
-                                      ).value = newValue.value;
-                                      let tempCount = color;
-                                      tempCount[index].colorValue =
-                                        newValue.value;
-                                      setcount([...tempCount]);
-                                      let tempCount1 = value;
-                                      tempCount1[index] = newValue;
-                                      setValue([...tempCount1]);
-                                    } else if (newValue.includes("#")) {
-                                      document.getElementById(
-                                        "colorinput" + index
-                                      ).value = newValue;
-                                      let tempCount1 = value;
-                                      tempCount1[index].label = newValue;
-                                      tempCount1[index].value = newValue;
-                                      setValue([...tempCount1]);
-                                    } else {
-                                      document.getElementById(
-                                        "colorinput" + index
-                                      ).value = newValue;
-                                      let tempCount1 = value;
-                                      tempCount1[index].label = newValue;
-                                      tempCount1[index].value = newValue;
-                                      setValue([...tempCount1]);
-                                    }
-                                  }}
-                                  freeSolo
-                                  // inputValue={inputValue}
-                                  onInputChange={(event, newInputValue) => {
-                                    // setInputValue(newInputValue);
-                                    if (newInputValue.includes("#")) {
-                                      let tempCount1 = value;
-                                      tempCount1[index].label = newInputValue;
-                                      tempCount1[index].value = newInputValue;
-                                      setValue([...tempCount1]);
-                                      document.getElementById(
-                                        "colorinput" + index
-                                      ).value = newInputValue;
-                                      let tempCount = color;
-                                      tempCount[index].colorValue =
-                                        newInputValue;
-                                      setcount([...tempCount]);
-                                    }
-                                  }}
-                                  getOptionLabel={(option) => option.label}
-                                  id={`controllable-states-demo${index}`}
-                                  options={colors}
-                                  sx={{ width: 300 }}
-                                  renderInput={(params) => (
-                                    <TextField {...params} label="Colors" />
-                                  )}
-                                />
-                                <Form.Control
-                                  type="color"
-                                  name="user_input"
-                                  style={{ width: "20%" }}
-                                  id={`colorinput${index}`}
-                                  value={color[index].colorValue}
-                                  className="user_input hide formbold-form-input"
-                                  onChange={(e) => {
-                                    value[index] = {
-                                      label: e.target.value,
-                                      value: e.target.value,
-                                    };
-                                    setValue([...value]);
-                                    let tempCount = color;
-                                    tempCount[index].colorValue =
-                                      e.target.value;
-                                    setcount([...tempCount]);
-                                  }}
-                                />
-                                {/* {index ? ( */}
-                                  <button
-                                    type="button"
-                                    className="name noselect"
-                                    onClick={() => removeFormFields(index)}
-                                    style={{ border: "1px solid #C43434" }}
-                                  >
-                                    <BsFillTrashFill />
-                                  </button>
-                                {/* ):""} */}
-                              </Form.Group>
-                            </div>
-                          ))}
-                          <div className="button-section">
-                            <Button
-                              className="name noselect m-20 "
-                              type="button"
-                              id="add_input"
-                              onClick={() => addFormFields()}
-                            >
-                              Add
-                            </Button>
-                          </div>
-                        </Form.Group>
-                      </div>
-                      <Form.Group className="mb-3 my-3" id="fontLink">
-                        <Form.Label>
-                          Font links{" "}
-                          <small>(with respect there google font name)</small>
-                        </Form.Label>
-                        <div id="list" className="hide formbold-chatbox-form">
-                          {fontLink?.map((element, index) => (
-                            <div id="fetch" className="m-3" key={index}>
+                <div className="col-lg-6 col-md-7 col-sm-12">
+                  {/* <Form.Group className="mb-3" id="Guidlines">
+                    <Form.Label>Guidlines</Form.Label>
+                    <RichtextEditor
+                      guidlines={guidlines}
+                      setGuidlines={setGuidlines}
+                      tabIndex={'0'}
+                    />
+                  </Form.Group> */}
+                  <div className="hide formbold-chatbox-form" id="list">
+                    <Form.Group className="mb-3">
+                      <Form.Label>
+                        Color{" "}
+                        <small className="text-muted">
+                          (hex code, eg. #000000)
+                        </small>{" "}
+                      </Form.Label>
+                      {color?.map((element, index) => (
+                        <div id="fetch" key={index}>
+                          <Form.Group className="mb-3 d-flex">
+                            <Form.Control
+                              type="text"
+                              name="user_table_input"
+                              id={index}
+                              placeholder="Enter color name"
+                              value={color[index].colorName}
+                              onChange={(e) => {
+                                let tempCount = color;
+                                tempCount[index].colorName = e.target.value;
+                                setcount([...tempCount]);
+                              }}
+                              className="contact-form-area me-1"
+                            />
+                            <div className="color-picker-wrp me-1">
                               <Autocomplete
-                                  getOptionLabel={(option) => option}
-                                  value={fontLink[index]}
-                                  placeholder="Enter font name"
-                                  
-                                  id={"id" + index}
-                                  options={fontFamily}
-                                  onChange={ (e: any, newValue: string | null) => {
-                                    let tempCount = fontLink;
-                                    tempCount[index] = newValue;
-                                    setFontLink([...tempCount]);
-                                  }}
-                                  // getOptionSelected
-                                  isOptionEqualToValue={() => true }
-                                  sx={{ width: 300 }}
-                                  renderInput={(params) => (
-                                    <TextField {...params} label="Fonts" />
-                                  )}
-                                />
-                              {/* {index ? ( */}
-                                <button
-                                  type="button"
-                                  className="name noselect"
-                                  onClick={() => removeFontFields(index)}
-                                  style={{ border: "1px solid #C43434" }}
-                                >
-                                  <BsFillTrashFill />
-                                  delete
-                                </button>
-                              {/* ) : ""} */}
+                                value={value[index]}
+                                onChange={(e, newValue) => {
+                                  if (newValue.value != undefined) {
+                                    // setValue(newValue)
+                                    document.getElementById(
+                                      "colorinput" + index
+                                    ).value = newValue.value;
+                                    let tempCount = color;
+                                    tempCount[index].colorValue = newValue.value;
+                                    setcount([...tempCount]);
+                                    let tempCount1 = value;
+                                    tempCount1[index] = newValue;
+                                    setValue([...tempCount1]);
+                                  } else if (newValue.includes("#")) {
+                                    document.getElementById(
+                                      "colorinput" + index
+                                    ).value = newValue;
+                                    let tempCount1 = value;
+                                    tempCount1[index].label = newValue;
+                                    tempCount1[index].value = newValue;
+                                    setValue([...tempCount1]);
+                                  } else {
+                                    document.getElementById(
+                                      "colorinput" + index
+                                    ).value = newValue;
+                                    let tempCount1 = value;
+                                    tempCount1[index].label = newValue;
+                                    tempCount1[index].value = newValue;
+                                    setValue([...tempCount1]);
+                                  }
+                                }}
+                                freeSolo
+                                // inputValue={inputValue}
+                                onInputChange={(event, newInputValue) => {
+                                  // setInputValue(newInputValue);
+                                  if (newInputValue.includes("#")) {
+                                    let tempCount1 = value;
+                                    tempCount1[index].label = newInputValue;
+                                    tempCount1[index].value = newInputValue;
+                                    setValue([...tempCount1]);
+                                    document.getElementById(
+                                      "colorinput" + index
+                                    ).value = newInputValue;
+                                    let tempCount = color;
+                                    tempCount[index].colorValue = newInputValue;
+                                    setcount([...tempCount]);
+                                  }
+                                }}
+                                getOptionLabel={(option) => option.label}
+                                id={`controllable-states-demo${index}`}
+                                options={colors}
+                                sx={{ width: 300 }}
+                                renderInput={(params) => (
+                                  <TextField {...params} label="Colors" />
+                                )}
+                              />
+                              <Form.Control
+                                type="color"
+                                name="user_input"
+                                id={`colorinput${index}`}
+                                value={color[index].colorValue}
+                                className="user_input hide formbold-form-input color-picker"
+                                onChange={(e) => {
+                                  value[index] = {
+                                    label: e.target.value,
+                                    value: e.target.value,
+                                  };
+                                  setValue([...value]);
+                                  let tempCount = color;
+                                  tempCount[index].colorValue = e.target.value;
+                                  setcount([...tempCount]);
+                                }}
+                              />
                             </div>
-                          ))}
-                          <div className="button-section">
-                            <Button
-                              className="name noselect m-20 "
+
+                            <button
                               type="button"
-                              id="add_input"
-                              onClick={() => addFontFields()}
+                              className="name noselect btn"
+                              onClick={() => removeFormFields(index)}
                             >
-                              Add
-                            </Button>
-                          </div>
+                              <MdDelete />
+                            </button>
+
+                          </Form.Group>
                         </div>
-                      </Form.Group>
-                      <div id="button" className="">
-                        <Button
-                          variant="primary"
-                          onClick={() => updateProfileValue()}
+                      ))}
+
+                      <div className="button-section">
+                        <Button variant="link"
+                          onClick={() => addFormFields()}
                         >
-                          Update
+                          Add new color
                         </Button>
                       </div>
-                    </Form>
-                  </Stack>
-                </Card.Body>
-              </Card>
-            </Col>
+                    </Form.Group>
+                  </div>
+                  <Form.Group className="mb-3 my-3" id="fontLink">
+                    <Form.Label>
+                      Font links
+                      <small>(by <a href="https://fonts.google.com/" className="text-muted">https://fonts.google.com/</a>)</small>
+                    </Form.Label>
+                    <div className="">
+                      {fontLink?.map((element, index) => (
+                        <div className="d-flex mb-3" key={index}>
+                          <Autocomplete
+                            className="me-1"
+                            getOptionLabel={(option) => option}
+                            value={fontLink[index]}
+                            placeholder="Enter font name"
+                            id={"id" + index}
+                            options={fontFamily}
+                            onChange={(e ,newValue) => {
+                              let tempCount = fontLink;
+                              tempCount[index] = newValue;
+                              setFontLink([...tempCount]);
+                            }}
+                            // getOptionSelected
+                            isOptionEqualToValue={() => true}
+                            sx={{ width: 300 }}
+                            renderInput={(params) => (
+                              <TextField {...params} label="Fonts" />
+                            )}
+                          />
+                          <button
+                            type="button"
+                            className="btn"
+                            onClick={() => removeFontFields(index)}
+                          >
+                            <MdDelete />
+                          </button>
+                        </div>
+                      ))}
+                      <div className="button-section">
+                        <Button variant="link"
+
+                          onClick={() => addFontFields()}>
+                          Add new font
+                        </Button>
+                      </div>
+                    </div>
+                  </Form.Group>
+                </div>
+              </Form>
+            </Stack>
           </Row>
+
+          <div className="edit-brand-footer bg-light">
+            <Button
+              variant="primary"
+              onClick={() => updateProfileValue()}
+            >
+              Update
+            </Button>
+          </div>
+
           <Modal
             show={show}
             fullscreen={fullscreen}
