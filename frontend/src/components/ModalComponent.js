@@ -93,7 +93,7 @@ function ModalComponent(props) {
           </Modal.Header>
           <Modal.Body>
             <div className="d-flex">
-              <div className="d-flex item">
+              <div className="d-flex flex-wrap item">
                 {collection &&
                   collection.map((collection) => {
                     return (
