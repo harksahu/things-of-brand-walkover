@@ -20,7 +20,7 @@ function MyCompany() {
   const [domain, setDomain] = useState();
   const { user } = UserAuth();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
   const[message, setMessage] = useState("")
 
@@ -32,7 +32,7 @@ function MyCompany() {
   }
   const handleShow = () => setShow(true);
   useEffect(() => {
-    setLoading(true);
+    // setLoading(true);
 
     if (user) {
       if (user?.email) {
@@ -124,6 +124,7 @@ function MyCompany() {
 
   return (
     <>
+    <div className="py-4 bg-light flex-fill">
     <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert}/>
       {loading ? (
         <div className="center-loader"><ClipLoader /></div>
@@ -215,6 +216,7 @@ function MyCompany() {
           </Container>          
         </div>
       )}
+      </div>
     </>
   );
 }

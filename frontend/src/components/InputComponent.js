@@ -11,7 +11,6 @@ function InputComponent({ label, setValue, valuee, placeholderr,smalll,autoFocus
     <>
       <Form.Group className="mb-3">
         {label && <Form.Label>{label}{<small>{smalll}</small>}</Form.Label>}
-        {}
         <Form.Control
         id ="inputComponentBox"
           type="text"

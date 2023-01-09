@@ -31,6 +31,7 @@ function ModalComponent(props) {
   const createCollections = async (event) => {
     event.preventDefault();
     // props.onHide();
+    setCollectionName("");
     if (collectionName?.trim() == "")
       return;
      await createCollection({
@@ -139,6 +140,7 @@ function ModalComponent(props) {
                 variant="link"
                 onClick={()=>{
                   setShowComponent(true)
+
                 }}>
                   Add new collection
                 </Button>
@@ -150,6 +152,7 @@ function ModalComponent(props) {
                   setValue={setCollectionName}
                   valuee={collectionName}
                   placeholderr={"Enter Collection name"}  
+                  autoFocus={"true"}
                 />
                 <Button
                   type="submit"
