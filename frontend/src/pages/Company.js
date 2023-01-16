@@ -277,7 +277,7 @@ function Company() {
               <div className="row mt-4">
                 <Navbar>
                   <Container>
-                    <Nav className="me-auto">
+                    {user &&<Nav className="me-auto">
                       <Button
                         variant="outline-dark"
                         onClick={() => {
@@ -290,7 +290,7 @@ function Company() {
                       >
                         <MdArrowBackIos /> Back
                       </Button>
-                    </Nav>
+                    </Nav>}
 
                     {isShared && (
                       <>
