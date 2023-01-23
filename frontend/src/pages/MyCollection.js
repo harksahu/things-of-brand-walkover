@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
+import Alert from 'react-bootstrap/Alert';
 import Modal from "react-bootstrap/Modal";
 import { Container, Form, Card, Dropdown } from "react-bootstrap";
 import { BsFillPlusCircleFill } from "react-icons/bs";
@@ -41,7 +42,7 @@ const MyCollection = () => {
     setAllCollection(data.data.data);
     setLoading(false);
   };
- 
+
   const deleteCollection = async (collection) => {
     // setShowAlert(true);
     var index = allCollection.indexOf(collection);
@@ -94,15 +95,15 @@ const MyCollection = () => {
       </div> :
         <Container>
           <DeleteComponent
-                          show={modalShow}
-                          msg={"Delete"}
-                          setmodalshow={ setModalShow}
-                          setcollectiontodelete={setcollectiontodelete}
-                          onSubmit ={()=>deleteCollection(collectionToDelete)}
-                           />
+            show={modalShow}
+            msg={"Delete"}
+            setmodalshow={setModalShow}
+            setcollectiontodelete={setcollectiontodelete}
+            onSubmit={() => deleteCollection(collectionToDelete)}
+          />
           <Col md={6} className="mb-2">
 
-      </Col>
+          </Col>
           <AlertComponent message={message} showAlert={showAlert} setShowAlert={setShowAlert} />
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -123,6 +124,14 @@ const MyCollection = () => {
               </Form>
             </Modal.Body>
           </Modal>
+          <Alert variant="success">
+            <Alert.Heading>Hey, here are your collections</Alert.Heading>
+            <p>
+              Saved Collections in ThingsOfBrand allow users to save Images they like or want to view later. This feature can be used to save Images from brands, or public accounts that can be used through API and access access all over the OWN website. Saved Image can be accessed by clicking on the “Collections” tab. This allows users to easily find and view saved Images at a later time, without having to scroll through their Companies to find it again. Additionally, saved Images can be access by code, which makes it easier to Understand .
+
+            </p>
+
+          </Alert>
 
           <div className="grid-small">
             {allCollection &&
@@ -130,32 +139,32 @@ const MyCollection = () => {
                 return (
                   <div key={collection._id} className="d-flex box-shadow coll-item">
                     <Link to={"/collection/" + collection._id} className="align-items-center d-flex flex-fill p-3">
-                        <Card.Title className="bold flex-fill">{collection?.CollectionName} </Card.Title>
-                        <div className="d-flex coll-preview align-items-center">
-                          {collection?.logo &&
-                            collection?.logo?.map((logo, index) => {
-                              return (
-                                index < 5 && (
-                                  <div className="cpi" key={index}>
-                                    <img src={logo?.url} key={index} width="24px" height="24px" style={{ marginRight: "5px" }} />
-                                  </div>
-                                )
+                      <Card.Title className="bold flex-fill">{collection?.CollectionName} </Card.Title>
+                      <div className="d-flex coll-preview align-items-center">
+                        {collection?.logo &&
+                          collection?.logo?.map((logo, index) => {
+                            return (
+                              index < 5 && (
+                                <div className="cpi" key={index}>
+                                  <img src={logo?.url} key={index} width="24px" height="24px" style={{ marginRight: "5px" }} />
+                                </div>
                               )
-                            })
-                          }
-                          <div className="count">
+                            )
+                          })
+                        }
+                        <div className="count">
                           {
                             collection?.logo?.length > 5 && ("+" + (collection?.logo?.length - 5))
                           }
-                          </div>
                         </div>
+                      </div>
                     </Link>
 
                     <Dropdown className="p-3 d-flex align-items-center">
                       <Dropdown.Toggle variant="light" id="dropdown-basic" size="sm">
                         <MdMoreVert />
                       </Dropdown.Toggle>
-                  
+
                       <Dropdown.Menu>
                         <Dropdown.Item onClick={() => {
                           setModalShow(true);
