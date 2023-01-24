@@ -24,7 +24,7 @@ import {
   sendSearchAPI,
   updateProfileFields,
   getCollection,
-  getProfileDetailsInJson
+  getProfileDetailsInJson,
 } from "../api/Index.js";
 import saveAs from "file-saver";
 import { BsFillPlusCircleFill, BsFillTrashFill } from "react-icons/bs";
@@ -35,14 +35,13 @@ import {
   MdOutlineModeEdit,
   MdMoreVert,
   MdCode,
-  MdOutlineFileDownload
+  MdOutlineFileDownload,
 } from "react-icons/md";
 import Addfile from "./Addfile.js";
 import ModalComponent from "../components/ModalComponent.js";
-import { SocialIcon } from 'react-social-icons';
-import JsonModel from "../components/JsonModel.js"
-import sendMail from "../utils/SendMail.js"
-
+import { SocialIcon } from "react-social-icons";
+import JsonModel from "../components/JsonModel.js";
+import sendMail from "../utils/SendMail.js";
 
 function Not_found() {
   return <div className="not-found">Not found</div>;
@@ -81,6 +80,7 @@ function Company() {
   const [indexToaddToFav, setIndexToaddToFav] = useState();
   const [CompanyData, setCompanyData] = useState();
   const [showJson, setShowJson] = useState(false);
+  const [defaultLogo, setDefaultLogo] = useState(false);
 
   const handleCloseJson = () => setShowJson(false);
   const handleShowJson = () => setShowJson(true);
@@ -119,19 +119,14 @@ function Company() {
       updateLogo();
     }
 
-    sendMail(event.target.sharingEmail.value,user?.displayName,name)
+    sendMail(event.target.sharingEmail.value, user?.displayName, name);
   };
 
   const GetCompanyDetail = async () => {
-    const data = await getProfileDetailsInJson({ domain: title.title })
-    setCompanyData(data?.data?.data[0])
-    handleShowJson()
-  }
-
-
-
-
-
+    const data = await getProfileDetailsInJson({ domain: title.title });
+    setCompanyData(data?.data?.data[0]);
+    handleShowJson();
+  };
 
   const DownloadToSvg = async (svg, fileName) => {
     saveAs(svg, fileName);
@@ -148,10 +143,9 @@ function Company() {
     var temp = [];
     for (var j = 0; j < DomainPost?.length; j++) {
       // var flag = true;
-      const isFind = collection?.data?.data.find(col =>
-        col.Logos.includes(
-          DomainPost[j]?._id
-        ))
+      const isFind = collection?.data?.data.find((col) =>
+        col.Logos.includes(DomainPost[j]?._id)
+      );
       if (isFind) {
         temp.push("black");
       } else {
@@ -161,14 +155,12 @@ function Company() {
     setvariants([...temp]);
     // console.log("hello ");
     setLoading(false);
-  }
-
+  };
 
   const getbrandslogo = async (id) => {
     const data = await sendSearchAPI({ domain: id, active: 1 });
     setDomainPost(data?.data?.data);
     setLoading(false);
-
   };
   const getbrand = async () => {
     const fresult = await getProfileDetails({
@@ -177,6 +169,7 @@ function Company() {
     });
 
     if (fresult?.data?.data?.length > 0) {
+      setDefaultLogo(fresult?.data?.data[0].logo || false);
       setCompany(fresult?.data?.data[0]);
       setId(fresult?.data?.data[0]._id);
       setName(fresult?.data?.data[0].name);
@@ -191,19 +184,20 @@ function Company() {
       setSharedEmail(fresult.data.data[0].sharedEmail);
       if (fresult?.data?.data[0].domain)
         getbrandslogo(fresult?.data?.data[0]._id);
-      else
-        setLoading(false);
+      else setLoading(false);
     } else {
       setLoading(false);
     }
-    isCompanyShared(fresult?.data?.data[0].email, fresult.data.data[0].sharedEmail);
+    isCompanyShared(
+      fresult?.data?.data[0].email,
+      fresult.data.data[0].sharedEmail
+    );
   };
 
   const isCompanyShared = async (myEmail, Shared) => {
     if (user?.email === myEmail) {
       setSharedCompany(true);
-    }
-    else {
+    } else {
       for (var i = 0; i < Shared?.length; i++) {
         if (user?.email === Shared[i]) {
           setSharedCompany(true);
@@ -230,22 +224,17 @@ function Company() {
     await updateProfileFields(data);
   };
   useEffect(() => {
-    if (title.title)
-      getbrand();
-  }, [title.title])
+    if (title.title) getbrand();
+  }, [title.title]);
   useEffect(() => {
     if (user?.email) {
-      getCollectionData()
-      isCompanyShared(email, sharedEmail)
+      getCollectionData();
+      isCompanyShared(email, sharedEmail);
     }
-  }, [user])
+  }, [user]);
   useEffect(() => {
-    if (domain && show === false)
-      getbrandslogo(id)
-  }, [show])
-
-
-
+    if (domain && show === false) getbrandslogo(id);
+  }, [show]);
 
   useEffect(() => {
     return () => {
@@ -255,12 +244,11 @@ function Company() {
           fontLINKs[i].remove();
         }
       }
-    }
+    };
   }, [user, modalShow]);
   function handleShow() {
     setFullscreen("md-down");
     setShow(true);
-
   }
   return (
     <>
@@ -269,39 +257,36 @@ function Company() {
           <ClipLoader />
         </div>
       ) : (
-
-
         <div className="bg-light flex-fill">
           <Container>
             {domain ? (
               <div className="row mt-4">
                 <Navbar>
                   <Container>
-                    {user &&<Nav className="me-auto">
-                      <Button
-                        variant="outline-dark"
-                        onClick={() => {
-                          if (key === "default") {
-                            navigate("/");
-                          } else {
-                            navigate(-1);
-                          }
-                        }}
-                      >
-                        <MdArrowBackIos /> Back
-                      </Button>
-                    </Nav>}
+                    {defaultLogo && (
+                      <div className="">
+                        <div className="" style={{ display: "flex" }}>
+                          <img
+                            src={defaultLogo}
+                            width="35px"
+                            height="56px"
+                            style={{ marginRight: "5px" }}
+                          />
+                          <div>{name && <h1>{name}</h1>}</div>
+                        </div>
+                      </div>
+                    )}
 
-                    {isShared && (
-                      <>
-                        <Nav className="nav-action">
+                    <Nav className="nav-action">
+                      {isShared && (
+                        <>
                           <Button
                             className="me-2"
                             as={Link}
                             variant="btn"
                             to="/editprofile"
                             state={{ data: company }}
-                            >
+                          >
                             <MdOutlineModeEdit /> Edit
                           </Button>
 
@@ -315,98 +300,98 @@ function Company() {
                           >
                             <MdShare /> Share
                           </Button>
-                        </Nav>
+                        </>
+                      )}
 
-                        <Modal show={showw} onHide={handleClosee}>
-                          <Modal.Header closeButton>
-                            <Modal.Title>
-                              Share {name ? name : domain}
-                            </Modal.Title>
-                          </Modal.Header>
-
-                          <Form onSubmit={handleSubmit}>
-                            <Modal.Body>                              
-                              <Form.Label>Email address</Form.Label>
-                              <Form.Control
-                                type="email"
-                                id="addEmail"
-                                name="sharingEmail"
-                                placeholder="Enter email"
-                                autoFocus
-                              />
-                              {userEmail && (
-                                <Form.Label className="text-danger small ps-2">
-                                  Already shared with this email.
-                                </Form.Label>
-                              )}
-                              {isRepeatingEmail && (
-                                <Form.Label className="text-danger small ps-2">
-                                  Already shared with this email.
-                                </Form.Label>
-                              )}
-                              
-                              <ListGroup variant="flush">
-                                {sharedEmail.map((email, index) => {
-                                  return (
-                                    <ListGroup.Item key={index} className="d-flex align-items-center">
-                                      {email?.length > 4 && (
-                                        <>
-                                          <span className="me-auto">{email}</span>
-                                          <button
-                                            className="btn-sm btn"
-                                            onClick={() => {
-                                              removeSharedEmail(index);
-                                            }}
-                                          >
-                                            <BsFillTrashFill />
-                                          </button>
-                                        </>
-                                      )}
-                                    </ListGroup.Item>                                    
-                                  );
-                                })}
-                              </ListGroup>
-                            </Modal.Body>
-                            <Modal.Footer>
-                              <Button
-                                variant="outline-dark"
-                                className="me-auto"
-                                onClick={() => {
-                                  navigator.clipboard.writeText(
-                                    window.location.href
-                                  );
-                                  setCopyValue("copied!!");
-                                }}
-                              >
-                                {CopyValue}
-                              </Button>
-                              <Button
-                                variant="secondary"
-                                onClick={handleClosee}
-                              >
-                                Close
-                              </Button>
-                              <Button type="submit" variant="primary">
-                                Share
-                              </Button>
-                            </Modal.Footer>
-                          </Form>
-                        </Modal>
-                      </>
-                    )}
-                    {user && (
-                      <Nav className="nav-action">
+                      {user && (
                         <Button
                           variant="btn"
                           onClick={() => {
-                            GetCompanyDetail()
-                          }}                          
+                            GetCompanyDetail();
+                          }}
                         >
                           <MdCode /> Code
                         </Button>
-                      </Nav>
-                    )}
+                      )}
+                    </Nav>
 
+                    {isShared && (
+                      <Modal show={showw} onHide={handleClosee}>
+                        <Modal.Header closeButton>
+                          <Modal.Title>
+                            Share {name ? name : domain}
+                          </Modal.Title>
+                        </Modal.Header>
+
+                        <Form onSubmit={handleSubmit}>
+                          <Modal.Body>
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control
+                              type="email"
+                              id="addEmail"
+                              name="sharingEmail"
+                              placeholder="Enter email"
+                              autoFocus
+                            />
+                            {userEmail && (
+                              <Form.Label className="text-danger small ps-2">
+                                Already shared with this email.
+                              </Form.Label>
+                            )}
+                            {isRepeatingEmail && (
+                              <Form.Label className="text-danger small ps-2">
+                                Already shared with this email.
+                              </Form.Label>
+                            )}
+
+                            <ListGroup variant="flush">
+                              {sharedEmail.map((email, index) => {
+                                return (
+                                  <ListGroup.Item
+                                    key={index}
+                                    className="d-flex align-items-center"
+                                  >
+                                    {email?.length > 4 && (
+                                      <>
+                                        <span className="me-auto">{email}</span>
+                                        <button
+                                          className="btn-sm btn"
+                                          onClick={() => {
+                                            removeSharedEmail(index);
+                                          }}
+                                        >
+                                          <BsFillTrashFill />
+                                        </button>
+                                      </>
+                                    )}
+                                  </ListGroup.Item>
+                                );
+                              })}
+                            </ListGroup>
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <Button
+                              variant="outline-dark"
+                              className="me-auto"
+                              onClick={() => {
+                                navigator.clipboard.writeText(
+                                  window.location.href
+                                );
+                                setCopyValue("copied!!");
+                              }}
+                            >
+                              {CopyValue}
+                            </Button>
+                            <Button variant="secondary" onClick={handleClosee}>
+                              Close
+                            </Button>
+                            <Button type="submit" variant="primary">
+                              Share
+                            </Button>
+                          </Modal.Footer>
+                        </Form>
+                      </Modal>
+                    )}
                   </Container>
                 </Navbar>
 
@@ -414,61 +399,65 @@ function Company() {
                   <div className="row">
                     <div className="col-lg-7 col-md-6 col-sm-12">
                       <div className="">
-                        <div>{name && <h1>{name}</h1>}</div>
                         <div
                           id="aboutus"
                           dangerouslySetInnerHTML={{ __html: aboutus }}
                         ></div>
                       </div>
-                        <div className="align-items-center d-flex mt-3 mb-3">
-                          <a
-                            href={"https://" + domain}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="b-domain me-2"
-                          >
-                            {domain}
-                          </a>
-                          {user && (
-                            email === user.email ? (
-                              verify === "true" ? (
-                                <MdVerified />
-                              ) : (
-                                <>
-                                  (<span className="me-2">Not verified!</span>
-                                  <Link
-                                    to="/domainverify"
-                                    className="text-sm how-to"
-                                    state={{ data: company }}
-                                  >
-                                    How to verify?
-                                  </Link>)
-                                </>
-                              )
-
+                      <div className="align-items-center d-flex mt-3 mb-3">
+                        <a
+                          href={"https://" + domain}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="b-domain me-2"
+                        >
+                          {domain}
+                        </a>
+                        {user &&
+                          (email === user.email ? (
+                            verify === "true" ? (
+                              <MdVerified />
                             ) : (
                               <>
-                                  (<span className="me-2">Not verified!</span>
-                                  <Link
-                                    to="/domainverify"
-                                    className="text-sm how-to"
-                                    state={{ data: company }}
-                                  >
-                                    How to verify?
-                                  </Link>)
-                                </>
+                                (<span className="me-2">Not verified!</span>
+                                <Link
+                                  to="/domainverify"
+                                  className="text-sm how-to"
+                                  state={{ data: company }}
+                                >
+                                  How to verify?
+                                </Link>
+                                )
+                              </>
                             )
-                          )}
-                        </div>
-                        <div className="d-flex">
-                          {links?.map((link) => {
-                            return (
-                              <div key={link} className="social-icons">
-                                <SocialIcon className="icon" url={link} target="_blank" style={{ height: 32, width: 32 }} />
-                              </div>
-                            );
-                          })}
-                        </div>
+                          ) : (
+                            <>
+                              (<span className="me-2">Not verified!</span>
+                              <Link
+                                to="/domainverify"
+                                className="text-sm how-to"
+                                state={{ data: company }}
+                              >
+                                How to verify?
+                              </Link>
+                              )
+                            </>
+                          ))}
+                      </div>
+                      <div className="d-flex">
+                        {links?.map((link) => {
+                          return (
+                            <div key={link} className="social-icons">
+                              <SocialIcon
+                                className="icon"
+                                url={link}
+                                target="_blank"
+                                style={{ height: 32, width: 32 }}
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
                   <div className="mt-5">
@@ -478,13 +467,13 @@ function Company() {
                         return (
                           <div key={brand._id} className="item">
                             <Card className="box-shadow">
-                              <Link className="h-100" to={"/stuff/" + brand._id}>
-                                <div                                  
-                                  className="img-size pattern-square h-100"
-                                >
+                              <Link
+                                className="h-100"
+                                to={"/stuff/" + brand._id}
+                              >
+                                <div className="img-size pattern-square h-100">
                                   {brand.url !== undefined &&
-                                    brand.url !== "null" ? (
-
+                                  brand.url !== "null" ? (
                                     <img src={brand.url} alt="" />
                                   ) : (
                                     <img src="/assets/picture.svg" alt="" />
@@ -492,75 +481,80 @@ function Company() {
                                 </div>
                               </Link>
                               <div className="item-footer d-flex">
-                                  <div className="flex-fill">{brand.title}</div>
-                                  <Dropdown>
+                                <div className="flex-fill">{brand.title}</div>
+                                <Dropdown>
                                   <Dropdown.Toggle variant="icon">
-                                    <MdOutlineFileDownload/>
+                                    <MdOutlineFileDownload />
                                   </Dropdown.Toggle>
 
                                   <Dropdown.Menu>
-                                    <Dropdown.Item href="#" 
-                                    onClick={() => {
-                                      navigate("/stuff/" + brand._id);
-                                    }}>PNG</Dropdown.Item>
-                                    <Dropdown.Item href="#"
-                                    onClick={() => {
-                                      DownloadToSvg(brand.url, brand.title);
-                                    }}
-                                    >SVG</Dropdown.Item>
+                                    <Dropdown.Item
+                                      href="#"
+                                      onClick={() => {
+                                        navigate("/stuff/" + brand._id);
+                                      }}
+                                    >
+                                      PNG
+                                    </Dropdown.Item>
+                                    <Dropdown.Item
+                                      href="#"
+                                      onClick={() => {
+                                        DownloadToSvg(brand.url, brand.title);
+                                      }}
+                                    >
+                                      SVG
+                                    </Dropdown.Item>
                                   </Dropdown.Menu>
-                                </Dropdown>                                                                
-                                {
-                                  (user?.email) ?
-                                    <button type="button" className="btn-icon"
+                                </Dropdown>
+                                {user?.email ? (
+                                  <button
+                                    type="button"
+                                    className="btn-icon"
                                     onClick={() => {
                                       setModalShow(true);
                                       setAddImageToCollection(brand._id);
                                       setIndexToaddToFav(index);
                                     }}
-                                    >
-                                      <BookmarkIcon />
-                                    </button>
-                                  : ""
-                                }  
-                              </div>                              
+                                  >
+                                    <BookmarkIcon />
+                                  </button>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
                             </Card>
                           </div>
                         );
                       })}
 
-                      {user && (
-                        (email === user.email || isShared == true) && (
-                          // <Link to="/addfile" className="add-new" state={{ domain: domain }}>
-                          <div className="add-new">
-                            <Card className="item border-0 box-shadow" onClick={() => handleShow()}>
-                              {/* <Card className="h-100 item-company"> */}
-                              <Card.Body className="add-icon align-items-center d-flex justify-content-center">
-                                <Card.Title className="text-center">
-                                  <BsFillPlusCircleFill
-                                    style={{ fontSize: 40 }}
-                                  />
-                                </Card.Title>
-                                <Card.Text></Card.Text>
-                              </Card.Body>
-                              <Card.Body>
-                                <Card.Title>Add New</Card.Title>
-                              </Card.Body>
-                            </Card>
-                          </div>
-                        )
+                      {user && (email === user.email || isShared == true) && (
+                        // <Link to="/addfile" className="add-new" state={{ domain: domain }}>
+                        <div className="add-new">
+                          <Card
+                            className="item border-0 box-shadow"
+                            onClick={() => handleShow()}
+                          >
+                            {/* <Card className="h-100 item-company"> */}
+                            <Card.Body className="add-icon align-items-center d-flex justify-content-center">
+                              <Card.Title className="text-center">
+                                <BsFillPlusCircleFill
+                                  style={{ fontSize: 40 }}
+                                />
+                              </Card.Title>
+                              <Card.Text></Card.Text>
+                            </Card.Body>
+                            <Card.Body>
+                              <Card.Title>Add New</Card.Title>
+                            </Card.Body>
+                          </Card>
+                        </div>
                       )}
                     </div>
                   </div>
 
                   <div className="mt-5">
-                    {(allColor[0]?.colorValue &&
-                      allColor[0]?.colorValue != "") && (
-
-                        <h5>Colors</h5>
-                      )}
-
-
+                    {allColor[0]?.colorValue &&
+                      allColor[0]?.colorValue != "" && <h5>Colors</h5>}
 
                     {allColor != "" && (
                       <div className="d-flex colors-wrp">
@@ -606,7 +600,11 @@ function Company() {
                     <div className="d-flex">
                       {fontLink?.map((link, index) => {
                         return (
-                          <div key={index} style={{ fontFamily: link, fontSize: '24px' }} className="card p-2 m-1">
+                          <div
+                            key={index}
+                            style={{ fontFamily: link, fontSize: "24px" }}
+                            className="card p-2 m-1"
+                          >
                             <Helmet>
                               <link
                                 className="fontUrl"
@@ -614,9 +612,14 @@ function Company() {
                                 href={`https://fonts.googleapis.com/css2?family=${link}`}
                               />
                             </Helmet>
-                            <a href={`https://fonts.google.com/specimen/${link}`} target="_blank" rel="noreferrer" style={{ color: "black", textDecoration: "none" }}>{link}</a>
-
-
+                            <a
+                              href={`https://fonts.google.com/specimen/${link}`}
+                              target="_blank"
+                              rel="noreferrer"
+                              style={{ color: "black", textDecoration: "none" }}
+                            >
+                              {link}
+                            </a>
                           </div>
                         );
                       })}
@@ -659,15 +662,21 @@ function Company() {
               />
             )}
 
-            <Modal 
+            <Modal
               size="xl"
               aria-labelledby="contained-modal-title-vcenter"
-              centered show={showJson} onHide={handleCloseJson}>
+              centered
+              show={showJson}
+              onHide={handleCloseJson}
+            >
               <Modal.Header closeButton>
                 <Modal.Title>{title?.title} </Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <JsonModel data={CompanyData} id={title?.title} show={"Company"}
+                <JsonModel
+                  data={CompanyData}
+                  id={title?.title}
+                  show={"Company"}
                 />
               </Modal.Body>
               <Modal.Footer>
@@ -676,7 +685,7 @@ function Company() {
                 </Button>
               </Modal.Footer>
             </Modal>
-          <div className="mb-5"></div>
+            <div className="mb-5"></div>
           </Container>
         </div>
       )}

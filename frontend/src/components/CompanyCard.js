@@ -6,7 +6,8 @@ export default function CompanyCard(props) {
     return ( 
         <Link 
         key={props?.props?._id}
-        to={"/" + props?.props?.domain}>
+        to={"/" + props?.props?.domain}
+        target="_blank">
           <Card className="item-company">
             <Card.Body className="img-size  pattern-square">
               {

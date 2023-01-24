@@ -43,8 +43,8 @@ function App() {
           minBreakpoint="xxs"
         >
           <AuthContextProvider>
-
-            {location?.pathname ? (location?.pathname.slice(0, 7).toLowerCase() === '/stuff/' ? "" : <NavigationBar />) : <NavigationBar />}
+          
+            {location?.pathname ? (location?.pathname.slice(0, 7).toLowerCase() === '/stuff/' || location?.pathname?.includes(".") ?  "" : <NavigationBar />) : <NavigationBar />}
             {/* <SearchBar /> */}
             <Routes>
 
@@ -64,7 +64,7 @@ function App() {
               <Route path='/collection/:id' element={<Protected> <Collection /> </Protected>} />
               <Route path='*' element={<PageNotFound />} />
             </Routes>            
-            {window.location.pathname ? (window.location.pathname.slice(0, 7).toLocaleLowerCase() === '/stuff/' ? "" : <Footer />) : <Footer />}
+            {window.location.pathname ? (window.location.pathname.slice(0, 7).toLocaleLowerCase() === '/stuff/' || location?.pathname?.includes(".")? "" : <Footer />) : <Footer />}
           </AuthContextProvider>
         </ThemeProvider>
       }
