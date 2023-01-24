@@ -137,12 +137,6 @@ const getTXT = async (link) => {
 }
 
 
-
-
-
-
-
-
 //AWS
 const getS3SignUrl = async (file) => {
   const { url } = await fetch(URL + "/s3url").then(res => res.json())

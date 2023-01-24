@@ -41,7 +41,7 @@ import Addfile from "./Addfile.js";
 import ModalComponent from "../components/ModalComponent.js";
 import { SocialIcon } from 'react-social-icons';
 import JsonModel from "../components/JsonModel.js"
-
+import sendMail from "../utils/SendMail.js"
 
 
 function Not_found() {
@@ -118,9 +118,9 @@ function Company() {
       setSharedEmail([...temp]);
       updateLogo();
     }
+
+    sendMail(event.target.sharingEmail.value,user?.displayName,name)
   };
-
-
 
   const GetCompanyDetail = async () => {
     const data = await getProfileDetailsInJson({ domain: title.title })
