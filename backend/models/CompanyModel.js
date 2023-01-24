@@ -38,6 +38,12 @@ const CompanySchema = new mongoose.Schema({
     verify:{
         type: String,
     },
+    img_section:{
+        type:[Array]
+    },
+    text_section:{
+        type:[Array]
+    }
 
     })
 

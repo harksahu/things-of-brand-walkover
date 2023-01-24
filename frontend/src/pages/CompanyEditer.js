@@ -23,6 +23,7 @@ import {
   deleteMyStuffAPI,
   restoreMyStuffAPI,
   sendSearchAPI,
+  getS3SignUrlOfAssets,
 } from "../api/Index.js";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import RichtextEditor from "./JoditEditor.js";
@@ -69,7 +70,7 @@ function Profile() {
   const [message, setMessage] = useState("");
   const [showLinkError, setShowLinkError] = useState(false);
   const [idToDelete, setIdToDelete] = useState(false);
-
+  const [file,setFile] = useState();
   const location = useLocation();
   let countTemp = countTracker;
   let countTemp2 = linkCount;
@@ -306,6 +307,16 @@ function Profile() {
     setFullscreen("md-down");
     setShow(true);
   }
+
+  const onSubmitClick = async () => {
+   
+    try {
+      const data = await getS3SignUrlOfAssets(file);
+
+    } catch (error) {
+      //TODO: error message
+    }
+  };
 
   return (
     <div className="bg-light flex-fill">
