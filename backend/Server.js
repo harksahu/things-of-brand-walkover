@@ -8,18 +8,19 @@ import StuffRouters from "./routers/StuffRouters.js";
 import MyStuffRouters from "./routers/MyStuffRouters.js";
 import SearchRouters from "./routers/SearchRouters.js";
 import MyStuffdeleteitemRouters from "./routers/MyStuffdeleteitemRouters.js";
-import {generateUploadURL} from './services/s3.js';
+import { generateUploadURL } from './services/s3.js';
 import CollectionRouters from "./routers/CollectionRouters.js";
 import CompanyRouters from "./routers/CompanyRouters.js";
 import puppy from "./details_feacher/getData.js"
 import getUpdatedData from "./details_feacher/gettingdata.js";
-import {setConfigTable,getUrlFromTable} from "./details_feacher/getUrlFromTable.js";
+import { setConfigTable, getUrlFromTable } from "./details_feacher/getUrlFromTable.js";
 import dotenv from 'dotenv'
-import {getCompanyJson} from "./controllers/CompanyController.js";
-import {getCollectionJson} from "./controllers/CollectionController.js";
+import { getCompanyJson } from "./controllers/CompanyController.js";
+import { getCollectionJson } from "./controllers/CollectionController.js";
 import dns from "dns";
 import { checkAuthorizedKey } from "./controllers/AuthKeyControllers.js";
-dotenv.config({path:'../.env'})
+import axios from "axios";
+dotenv.config({ path: '../.env' })
 
 
 // SERVICES
@@ -37,76 +38,72 @@ app.use(express.json());
 //  ROUTES
 
 
-app.use('/api/uploads',uploadRoutes);
-app.use('/api/stuff',StuffRouters);
-app.use('/api/search',SearchRouters);
-app.use('/api/MyStuff',MyStuffRouters);
-app.use('/api/deteteItems',MyStuffdeleteitemRouters);
-app.use('/api/storeKey',authKeyRouters);
-app.use('/api/deleteKey',authKeyRouters);
-app.use('/api/Collection',CollectionRouters);
-app.use('/api/companies',CompanyRouters);
+app.use('/api/uploads', uploadRoutes);
+app.use('/api/stuff', StuffRouters);
+app.use('/api/search', SearchRouters);
+app.use('/api/MyStuff', MyStuffRouters);
+app.use('/api/deteteItems', MyStuffdeleteitemRouters);
+app.use('/api/storeKey', authKeyRouters);
+app.use('/api/deleteKey', authKeyRouters);
+app.use('/api/Collection', CollectionRouters);
+app.use('/api/companies', CompanyRouters);
 
-app.get('/s3url',async(req,res)=>{
-    // console.log("file:-");
-    // console.log(req)
-    const url = await generateUploadURL()
+app.get('/s3url', async (req, res) => {
+  // console.log("file:-");
+  // console.log(req)
+  const url = await generateUploadURL()
 
-    res.send({url});
+  res.send({ url });
 })
 
 
 
-app.get('/:domain/json',async(req,res)=>{
-  if(!(req.headers.host === "thingsofbrand.com"))
-  {
-     const data = await checkAuthorizedKey(req);
-     if(!(data[0]?.authKey))
-     {
+app.get('/:domain/json', async (req, res) => {
+  if (!(req.headers.host === "thingsofbrand.com")) {
+    const data = await checkAuthorizedKey(req);
+    if (!(data[0]?.authKey)) {
       return res.send({
-        "error":"Invalid authorization"
+        "error": "Invalid authorization"
       });
     }
-    
+
   }
   const data = await getCompanyJson(req?.params?.domain)
 
-  res.send({data});
-  
+  res.send({ data });
+
 })
 
-app.get('/collection/:id/json',async(req,res)=>{
+app.get('/collection/:id/json', async (req, res) => {
 
-  if(!(req.headers.host === "thingsofbrand.com"))
-  {
-     const data = await checkAuthorizedKey(req);
-     if(!(data[0]?.authKey))
-     {
+  if (!(req.headers.host === "thingsofbrand.com")) {
+    const data = await checkAuthorizedKey(req);
+    if (!(data[0]?.authKey)) {
       return res.send({
-        "error":"Invalid authorization"
+        "error": "Invalid authorization"
       });
     }
-    
+
   }
   const data = await getCollectionJson(req?.params?.id)
-  res.send({data});
+  res.send({ data });
 })
 
 
 
-app.get("/uploads/:id",(req,res)=>{
-    res.sendFile(path.join(__dirname,"uploads",req.params.id));
+app.get("/uploads/:id", (req, res) => {
+  res.sendFile(path.join(__dirname, "uploads", req.params.id));
 })
 
-if(process.env.NODE_ENV === 'production'){
-    app.use(express.static(path.join(__dirname, '/frontend/build')))
-    app.get('*', (req, res) =>
-        res.sendFile(path.resolve(__dirname , 'frontend' , 'build' , 'index.html'))
-    )
-}else{
-     app.get("/",(req,res)=>{
-        res.send("Api working");
-     })
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/build')))
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  )
+} else {
+  app.get("/", (req, res) => {
+    res.send("Api working");
+  })
 }
 
 app.post("/croneUpdatedata", async (req, res) => {
@@ -121,14 +118,14 @@ app.post("/croneUpdatedata", async (req, res) => {
   res.send("crone run succesfully");
 });
 app.post("/getdata", async (req, res) => {
-  
+
   try {
     const url = req.body.link;
     const data = await puppy(url);
     // console.log(data);
-  res.send({
-    data: data 
-  });
+    res.send({
+      data: data
+    });
   } catch (error) {
     res.send({
       data: error,
@@ -136,65 +133,120 @@ app.post("/getdata", async (req, res) => {
   }
 });
 app.post("/getUpdatedData", async (req, res) => {
- try {
-  const url = req.body.url
-  const xpath = req.body.xpath;
-  // console.log(url,xpath)
-  //  console.log("url"+url);
-  //  console.log("xapth"+xpath);
-  const data = await getUpdatedData(url,xpath);
+  try {
+    const url = req.body.url
+    const xpath = req.body.xpath;
+    // console.log(url,xpath)
+    //  console.log("url"+url);
+    //  console.log("xapth"+xpath);
+    const data = await getUpdatedData(url, xpath);
     res.send({
       data: data,
     });
- } catch (error) {
-  res.send({
-    data: error,
-  });
- }
+  } catch (error) {
+    res.send({
+      data: error,
+    });
+  }
 });
 app.post("/getUpdatedData", async (req, res) => {
   try {
-   const url = req.body.url
-   const xpath = req.body.xpath;
-   // console.log(url,xpath)
-   //  console.log("url"+url);
-   //  console.log("xapth"+xpath);
-   const data = await getUpdatedData(url,xpath);
-     res.send({
-       data: data,
-     });
+    const url = req.body.url
+    const xpath = req.body.xpath;
+    // console.log(url,xpath)
+    //  console.log("url"+url);
+    //  console.log("xapth"+xpath);
+    const data = await getUpdatedData(url, xpath);
+    res.send({
+      data: data,
+    });
   } catch (error) {
-   res.send({
-     data: error,
-   });
+    res.send({
+      data: error,
+    });
   }
- });
+});
+app.post("/sendMail", async (req, res) => {
+  const { email, name, companyName } = req.body;
+
+
+  const data = {
+    "to": [
+      {
+        "name": "thingsofbrand",
+        "email": email
+      }
+    ],
+    "from": {
+      "name": "Thingsofbrand",
+      "email": "team@mail.thingsofbrand.com"
+    },
+
+    "domain": "mail.thingsofbrand.com",
+    "mail_type_id": "1",
+
+    "template_id": "thingsofbrand",
+    "variables": {
+      "name": name,
+      "companyName": companyName
+    }
+  }
+  console.log("sendMail");
+  const headers = {
+    "authkey": "388885AW8zZqZsVF63ca6711P1"
+  }
+  console.log(email, name, companyName);
+  try {
+
+    const r = await axios.post(`https://api.msg91.com/api/v5/email/send`, data, { headers: headers })
+    // console.log(r);
+    res.send({
+      data: r?.data,
+      msg:"success"
+    })
+
+  } catch (er) {
+    // console.log(er);
+    res.send({ err: er })
+  }
+  // .then(
+  //   (data)=>{
+  //    res.send({
+  //      data: data,
+  //      msg:"success",
+  //    })
+  //   }
+  //  ).catch((error)=>{
+  //    console.log(error);
+  //    res.send({error: error})
+  //  })
+});
 
 
 
 
 
 
- app.post("/getDomainTXT", async (req, res) => {
+app.post("/getDomainTXT", async (req, res) => {
   const url = req.body.link
 
   const xpath = req.body.xpath;
   try {
-    dns.resolveTxt(url, ( error,record)=>{
+    dns.resolveTxt(url, (error, record) => {
       if (error) {
         res.send({
           error: error,
         });
       }
-    else{
-      res.send({
-        data: record,
-      });
-    }
-  
-   })
+      else {
+        res.send({
+          data: record,
+        });
+      }
+
+    })
   } catch (error) {
-    
+
   }
 
 });
@@ -206,4 +258,4 @@ app.post("/getUpdatedData", async (req, res) => {
 // ERROR HANDLE
 
 
-app.listen(PORT , console.log("listening on port "+PORT))
+app.listen(PORT, console.log("listening on port " + PORT))

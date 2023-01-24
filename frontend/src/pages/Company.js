@@ -25,6 +25,7 @@ import {
   updateProfileFields,
   getCollection,
   getProfileDetailsInJson,
+  sendMail
 } from "../api/Index.js";
 import saveAs from "file-saver";
 import { BsFillPlusCircleFill, BsFillTrashFill } from "react-icons/bs";
@@ -41,7 +42,6 @@ import Addfile from "./Addfile.js";
 import ModalComponent from "../components/ModalComponent.js";
 import { SocialIcon } from "react-social-icons";
 import JsonModel from "../components/JsonModel.js";
-import sendMail from "../utils/SendMail.js";
 
 function Not_found() {
   return <div className="not-found">Not found</div>;
@@ -95,7 +95,7 @@ function Company() {
     setSharedEmail([...temp]);
     updateLogo();
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
     setUserEmail(false);
     setIsRepeatingEmail(false);
@@ -119,7 +119,7 @@ function Company() {
       updateLogo();
     }
 
-    sendMail(event.target.sharingEmail.value, user?.displayName, name);
+    const data = await sendMail({email:event.target.sharingEmail.value,name: user?.displayName, companyName:name});
   };
 
   const GetCompanyDetail = async () => {
@@ -265,13 +265,15 @@ function Company() {
                   <Container>
                     {defaultLogo && (
                       <div className="">
-                        <div className="" style={{ display: "flex" }}>
+                        <div  style={{ display: "flex" }}>
+                          <div className="cpi">
                           <img
                             src={defaultLogo}
                             width="35px"
                             height="56px"
                             style={{ marginRight: "5px" }}
                           />
+                          </div>
                           <div>{name && <h1>{name}</h1>}</div>
                         </div>
                       </div>

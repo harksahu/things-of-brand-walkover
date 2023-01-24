@@ -1,7 +1,7 @@
 import axios from "../interceptor/Intercepter.js";
-const URL = "https://thingsofbrand.com";
+// const URL = "https://thingsofbrand.com";
 
-// const URL = "http://localhost:8080";
+const URL = "http://localhost:8080";
 
 const createBrandAPI = async (dataToSend) => {
   const data = {
@@ -183,6 +183,9 @@ const getCollection = async ({ _id= "" , email=""}) => {
 const deleteCollections = async (id) => {
   return await axios.delete(URL + "/api/Collection/"+ id);
 }
+const sendMail = async (data) => {
+  return await axios.post(URL + "/sendMail",data);
+}
 
 
 export {
@@ -211,5 +214,6 @@ export {
   updateCollection,
   deleteCollections,
   getProfileDetailsInJson,
-  getCollectionDetailsInJson
+  getCollectionDetailsInJson,
+  sendMail
 };
