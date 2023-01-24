@@ -9,7 +9,7 @@ const storeAuthKey = async (req,res)=>{
         email : req.body.email
     }   
         );
-        res.json({
+        res.json({  
             "message":"Successfully Created",
             "data":data
         }).status(200);

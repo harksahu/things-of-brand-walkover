@@ -26,5 +26,4 @@ class Middleware{
 }
 
 
-
 export default new Middleware();
