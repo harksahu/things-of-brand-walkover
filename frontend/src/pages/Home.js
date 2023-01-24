@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import "../utils/SvgInLine.css";
 import "../scss/home.scss";
 import { UserAuth } from "../context/AuthContext";
-
+ 
 function Home() {
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
@@ -57,29 +57,29 @@ function Home() {
               They manage their brand here
             </div>
             <div className="d-flex brands-wrp align-items-center justify-content-center flex-wrap">
-              <a href="/walkover.in">
+              <Link  to="/walkover.in" target="_blank">
                 <img src="walkover.svg" />
-              </a>
+              </Link >
               
-              <a href="/msg91.com">
+              <Link  to="/msg91.com"target="_blank">
                 <img src="msg91.svg" />
-              </a>
+              </Link >
               
-              <a href="/giddh.com">
+              <Link  to="/giddh.com"target="_blank">
                 <img src="giddh.svg" />
-              </a>
+              </Link >
               
-              <a href="/halfkg.store">
+              <Link  to="/halfkg.store"target="_blank">
                 <img src="halfkg.svg" />
-              </a>
+              </Link >
               
-              <a href="/viasocket.com">
+              <Link  to="/viasocket.com"target="_blank">
                 <img src="socket.svg" />
-              </a>
+              </Link >
               
-              <a href="/workspace91.com">
+              <Link  to="/workspace91.com"target="_blank">
                 <img src="workspace.svg" />
-              </a>
+              </Link >
             </div>
             <Link to="/all-companies">Explore more...</Link>
           </Col>

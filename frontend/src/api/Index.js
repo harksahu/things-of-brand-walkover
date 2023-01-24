@@ -1,7 +1,7 @@
 import axios from "../interceptor/Intercepter.js";
-const URL = "https://thingsofbrand.com";
+// const URL = "https://thingsofbrand.com";
 
-// const URL = "http://localhost:8080"; 
+const URL = "http://localhost:8080";
 
 const createBrandAPI = async (dataToSend) => {
   const data = {
@@ -137,12 +137,6 @@ const getTXT = async (link) => {
 }
 
 
-
-
-
-
-
-
 //AWS
 const getS3SignUrl = async (file) => {
   const { url } = await fetch(URL + "/s3url").then(res => res.json())
@@ -150,6 +144,19 @@ const getS3SignUrl = async (file) => {
     method: "PUT",
     headers: {
       "Content-Type": "image/svg+xml"
+    },
+    body: file
+  })
+  return url;
+
+};
+
+const getS3SignUrlOfAssets = async (file) => {
+  const { url } = await fetch(URL + "/assets").then(res => res.json())
+  await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "image"
     },
     body: file
   })
@@ -189,6 +196,9 @@ const getCollection = async ({ _id= "" , email=""}) => {
 const deleteCollections = async (id) => {
   return await axios.delete(URL + "/api/Collection/"+ id);
 }
+const sendMail = async (data) => {
+  return await axios.post(URL + "/sendMail",data);
+}
 
 
 export {
@@ -217,5 +227,7 @@ export {
   updateCollection,
   deleteCollections,
   getProfileDetailsInJson,
-  getCollectionDetailsInJson
+  getCollectionDetailsInJson,
+  sendMail,
+  getS3SignUrlOfAssets
 };

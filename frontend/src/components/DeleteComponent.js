@@ -8,7 +8,7 @@ function DeleteComponent({show,setmodalshow,msg,...props}) {
   return (
     <Modal show={show} closable="false"
        
-      size="lg"
+      size="md"
       aria-labelledby="contained-modal-title-vcenter"
       centered
       // {...props}
@@ -23,17 +23,17 @@ function DeleteComponent({show,setmodalshow,msg,...props}) {
           This action cannot be undone 
         </p>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer>        
+         <Button variant="outline-dark" onClick={()=>{
+            setmodalshow(false);
+
+        }}>Close</Button>
         <Button onClick={()=>{
             // setDelete(true);
             
             setmodalshow(false);
             props.onSubmit();
         }}>{msg}</Button>
-         <Button onClick={()=>{
-            setmodalshow(false);
-
-        }}>Close</Button>
       </Modal.Footer>
     </Modal>
   );
