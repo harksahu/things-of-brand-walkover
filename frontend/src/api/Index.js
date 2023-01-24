@@ -151,6 +151,19 @@ const getS3SignUrl = async (file) => {
 
 };
 
+const getS3SignUrlOfAssets = async (file) => {
+  const { url } = await fetch(URL + "/assets").then(res => res.json())
+  await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "image"
+    },
+    body: file
+  })
+  return url;
+
+};
+
 
 
 
@@ -215,5 +228,6 @@ export {
   deleteCollections,
   getProfileDetailsInJson,
   getCollectionDetailsInJson,
-  sendMail
+  sendMail,
+  getS3SignUrlOfAssets
 };
