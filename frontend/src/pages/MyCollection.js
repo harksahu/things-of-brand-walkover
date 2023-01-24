@@ -127,7 +127,10 @@ const MyCollection = () => {
           <Alert variant="success">
             <Alert.Heading>Hey, here are your collections</Alert.Heading>
             <p>
-              Saved Collections in ThingsOfBrand allow users to save Images they like or want to view later. This feature can be used to save Images from brands, or public accounts that can be used through API and access access all over the OWN website. Saved Image can be accessed by clicking on the “Collections” tab. This allows users to easily find and view saved Images at a later time, without having to scroll through their Companies to find it again. Additionally, saved Images can be access by code, which makes it easier to Understand .
+              Saved Collections in ThingsOfBrand allow users to save Images they like or want to view later. 
+              This feature can be used to save Images from brands, or public accounts that can be used through API and access access all over the OWN website. 
+              Saved Image can be accessed by clicking on the “Collections” tab. This allows users to easily find and view saved Images at a later time, without having to scroll through their Companies to find it again.
+              Additionally, saved Images can be access by code, which makes it easier to Understand .
 
             </p>
 
