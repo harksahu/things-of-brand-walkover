@@ -2,10 +2,21 @@ import React from "react";
 import {
   Container,  
 } from "react-bootstrap";
+import { Link, useLocation } from "react-router-dom";
 
 function Footer() {
+   const location= useLocation();
   return (
-    <footer className="footer bg-light">
+    <>
+   {
+    location?.pathname?.includes(".") ? 
+    (<footer className="footer bg-light">
+      <Container className="d-flex small justify-content-end">
+      Powered By <Link to = "/" target="_blank"> ThingsOfBrand</Link>
+      </Container>  
+      </footer>)
+    :
+   ( <footer className="footer bg-light">
       <Container className="d-flex small justify-content-between">
         <div>
           <img src="/tob-icon.svg" id="footer-icon" className="me-2" /> 
@@ -26,7 +37,9 @@ function Footer() {
           </a>
         </div>
       </Container>  
-    </footer>      
+    </footer> )
+   }  
+   </>   
   );
 }
 export default Footer;
