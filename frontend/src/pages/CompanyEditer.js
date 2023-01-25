@@ -9,7 +9,8 @@ import {
   Stack,
   ListGroup,
   OverlayTrigger,
-  Tooltip
+  Tooltip,
+  Dropdown
 } from "react-bootstrap";
 import colors from "../api/colors.json";
 import { Autocomplete, TextField } from "@mui/material";
@@ -41,7 +42,6 @@ function Profile() {
   const [aboutus, setAboutus] = useState("");
   const [domain, setDomain] = useState("");
   const [guidlines, setGuidlines] = useState("");
-
   const [PrimaryColors, setPrimaryColors] = useState("");
   const [secondaryColors, setSecondaryColors] = useState("");
   const [backgroundColors, setBackgroundColors] = useState("");
@@ -59,6 +59,8 @@ function Profile() {
   const [fontLink, setFontLink] = useState([]);
   const [linkCount, setLinkCount] = useState(1);
   const [countTracker, setCountTracker] = useState(1);
+  const [imgCount, setImgCount] = useState(1);
+  const [imgTracker, setImgTracker] = useState(1);
   const [valid, setvalid] = useState([false]);
   const [valid2, setvalid2] = useState([false]);
   const [fontFamily, setFontFamily] = useState([false]);
@@ -69,11 +71,13 @@ function Profile() {
   const [message, setMessage] = useState("");
   const [showLinkError, setShowLinkError] = useState(false);
   const [idToDelete, setIdToDelete] = useState(false);
-
+  const [ImgSections, setImgSections] = useState([]);
+  const [TextSections, setTextSections] = useState([]);
   const location = useLocation();
   let countTemp = countTracker;
   let countTemp2 = linkCount;
-
+  console.log(ImgSections);
+  console.log(TextSections);
   const navigate = useNavigate();
 
   const getAllData = async () => {
@@ -126,13 +130,7 @@ function Profile() {
       event.target.value = "";
     }
   };
-  // const savedata = async (id, n) => {
-  //   const new_data = {
-  //     _id: id,
-  //     title: n,
-  //   };
-  //   await saveMyStuffAPI(new_data);
-  // };
+
   const removeLinks = (index) => {
     setLinks([...links.filter((link) => links.indexOf(link) !== index)]);
   };
@@ -221,6 +219,8 @@ function Profile() {
       sharedEmail: sharedEmail,
       email: user?.email,
       color: color,
+      ImageSections: ImgSections,
+      TextSections:TextSections
     };
     await updateProfileFields(data);
 
@@ -246,6 +246,8 @@ function Profile() {
       setcount(location?.state?.data?.color);
       setLogo(location?.state?.data?.logo);
       setDomain(location?.state?.data?.domain);
+      setTextSections(location?.state?.data?.TextSections);
+      setImgSections(location?.state?.data?.ImageSections);
       let colorData = [];
       location?.state?.data?.color.map((colorDataTemp) => {
         colorData.push({
@@ -262,7 +264,6 @@ function Profile() {
   };
 
   useEffect(() => { }, [value]);
-  // useEffect(() => { }, [fontLink]);
 
   const config = {
     buttons: ["bold", "italic"],
@@ -272,6 +273,19 @@ function Profile() {
     setcount([...color, { colorName: "", colorValue: "#000000" }]);
     setCountTracker(countTemp + 1);
     setValue([...value, { label: "Black", value: "#F0FFFF" }]);
+  };
+  let removeFormFields = (i) => {
+    setCountTracker(countTemp - 1);
+    // document.getElementById("add_input").classList.remove("hide");
+    let newFormValues = [...color];
+    newFormValues.splice(i, 1);
+    setcount(newFormValues);
+    let newFormVaild = [...valid];
+    newFormVaild.splice(i, 1);
+    setvalid(newFormVaild);
+    let newFormValues1 = [...value];
+    newFormValues1.splice(i, 1);
+    setValue(newFormValues1);
   };
   let addFontFields = () => {
     setFontLink([...fontLink, ""]);
@@ -288,18 +302,26 @@ function Profile() {
     newFormVaild.splice(i, 1);
     setvalid2(newFormVaild);
   };
-  let removeFormFields = (i) => {
-    setCountTracker(countTemp - 1);
-    // document.getElementById("add_input").classList.remove("hide");
-    let newFormValues = [...color];
+
+  let addImageFeild = () => {
+    setImgSections([...ImgSections, { imageName: "", imageValue: "" }]);
+    // setLinkCount(countTemp2 + 1);
+  };
+
+  let removeImageField = (i) => {
+    let newFormValues = [...ImgSections];
     newFormValues.splice(i, 1);
-    setcount(newFormValues);
-    let newFormVaild = [...valid];
-    newFormVaild.splice(i, 1);
-    setvalid(newFormVaild);
-    let newFormValues1 = [...value];
-    newFormValues1.splice(i, 1);
-    setValue(newFormValues1);
+    setImgSections(newFormValues);
+  };
+
+  let addTextFeild = () => {
+    setTextSections([...TextSections, { textName: "", textValue: "" }]);
+    // setLinkCount(countTemp2 + 1);
+  };
+  let removeTextField = (i) => {
+    let newFormValues = [...TextSections];
+    newFormValues.splice(i, 1);
+    setTextSections(newFormValues);
   };
 
   function handleShow() {
@@ -421,7 +443,7 @@ function Profile() {
                       {DomainPost?.map((brand, index) => {
                         return (
                           <Card key={brand._id} className="box-shadow border-0">
-                            {}
+                            { }
                             <Link className="h-100" to={"/stuff/" + brand._id}>
                               <div
                                 style={{ overflow: "auto" }}
@@ -713,7 +735,7 @@ function Profile() {
                             placeholder="Enter font name"
                             id={"id" + index}
                             options={fontFamily}
-                            onChange={(e ,newValue) => {
+                            onChange={(e, newValue) => {
                               let tempCount = fontLink;
                               tempCount[index] = newValue;
                               setFontLink([...tempCount]);
@@ -744,17 +766,105 @@ function Profile() {
                     </div>
                   </Form.Group>
                 </div>
+                <div>
+                  {ImgSections?.map((element, index) => (
+                    <div key={index}>
+                      <Form.Group>
+                        <Form.Control
+                          type="text"
+                          name="user_label_input"
+                          placeholder="Enter color name"
+                          value={ImgSections[index].imageName}
+                          onChange={(e) => {
+                            let tempCount = ImgSections;
+                            tempCount[index].imageName = e.target.value;
+                            setImgSections([...tempCount]);
+                          }}
+                          className="contact-form-area me-1"
+                        />
+                        <Form.Control
+                          type="file"
+                          name="user_input"
+                          className="user_input hide formbold-form-input color-picker"
+                          // value={ImgSections[index].imageValue}
+                          onChange={(e) => {
+                            let tempCount = ImgSections;
+                            tempCount[index].imageValue = e.target.value;
+                            setImgSections([...tempCount]);
+                          }}
+                        />
+
+                        <button
+                          type="button"
+                          className="name noselect btn"
+                          onClick={() => removeImageField(index)}
+                        >
+                          <MdDelete />
+                        </button>
+
+                      </Form.Group>
+                    </div>
+                  ))}
+                  {TextSections?.map((element, index) => (
+                    <div key={index}>
+                      <Form.Group>
+                        <Form.Control
+                          type="text"
+                          name="user_label_input"
+                          placeholder="Enter color name"
+                          value={TextSections[index].textName}
+                          onChange={(e) => {
+                            let tempCount = TextSections;
+                            tempCount[index].textName = e.target.value;
+                            setTextSections([...tempCount]);
+                          }}
+                          className="contact-form-area me-1"
+                        />
+                        <Form.Control
+                          type="text"
+                          name="user_input"
+                          className="user_input hide formbold-form-input color-picker"
+                          value={TextSections[index].textValue}
+                          onChange={(e) => {
+                            let tempCount = TextSections;
+                            tempCount[index].textValue = e.target.value;
+                            setTextSections([...tempCount]);
+                          }}
+                        />
+
+                        <button
+                          type="button"
+                          className="name noselect btn"
+                          onClick={() => removeTextField(index)}
+                        >
+                          <MdDelete />
+                        </button>
+
+                      </Form.Group>
+                    </div>
+                  ))}
+                </div>
               </Form>
             </Stack>
           </Row>
 
-          <div className="edit-brand-footer bg-light">
+          <div className="d-flex edit-brand-footer bg-light">
             <Button
               variant="primary"
               onClick={() => updateProfileValue()}
             >
               Update
             </Button>
+            <Dropdown style={{ paddingLeft: "3px" }}>
+              <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                Add section
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => { addImageFeild() }}>Image</Dropdown.Item>
+                <Dropdown.Item onClick={() => { addTextFeild() }}>TextArea</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
 
           <Modal

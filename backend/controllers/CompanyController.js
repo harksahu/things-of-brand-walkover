@@ -56,7 +56,7 @@ const getCompanyDetails = async (req, res) => {
 }
 
 const updateCompany = async (req, res) => {
-
+    console.log(req.body)
     let { name, aboutus, fontLink } = req.body
     let logo = req.body.logo;
     let links = req.body.links;
@@ -67,6 +67,8 @@ const updateCompany = async (req, res) => {
     let verify = req.body.verify
     let link = req.body.links;
     let id = req.body._id;
+    let ImageSections = req.body.ImageSections;
+    let TextSections = req.body.TextSections
     let sharedEmail = req.body.sharedEmail ? req.body.sharedEmail : "";
     try {
         const data = await CompanyModel.updateMany(
@@ -87,10 +89,12 @@ const updateCompany = async (req, res) => {
                     link,
                     fontLink,
                     sharedEmail,
+                    ImageSections,
+                    TextSections
                 }
             }
         )
-
+        
         res.json({
             "message": "Related Data is Successfully updated",
             "data": data
