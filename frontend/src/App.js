@@ -64,8 +64,7 @@ function App() {
               <Route path='/collection/:id' element={<Protected> <Collection /> </Protected>} />
               <Route path='*' element={<PageNotFound />} />
             </Routes>            
-            <Footer />
-            {window.location.pathname ? (window.location.pathname.slice(0, 7).toLocaleLowerCase() === '/stuff/' || location?.pathname?.includes(".")? "" : <Footer />) : <Footer />}
+            {location?.pathname ? (location?.pathname.slice(0, 7).toLocaleLowerCase() === '/stuff/' ? "" : <Footer />) : <Footer />}
           </AuthContextProvider>
         </ThemeProvider>
       }
