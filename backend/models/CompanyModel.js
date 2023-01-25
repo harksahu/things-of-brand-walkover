@@ -38,7 +38,14 @@ const CompanySchema = new mongoose.Schema({
     verify:{
         type: String,
     },
-
+    ImageSections:[{
+        imageName:String,
+        imageValue:String
+    }],
+    TextSections:[{
+        textName:String,
+        textValue:String
+    }]
     })
 
     const Companies = mongoose.model("profiles",CompanySchema)

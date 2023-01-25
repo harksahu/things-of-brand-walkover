@@ -1,7 +1,7 @@
 import axios from "../interceptor/Intercepter.js";
-const URL = "https://thingsofbrand.com";
+// const URL = "https://thingsofbrand.com";
 
-// const URL = "http://localhost:8080";
+const URL = "http://localhost:8080";
 
 const createBrandAPI = async (dataToSend) => {
   const data = {
@@ -61,7 +61,7 @@ const updateProfileFields = async (dataToSend) => {
   const data = {
     ...dataToSend
   }
-
+  console.log(dataToSend)
   return await axios.put(URL + "/api/companies", data);
 }
 

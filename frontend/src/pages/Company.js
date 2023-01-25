@@ -172,7 +172,7 @@ function Company() {
       setDefaultLogo(fresult?.data?.data[0].logo || false);
       setCompany(fresult?.data?.data[0]);
       setId(fresult?.data?.data[0]._id);
-      setName(fresult?.data?.data[0].name);
+      setName(fresult?.data?.data[0]?.name);
       setAboutus(fresult?.data?.data[0].aboutus);
       setLinks(fresult?.data?.data[0].links);
       setDomain(fresult?.data?.data[0].domain);
@@ -189,8 +189,8 @@ function Company() {
       setLoading(false);
     }
     isCompanyShared(
-      fresult?.data?.data[0].email,
-      fresult.data.data[0].sharedEmail
+      fresult?.data?.data[0]?.email,
+      fresult.data.data[0]?.sharedEmail
     );
   };
 
@@ -263,9 +263,9 @@ function Company() {
               <div className="row mt-4">
                 <Navbar>
                   <Container>
+                      <div className="d-flex">
                     {defaultLogo && (
-                      <div className="">
-                        <div  style={{ display: "flex" }}>
+                        <div>
                           <div className="cpi">
                           <img
                             src={defaultLogo}
@@ -274,10 +274,10 @@ function Company() {
                             style={{ marginRight: "5px" }}
                           />
                           </div>
-                          <div>{name && <h1>{name}</h1>}</div>
                         </div>
-                      </div>
                     )}
+                    <div> <h1>{name}</h1></div>
+                      </div>
 
                     <Nav className="nav-action">
                       {isShared && (
