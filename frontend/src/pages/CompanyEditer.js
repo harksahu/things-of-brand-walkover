@@ -20,6 +20,7 @@ import AlertComponent from "../components/AlertComponent";
 import {
   getProfileDetails,
   updateProfileFields,
+  getS3SignUrlOfAssets,
   getFontList,
   deleteMyStuffAPI,
   restoreMyStuffAPI,
@@ -199,8 +200,17 @@ function Profile() {
       setMessage("About us field is compulsory");
       return;
     }
+    const value = ImgSections
 
+    for(let i=0;i<ImgSections?.length;i++)
+    {   
+        console.log(ImgSections[i].imageValue)
+        const data = await getS3SignUrlOfAssets(ImgSections[i].imageValue)
+        console.log(data);
+        value[i].imageValue = data
+        setImgSections(value);
 
+    }
     const domainTemp = extractDomain(domain);
     const data = {
       _id: id,
@@ -217,8 +227,8 @@ function Profile() {
       sharedEmail: sharedEmail,
       email: user?.email,
       color: color,
-      ImageSections: ImgSections,
-      TextSections: TextSections
+      ImageSections: value,
+      TextSections:TextSections
     };
     await updateProfileFields(data);
 
@@ -784,7 +794,7 @@ function Profile() {
                           type="file"
                           name="user_input"
                           className="user_input hide formbold-form-input color-picker"
-                          // value={ImgSections[index].imageValue}
+                          value={ImgSections[index].imageValue}
                           onChange={(e) => {
                             let tempCount = ImgSections;
                             tempCount[index].imageValue = e.target.value;
