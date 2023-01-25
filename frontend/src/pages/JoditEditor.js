@@ -9,16 +9,23 @@ const config = {
   "showXPathInStatusbar": false
 };
 
-const RichTextEditor = ({ guidlines ,setGuidlines,tabIndex }) => {
+const RichTextEditor = ({ guidlines, setGuidlines, tabIndex, type, index }) => {
   const editor = useRef(null);
 
+  const setSectionValue = (value) => {
+    {
+      const tempCount = guidlines;
+      tempCount[index].textValue = value;
+      setGuidlines([...tempCount]);
+    }
+  }
   return (
     <JoditEditor
       ref={editor}
-      value={guidlines}
+      value={type ? guidlines[index].textValue:guidlines}
       config={config}
       tabIndex={tabIndex}
-      onChange={(newContent) => setGuidlines(newContent)}
+      onChange={(newContent) => (type ? (setSectionValue( newContent)) : setGuidlines(newContent))}
     />
   );
 };

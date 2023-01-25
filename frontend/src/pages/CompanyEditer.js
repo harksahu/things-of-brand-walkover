@@ -76,8 +76,6 @@ function Profile() {
   const location = useLocation();
   let countTemp = countTracker;
   let countTemp2 = linkCount;
-  console.log(ImgSections);
-  console.log(TextSections);
   const navigate = useNavigate();
 
   const getAllData = async () => {
@@ -220,7 +218,7 @@ function Profile() {
       email: user?.email,
       color: color,
       ImageSections: ImgSections,
-      TextSections:TextSections
+      TextSections: TextSections
     };
     await updateProfileFields(data);
 
@@ -766,14 +764,14 @@ function Profile() {
                     </div>
                   </Form.Group>
                 </div>
-                <div>
+                <div  className="col-lg-6 col-md-7 col-sm-12">
                   {ImgSections?.map((element, index) => (
                     <div key={index}>
                       <Form.Group>
                         <Form.Control
                           type="text"
                           name="user_label_input"
-                          placeholder="Enter color name"
+                          placeholder="Enter Image Section name"
                           value={ImgSections[index].imageName}
                           onChange={(e) => {
                             let tempCount = ImgSections;
@@ -811,7 +809,7 @@ function Profile() {
                         <Form.Control
                           type="text"
                           name="user_label_input"
-                          placeholder="Enter color name"
+                          placeholder="Enter Text Section name"
                           value={TextSections[index].textName}
                           onChange={(e) => {
                             let tempCount = TextSections;
@@ -820,16 +818,12 @@ function Profile() {
                           }}
                           className="contact-form-area me-1"
                         />
-                        <Form.Control
-                          type="text"
-                          name="user_input"
-                          className="user_input hide formbold-form-input color-picker"
-                          value={TextSections[index].textValue}
-                          onChange={(e) => {
-                            let tempCount = TextSections;
-                            tempCount[index].textValue = e.target.value;
-                            setTextSections([...tempCount]);
-                          }}
+                        <RichtextEditor
+                          guidlines={TextSections}
+                          setGuidlines={setTextSections}
+                          tabIndex={'0'}
+                          index={index}
+                          type={true}
                         />
 
                         <button

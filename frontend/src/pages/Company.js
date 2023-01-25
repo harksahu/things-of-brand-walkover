@@ -81,7 +81,8 @@ function Company() {
   const [CompanyData, setCompanyData] = useState();
   const [showJson, setShowJson] = useState(false);
   const [defaultLogo, setDefaultLogo] = useState(false);
-
+  const [ImgSections, setImgSections] = useState([]);
+  const [TextSections, setTextSections] = useState([]);
   const handleCloseJson = () => setShowJson(false);
   const handleShowJson = () => setShowJson(true);
   const { key } = useLocation();
@@ -95,7 +96,7 @@ function Company() {
     setSharedEmail([...temp]);
     updateLogo();
   };
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setUserEmail(false);
     setIsRepeatingEmail(false);
@@ -119,11 +120,12 @@ function Company() {
       updateLogo();
     }
 
-    const data = await sendMail({email:event.target.sharingEmail.value,name: user?.displayName, companyName:name});
+    const data = await sendMail({ email: event.target.sharingEmail.value, name: user?.displayName, companyName: name });
   };
 
   const GetCompanyDetail = async () => {
     const data = await getProfileDetailsInJson({ domain: title.title });
+    console.log(data?.data);
     setCompanyData(data?.data?.data[0]);
     handleShowJson();
   };
@@ -153,7 +155,7 @@ function Company() {
       }
     }
     setvariants([...temp]);
-    // console.log("hello ");
+
     setLoading(false);
   };
 
@@ -182,6 +184,8 @@ function Company() {
       setEmail(fresult?.data?.data[0].email);
       setVerify(fresult?.data?.data[0].verify);
       setSharedEmail(fresult.data.data[0].sharedEmail);
+      setTextSections(fresult?.data?.data[0]?.TextSections);
+      setImgSections(fresult?.data?.data[0]?.ImageSections);
       if (fresult?.data?.data[0].domain)
         getbrandslogo(fresult?.data?.data[0]._id);
       else setLoading(false);
@@ -263,21 +267,21 @@ function Company() {
               <div className="row mt-4">
                 <Navbar>
                   <Container>
-                      <div className="d-flex">
-                    {defaultLogo && (
+                    <div className="d-flex">
+                      {defaultLogo && (
                         <div>
                           <div className="cpi">
-                          <img
-                            src={defaultLogo}
-                            width="35px"
-                            height="56px"
-                            style={{ marginRight: "5px" }}
-                          />
+                            <img
+                              src={defaultLogo}
+                              width="35px"
+                              height="56px"
+                              style={{ marginRight: "5px" }}
+                            />
                           </div>
                         </div>
-                    )}
-                    <div> <h1>{name}</h1></div>
-                      </div>
+                      )}
+                      <div> <h1>{name}</h1></div>
+                    </div>
 
                     <Nav className="nav-action">
                       {isShared && (
@@ -475,7 +479,7 @@ function Company() {
                               >
                                 <div className="img-size pattern-square h-100">
                                   {brand.url !== undefined &&
-                                  brand.url !== "null" ? (
+                                    brand.url !== "null" ? (
                                     <img src={brand.url} alt="" />
                                   ) : (
                                     <img src="/assets/picture.svg" alt="" />
@@ -627,6 +631,28 @@ function Company() {
                       })}
                     </div>
                   </div>
+                  <div className="mt-5">
+                    {ImgSections?.map((img, index) => {
+                      return (
+                        <div key={img._id} className="item">
+                          <h5>{img?.imageName}</h5> 
+                          <img src={img?.imageValue} alt="" />
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-5">
+                    {TextSections?.map((text, index) => {
+                      return (
+                        <div key={text._id} className="item">
+                           <h5>{text?.textName}</h5>
+                           <div dangerouslySetInnerHTML={{ __html: text?.textValue }}></div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+
 
                   {/* <div className="mt-5">
                     {guidlines?.length > 12 ? <h5>Guidelines</h5> : ""}
