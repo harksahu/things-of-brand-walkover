@@ -9,6 +9,7 @@ import MyStuffRouters from "./routers/MyStuffRouters.js";
 import SearchRouters from "./routers/SearchRouters.js";
 import MyStuffdeleteitemRouters from "./routers/MyStuffdeleteitemRouters.js";
 import { generateUploadURL } from './services/s3.js';
+import { generateUploadURLOfAssets } from "./services/s3Assets.js";
 import CollectionRouters from "./routers/CollectionRouters.js";
 import CompanyRouters from "./routers/CompanyRouters.js";
 import puppy from "./details_feacher/getData.js"
@@ -49,13 +50,14 @@ app.use('/api/Collection', CollectionRouters);
 app.use('/api/companies', CompanyRouters);
 
 app.get('/s3url', async (req, res) => {
-  // console.log("file:-");
-  // console.log(req)
   const url = await generateUploadURL()
-
   res.send({ url });
 })
 
+app.get('/assets', async (req, res) => {
+  const url = await generateUploadURLOfAssets()
+  res.send({ url });
+})
 
 
 app.get('/:domain/json', async (req, res) => {
