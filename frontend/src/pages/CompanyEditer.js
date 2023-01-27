@@ -204,9 +204,7 @@ function Profile() {
 
     for(let i=0;i<ImgSections?.length;i++)
     {   
-        console.log(ImgSections[i].imageValue)
         const data = await getS3SignUrlOfAssets(ImgSections[i].imageValue)
-        console.log(data);
         value[i].imageValue = data
         setImgSections(value);
 
@@ -300,7 +298,6 @@ function Profile() {
     setLinkCount(countTemp2 + 1);
   };
   let removeFontFields = (i) => {
-    console.log("sdf");
     setLinkCount(countTemp2 - 1);
     // document.getElementById("add_input").classList.remove("hide");
     let newFormValues = [...fontLink];
@@ -794,7 +791,7 @@ function Profile() {
                           type="file"
                           name="user_input"
                           className="user_input hide formbold-form-input color-picker"
-                          value={ImgSections[index].imageValue}
+                          // value={ImgSections[index].imageValue}
                           onChange={(e) => {
                             let tempCount = ImgSections;
                             tempCount[index].imageValue = e.target.value;

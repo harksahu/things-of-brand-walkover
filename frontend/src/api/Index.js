@@ -61,7 +61,6 @@ const updateProfileFields = async (dataToSend) => {
   const data = {
     ...dataToSend
   }
-  console.log(dataToSend)
   return await axios.put(URL + "/api/companies", data);
 }
 
@@ -156,7 +155,7 @@ const getS3SignUrlOfAssets = async (file) => {
   await fetch(url, {
     method: "PUT",
     headers: {
-      "Content-Type": "image"
+      "Content-Type": "image/png"
     },
     body: file
   })

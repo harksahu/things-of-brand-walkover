@@ -125,7 +125,6 @@ function Company() {
 
   const GetCompanyDetail = async () => {
     const data = await getProfileDetailsInJson({ domain: title.title });
-    console.log(data?.data);
     setCompanyData(data?.data?.data[0]);
     handleShowJson();
   };
@@ -450,16 +449,20 @@ function Company() {
                             </>
                           ))}
                       </div>
-                      <div className="d-flex">
+                      <div>
                         {links?.map((link) => {
                           return (
-                            <div key={link} className="social-icons">
+                            <div key={link} className="social-icons p-2 d-flex">
                               <SocialIcon
                                 className="icon"
                                 url={link}
                                 target="_blank"
                                 style={{ height: 32, width: 32 }}
                               />
+                              <Card><a href={link} rel ="noreferrer" target = "_blank" >{link} </a></Card>
+                              <CopyToClipboard
+                                        color={link}
+                                      />
                             </div>
                           );
                         })}
