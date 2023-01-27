@@ -1,7 +1,6 @@
 import axios from "../interceptor/Intercepter.js";
 // const URL = "https://thingsofbrand.com";
-
-const URL = "http://localhost:8080";
+const URL = process.env.REACT_APP_SERVER_URL;
 
 const createBrandAPI = async (dataToSend) => {
   const data = {
