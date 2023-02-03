@@ -13,7 +13,6 @@ export const searchBrand = (payload) => {
     getProfileDetails(payload)
 
       .then((response) => {
-        // console.log(response);
         dispatch(searchBrandSuccess(response?.data?.data));
       })
 

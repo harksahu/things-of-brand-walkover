@@ -205,7 +205,8 @@ function Profile() {
     for(let i=0;i<ImgSections?.length;i++)
     {   
         const data = await getS3SignUrlOfAssets(ImgSections[i].imageValue)
-        value[i].imageValue = data
+        const imageUrl = data.split("?")[0]
+        value[i].imageValue = imageUrl
         setImgSections(value);
 
     }
@@ -794,7 +795,7 @@ function Profile() {
                           // value={ImgSections[index].imageValue}
                           onChange={(e) => {
                             let tempCount = ImgSections;
-                            tempCount[index].imageValue = e.target.value;
+                            tempCount[index].imageValue = e.target.files[0];
                             setImgSections([...tempCount]);
                           }}
                         />

@@ -76,7 +76,6 @@ function MyCompany() {
           navigate("/editprofile", { state: { data: data.data.data } })
 
         } catch (err) {
-          // console.log(err);
           setShowAlert(true);
           setMessage("Profile is not created")
          

@@ -52,7 +52,7 @@ function ImageEditer() {
   };
 
   function changeHW(w, h) {
-    console.log(w, h);
+
 
     document.getElementById(props.url).style.width = w + "px";
     document.getElementById(props.url).style.height = h + "px";
@@ -83,7 +83,6 @@ function ImageEditer() {
 
     async function toPng(data) {
       const { width, height } = data;
-      // console.log(width);
       const canvas = new OffscreenCanvas(width, height);
       const ctx = canvas.getContext("2d");
       const v = await Canvg.from(ctx, img, preset);
@@ -115,7 +114,6 @@ function ImageEditer() {
   );
 
   const companyPage = async () => {
-    // console.log(props?.domain);
 
     const forwardTo = await getProfileDetails({
       email: "",
@@ -124,7 +122,6 @@ function ImageEditer() {
       searchfrom: "false",
       _id: props?.domain,
     });
-    // console.log(forwardTo?.data?.data[0]?.domain);
 
     const moveTo = "/" + forwardTo?.data?.data[0]?.domain
     navigate(moveTo);

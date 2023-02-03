@@ -106,6 +106,7 @@ const Addfile = (props) => {
       return
     }
     try {
+
       const data = await getS3SignUrl(file);
 
       // setModalShow(+true);

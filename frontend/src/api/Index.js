@@ -1,6 +1,6 @@
 import axios from "../interceptor/Intercepter.js";
-const URL = "https://thingsofbrand.com";
-// const URL = process.env.REACT_APP_SERVER_URL;
+// const URL = "https://thingsofbrand.com";
+const URL = process.env.REACT_APP_SERVER_URL;
 
 const createBrandAPI = async (dataToSend) => {
   const data = {
@@ -153,9 +153,9 @@ const getS3SignUrlOfAssets = async (file) => {
   const { url } = await fetch(URL + "/assets").then(res => res.json())
   await fetch(url, {
     method: "PUT",
-    headers: {
-      "Content-Type": "image/png"
-    },
+    // headers: {
+    //   "Content-Type": "image/png"
+    // },
     body: file
   })
   return url;
