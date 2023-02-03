@@ -1,28 +1,34 @@
-.b-domain{
+.b-domain {
     font-size: 24px;
     color: var(--text);
     text-decoration: none;
 }
-.social-icons{
-    .icon{
+
+.social-icons {
+    .icon {
         margin-right: 16px;
     }
 }
-.coll-item{
+
+.coll-item {
     background: #fff;
     border-radius: var(--border-radius);
     min-height: 78px;
-    cursor: pointer;    
-    a{
+    cursor: pointer;
+
+    a {
         text-decoration: none;
         color: var(--text)
     }
-    .dropdown-toggle::after{
+
+    .dropdown-toggle::after {
         display: none;
     }
-    .coll-preview{    
+
+    .coll-preview {
         padding: 3px;
-        .cpi{
+
+        .cpi {
             background: #fff;
             margin-right: 2px;
             border: 1px solid #D5D9DC;
@@ -34,25 +40,26 @@
             padding: 6px;
             overflow: hidden;
         }
-        .count{
+
+        .count {
             background: #fff;
         }
     }
 }
-.add-collection{
+
+.add-collection {
     color: #999;
-    &:hover{
+
+    &:hover {
         color: var(--bs-link-hover-color);
     }
 }
 
-.color-picker-wrp .MuiAutocomplete-hasPopupIcon.css-gcwvw8-MuiAutocomplete-root .MuiOutlinedInput-root,
-.color-picker-wrp .MuiAutocomplete-hasClearIcon.css-gcwvw8-MuiAutocomplete-root .MuiOutlinedInput-root {
-    padding-left: 38px;
-}
-.color-picker-wrp{
+// .color-picker-wrp 
+.color-picker-wrp {
     position: relative;
-    .color-picker{
+
+    .color-picker {
         position: absolute;
         padding: 0;
         border: none;
@@ -62,14 +69,21 @@
         top: 14px;
         left: 12px;
     }
+
+    .MuiAutocomplete-root {
+        .MuiOutlinedInput-root {
+            padding-left: 38px;
+        }
+    }
 }
 
-.edit-brand-footer{
+.edit-brand-footer {
     position: sticky;
     bottom: 0;
     padding: 16px;
     margin: 0 -16px;
 }
-.how-to{
+
+.how-to {
     color: var(--bs-body-color)
 }
