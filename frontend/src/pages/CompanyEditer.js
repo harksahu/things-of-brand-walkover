@@ -10,7 +10,7 @@ import {
   ListGroup,
   OverlayTrigger,
   Tooltip,
-  Dropdown
+  Dropdown,
 } from "react-bootstrap";
 import colors from "../api/colors.json";
 import { Autocomplete, TextField } from "@mui/material";
@@ -28,7 +28,12 @@ import {
 } from "../api/Index.js";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import RichtextEditor from "./JoditEditor.js";
-import { MdArrowBackIos, MdDelete, MdRestoreFromTrash, MdDone } from "react-icons/md";
+import {
+  MdArrowBackIos,
+  MdDelete,
+  MdRestoreFromTrash,
+  MdDone,
+} from "react-icons/md";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import InputComponent from "../components/InputComponent.js";
@@ -122,8 +127,8 @@ function Profile() {
     if (event.key === "Enter" && event.target.value !== "") {
       var check = event.target.value.split(".");
       if (!check[1] || check[1]?.length < 5) {
-        setShowLinkError(true)
-        return
+        setShowLinkError(true);
+        return;
       }
       setLinks([...links, event.target.value]);
       event.target.value = "";
@@ -151,11 +156,9 @@ function Profile() {
     }
   }, [user]);
 
-
   useEffect(() => {
-    if (domain && show === false)
-      getbrandslogo(id)
-  }, [show])
+    if (domain && show === false) getbrandslogo(id);
+  }, [show]);
 
   useEffect(() => {
     fontlist();
@@ -167,7 +170,6 @@ function Profile() {
     }
   }, [domain]);
   const updateProfileValue = async () => {
-
     if (domain != location?.state?.data?.domain) {
       for (let i = 0; i < allData?.length; i++) {
         if (allData[i].domain === domain) {
@@ -180,8 +182,11 @@ function Profile() {
     }
 
     var domainParts = domain.split(".");
-    if (domainParts.length <= 2 && (domainParts[1]?.length <= 1 || !domainParts[1])) {
-      window.scrollTo(0, 0)
+    if (
+      domainParts.length <= 2 &&
+      (domainParts[1]?.length <= 1 || !domainParts[1])
+    ) {
+      window.scrollTo(0, 0);
       setShowAlert(true);
       setMessage("Enter proper domain");
       return;
@@ -200,15 +205,21 @@ function Profile() {
       setMessage("About us field is compulsory");
       return;
     }
-    const value = ImgSections
+    const value = ImgSections;
 
-    for(let i=0;i<ImgSections?.length;i++)
-    {   
-        const data = await getS3SignUrlOfAssets(ImgSections[i].imageValue)
-        const imageUrl = data.split("?")[0]
-        value[i].imageValue = imageUrl
+    for (let i = 0; i < ImgSections?.length; i++) {
+      if (
+        typeof ImgSections[i].imageValue === "object" &&
+        ImgSections[i].imageValue != null
+      ) {
+        const data = await getS3SignUrlOfAssets(ImgSections[i].imageValue);
+        const imageUrl = data.split("?")[0];
+        value[i].imageValue = imageUrl;
         setImgSections(value);
-
+      } else {
+        value[i].imageValue = ImgSections[i].imageValue;
+        setImgSections(value);
+      }
     }
     const domainTemp = extractDomain(domain);
     const data = {
@@ -227,7 +238,7 @@ function Profile() {
       email: user?.email,
       color: color,
       ImageSections: value,
-      TextSections:TextSections
+      TextSections: TextSections,
     };
     await updateProfileFields(data);
 
@@ -270,7 +281,7 @@ function Profile() {
     }
   };
 
-  useEffect(() => { }, [value]);
+  useEffect(() => {}, [value]);
 
   const config = {
     buttons: ["bold", "italic"],
@@ -347,11 +358,12 @@ function Profile() {
         msg={msgForAlert}
         setmodalshow={setModalShow}
         onSubmit={() => {
-          msgForAlert == "Delete" ?
-            deleteMyStuffAPI(idToDelete)
+          msgForAlert == "Delete"
+            ? deleteMyStuffAPI(idToDelete)
             : restoreMyStuffAPI(idToDelete);
-          navigate(-1)
-        }} />
+          navigate(-1);
+        }}
+      />
 
       {loading ? (
         <div className="center-loader">
@@ -398,7 +410,7 @@ function Profile() {
                       guidlines={aboutus}
                       setGuidlines={setAboutus}
                       config={config}
-                      tabIndex={'0'}
+                      tabIndex={"0"}
                     />
                   </Form.Group>
                   <div
@@ -449,14 +461,14 @@ function Profile() {
                       {DomainPost?.map((brand, index) => {
                         return (
                           <Card key={brand._id} className="box-shadow border-0">
-                            { }
+                            {}
                             <Link className="h-100" to={"/stuff/" + brand._id}>
                               <div
                                 style={{ overflow: "auto" }}
                                 className="img-size  pattern-square h-100"
                               >
                                 {brand.url !== undefined &&
-                                  brand.url !== "null" ? (
+                                brand.url !== "null" ? (
                                   <img src={brand.url} alt="" />
                                 ) : (
                                   <img src="/assets/picture.svg" alt="" />
@@ -479,16 +491,15 @@ function Profile() {
                                 ) : ( */}
                                 <div
                                   id="showname"
-                                // onClick={() => {
-                                //   setShow(true);
-                                // }}
+                                  // onClick={() => {
+                                  //   setShow(true);
+                                  // }}
                                 >
                                   {brand.title}
                                 </div>
                                 {/* )} */}
                               </div>
-                              {(user &&
-                                user.email === user.email) ? (
+                              {user && user.email === user.email ? (
                                 logo === brand.url ? (
                                   <button className="btn-icon" disabled>
                                     <MdDone />
@@ -513,7 +524,6 @@ function Profile() {
                                     </button>
                                   </OverlayTrigger>
                                 )
-
                               ) : (
                                 ""
                               )}
@@ -531,9 +541,8 @@ function Profile() {
                                     className="btn-icon"
                                     onClick={async () => {
                                       setModalShow(true);
-                                      setIdToDelete(brand?._id)
-                                      setMsgForAlert("Delete")
-
+                                      setIdToDelete(brand?._id);
+                                      setMsgForAlert("Delete");
                                     }}
                                   >
                                     <MdDelete />
@@ -553,9 +562,8 @@ function Profile() {
                                     className="btn-icon"
                                     onClick={async () => {
                                       setModalShow(true);
-                                      setIdToDelete(brand?._id)
-                                      setMsgForAlert("Restore")
-
+                                      setIdToDelete(brand?._id);
+                                      setMsgForAlert("Restore");
                                     }}
                                   >
                                     <MdRestoreFromTrash />
@@ -638,7 +646,8 @@ function Profile() {
                                       "colorinput" + index
                                     ).value = newValue.value;
                                     let tempCount = color;
-                                    tempCount[index].colorValue = newValue.value;
+                                    tempCount[index].colorValue =
+                                      newValue.value;
                                     setcount([...tempCount]);
                                     let tempCount1 = value;
                                     tempCount1[index] = newValue;
@@ -712,15 +721,12 @@ function Profile() {
                             >
                               <MdDelete />
                             </button>
-
                           </Form.Group>
                         </div>
                       ))}
 
                       <div className="button-section">
-                        <Button variant="link"
-                          onClick={() => addFormFields()}
-                        >
+                        <Button variant="link" onClick={() => addFormFields()}>
                           Add new color
                         </Button>
                       </div>
@@ -729,7 +735,16 @@ function Profile() {
                   <Form.Group className="mb-3 my-3" id="fontLink">
                     <Form.Label>
                       Font links
-                      <small>(by <a href="https://fonts.google.com/" className="text-muted">https://fonts.google.com/</a>)</small>
+                      <small>
+                        (by{" "}
+                        <a
+                          href="https://fonts.google.com/"
+                          className="text-muted"
+                        >
+                          https://fonts.google.com/
+                        </a>
+                        )
+                      </small>
                     </Form.Label>
                     <div className="">
                       {fontLink?.map((element, index) => (
@@ -763,52 +778,74 @@ function Profile() {
                         </div>
                       ))}
                       <div className="button-section">
-                        <Button variant="link"
-
-                          onClick={() => addFontFields()}>
+                        <Button variant="link" onClick={() => addFontFields()}>
                           Add new font
                         </Button>
                       </div>
                     </div>
                   </Form.Group>
                 </div>
-                <div  className="col-lg-6 col-md-7 col-sm-12">
+                <div className="col-lg-6 col-md-7 col-sm-12">
                   {ImgSections?.map((element, index) => (
                     <div key={index}>
-                      <Form.Group>
-                        <Form.Control
-                          type="text"
-                          name="user_label_input"
-                          placeholder="Enter Image Section name"
-                          value={ImgSections[index].imageName}
-                          onChange={(e) => {
-                            let tempCount = ImgSections;
-                            tempCount[index].imageName = e.target.value;
-                            setImgSections([...tempCount]);
-                          }}
-                          className="contact-form-area me-1"
-                        />
-                        <Form.Control
-                          type="file"
-                          name="user_input"
-                          className="user_input hide formbold-form-input color-picker"
-                          // value={ImgSections[index].imageValue}
-                          onChange={(e) => {
-                            let tempCount = ImgSections;
-                            tempCount[index].imageValue = e.target.files[0];
-                            setImgSections([...tempCount]);
-                          }}
-                        />
-
-                        <button
-                          type="button"
-                          className="name noselect btn"
-                          onClick={() => removeImageField(index)}
+                      {console.log(element?.imageValue)}
+                      {typeof element?.imageValue != "object" &&
+                      element?.imageValue != "" ? (
+                        <Card
+                        style={{ width: "200px", marginTop: "3px"}}
+                          key={element.imageValue}
+                          className="box-shadow border-0"
                         >
-                          <MdDelete />
-                        </button>
+                          <div
+                            style={{ overflow: "auto" }}
+                            className="img-size  pattern-square h-100"
+                          >
+                            {element.imageValue !== undefined &&
+                            element.imageValue !== "null" ? (
+                              <img src={element.imageValue} alt="" />
+                            ) : (
+                              <img src="/assets/picture.svg" alt="" />
+                            )}
+                          </div>
+                          <Card.Body className="d-flex align-items-center">
+                           {element?.imageName}
+                          </Card.Body>
+                        </Card>
+                      ) : (
+                        <Form.Group>
+                          <Form.Control
+                            type="text"
+                            name="user_label_input"
+                            placeholder="Enter Image Section name"
+                            value={ImgSections[index].imageName}
+                            onChange={(e) => {
+                              let tempCount = ImgSections;
+                              tempCount[index].imageName = e.target.value;
+                              setImgSections([...tempCount]);
+                            }}
+                            className="contact-form-area me-1"
+                          />
 
-                      </Form.Group>
+                          <Form.Control
+                            type="file"
+                            name="user_input"
+                            className="user_input hide formbold-form-input color-picker"
+                            // value={ImgSections[index].imageValue}
+                            onChange={(e) => {
+                              let tempCount = ImgSections;
+                              tempCount[index].imageValue = e.target.files[0];
+                              setImgSections([...tempCount]);
+                            }}
+                          />
+                        </Form.Group>
+                      )}
+                      <button
+                        type="button"
+                        className="name noselect btn"
+                        onClick={() => removeImageField(index)}
+                      >
+                        <MdDelete />
+                      </button>
                     </div>
                   ))}
                   {TextSections?.map((element, index) => (
@@ -829,7 +866,7 @@ function Profile() {
                         <RichtextEditor
                           guidlines={TextSections}
                           setGuidlines={setTextSections}
-                          tabIndex={'0'}
+                          tabIndex={"0"}
                           index={index}
                           type={true}
                         />
@@ -841,7 +878,6 @@ function Profile() {
                         >
                           <MdDelete />
                         </button>
-
                       </Form.Group>
                     </div>
                   ))}
@@ -851,10 +887,7 @@ function Profile() {
           </Row>
 
           <div className="d-flex edit-brand-footer bg-light">
-            <Button
-              variant="primary"
-              onClick={() => updateProfileValue()}
-            >
+            <Button variant="primary" onClick={() => updateProfileValue()}>
               Update
             </Button>
             <Dropdown style={{ paddingLeft: "3px" }}>
@@ -863,8 +896,20 @@ function Profile() {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item onClick={() => { addImageFeild() }}>Image</Dropdown.Item>
-                <Dropdown.Item onClick={() => { addTextFeild() }}>TextArea</Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    addImageFeild();
+                  }}
+                >
+                  Image
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    addTextFeild();
+                  }}
+                >
+                  TextArea
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>

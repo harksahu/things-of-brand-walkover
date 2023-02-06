@@ -645,17 +645,19 @@ function Company() {
                   </div>
                   <div className="mt-5">
                     {ImgSections?.map((img, index) => {
+                    
                       return (
-                        <Card
-                          key={img._id + index}
-                          className=""
-                          style={{ width: "200px", marginTop: "3px" }}
-                        >
-                          <div className="img-size h-100">
-                            <img src={img?.imageValue} alt="" />
-                            <h5>{img?.imageName}</h5>
-                          </div>
-                        </Card>
+                       <Card
+                      key={img._id + index}
+                      className=""
+                      style={{ width: "200px", marginTop: "3px" }}
+                    >
+                     
+                      <div className="img-size h-100">
+                        <img src={img?.imageValue} alt="" />
+                        <h5>{img?.imageName}</h5>
+                      </div>
+                    </Card>
                       );
                     })}
                   </div>
