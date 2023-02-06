@@ -38,7 +38,7 @@ import { useLocation, Link, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import InputComponent from "../components/InputComponent.js";
 import DeleteComponent from "../components/DeleteComponent.js";
-
+import { errorToast } from "../components/CustomToast.js";
 function Profile() {
   const [DomainPost, setDomainPost] = useState();
   const [modalShow, setModalShow] = useState(false);
@@ -65,8 +65,6 @@ function Profile() {
   const [fontLink, setFontLink] = useState([]);
   const [linkCount, setLinkCount] = useState(1);
   const [countTracker, setCountTracker] = useState(1);
-  const [imgCount, setImgCount] = useState(1);
-  const [imgTracker, setImgTracker] = useState(1);
   const [valid, setvalid] = useState([false]);
   const [valid2, setvalid2] = useState([false]);
   const [fontFamily, setFontFamily] = useState([false]);
@@ -180,7 +178,6 @@ function Profile() {
         }
       }
     }
-
     var domainParts = domain.split(".");
     if (
       domainParts.length <= 2 &&
@@ -205,8 +202,23 @@ function Profile() {
       setMessage("About us field is compulsory");
       return;
     }
-    const value = ImgSections;
 
+
+  var error="" 
+   fontLink?.find(  function(font) {
+      if (font == "" ||font== null) {
+        error="error";
+         return "error";
+      }
+    });
+    if(error)
+    {
+        window.scrollTo(0, 0);
+        errorToast("font is required");
+        return 
+    }
+    const value = ImgSections;
+    
     for (let i = 0; i < ImgSections?.length; i++) {
       if (
         typeof ImgSections[i].imageValue === "object" &&
@@ -788,7 +800,6 @@ function Profile() {
                 <div className="col-lg-6 col-md-7 col-sm-12">
                   {ImgSections?.map((element, index) => (
                     <div key={index}>
-                      {console.log(element?.imageValue)}
                       {typeof element?.imageValue != "object" &&
                       element?.imageValue != "" ? (
                         <Card

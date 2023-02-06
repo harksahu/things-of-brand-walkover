@@ -21,7 +21,8 @@ import Company from './pages/Company.js';
 import SearchLogo from './pages/SearchLogo.js';
 import Profile from './pages/CompanyEditer.js';
 import DomainVerificationPage from './pages/DomainVerificationPage';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import PageNotFound from './pages/PageNotFound.js';
 
 function App() {
@@ -43,7 +44,7 @@ function App() {
           minBreakpoint="xxs"
         >
           <AuthContextProvider>
-          
+          <ToastContainer/>
             {location?.pathname ? (location?.pathname.slice(0, 7).toLowerCase() === '/stuff/' || location?.pathname?.includes(".") ?  "" : <NavigationBar />) : <NavigationBar />}
             {/* <SearchBar /> */}
             <Routes>
