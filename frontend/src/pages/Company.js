@@ -650,13 +650,15 @@ function Company() {
                        <Card
                       key={img._id + index}
                       className=""
-                      style={{ width: "200px", marginTop: "3px" }}
+                      style={{ width: "200px",height :"195px", marginTop: "3px" }}
                     >
                      
-                      <div className="img-size h-100">
+                      <div className="img-size " style={{ padding:"2px",height :"170px"}}>
                         <img src={img?.imageValue} alt="" />
-                        <h5>{img?.imageName}</h5>
                       </div>
+                      <Card.Body className="d-flex align-items-center" style={{margin: "auto" ,paddingBottom:"0px",paddingTop:"0px"}}>
+                           {img?.imageName}
+                      </Card.Body>
                     </Card>
                       );
                     })}
