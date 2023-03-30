@@ -12,7 +12,7 @@ function Footer() {
     location?.pathname?.includes(".") ? 
     (<footer className="footer bg-light">
       <Container className="d-flex small justify-content-end">
-      Powered By <Link to = "/" target="_blank"> ThingsOfBrand</Link>
+      Powered By<Link to = "/" target="_blank" className="ms-2">Things Of Brand</Link>
       </Container>  
       </footer>)
     :

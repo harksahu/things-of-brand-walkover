@@ -60,6 +60,7 @@ function Company() {
   const [DomainPost, setDomainPost] = useState();
   const [verify, setVerify] = useState();
   const [allColor, setAllColor] = useState();
+  const [bannerGradient, setBannerGradient] = useState();
   const [fontLink, setFontLink] = useState([]);
   const [company, setCompany] = useState([]);
   const navigate = useNavigate();
@@ -167,6 +168,19 @@ function Company() {
     setDomainPost(data?.data?.data);
     setLoading(false);
   };
+  
+  const getGradient = () => {
+    var str = `linear-gradient(90deg, rgba(217,0,0,1) 0%, rgba(103,32,176,1) 25%, rgba(52,25,156,1) 50%, rgba(71,100,230,1) 75%, rgba(0,148,212,1) 100%)`;
+    if(allColor?.length){
+      var p = 100/allColor?.length;
+      str='linear-gradient(90deg';
+      allColor?.map((item, index)=>
+        str += `, ${item.colorValue} ${index*p}%`      
+      )
+      str += `)`;
+    }    
+    return str;
+  };
   const getbrand = async () => {
     const fresult = await getProfileDetails({
       domain: title.title,
@@ -230,9 +244,15 @@ function Company() {
 
     await updateProfileFields(data);
   };
+
+  useEffect(() => {    
+    setBannerGradient(getGradient);
+  })
+
   useEffect(() => {
     if (title.title) getbrand();
   }, [title.title]);
+
   useEffect(() => {
     if (user?.email) {
       getCollectionData();
@@ -251,7 +271,7 @@ function Company() {
           fontLINKs[i].remove();
         }
       }
-    };
+    };    
   }, [user, modalShow]);
   function handleShow() {
     setFullscreen("md-down");
@@ -265,20 +285,19 @@ function Company() {
         </div>
       ) : (
         <div className="bg-light flex-fill">
+          <div className="banner" style={{background: bannerGradient, height: '200px'}}></div>
           <Container>
             {domain ? (
-              <div className="row mt-4">
-                <Navbar>
-                  <Container>
-                    <div className="d-flex">
+              <>
+                <Navbar className="company-navbar">
+                  <Container>                    
+                    <div className="d-flex align-items-center">
                       {defaultLogo && (
                         <div>
                           <div className="cpi">
                             <img
-                              src={defaultLogo}
-                              width="35px"
-                              height="56px"
-                              style={{ marginRight: "5px" }}
+                              src={defaultLogo}                              
+                              style={{ width: "100%" }}
                             />
                           </div>
                         </div>
@@ -406,17 +425,11 @@ function Company() {
                     )}
                   </Container>
                 </Navbar>
-
                 <div className="col-lg-12 col-md-12">
-                  <div className="row">
-                    <div className="col-lg-7 col-md-6 col-sm-12">
-                      <div className="">
-                        <div
-                          id="aboutus"
-                          dangerouslySetInnerHTML={{ __html: aboutus }}
-                        ></div>
-                      </div>
-                      <div className="align-items-center d-flex mt-3 mb-3">
+                  
+                  <div className="mt-5">
+                      {domain ? <h5>Website</h5> : ""}
+                      <div className="align-items-center d-flex">
                         <a
                           href={"https://" + domain}
                           target="_blank"
@@ -456,28 +469,8 @@ function Company() {
                             </>
                           ))}
                       </div>
-                      <div>
-                        {links?.map((link) => {
-                          return (
-                            <div key={link} className="social-icons p-2 d-flex">
-                              <SocialIcon
-                                className="icon"
-                                url={link}
-                                target="_blank"
-                                style={{ height: 32, width: 32 }}
-                              />
-                              <Card>
-                                <a href={link} rel="noreferrer" target="_blank">
-                                  {link}{" "}
-                                </a>
-                              </Card>
-                              <CopyToClipboard color={link} />
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
+                  </div>                                      
+                  
                   <div className="mt-5">
                     {DomainPost?.length > 0 ? <h5>Logos</h5> : ""}
                     <div className="grid">
@@ -606,26 +599,21 @@ function Company() {
                         })}
                       </div>
                     )}
-                  </div>
-
-                  <div>
-                    <div className="d-flex"></div>
-                  </div>
+                  </div>                  
 
                   <div className="mt-5">
                     {fontLink != "" && <h5>Fonts</h5>}
 
-                    <div className="d-flex">
+                    <div className="d-flex fonts">
                       {fontLink?.map((link, index) => {
                         return (
                           <div
                             key={index}
                             style={{ fontFamily: link, fontSize: "24px" }}
-                            className="card p-2 m-1"
+                            className="font-card"
                           >
                             <Helmet>
-                              <link
-                                className="fontUrl"
+                              <link                                
                                 rel="stylesheet"
                                 href={`https://fonts.googleapis.com/css2?family=${link}`}
                               />
@@ -644,8 +632,7 @@ function Company() {
                     </div>
                   </div>
                   <div className="mt-5">
-                    {ImgSections?.map((img, index) => {
-                    
+                    {ImgSections?.map((img, index) => {                    
                       return (
                        <Card
                       key={img._id + index}
@@ -657,7 +644,7 @@ function Company() {
                         <img src={img?.imageValue} alt="" />
                       </div>
                       <Card.Body className="d-flex align-items-center" style={{margin: "auto" ,paddingBottom:"0px",paddingTop:"0px"}}>
-                           {img?.imageName}
+                        {img?.imageName}
                       </Card.Body>
                     </Card>
                       );
@@ -677,11 +664,42 @@ function Company() {
                       );
                     })}
                   </div>
+                  
+                  <div className="col-lg-7 col-md-6 col-sm-12">
+                    <div className="mt-5">
+                      {aboutus?.length > 0 ? <h5>About</h5> : ""}
+                      <div
+                        id="aboutus"
+                        dangerouslySetInnerHTML={{ __html: aboutus }}
+                      ></div>
+                    </div>                                                                  
+                  </div>
+
+                  <div className="mt-5 social-links">
+                    {links?.length > 0 ? <h5>Social</h5> : ""}
+                    {links?.map((link) => {
+                      return (
+                        <div key={link} className="slink p-2 d-flex align-items-center ">
+                          <SocialIcon
+                            className="icon"
+                            url={link}
+                            target="_blank"
+                            style={{ height: 32, width: 32 }}
+                          />                          
+                          <a href={link} rel="noreferrer" target="_blank">
+                            {link}{" "}
+                          </a>                          
+                          <CopyToClipboard color={link} />
+                        </div>
+                      );
+                    })}
+                  </div>
 
                   {/* <div className="mt-5">
                     {guidlines?.length > 12 ? <h5>Guidelines</h5> : ""}
                     <div dangerouslySetInnerHTML={{ __html: guidlines }}></div>
                   </div> */}
+
                 </div>
                 <Modal
                   show={show}
@@ -695,7 +713,7 @@ function Company() {
                     <Addfile domain={domain} />
                   </Modal.Body>
                 </Modal>
-              </div>
+              </>
             ) : (
               <Not_found />
             )}

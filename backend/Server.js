@@ -28,7 +28,7 @@ dotenv.config({ path: '../.env' })
 const app = express();
 const __dirname = path.resolve();
 connectDB();
-const PORT = process.env.PORT || 8081
+const PORT = process.env.PORT || 8080
 
 
 // MIDDLEWARE
