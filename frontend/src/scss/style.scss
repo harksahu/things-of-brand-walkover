@@ -78,7 +78,7 @@
 }
 .grid{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr));
     grid-column-gap: 30px;
     grid-row-gap: 30px;
     justify-items: stretch;

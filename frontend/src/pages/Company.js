@@ -297,7 +297,7 @@ function Company() {
                           <div className="cpi">
                             <img
                               src={defaultLogo}                              
-                              style={{ width: "100%" }}
+                              style={{ width: "100%", maxHeight: "150px" }}
                             />
                           </div>
                         </div>

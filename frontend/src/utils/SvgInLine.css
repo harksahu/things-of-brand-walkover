@@ -22,6 +22,7 @@
 .img-size img{
     width: -webkit-fill-available;
     height: -webkit-fill-available;
+    max-height: 150px;
 }
 
 .popup_img{
