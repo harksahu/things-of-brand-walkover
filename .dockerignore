@@ -1,0 +1,11 @@
+build
+.dockerignore
+node_modules
+node_modules/
+package-lock.json
+uploads/
+.env
+.vscode
+app.yaml
+/frontend/.DS_Store
+.DS_Store
