@@ -85,6 +85,9 @@
     .card{
         border: none;            
         height: 100%;
+        .card-title{
+            font-size: 16px;
+        }
     }
     .item-footer{
         padding: 16px;
