@@ -2,7 +2,6 @@ build
 .dockerignore
 node_modules
 node_modules/
-package-lock.json
 uploads/
 .env
 .vscode
