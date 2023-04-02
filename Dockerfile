@@ -3,6 +3,8 @@ WORKDIR /app/frontend/
 ENV PATH /app/frontend/node_modules/.bin:$PATH
 COPY frontend/package.json ./
 COPY frontend/package-lock.json ./
+COPY frontend/src ./
+COPY frontend/tags-input ./
 RUN npm install --silent
 RUN npm install react-scripts@5.0.1 -g --silent
 ENV REACT_APP_SERVER_URL = https://thingsofbrand.com
