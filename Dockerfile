@@ -5,6 +5,8 @@ COPY frontend/package.json ./
 COPY frontend/package-lock.json ./
 RUN npm install --silent
 RUN npm install react-scripts@5.0.1 -g --silent
+ENV REACT_APP_SERVER_URL = https://thingsofbrand.com
+RUN npm run build
 COPY . ./
 EXPOSE 8080
 WORKDIR /app
