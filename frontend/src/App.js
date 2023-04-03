@@ -63,7 +63,7 @@ function App() {
               <Route path='/my-companies' element={<Protected> <MyCompany /> </Protected>} />
               <Route path='/collection' element={<Protected> <MyCollection /> </Protected>} />
               <Route path='/collection/:id' element={<Protected> <Collection /> </Protected>} />
-              <Route path='*' element={<PageNotFound />} />
+              <Route path='*' element={<PageNotFound />} />              
             </Routes>            
             {location?.pathname ? (location?.pathname.slice(0, 7).toLocaleLowerCase() === '/stuff/' ? "" : <Footer />) : <Footer />}
           </AuthContextProvider>

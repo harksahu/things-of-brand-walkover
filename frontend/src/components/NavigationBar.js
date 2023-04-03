@@ -128,7 +128,7 @@ function NavigationBar({ getSearchBrand }) {
         <Container>
           <Navbar.Brand
             onClick={() => {
-              navigate("/");
+              navigate(user?.displayName ? "/my-companies" : '/');
             }}
             id="logo"
             style={{ cursor: "pointer" }}
@@ -194,10 +194,7 @@ function NavigationBar({ getSearchBrand }) {
                     />
                   </Form>
                 )
-                }                
-                {(location.pathname === "/") ? ("") : (
-                  <Nav.Link eventKey="link-1" href="#" className={location.pathname === "/"  ? "active" : ""}  onClick={() => { navigate("/"); }}>Home</Nav.Link>
-                )}
+                }
                 <Nav.Link eventKey="link-2" href="#" className={location.pathname.includes("/my-companies") ? "active":""} onClick={() => { navigate("/my-companies"); }}>My Brands</Nav.Link>
                 <Nav.Link eventKey="link-3" href="#" className={location.pathname.includes("/collection") ? "active":""} onClick={() => { navigate("/collection"); }}>Collections</Nav.Link>
                 <Nav.Link eventKey="link-4" href="#" className={location.pathname.includes("/all-companies") ? "active":""} onClick={() => { navigate("/all-companies"); }}>Explore</Nav.Link>
@@ -234,7 +231,7 @@ function NavigationBar({ getSearchBrand }) {
               !isLoading && (
               <>
                 {(location.pathname === "/") ? ("") : (
-                  <Nav.Link eventKey="link-1" href="#" className={location.pathname === "/"  ? "active" : ""}  onClick={() => { navigate("/"); }}>Home</Nav.Link>
+                  <Nav.Link eventKey="link-1" href="#" className={location.pathname === "/"  ? "active me-3" : "me-3"}  onClick={() => { navigate("/"); }}>Home</Nav.Link>
                 )}
                 <button
                   type="button"

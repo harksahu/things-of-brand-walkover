@@ -1,5 +1,12 @@
-.item{
+.item,.add-new{
     margin: 0;    
+}
+.add-new{
+    margin: 0;
+    cursor: pointer;
+}
+.item-company:hover,.item:hover, .add-new:hover{
+    -webkit-filter: brightness(95%);
 }
 .item a{
     text-decoration: none;
@@ -10,6 +17,9 @@
     text-overflow: ellipsis;
     color: var(--bs-gray-700);
     margin-bottom: 0 !important;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;    
 }
 .img-size{
     padding: 16px;    
@@ -22,6 +32,7 @@
 .img-size img{
     width: -webkit-fill-available;
     height: -webkit-fill-available;
+    max-height: 150px;
 }
 
 .popup_img{
