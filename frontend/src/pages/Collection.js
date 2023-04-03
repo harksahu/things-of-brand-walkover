@@ -120,7 +120,7 @@ const Collection = () => {
               }
             </Navbar>
 
-          <div className="d-flex item grid collection" style={{ flexWrap: "wrap" }}>
+          <div className="d-flex grid collection" style={{ flexWrap: "wrap" }}>
             {allLogos?.length
               ? allLogos?.map((collection, index) => {
                 return (
